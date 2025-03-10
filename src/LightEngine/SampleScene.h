@@ -1,26 +1,19 @@
 #pragma once
 
 #include "Scene.h"
-#include "SFML/System/Clock.hpp"
+#include "Player.h"
 class DummyEntity;
 
 class SampleScene : public Scene
 {
-
-	
-
-private:
-	void TrySetSelectedEntity(DummyEntity* pEntity, int x, int y);
+	Player* mPlayer;
 
 public:
-	float dt;
-	float time;
-	sf::Clock jumpclock;
+	float playerJumpTime;
+	float playerRunTime;
 	void OnInitialize() override;
 	void OnEvent(const sf::Event& event) override;
 	void OnUpdate() override;
-	sf::Vector2f Movement();
-	void Jump();
 };
 
 
