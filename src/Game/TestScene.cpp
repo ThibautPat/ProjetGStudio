@@ -14,6 +14,11 @@ void TestScene::OnInitialize()
 
 	}
 
+	Entity* pEntity = CreateEntity<Entity>(100, sf::Color::Red);
+	pEntity->SetPosition(500, 500);
+	pEntity->SetRigidBody(true);
+	pEntity->SetTag(1);
+
 	mGm = GameManager::Get();
 }
 
@@ -22,6 +27,9 @@ void TestScene::OnEvent(const sf::Event& event)
 	if (event.type != sf::Event::EventType::KeyPressed) {
 
 		//#TODO
+		mGm->GetEntity<Entity>(1);
+
+
 		if (event.KeyPressed == sf::Keyboard::Left)
 		{
 
