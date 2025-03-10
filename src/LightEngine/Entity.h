@@ -10,6 +10,7 @@ namespace sf
 }
 
 class Scene;
+class Collider;
 
 class Entity
 {
@@ -21,6 +22,9 @@ class Entity
     };
 
 protected:
+
+	Collider* mCollider;
+
     sf::CircleShape mShape;
     sf::Vector2f mDirection;
 	Target mTarget;
@@ -39,6 +43,7 @@ public:
 	float GetRadius() const { return mShape.getRadius(); }
 	void SetRigidBody(bool isRigitBody) { mRigidBody = isRigitBody; }
 	bool IsRigidBody() const { return mRigidBody; }
+	Collider* GetCollider() const { return mCollider; }
 
     sf::Vector2f GetPosition(float ratioX = 0.5f, float ratioY = 0.5f) const;
 	sf::Shape* GetShape() { return &mShape; }

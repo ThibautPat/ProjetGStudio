@@ -3,12 +3,17 @@
 #include "GameManager.h"
 #include "Utils.h"
 #include "Debug.h"
+#include "Moteur/CircleCollider.h"
+#include "Moteur/AABBCollider.h"
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 
 void Entity::Initialize(float radius, const sf::Color& color)
 {
+	//mCollider = new AABBCollider(0.f, 0.f, 10.f, 10.f); // Ici pour le moment -> faire une surcharge de Initialize pour créer des rectangles
+	mCollider = new CircleCollider(0, 0, radius);
+
 	mDirection = sf::Vector2f(0.0f, 0.0f);
 
 	mShape.setOrigin(0.f, 0.f);
@@ -45,16 +50,7 @@ void Entity::Repulse(Entity* other)
 
 bool Entity::IsColliding(Entity* other) const
 {
-	sf::Vector2f distance = GetPosition(0.5f, 0.5f) - other->GetPosition(0.5f, 0.5f);
-
-	float sqrLength = (distance.x * distance.x) + (distance.y * distance.y);
-
-	float radius1 = mShape.getRadius();
-	float radius2 = other->mShape.getRadius();
-
-	float sqrRadius = (radius1 + radius2) * (radius1 + radius2);
-
-	return sqrLength < sqrRadius;
+	return mCollider->IsColliding(other->GetCollider());
 }
 
 bool Entity::IsInside(float x, float y) const
@@ -171,6 +167,7 @@ void Entity::Update()
 			mTarget.isSet = false;
 		}
 	}
+	mCollider->Update(GetPosition().x, GetPosition().y);
 
 	OnUpdate();
 }
