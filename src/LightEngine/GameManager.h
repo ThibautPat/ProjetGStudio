@@ -44,12 +44,12 @@ private:
 
 	void SetDeltaTime(float deltaTime) { mDeltaTime = deltaTime; }
 
-	sf::RenderWindow* GetWindow() const { return mpWindow; }
+	
 
 public:
 	~GameManager();
 	static GameManager* Get();
-
+	sf::RenderWindow* GetWindow() const { return mpWindow; }
 	void CreateWindow(unsigned int width, unsigned int height, const char* title, int fpsLimit = 60, sf::Color clearColor = sf::Color::Black);
 
 	template<typename T>

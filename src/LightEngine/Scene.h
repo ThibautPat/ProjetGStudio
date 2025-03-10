@@ -7,7 +7,7 @@ class GameManager;
 
 class Scene
 {
-private:
+protected:
 	GameManager* mpGameManager;
 
 private:

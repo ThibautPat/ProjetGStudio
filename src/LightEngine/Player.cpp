@@ -57,8 +57,6 @@ bool Player::Jump(float dt, float pTime)
 
 void Player::Move(sf::Vector2f movement, float dt, float runTime)
 {
-	
-	
 	float speed = 0;
 	if (mSpeed <= 0)
 	{
@@ -75,14 +73,14 @@ void Player::Move(sf::Vector2f movement, float dt, float runTime)
 	else if (runTime == 0)
 	{
 		if (time > 0)
-		time -= dt; 
+			time -= dt;
 		float speedDecrement = mPData.mDeceleration;
 		float realSpeed = mSpeed;
-		
-			speed = realSpeed/500 - speedDecrement * dt;
-			if (mSpeed <= 10)
-			{
-				speed = 0;	
+
+		speed = realSpeed / 500 - speedDecrement * dt;
+		if (mSpeed <= 10)
+		{
+			speed = 0;
 		}
 	}
 	else
