@@ -62,6 +62,9 @@ public:
 	template<typename T>
 	std::list<T*>& GetEntities();
 
+	template<typename T>
+	T* GetEntity(int tag);
+
 	friend Debug;
 	friend Scene;
 };
