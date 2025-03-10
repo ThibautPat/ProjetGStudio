@@ -1,8 +1,8 @@
 #include "TestScene.h"
 
-#include "../LightEngine/Entity.h"
+#include "../Core/Entity.h"
 #include <iostream>
-#include "../LightEngine/Debug.h"
+#include "../Core/Debug.h"
 
 void TestScene::OnInitialize()
 {
@@ -35,6 +35,7 @@ void TestScene::OnEvent(const sf::Event& event)
 		{
 			p->SetPosition(p->GetPosition().x-10, p->GetPosition().y);
 		}
+
 	}
 }
 
@@ -42,19 +43,24 @@ void TestScene::OnUpdate()
 {
 	std::list<Entity*> entities = mGm->GetEntities<Entity>();
 
-
 	for (Entity* entity : entities)
 	{
 		sf::Vector2f co = entity->GetPosition();
 
-		//#TODO def outoufbound
-		if (co.y + entity->GetRadius() > 900) {
-			entity->ResetGravity();
+		if (co.y + entity->GetRadius() > 720)
+		{
+			entity->mBoolGravity = 0;
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		{
+			entity->mBoolGravity = 1;
+			entity->mGravitySpeed = -100;
 		}
 
 		std::string speed = std::to_string((int)entity->mGravitySpeed) + " grav speed";
 		Debug::DrawText(co.x - entity->GetRadius()/2, co.y , speed, sf::Color::White);
-		std::string grav = std::to_string(entity->mGravity) + " grav";
+		std::string grav = std::to_string(entity->mBoolGravity) + " grav";
 		Debug::DrawText(co.x - entity->GetRadius() / 2, co.y + 20, grav, sf::Color::White);
 	}
 

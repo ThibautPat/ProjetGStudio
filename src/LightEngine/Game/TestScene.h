@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../LightEngine/Scene.h"
+#include "../Core/Scene.h"
 
-#define ENTITY_NB 2
+#define ENTITY_NB 0
 
 class Entity;
 

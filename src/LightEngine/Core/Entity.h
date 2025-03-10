@@ -33,9 +33,8 @@ protected:
 
 
 public:
-	bool mGravity = true;
+	bool mBoolGravity = true;
 	float mGravitySpeed = 0.f;
-
 
 	void ResetGravity();
 
@@ -45,7 +44,7 @@ public:
 	void SetDirection(float x, float y, float speed = -1.f);
 	void SetSpeed(float speed) { mSpeed = speed; }
 	void SetTag(int tag) { mTag = tag; }
-	void SetGravity(bool gravity) { mGravity = gravity; }
+	void SetGravity(bool gravity) { mBoolGravity = gravity; }
 	float GetRadius() const { return mShape.getRadius(); }
 	void SetRigidBody(bool isRigitBody) { mRigidBody = isRigitBody; }
 	bool IsRigidBody() const { return mRigidBody; }

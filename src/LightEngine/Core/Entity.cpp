@@ -46,7 +46,7 @@ void Entity::Repulse(Entity* other)
 
 void Entity::Fall(float dt)
 {
-	if (mGravity == false)
+	if (mBoolGravity == false)
 		return;
 
 	mGravitySpeed += GRAVITYACCEL + dt;
@@ -57,7 +57,7 @@ void Entity::Fall(float dt)
 
 void Entity::ResetGravity()
 {
-	if (mGravity == false)
+	if (mBoolGravity == false)
 		return;
 
 	mGravitySpeed = 0.f;
