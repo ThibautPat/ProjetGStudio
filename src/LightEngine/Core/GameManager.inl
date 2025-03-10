@@ -2,6 +2,7 @@
 
 #include "GameManager.h"
 #include "Scene.h"
+#include "Entity.h"
 
 template<typename T>
 void GameManager::LaunchScene()
@@ -16,4 +17,22 @@ void GameManager::LaunchScene()
 	mpScene->OnInitialize();
 
 	Run();
+}
+
+template<typename T>
+inline std::list<T*>& GameManager::GetEntities()
+{
+	return mEntities;
+}
+
+template<typename T>
+inline T* GameManager::GetEntity(int tag)
+{
+	for (Entity* entity : mEntities)
+	{
+		if (entity->IsTag(tag))
+			return entity;
+	}
+
+	return nullptr;
 }

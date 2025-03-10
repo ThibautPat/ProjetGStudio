@@ -38,6 +38,8 @@ public:
 	static void DrawText(float x, float y, const std::string& text, const sf::Color& color);
 	static void DrawText(float x, float y, const std::string& text, float ratioX, float ratioY, const sf::Color& color);
 
+	static void ShowFPS(float x = 10, float y = 10, const sf::Color& color = sf::Color::White);
+
 	friend GameManager;
 };
 

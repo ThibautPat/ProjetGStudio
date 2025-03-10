@@ -12,7 +12,6 @@ void SampleScene::OnInitialize()
 
 void SampleScene::OnEvent(const sf::Event& event)
 {
-
 }
 
 

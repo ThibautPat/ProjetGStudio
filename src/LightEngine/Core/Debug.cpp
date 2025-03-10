@@ -92,3 +92,9 @@ void Debug::DrawText(float x, float y, const std::string& text, float ratioX, fl
 
 	Debug::Get()->mTexts.push_back(sfText);
 }
+
+void Debug::ShowFPS(float x, float y, const sf::Color& color)
+{
+	std::string text = std::to_string(1.f / GameManager::Get()->GetDeltaTime());
+	DrawText(x, y, text, 0.f, 0.f, color);
+}
