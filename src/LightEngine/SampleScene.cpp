@@ -2,54 +2,59 @@
 
 #include "DummyEntity.h"
 
+#include <iostream>
 #include "Debug.h"
 
 void SampleScene::OnInitialize()
 {
-	pEntity1 = CreateEntity<DummyEntity>(100, sf::Color::Red);
-	pEntity1->SetPosition(100, 100);
-	pEntity1->SetRigidBody(true);
 
-	pEntity2 = CreateEntity<DummyEntity>(50, sf::Color::Green);
-	pEntity2->SetPosition(500, 500);
-	pEntity2->SetRigidBody(true);
-
-	pEntitySelected = nullptr;
 }
 
 void SampleScene::OnEvent(const sf::Event& event)
 {
-	if (event.type != sf::Event::EventType::MouseButtonPressed)
-		return;
 
-	if (event.mouseButton.button == sf::Mouse::Button::Right)
-	{
-		TrySetSelectedEntity(pEntity1, event.mouseButton.x, event.mouseButton.y);
-		TrySetSelectedEntity(pEntity2, event.mouseButton.x, event.mouseButton.y);
-	}
-
-	if (event.mouseButton.button == sf::Mouse::Button::Left)
-	{
-		if (pEntitySelected != nullptr) 
-		{
-			pEntitySelected->GoToPosition(event.mouseButton.x, event.mouseButton.y, 100.f);
-		}
-	}
 }
 
-void SampleScene::TrySetSelectedEntity(DummyEntity* pEntity, int x, int y)
-{
-	if (pEntity->IsInside(x, y) == false)
-		return;
-
-	pEntitySelected = pEntity;
-}
+void SampleScene::TrySetSelectedEntity(DummyEntity* pEntity, int x, int y){}
 
 void SampleScene::OnUpdate()
 {
-	if(pEntitySelected != nullptr)
+	float x = 0;
+	float y = 0;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
 	{
-		sf::Vector2f position = pEntitySelected->GetPosition();
-		Debug::DrawCircle(position.x, position.y, 10, sf::Color::Blue);
+		x = -100; 
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	{
+		x = 100;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+	{
+		y = -100;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	{
+		y = 100;
+	}
+
+	if (sf::Joystick::isConnected(0))
+	{
+		x = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+		y = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+	}
+
+	if (x > -10 && x < 10)
+		x = 0;
+	if (y > -10 && y < 10)
+		y = 0;
+	if (x < 0)
+		x = -1;
+	if (x > 0)
+		x = 1;
+	if (y < 0)
+		y = -1;
+	if (y > 0)
+		y = 1;
+	std::cout << x << "," << y << std::endl;
 }
