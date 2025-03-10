@@ -58,6 +58,9 @@ public:
 	float GetDeltaTime() const { return mDeltaTime; }
 	Scene* GetScene() const { return mpScene; }
 	sf::Font& GetFont() { return mFont; };
+	
+	template<typename T>
+	std::list<T*>& GetEntities();
 
 	friend Debug;
 	friend Scene;

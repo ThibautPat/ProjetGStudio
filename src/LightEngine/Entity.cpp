@@ -41,6 +41,26 @@ void Entity::Repulse(Entity* other)
 
 	SetPosition(position1.x, position1.y, 0.5f, 0.5f);
 	other->SetPosition(position2.x, position2.y, 0.5f, 0.5f);
+
+}
+
+void Entity::Fall(float dt)
+{
+	if (mGravity == false)
+		return;
+
+	mGravitySpeed += GRAVITYACCEL + dt;
+	sf::Vector2f co = mShape.getPosition();
+	co.y += mGravitySpeed * dt;
+	mShape.setPosition(co);
+}
+
+void Entity::ResetGravity()
+{
+	mGravitySpeed = 0.f;
+	sf::Vector2f co = mShape.getPosition();
+	co.y = 0;
+	mShape.setPosition(co);
 }
 
 bool Entity::IsColliding(Entity* other) const
@@ -170,7 +190,10 @@ void Entity::Update()
 			mDirection = sf::Vector2f(0.f, 0.f);
 			mTarget.isSet = false;
 		}
+
 	}
+
+	Fall(dt);
 
 	OnUpdate();
 }

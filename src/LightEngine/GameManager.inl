@@ -17,3 +17,9 @@ void GameManager::LaunchScene()
 
 	Run();
 }
+
+template<typename T>
+inline std::list<T*>& GameManager::GetEntities()
+{
+	return mEntities;
+}
