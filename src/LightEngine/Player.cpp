@@ -44,7 +44,7 @@ bool Player::Jump(float dt, float pTime)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0))
 		{
-			std::cout << "Jump" << std::endl;
+			std::cout << "Jump" << std::endl; //#TODO add jump with gravity
 			
 			return true;
 		}

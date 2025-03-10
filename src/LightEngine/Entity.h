@@ -24,13 +24,13 @@ protected:
     sf::CircleShape mShape;
     sf::Vector2f mDirection;
 	Target mTarget;
-    
+    float mSpeed = 0.f;
     bool mToDestroy = false;
     int mTag = -1;
 	bool mRigidBody = false;
 
 public:
-	float mSpeed = 0.f;
+	
 	bool GoToDirection(int x, int y, float speed = -1.f);
     bool GoToPosition(int x, int y, float speed = -1.f);
     void SetPosition(float x, float y, float ratioX = 0.5f, float ratioY = 0.5f);

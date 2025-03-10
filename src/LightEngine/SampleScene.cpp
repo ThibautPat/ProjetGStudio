@@ -19,7 +19,6 @@ void SampleScene::OnEvent(const sf::Event& event)
 void SampleScene::OnUpdate()
 { 
 	playerJumpTime += GetDeltaTime();
-	std::cout << mPlayer->mSpeed << std::endl;
 	bool isJumping = mPlayer->Jump(GetDeltaTime(), playerJumpTime);
 	if (isJumping == true)
 	{
