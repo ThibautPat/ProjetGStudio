@@ -57,25 +57,47 @@ bool Player::Jump(float dt, float pTime)
 
 void Player::Move(sf::Vector2f movement, float dt, float runTime)
 {
+	
+	
 	float speed = 0;
+	if (mSpeed <= 0)
+	{
+		float speedDecrement = mPData.mDeceleration;
+		float realSpeed = mSpeed;
+		mSpeed = realSpeed / 500 + speedDecrement*dt;
+	}
 	if (runTime > 0 && mSpeed < mPData.mMaxSpeed*500) 
 	{
-		float acceleration = mPData.mAcceleration;
-		float minSpeed = mPData.mMinSpeed;
-		speed = minSpeed + acceleration * runTime;
+		time += dt;
+		float acceleration = mPData.mAcceleration; 
+		speed += acceleration * time; 
 	}
 	else if (runTime == 0)
 	{
-		speed = mPData.mMinSpeed;
+		if (time > 0)
+		time -= dt; 
+		float speedDecrement = mPData.mDeceleration;
+		float realSpeed = mSpeed;
+		
+			speed = realSpeed/500 - speedDecrement * dt;
+			if (mSpeed <= 10)
+			{
+				speed = 0;	
+		}
 	}
 	else
 	{
 		speed = mPData.mMaxSpeed; 
 	}
 	
+	mSpeed = speed * 500;
 
-	mSpeed = speed * 500 ;
-	SetDirection(movement.x * dt, movement.y * dt, mSpeed);
+	if (!movement.x == 0)
+	{
+		mLastMovement = movement; 
+	}
+	
+	SetDirection(mLastMovement.x * dt,0, mSpeed);
 }
 
 Player::~Player()
