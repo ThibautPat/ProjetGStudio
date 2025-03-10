@@ -57,6 +57,9 @@ void Entity::Fall(float dt)
 
 void Entity::ResetGravity()
 {
+	if (mGravity == false)
+		return;
+
 	mGravitySpeed = 0.f;
 	sf::Vector2f co = mShape.getPosition();
 	co.y = 0;
