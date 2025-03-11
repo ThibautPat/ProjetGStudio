@@ -9,9 +9,10 @@ struct PlayerData
 	float mJumpTime = 2.f;
 	float mMinSpeed = 0.f;
 	float mMaxSpeed = 50.f;
-	float mAcceleration = 70.f; 
-	float mDeceleration = 90.f;
+	float mAcceleration = 100.f; 
+	float mDeceleration = 500.f;
 };
+
 
 class Player : public DummyEntity
 {

@@ -6,20 +6,13 @@
 
 void TestScene::OnInitialize()
 {
-	for (int i = 0; i < ENTITY_NB; i++)
+	for (int i = 0; i <= ENTITY_NB; i++) 
 	{
 		Entity* pEntity = CreateEntity<Entity>(100, sf::Color::Red);
-		pEntity->SetPosition(i*200 + 200, 720);
+		pEntity->SetPosition(i*200 + 200, 0);
 		pEntity->SetRigidBody(true);
-		pEntity->SetGravity(false);
-
+		pEntity->SetGravity(true);
 	}
-
-	Entity* pEntity = CreateEntity<Entity>(100, sf::Color::Red);
-	pEntity->SetPosition(300, 500);
-	pEntity->SetRigidBody(true);
-	pEntity->SetTag(1);
-	pEntity->mVelocityMax = 500;
 
 	mGm = GameManager::Get();
 }
