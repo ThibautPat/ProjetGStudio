@@ -18,3 +18,9 @@ T* Entity::CreateEntity(float radius, const sf::Color& color)
 {
 	return GetScene()->CreateEntity<T>(radius, color);
 }
+
+template<typename T>
+T* Entity::CreateEntity(float height, float weight, const sf::Color& color)
+{
+	return GetScene()->CreateEntity<T>(float height, float weight, color);
+}

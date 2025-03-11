@@ -24,6 +24,9 @@ public:
 	template<typename T>
 	T* CreateEntity(float radius, const sf::Color& color);
 
+	template<typename T>
+	T* CreateEntity(float height, float weight, const sf::Color& color);
+
 	float GetDeltaTime() const;
 
 	int GetWindowWidth() const;

@@ -12,7 +12,7 @@ void SampleScene::OnInitialize()
 
 	pEntity2 = CreateEntity<DummyEntity>(50, sf::Color::Green);
 	pEntity2->SetPosition(500, 500);
-	pEntity2->SetRigidBody(true);
+	pEntity2->SetRigidBody(false);
 
 	pEntitySelected = nullptr;
 }

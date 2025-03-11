@@ -11,8 +11,8 @@
 
 void Entity::Initialize(float radius, const sf::Color& color)
 {
-	//mCollider = new AABBCollider(0.f, 0.f, 10.f, 10.f); // Ici pour le moment -> faire une surcharge de Initialize pour créer des rectangles
-	mCollider = new CircleCollider(0, 0, radius);
+	mCollider = new AABBCollider(0.f, 0.f, radius * 2, radius * 2);
+	//mCollider = new CircleCollider(0, 0, radius);
 
 	mDirection = sf::Vector2f(0.0f, 0.0f);
 
@@ -25,7 +25,7 @@ void Entity::Initialize(float radius, const sf::Color& color)
 	OnInitialize();
 }
 
-void Entity::Repulse(Entity* other) 
+void Entity::Repulse(Entity* other) // Uniquement pour les cercles
 {
 	sf::Vector2f distance = GetPosition(0.5f, 0.5f) - other->GetPosition(0.5f, 0.5f);
 	
@@ -167,7 +167,9 @@ void Entity::Update()
 			mTarget.isSet = false;
 		}
 	}
-	mCollider->Update(GetPosition().x, GetPosition().y);
+	mCollider->Update(GetPosition().x - mCollider->mWeight / 2.f, GetPosition().y - mCollider->mHeight / 2.f);
+
+	Debug::DrawRectangle(mCollider->mXMin, mCollider->mYMin, mCollider->mWeight, mCollider->mHeight, sf::Color::Blue);
 
 	OnUpdate();
 }

@@ -23,9 +23,9 @@ class Entity
 
 protected:
 
-	Collider* mCollider;
+	Collider* mCollider; //
 
-    sf::CircleShape mShape;
+    sf::CircleShape mShape; //
     sf::Vector2f mDirection;
 	Target mTarget;
     float mSpeed = 0.f;
@@ -40,10 +40,9 @@ public:
 	void SetDirection(float x, float y, float speed = -1.f);
 	void SetSpeed(float speed) { mSpeed = speed; }
 	void SetTag(int tag) { mTag = tag; }
-	float GetRadius() const { return mShape.getRadius(); }
 	void SetRigidBody(bool isRigitBody) { mRigidBody = isRigitBody; }
 	bool IsRigidBody() const { return mRigidBody; }
-	Collider* GetCollider() const { return mCollider; }
+	Collider* GetCollider() const { return mCollider; } //
 
     sf::Vector2f GetPosition(float ratioX = 0.5f, float ratioY = 0.5f) const;
 	sf::Shape* GetShape() { return &mShape; }
@@ -64,6 +63,9 @@ public:
     template<typename T>
     T* CreateEntity(float radius, const sf::Color& color);
 
+	template<typename T>
+	T* CreateEntity(float height, float weight, const sf::Color& color); //
+
 protected:
     Entity() = default;
     ~Entity() = default;
@@ -73,10 +75,10 @@ protected:
 	virtual void OnInitialize() {};
 	virtual void OnDestroy() {};
 	
-private:
     void Update();
-	void Initialize(float radius, const sf::Color& color);
-	void Repulse(Entity* other);
+	virtual void Initialize(float radius, const sf::Color& color) = 0; //
+	virtual void Initialize(float height, float weight, const sf::Color& color) = 0; //
+	virtual void Repulse(Entity* other) = 0; // 
 
     friend class GameManager;
     friend Scene;
