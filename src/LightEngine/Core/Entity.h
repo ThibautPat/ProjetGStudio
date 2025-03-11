@@ -36,7 +36,7 @@ public:
 	bool mBoolGravity = true;
 	float mGravitySpeed = 0.f;
 	float mSpeed = 0.f;
-
+	int secondjump = 2;
 	float mVelocitySpeed = 0.f;
 	float mVelocityMax = 0.f;
 

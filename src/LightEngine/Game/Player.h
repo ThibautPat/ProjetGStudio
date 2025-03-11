@@ -6,7 +6,7 @@
 struct PlayerData
 {
 	float mJumpHeight = 500.f;
-	float mJumpTime = 2.f;
+	float mJumpTime = 1.f;
 	float mMinSpeed = 0.f;
 	float mMaxSpeed = 20000.f;
 	float mAcceleration = 700.f; 
@@ -16,7 +16,7 @@ struct PlayerData
 
 class Player : public Entity
 {
-
+	
 	float time = 0;
 	PlayerData mPData;
 	sf::Vector2f mLastMovement;

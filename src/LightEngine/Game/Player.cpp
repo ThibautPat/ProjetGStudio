@@ -71,14 +71,17 @@ void Player::Inertia(float dt, sf::Vector2f movement)
 void Player::Jump(float dt)
 {
 	pJumpTime += dt;
-	if (pJumpTime > mPData.mJumpTime)
-	{
+	if (mBoolGravity && secondjump == 0)
+		return;
+	if (pJumpTime < mPData.mJumpTime)
+		return;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0))
 		{
+			secondjump -=1;
+			pJumpTime = 0;
 			mGravitySpeed = -mPData.mJumpHeight;
 			mBoolGravity = true;
 		}
-	}
 }
 
 void Player::Move(sf::Vector2f movement, float dt)

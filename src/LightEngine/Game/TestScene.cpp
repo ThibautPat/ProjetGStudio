@@ -70,6 +70,7 @@ void TestScene::OnUpdate()
 		{
 			entity->mBoolGravity = 0;
 			entity->SetPosition(co.x, 720 - entity->GetRadius() - 1);
+			(entity)->secondjump = 1;
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
