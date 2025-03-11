@@ -6,18 +6,19 @@
 #include "../Game/Player.h"
 void TestScene::OnInitialize()
 {
+	mView = sf::View(sf::FloatRect(0, 0, 1280, 720));
 	
+	
+
 	Player* pEntity = CreateEntity<Player>(100, sf::Color::Red);
 	pEntity->SetGravity(true);
 	pEntity->SetRigidBody(true);
+	pEntity->SetPosition(600, 100);
 
-	for (int i = 0; i <= ENTITY_NB; i++) 
-	{
-		Entity* pEntity = CreateEntity<Entity>(100, sf::Color::Red);
-		pEntity->SetPosition(i*200 + 200, 0);
-		pEntity->SetRigidBody(true);
-		pEntity->SetGravity(true);
-	}
+	Entity* pEntity2 = CreateEntity<Entity>(100, sf::Color::Green);
+	pEntity2->SetGravity(true);
+	pEntity2->SetRigidBody(true);
+	pEntity2->SetPosition(300, 100);
 
 	mGm = GameManager::Get();
 }
@@ -58,6 +59,7 @@ void TestScene::OnUpdate()
 	{
 		if (dynamic_cast<Player*>(entity))
 		{
+			mView.setCenter(entity->GetPosition());
 			dynamic_cast<Player*>(entity)->Jump(GetDeltaTime()); 
 			dynamic_cast<Player*>(entity)->Move(dynamic_cast<Player*>(entity)->InputDirection(), GetDeltaTime()); 
 		}
@@ -70,7 +72,7 @@ void TestScene::OnUpdate()
 		{
 			entity->mBoolGravity = 0;
 			entity->SetPosition(co.x, 720 - entity->GetRadius() - 1);
-			(entity)->secondjump = 1;
+			(entity)->secondjump = 2;
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
@@ -87,6 +89,6 @@ void TestScene::OnUpdate()
 		std::string grav = std::to_string(entity->mBoolGravity) + " grav";
 		Debug::DrawText(co.x - entity->GetRadius() / 2, co.y + 40, grav, sf::Color::White);
 	}
-
-	Debug::ShowFPS();
+	mGm->GetWindow()->setView(mView);
+	Debug::ShowFPS(mView.getCenter().x - GetWindowWidth()/2 + 10, mView.getCenter().y - GetWindowHeight()/2+10);
 }

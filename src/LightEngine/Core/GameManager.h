@@ -48,7 +48,7 @@ private:
 
 	void SetDeltaTime(float deltaTime) { mDeltaTime = deltaTime; }
 
-	sf::RenderWindow* GetWindow() const { return mpWindow; }
+	
 
 	void FixedUpdate();
 
@@ -57,7 +57,7 @@ public:
 	static GameManager* Get();
 
 	void CreateWindow(unsigned int width, unsigned int height, const char* title, int fpsLimit = 60, sf::Color clearColor = sf::Color::Black);
-
+	sf::RenderWindow* GetWindow() const { return mpWindow; }
 	template<typename T>
 	void LaunchScene();
 

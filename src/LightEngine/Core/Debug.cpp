@@ -95,6 +95,11 @@ void Debug::DrawText(float x, float y, const std::string& text, float ratioX, fl
 
 void Debug::ShowFPS(float x, float y, const sf::Color& color)
 {
-	std::string text = std::to_string(1.f / GameManager::Get()->GetDeltaTime());
+	int fps = 1.f / GameManager::Get()->GetDeltaTime();
+	if (fps > 60)
+	{
+		fps = 60;
+	}
+	std::string text = std::to_string(fps) + " FPS";
 	DrawText(x, y, text, 0.f, 0.f, color);
 }
