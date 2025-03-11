@@ -2,17 +2,23 @@
 
 #include "Scene.h"
 
-class DummyEntity;
+class DummyEntityRect;
+class DummyEntityCircle;
 
 class SampleScene : public Scene
 {
-	DummyEntity* pEntity1;
-	DummyEntity* pEntity2;
+	DummyEntityRect* pEntity1;
+	DummyEntityRect* pEntity2;
 
-	DummyEntity* pEntitySelected;
+	DummyEntityCircle* pEntity3;
+	DummyEntityCircle* pEntity4;
+
+	DummyEntityRect* pEntitySelected;
+	DummyEntityCircle* pEntitySelected2;
 
 private:
-	void TrySetSelectedEntity(DummyEntity* pEntity, int x, int y);
+	void TrySetSelectedEntity(DummyEntityRect* pEntity, int x, int y);
+	void TrySetSelectedEntity(DummyEntityCircle* pEntity, int x, int y);
 
 public:
 	void OnInitialize() override;

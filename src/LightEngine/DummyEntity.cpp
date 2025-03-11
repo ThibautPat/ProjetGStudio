@@ -2,7 +2,12 @@
 
 #include <iostream>
 
-void DummyEntity::OnCollision(Entity* other)
+void DummyEntityRect::OnCollision(Entity* other)
 {
-	std::cout << "DummyEntity::OnCollision" << std::endl;
+	std::cout << "DummyEntityRect::OnCollision" << std::endl;
+}
+
+void DummyEntityCircle::OnCollision(Entity* other)
+{
+	std::cout << "DummyEntityCircle::OnCollision" << std::endl;
 }
