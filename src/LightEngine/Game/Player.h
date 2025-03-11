@@ -2,7 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include <iostream>
 #include "../Core/DummyEntity.h"
-
+#include "../Core/GameManager.h"
 struct PlayerData
 {
 	float mJumpHeight = 500.f;
@@ -14,7 +14,7 @@ struct PlayerData
 };
 
 
-class Player : public DummyEntity
+class Player : public Entity
 {
 
 	float time = 0;
@@ -22,9 +22,9 @@ class Player : public DummyEntity
 	sf::Vector2f mLastMovement;
 public: 
 	float pJumpTime = 0;
-	sf::Vector2f Movement();
+	sf::Vector2f InputDirection();
 	void Inertia(float dt, sf::Vector2f movement);
-	bool Jump(float dt, float pTime);
+	void Jump(float dt);
 	void Move(sf::Vector2f movement, float dt); 
 	~Player();
 };

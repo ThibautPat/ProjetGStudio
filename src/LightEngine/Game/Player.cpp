@@ -1,8 +1,7 @@
 #include "Player.h"
 
-sf::Vector2f Player::Movement()
+sf::Vector2f Player::InputDirection()
 {
-	mBoolGravity = true;
 	float x = 0;
 	float y = 0;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) < -10)
@@ -69,7 +68,7 @@ void Player::Inertia(float dt, sf::Vector2f movement)
 	}
 }
 
-bool Player::Jump(float dt, float pTime)
+void Player::Jump(float dt)
 {
 	pJumpTime += dt;
 	if (pJumpTime > mPData.mJumpTime)
@@ -77,14 +76,9 @@ bool Player::Jump(float dt, float pTime)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0))
 		{
 			mGravitySpeed = -mPData.mJumpHeight;
-			
-			return true;
+			mBoolGravity = true;
 		}
-		else
-		return false;
 	}
-	else
-	return false;
 }
 
 void Player::Move(sf::Vector2f movement, float dt)
@@ -93,8 +87,39 @@ void Player::Move(sf::Vector2f movement, float dt)
 	mSpeed += movement.x*50*dt*mPData.mAcceleration;
 
 	Inertia(dt, movement);
+<<<<<<< Updated upstream
 
 	SetDirection(dt,0, mSpeed);
+=======
+	
+	bool crouched = Crouch();
+	if (crouched)
+	{
+		mSpeed = 10000*movement.x;
+	}
+	
+
+	if (mSpeed > 20000)
+	{
+		mSpeed = 20000;
+	}
+	if (mSpeed < -20000)
+	{
+		mSpeed = -20000;
+	}
+	float speed = mSpeed;
+
+	SetDirection(dt,0, speed);
+}
+
+bool Player::Crouch()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Joystick::isButtonPressed(0, 1))
+	{
+		return true;
+	}
+		return false;
+>>>>>>> Stashed changes
 }
 
 Player::~Player()

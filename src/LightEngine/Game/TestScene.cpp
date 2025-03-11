@@ -3,9 +3,14 @@
 #include "../Core/Entity.h"
 #include <iostream>
 #include "../Core/Debug.h"
-
+#include "../Game/Player.h"
 void TestScene::OnInitialize()
 {
+	
+	Player* pEntity = CreateEntity<Player>(100, sf::Color::Red);
+	pEntity->SetGravity(true);
+	pEntity->SetRigidBody(true);
+
 	for (int i = 0; i <= ENTITY_NB; i++) 
 	{
 		Entity* pEntity = CreateEntity<Entity>(100, sf::Color::Red);
@@ -29,23 +34,7 @@ void TestScene::OnEvent(const sf::Event& event)
 
 			for (Entity* entity : entities)
 			{
-				/*
-				if (entity->GetDirection().x > mVelocityMax)
-
-				float dir = entity->GetDirection().x;
-				entity->SetDirection(dir - 100, 0, 0);
-
 				
-				if(entity->GetDirection().x == 1)
-					entity->mVelocitySpeed = 0;
-
-				sf::Vector2f co = entity->GetPosition();
-				if (entity->mVelocitySpeed < entity->mVelocityMax) {
-					entity->mVelocitySpeed += 100;
-				}
-				
-				entity->SetDirection(-1, 0, 0);
-				*/
 			}
 		}
 
@@ -55,20 +44,7 @@ void TestScene::OnEvent(const sf::Event& event)
 
 			for (Entity* entity : entities)
 			{
-				/*
-				float dir = entity->GetDirection().x;
-				entity->SetDirection(dir + 100, 0, 0);
-
 				
-				if (entity->GetDirection().x == -1)
-					entity->mVelocitySpeed = 0;
-
-				sf::Vector2f co = entity->GetPosition();
-				if (entity->mVelocitySpeed < entity->mVelocityMax) {
-					entity->mVelocitySpeed += 100;
-				}
-				entity->SetDirection(1, 0, 0);
-				*/
 			}
 		}
 	}
@@ -80,11 +56,20 @@ void TestScene::OnUpdate()
 
 	for (Entity* entity : entities)
 	{
-		sf::Vector2f co = entity->GetPosition();
+		if (dynamic_cast<Player*>(entity))
+		{
+			dynamic_cast<Player*>(entity)->Jump(GetDeltaTime()); 
+			dynamic_cast<Player*>(entity)->Move(dynamic_cast<Player*>(entity)->InputDirection(), GetDeltaTime()); 
+		}
+	}
 
+	for (Entity* entity : entities)
+	{
+		sf::Vector2f co = entity->GetPosition();
 		if (co.y + entity->GetRadius() > 720)
 		{
 			entity->mBoolGravity = 0;
+			entity->SetPosition(co.x, 720 - entity->GetRadius() - 1);
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
