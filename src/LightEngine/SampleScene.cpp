@@ -3,16 +3,17 @@
 #include "DummyEntity.h"
 
 #include "Debug.h"
+#include <iostream>
 
 void SampleScene::OnInitialize()
 {
-	pEntity1 = CreateEntity<DummyEntity>(100, sf::Color::Red);
+	pEntity1 = CreateRectEntity<DummyEntity>(100, 100, sf::Color::Red);
 	pEntity1->SetPosition(100, 100);
 	pEntity1->SetRigidBody(true);
 
-	pEntity2 = CreateEntity<DummyEntity>(50, sf::Color::Green);
+	pEntity2 = CreateRectEntity<DummyEntity>(50, 50, sf::Color::Green);
 	pEntity2->SetPosition(500, 500);
-	pEntity2->SetRigidBody(false);
+	pEntity2->SetRigidBody(true);
 
 	pEntitySelected = nullptr;
 }
@@ -49,7 +50,7 @@ void SampleScene::OnUpdate()
 {
 	if(pEntitySelected != nullptr)
 	{
-		sf::Vector2f position = pEntitySelected->GetPosition();
+		sf::Vector2f position = pEntitySelected->GetPosition(1.f, 1.f);
 		Debug::DrawCircle(position.x, position.y, 10, sf::Color::Blue);
 	}
 }

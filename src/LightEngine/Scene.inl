@@ -1,11 +1,11 @@
-	#pragma once
+#pragma once
 
 #include "Scene.h"
 #include "GameManager.h"
 #include "Entity.h"
 
 template<typename T>
-T* Scene::CreateEntity(float radius, const sf::Color& color)
+T* Scene::CreateCircleEntity(float radius, const sf::Color& color)
 {
 	static_assert(std::is_base_of<Entity, T>::value, "T must be derived from Entity");
 
@@ -20,14 +20,14 @@ T* Scene::CreateEntity(float radius, const sf::Color& color)
 }
 
 template<typename T>
-T* Scene::CreateEntity(float height, float weight, const sf::Color& color)
+T* Scene::CreateRectEntity(float height, float weight, const sf::Color& color)
 {
 	static_assert(std::is_base_of<Entity, T>::value, "T must be derived from Entity");
 
 	T* newEntity = new T();
 
 	Entity* entity = newEntity;
-	entity->Initialize(float height, float weight, color);
+	entity->Initialize(height, weight, color);
 
 	mpGameManager->mEntitiesToAdd.push_back(newEntity);
 

@@ -12,15 +12,14 @@ T* Entity::GetScene() const
 	return pScene;
 }
 
-
 template<typename T>
-T* Entity::CreateEntity(float radius, const sf::Color& color)
+T* Entity::CreateCircleEntity(float radius, const sf::Color& color)
 {
-	return GetScene()->CreateEntity<T>(radius, color);
+	return GetScene()->CreateCircleEntity<T>(radius, color);
 }
 
 template<typename T>
-T* Entity::CreateEntity(float height, float weight, const sf::Color& color)
+T* Entity::CreateRectEntity(float height, float weight, const sf::Color& color)
 {
-	return GetScene()->CreateEntity<T>(float height, float weight, color);
+	return GetScene()->CreateRectEntity<T>(height, weight, color);
 }
