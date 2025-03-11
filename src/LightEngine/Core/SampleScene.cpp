@@ -33,5 +33,5 @@ void SampleScene::OnUpdate()
 	{
 		playerRunTime = 0;
 	}
-	mPlayer->Move(movement, GetDeltaTime(), playerRunTime);
+	mPlayer->Move(movement, GetDeltaTime());
 }
