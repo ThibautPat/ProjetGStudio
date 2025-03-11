@@ -40,7 +40,7 @@ void GameManager::FixedUpdate()
 			Entity* entity = *it1;
 			Entity* otherEntity = *it2;
 
-			if (entity->IsColliding(otherEntity) || not entity->mBoolGravity)
+			if (entity->IsColliding(otherEntity) && not otherEntity->mBoolGravity)
 			{
 				if (entity->IsRigidBody() && otherEntity->IsRigidBody())
 				{

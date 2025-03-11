@@ -6,6 +6,7 @@
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
+#include <iostream>
 
 void Entity::Initialize(float radius, const sf::Color& color)
 {
@@ -40,6 +41,7 @@ void Entity::Repulse(Entity* other)
 	sf::Vector2f position2 = other->GetPosition(0.5f, 0.5f) + translation;
 
 	SetPosition(position1.x, position1.y, 0.5f, 0.5f);
+
 	other->SetPosition(position2.x, position2.y, 0.5f, 0.5f);
 
 }
@@ -123,28 +125,21 @@ void Entity::FixedUpdate(float dt)
 	//May be some new things here
 	Fall(dt);
 
+	//#TODO Fonction
 	if (mDirection.x > 10 || mDirection.x < -10) {
-		mDirection.x -= AIRRESISANTCE + dt;
+		int k;
+		if (mDirection.x > 10)
+			k = -1;
+		if (mDirection.x < -10)
+			k = 1;
+		mDirection.x += k * AIRRESISANTCE*4 + dt;
 		sf::Vector2f co = mShape.getPosition();
-		float dir = mDirection.x;
-		co.x += dir * dt;
+		co.x += mDirection.x * dt;
 		mShape.setPosition(co);
 	}
 	else
 		mDirection.x = 0;
 
-	/* 
-	if (mVelocitySpeed > 0) {
-		mVelocitySpeed -= AIRRESISANTCE + dt ;
-		sf::Vector2f co = mShape.getPosition();
-		co.x += mVelocitySpeed * mDirection.x * dt;
-		mShape.setPosition(co);
-	}
-	else {
-		mVelocitySpeed = 0.f;
-		mDirection.x = 0;
-	}
-	*/
 }
 
 bool Entity::GoToDirection(int x, int y, float speed)

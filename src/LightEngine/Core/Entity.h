@@ -36,7 +36,7 @@ protected:
 public:
 	bool mBoolGravity = true;
 	float mGravitySpeed = 0.f;
-	float mVelocitySpeed = 0.f;
+	//float mVelocitySpeed = 0.f;
 	float mVelocityMax = 0.f;
 
 	void FixedUpdate(float dt);
