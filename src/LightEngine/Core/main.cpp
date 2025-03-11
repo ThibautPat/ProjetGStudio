@@ -15,7 +15,7 @@ int main()
 
 	pInstance->CreateWindow(1280, 720, "TestScene", 60, sf::Color::Black);
 	
-	pInstance->LaunchScene<TestScene>();
+	pInstance->LaunchScene<SampleScene>();
 
 	return 0;
 }

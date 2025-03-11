@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Scene.h"
-#include "Player.h"
+#include "../Core/Scene.h"
+#include "../Game/Player.h"
 class DummyEntity;
 
 class SampleScene : public Scene

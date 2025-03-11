@@ -8,6 +8,7 @@
 void SampleScene::OnInitialize()
 {
 	mPlayer = CreateEntity<Player>(100,sf::Color::Cyan);
+	mPlayer->pJumpTime = 2;
 }
 
 void SampleScene::OnEvent(const sf::Event& event)

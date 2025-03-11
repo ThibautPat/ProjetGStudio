@@ -26,7 +26,7 @@ protected:
     sf::CircleShape mShape;
     sf::Vector2f mDirection;
 	Target mTarget;
-    float mSpeed = 0.f;
+    
     bool mToDestroy = false;
     int mTag = -1;
 	bool mRigidBody = false;
@@ -35,7 +35,7 @@ protected:
 public:
 	bool mBoolGravity = true;
 	float mGravitySpeed = 0.f;
-
+	float mSpeed = 0.f;
 	void ResetGravity();
 
 	bool GoToDirection(int x, int y, float speed = -1.f);

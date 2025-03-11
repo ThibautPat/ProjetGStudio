@@ -2,6 +2,7 @@
 
 sf::Vector2f Player::Movement()
 {
+	
 	float x = 0;
 	float y = 0;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) < -10)
@@ -39,12 +40,12 @@ sf::Vector2f Player::Movement()
 
 bool Player::Jump(float dt, float pTime)
 {
-	
-	if (pTime > mPData.mJumpTime)
+	pJumpTime += dt;
+	if (pJumpTime > mPData.mJumpTime)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0))
 		{
-			std::cout << "Jump" << std::endl; //#TODO add jump with gravity
+			mGravitySpeed = -mPData.mJumpHeight;
 			
 			return true;
 		}
@@ -57,32 +58,35 @@ bool Player::Jump(float dt, float pTime)
 
 void Player::Move(sf::Vector2f movement, float dt, float runTime)
 {
-	
-	
 	float speed = 0;
+	
 	if (mSpeed <= 0)
 	{
 		float speedDecrement = mPData.mDeceleration;
 		float realSpeed = mSpeed;
-		mSpeed = realSpeed / 500 + speedDecrement*dt;
+		mSpeed = realSpeed / 500 + speedDecrement * dt;
 	}
-	if (runTime > 0 && mSpeed < mPData.mMaxSpeed*500) 
+	if (runTime > 0 && mSpeed < mPData.mMaxSpeed * 500)
 	{
 		time += dt;
-		float acceleration = mPData.mAcceleration; 
-		speed += acceleration * time; 
+		float acceleration = mPData.mAcceleration;
+		speed += acceleration * time;
+		if (mLastMovement != movement)
+		{
+			time = 0;
+		}
 	}
 	else if (runTime == 0)
 	{
 		if (time > 0)
-		time -= dt; 
+			time -= dt;
 		float speedDecrement = mPData.mDeceleration;
 		float realSpeed = mSpeed;
-		
-			speed = realSpeed/500 - speedDecrement * dt;
-			if (mSpeed <= 10)
-			{
-				speed = 0;	
+
+		speed = realSpeed / 500 - speedDecrement * dt;
+		if (mSpeed <= 10)
+		{
+			speed = 0;
 		}
 	}
 	else
