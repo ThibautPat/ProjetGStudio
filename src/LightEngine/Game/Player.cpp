@@ -87,10 +87,6 @@ void Player::Move(sf::Vector2f movement, float dt)
 	mSpeed += movement.x*50*dt*mPData.mAcceleration;
 
 	Inertia(dt, movement);
-<<<<<<< Updated upstream
-
-	SetDirection(dt,0, mSpeed);
-=======
 	
 	bool crouched = Crouch();
 	if (crouched)
@@ -119,7 +115,6 @@ bool Player::Crouch()
 		return true;
 	}
 		return false;
->>>>>>> Stashed changes
 }
 
 Player::~Player()
