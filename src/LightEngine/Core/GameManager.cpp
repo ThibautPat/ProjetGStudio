@@ -96,13 +96,15 @@ void GameManager::Run()
 	sf::Clock clock;
 	while (mpWindow->isOpen())
 	{
-		SetDeltaTime(clock.restart().asSeconds());
-
-		HandleInput();
-
-		Update();
 		
-		Draw();
+		SetDeltaTime(clock.restart().asSeconds());
+		
+		HandleInput();
+		
+			Update();
+		
+			Draw();
+		
 	}
 }
 
@@ -122,15 +124,20 @@ void GameManager::HandleInput()
 
 void GameManager::Update()
 {
-	mpScene->OnUpdate();
-
+	if (!mpScene->freeze)
+	{
+		mpScene->OnUpdate();
+	}
+	else
+		mpScene->Pause();
     //Update
     for (auto it = mEntities.begin(); it != mEntities.end(); )
     {
 		Entity* entity = *it;
-
-        entity->Update();
-
+		if (!mpScene->freeze)
+		{
+			entity->Update();
+		}
         if (entity->ToDestroy() == false)
         {
             ++it;
@@ -145,7 +152,10 @@ void GameManager::Update()
 	mAccumulatedDt += mDeltaTime;
 	while (mAccumulatedDt >= FIXED_DT)
 	{
-		FixedUpdate();
+		if (!mpScene->freeze)
+		{
+			FixedUpdate();
+		}
 		mAccumulatedDt -= FIXED_DT;
 	}
 

@@ -5,8 +5,8 @@
 #include "../Core/GameManager.h"
 struct PlayerData
 {
-	float mJumpHeight = 500.f;
-	float mJumpTime = 1.f;
+	float mJumpHeight = 600.f; // #TODO: Change to jump force
+	float mJumpTime = 0.3f; 
 	float mMinSpeed = 0.f;
 	float mMaxSpeed = 20000.f;
 	float mAcceleration = 700.f; 
@@ -16,11 +16,10 @@ struct PlayerData
 
 class Player : public Entity
 {
-	
-	float time = 0;
 	PlayerData mPData;
 	sf::Vector2f mLastMovement;
 public: 
+	int test = 0; // test variable
 	float pJumpTime = 0;
 	sf::Vector2f InputDirection();
 	void Inertia(float dt, sf::Vector2f movement);
