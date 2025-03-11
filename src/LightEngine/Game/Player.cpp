@@ -51,7 +51,38 @@ void Player::Move(sf::Vector2f movement, float dt)
 	bool crouched = Crouch();
 	if (crouched)
 	{
-		mSpeed = 10000*movement.x;
+
+		if (movement.x == 1)
+		{
+			if (mSpeed > 0)
+			{
+				mSpeed -= mPData.mMaxSpeed * dt;
+			}
+			if (mSpeed > 10000)
+			{
+				mSpeed -= mPData.mMaxSpeed* dt*2;
+			}
+			if (mSpeed < 11000 && mSpeed > 9000)
+			{
+				mSpeed = 10000;
+			}
+		}
+		else if (movement.x == -1)
+		{
+			if (mSpeed < 0)
+			{
+				mSpeed += mPData.mMaxSpeed * dt;
+			}
+			if (mSpeed < -10000)
+			{
+				mSpeed += mPData.mMaxSpeed * dt*2;
+			}
+			if (mSpeed > -11000 && mSpeed < -9000)
+			{
+				mSpeed = -10000;
+			}
+		}
+		
 	}
 	
 

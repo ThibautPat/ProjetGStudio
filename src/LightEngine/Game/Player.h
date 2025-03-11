@@ -8,7 +8,7 @@ struct PlayerData
 	float mJumpHeight = 500.f;
 	float mJumpTime = 2.f;
 	float mMinSpeed = 0.f;
-	float mMaxSpeed = 50.f;
+	float mMaxSpeed = 20000.f;
 	float mAcceleration = 700.f; 
 	float mDeceleration = 500.f;
 };
