@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include <iostream>
-#include "../Core/DummyEntity.h"
+#include "../Core/Entity.h"
 #include "../Core/GameManager.h"
 struct PlayerData
 {
@@ -17,17 +17,15 @@ struct PlayerData
 class Player : public Entity
 {
 
-	float time = 0;
 	PlayerData mPData;
 	sf::Vector2f mLastMovement;
 public: 
-	float pJumpTime = 0;
-	sf::Vector2f InputDirection();
 	void Inertia(float dt, sf::Vector2f movement);
-	void Jump(float dt);
+	void Jump();
 	void Move(sf::Vector2f movement, float dt);
 	bool Crouch();
 
+	void OnUpdate() override;
 
 	~Player();
 };

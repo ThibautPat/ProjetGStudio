@@ -2,10 +2,10 @@
 
 #include "Entity.h"
 #include "Debug.h"
+#include "../Core/InputManager.h"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-
 #include <iostream>
 
 GameManager::GameManager()
@@ -15,6 +15,7 @@ GameManager::GameManager()
 	mpScene = nullptr;
 	mWindowWidth = -1;
 	mWindowHeight = -1;
+	mInp = new InputManager();
 }
 
 GameManager* GameManager::Get()
@@ -116,6 +117,7 @@ void GameManager::HandleInput()
 			mpWindow->close();
 		}
 
+		mInp->InputUpdate(event);
 		mpScene->OnEvent(event);
 	}
 }

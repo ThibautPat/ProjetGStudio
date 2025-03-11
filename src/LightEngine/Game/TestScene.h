@@ -11,6 +11,7 @@ class TestScene : public Scene
 protected:
 
 	GameManager* mGm;
+	InputManager* mInp;
 
 public:
 	void OnInitialize() override;

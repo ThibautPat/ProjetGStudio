@@ -10,6 +10,7 @@
 class Entity;
 class Scene;
 class Debug;
+class InputManager;
 
 namespace sf 
 {
@@ -37,6 +38,8 @@ class GameManager
 
 	float mAccumulatedDt = 0.f;
 
+	InputManager* mInp;
+
 private:
 	GameManager();
 
@@ -63,6 +66,7 @@ public:
 
 	float GetDeltaTime() const { return mDeltaTime; }
 	Scene* GetScene() const { return mpScene; }
+	InputManager* GetInputManager() { return mInp; }
 	sf::Font& GetFont() { return mFont; };
 	
 	template<typename T>

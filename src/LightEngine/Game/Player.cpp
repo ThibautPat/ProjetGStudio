@@ -1,41 +1,5 @@
 #include "Player.h"
-
-sf::Vector2f Player::InputDirection()
-{
-	float x = 0;
-	float y = 0;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) < -10)
-	{
-		x = -100;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) > 10)
-	{
-		x = 100;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Joystick::getAxisPosition(0, sf::Joystick::Y) < -10)
-	{
-		y = -100;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Joystick::getAxisPosition(0, sf::Joystick::Y) > 10)
-	{
-		y = 100;
-	}
-
-	if (x > -10 && x < 10)
-		x = 0;
-	if (y > -10 && y < 10)
-		y = 0;
-	if (x < 0)
-		x = -1;
-	if (x > 0)
-		x = 1;
-	if (y < 0)
-		y = -1;
-	if (y > 0)
-		y = 1;
-
-	return sf::Vector2f(x, y);
-}
+#include "../Core/InputManager.h"
 
 void Player::Inertia(float dt, sf::Vector2f movement)
 {
@@ -68,17 +32,14 @@ void Player::Inertia(float dt, sf::Vector2f movement)
 	}
 }
 
-void Player::Jump(float dt)
+void Player::Jump()
 {
-	pJumpTime += dt;
-	if (pJumpTime > mPData.mJumpTime)
-	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0))
-		{
-			mGravitySpeed = -mPData.mJumpHeight;
-			mBoolGravity = true;
-		}
-	}
+	
+	if (mBoolGravity)
+		return;
+
+	mGravitySpeed = -mPData.mJumpHeight;
+	mBoolGravity = true;
 }
 
 void Player::Move(sf::Vector2f movement, float dt)
@@ -114,6 +75,13 @@ bool Player::Crouch()
 		return true;
 	}
 		return false;
+}
+
+void Player::OnUpdate()
+{
+	float dt = GameManager::Get()->GetDeltaTime();
+	InputManager* inp = GameManager::Get()->GetInputManager();
+
 }
 
 Player::~Player()

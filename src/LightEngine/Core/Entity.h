@@ -32,13 +32,16 @@ protected:
     int mTag = -1;
 	bool mRigidBody = false;
 
-public:
 	bool mBoolGravity = true;
 	float mGravitySpeed = 0.f;
 	float mSpeed = 0.f;
 
-	float mVelocitySpeed = 0.f;
-	float mVelocityMax = 0.f;
+public:
+
+
+	bool IsOnGround() { return not mBoolGravity; }
+	float GetGravitySpeed() { return mGravitySpeed; }
+	float GetSpeed() { return mSpeed;  }
 
 	void FixedUpdate(float dt);
 	bool GoToDirection(int x, int y, float speed = -1.f);

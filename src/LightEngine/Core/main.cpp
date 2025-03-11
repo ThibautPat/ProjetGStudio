@@ -3,7 +3,6 @@
 #include <iostream>
 
 #include "GameManager.h"
-#include "SampleScene.h"
 #include "../Game/TestScene.h"
 
 #include <cstdlib>
