@@ -16,6 +16,7 @@ struct PlayerData
 
 class Player : public Entity
 {
+	sf::Texture* mText;
 
 	PlayerData mPData;
 	sf::Vector2f mLastMovement;
@@ -25,7 +26,11 @@ public:
 	void Move(sf::Vector2f movement, float dt);
 	bool Crouch();
 
+	void OnInitialize() override;
 	void OnUpdate() override;
+
+	void SetTexture(sf::Texture* text) override;
+	sf::Texture* GetTexture() override { return mText; }
 
 	~Player();
 };

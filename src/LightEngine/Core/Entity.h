@@ -38,10 +38,12 @@ protected:
 
 public:
 
-
 	bool IsOnGround() { return not mBoolGravity; }
 	float GetGravitySpeed() { return mGravitySpeed; }
 	float GetSpeed() { return mSpeed;  }
+
+	virtual void SetTexture(sf::Texture* text) {}
+	virtual sf::Texture* GetTexture() { return nullptr; }
 
 	void FixedUpdate(float dt);
 	bool GoToDirection(int x, int y, float speed = -1.f);

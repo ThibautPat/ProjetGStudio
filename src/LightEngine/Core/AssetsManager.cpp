@@ -4,25 +4,37 @@ AssetsManager::AssetsManager()
 {
 }
 
-void AssetsManager::Load(const char* path, std::string name)
+sf::Texture* AssetsManager::Load(const char* path, std::string name)
 {
 	sf::Texture* text = new sf::Texture();
 	if (!text->loadFromFile(path))
-		return;
+		return nullptr;
 	mAssets.insert({ name , text });
+
+	return text;
 }
 
-sf::Texture* AssetsManager::GetTexture(std::string name)
+void AssetsManager::SetTexture(std::string name, Entity* entity)
 {
-	return mAssets.at(name);
+	entity->SetTexture(mAssets.at(name));
 }
 
-sf::Texture* AssetsManager::GetTexture(std::string name, sf::IntRect rect)
+void AssetsManager::SetTexture(std::string name, Entity* entity, sf::IntRect rect)
 {
+	sf::Texture texture = *mAssets.at(name);
 
-	sf::Texture* tmp = new sf::Texture();
-	tmp->create(rect.width, rect.height);
-	//tmp->
+	sf::RenderTexture renderTexture;
+	renderTexture.create(rect.width, rect.height); // Taille du recadrage
 
-	return nullptr;
+	sf::Sprite sprite(texture);
+	sprite.setTextureRect(sf::IntRect(rect.left, rect.top, rect.width, rect.height)); // On recadre la texture
+	sprite.setPosition(0, 0); // On le dessine en (0,0) pour que ça remplisse bien
+
+	renderTexture.clear();
+	renderTexture.draw(sprite);
+	renderTexture.display();
+
+	sf::Texture* croppedTexture = entity->GetTexture();
+	*croppedTexture = renderTexture.getTexture();
+	entity->SetTexture(croppedTexture);
 }

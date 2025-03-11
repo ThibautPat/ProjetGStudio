@@ -14,9 +14,8 @@ public:
 
 	AssetsManager();
 
-	void Load(const char* path, std::string name);
-	sf::Texture* GetTexture(std::string name);
-	sf::Texture* GetTexture(std::string name, sf::IntRect rect);
-	//sf::Texture* GetTile(std::string name);
+	sf::Texture* Load(const char* path, std::string name);
+	void SetTexture(std::string name, Entity* entity);
+	void SetTexture(std::string name, Entity* entity, sf::IntRect rect);
 };
 
