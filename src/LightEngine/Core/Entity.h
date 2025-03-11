@@ -4,6 +4,7 @@
 #include <SFML/Graphics/CircleShape.hpp>
 
 #define GRAVITYACCEL 9.81f
+#define AIRRESISANTCE GRAVITYACCEL/4
 
 namespace sf 
 {
@@ -31,13 +32,15 @@ protected:
     int mTag = -1;
 	bool mRigidBody = false;
 
-
 public:
 	bool mBoolGravity = true;
 	float mGravitySpeed = 0.f;
 	float mSpeed = 0.f;
-	void ResetGravity();
 
+	float mVelocitySpeed = 0.f;
+	float mVelocityMax = 0.f;
+
+	void FixedUpdate(float dt);
 	bool GoToDirection(int x, int y, float speed = -1.f);
     bool GoToPosition(int x, int y, float speed = -1.f);
     void SetPosition(float x, float y, float ratioX = 0.5f, float ratioY = 0.5f);
@@ -46,6 +49,7 @@ public:
 	void SetTag(int tag) { mTag = tag; }
 	void SetGravity(bool gravity) { mBoolGravity = gravity; }
 	float GetRadius() const { return mShape.getRadius(); }
+	sf::Vector2f GetDirection() const { return mDirection; }
 	void SetRigidBody(bool isRigitBody) { mRigidBody = isRigitBody; }
 	bool IsRigidBody() const { return mRigidBody; }
 

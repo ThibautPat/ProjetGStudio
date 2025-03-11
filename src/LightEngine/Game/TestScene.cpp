@@ -19,23 +19,65 @@ void TestScene::OnInitialize()
 	pEntity->SetPosition(300, 500);
 	pEntity->SetRigidBody(true);
 	pEntity->SetTag(1);
+	pEntity->mVelocityMax = 500;
 
 	mGm = GameManager::Get();
 }
 
 void TestScene::OnEvent(const sf::Event& event)
 {
-	if (event.type != sf::Event::EventType::KeyPressed) {
+	//#TODO
 
-		//#TODO
-		Entity* p = mGm->GetEntity<Entity>(1);
-
-
-		if (event.KeyPressed == sf::Keyboard::Left)
+	if (event.type == sf::Event::KeyPressed)
+	{
+		if (event.key.code == sf::Keyboard::Left)
 		{
-			p->SetPosition(p->GetPosition().x-10, p->GetPosition().y);
+			std::list<Entity*> entities = mGm->GetEntities<Entity>();
+
+			for (Entity* entity : entities)
+			{
+				/*
+				if (entity->GetDirection().x > mVelocityMax)
+
+				float dir = entity->GetDirection().x;
+				entity->SetDirection(dir - 100, 0, 0);
+
+				
+				if(entity->GetDirection().x == 1)
+					entity->mVelocitySpeed = 0;
+
+				sf::Vector2f co = entity->GetPosition();
+				if (entity->mVelocitySpeed < entity->mVelocityMax) {
+					entity->mVelocitySpeed += 100;
+				}
+				
+				entity->SetDirection(-1, 0, 0);
+				*/
+			}
 		}
 
+		if (event.key.code == sf::Keyboard::Right)
+		{
+			std::list<Entity*> entities = mGm->GetEntities<Entity>();
+
+			for (Entity* entity : entities)
+			{
+				/*
+				float dir = entity->GetDirection().x;
+				entity->SetDirection(dir + 100, 0, 0);
+
+				
+				if (entity->GetDirection().x == -1)
+					entity->mVelocitySpeed = 0;
+
+				sf::Vector2f co = entity->GetPosition();
+				if (entity->mVelocitySpeed < entity->mVelocityMax) {
+					entity->mVelocitySpeed += 100;
+				}
+				entity->SetDirection(1, 0, 0);
+				*/
+			}
+		}
 	}
 }
 
@@ -55,13 +97,15 @@ void TestScene::OnUpdate()
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			entity->mBoolGravity = 1;
-			entity->mGravitySpeed = -100;
+			entity->mGravitySpeed = -500;
 		}
 
-		std::string speed = std::to_string((int)entity->mGravitySpeed) + " grav speed";
-		Debug::DrawText(co.x - entity->GetRadius()/2, co.y , speed, sf::Color::White);
+		std::string gravsp = std::to_string((int)entity->mGravitySpeed) + " grav speed";
+		Debug::DrawText(co.x - entity->GetRadius()/2, co.y , gravsp, sf::Color::White);
+		std::string velo = std::to_string((int)entity->GetDirection().x) + " velo speed";
+		Debug::DrawText(co.x - entity->GetRadius() / 2, co.y + 20, velo, sf::Color::White);
 		std::string grav = std::to_string(entity->mBoolGravity) + " grav";
-		Debug::DrawText(co.x - entity->GetRadius() / 2, co.y + 20, grav, sf::Color::White);
+		Debug::DrawText(co.x - entity->GetRadius() / 2, co.y + 40, grav, sf::Color::White);
 	}
 
 	Debug::ShowFPS();
