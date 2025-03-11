@@ -13,10 +13,10 @@ protected:
 
 	GameManager* mGm;
 	sf::View mView;
-	sf::Clock escapeClockGap;
 	int pauseMenu = 0;
 	sf::Clock menuClock;
 public:
+	sf::Clock escapeClockGap;
 	void Pause() override;
 	void OnInitialize() override;
 	void OnEvent(const sf::Event& event) override;

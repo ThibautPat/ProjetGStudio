@@ -27,6 +27,7 @@ public:
 	T* CreateEntity(float radius, const sf::Color& color);
 
 	float GetDeltaTime() const;
+
 	bool freeze = false; 
 	int GetWindowWidth() const;
 	int GetWindowHeight() const;

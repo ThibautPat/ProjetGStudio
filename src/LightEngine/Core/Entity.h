@@ -11,7 +11,15 @@ namespace sf
 	class Shape;
     class Color;
 }
-
+struct PlayerData
+{
+	float mJumpHeight = 600.f; // #TODO: Change to jump force
+	float mJumpTime = 0.3f;
+	float mMinSpeed = 0.f;
+	float mMaxSpeed = 20000.f;
+	float mAcceleration = 700.f;
+	float mDeceleration = 500.f;
+};
 class Scene;
 
 class Entity
@@ -40,7 +48,7 @@ public:
 	float mVelocitySpeed = 0.f;
 	float mVelocityMax = 0.f;
 
-	void FixedUpdate(float dt);
+	virtual void FixedUpdate(float dt) { Fall(dt); };
 	bool GoToDirection(int x, int y, float speed = -1.f);
     bool GoToPosition(int x, int y, float speed = -1.f);
     void SetPosition(float x, float y, float ratioX = 0.5f, float ratioY = 0.5f);
@@ -80,12 +88,12 @@ protected:
     virtual void OnCollision(Entity* collidedWith) {};
 	virtual void OnInitialize() {};
 	virtual void OnDestroy() {};
-	
+	void Fall(float dt);
 private:
     void Update();
 	void Initialize(float radius, const sf::Color& color);
 	void Repulse(Entity* other);
-	void Fall(float dt);
+	
 
     friend class GameManager;
     friend Scene;

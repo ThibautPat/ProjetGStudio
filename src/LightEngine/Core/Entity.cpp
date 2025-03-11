@@ -44,6 +44,17 @@ void Entity::Repulse(Entity* other)
 
 }
 
+void Entity::Fall(float dt)
+{
+	if (mBoolGravity == false)
+		return;
+
+	mGravitySpeed += GRAVITYACCEL + dt;
+	sf::Vector2f co = mShape.getPosition();
+	co.y += mGravitySpeed * dt;
+	mShape.setPosition(co);
+}
+
 bool Entity::IsColliding(Entity* other) const
 {
 	sf::Vector2f distance = GetPosition(0.5f, 0.5f) - other->GetPosition(0.5f, 0.5f);
@@ -105,46 +116,6 @@ sf::Vector2f Entity::GetPosition(float ratioX, float ratioY) const
 	position.y += size * ratioY;
 
 	return position;
-}
-
-void Entity::Fall(float dt)
-{
-	if (mBoolGravity == false)
-		return;
-
-	mGravitySpeed += GRAVITYACCEL + dt;
-	sf::Vector2f co = mShape.getPosition();
-	co.y += mGravitySpeed * dt;
-	mShape.setPosition(co);
-}
-
-void Entity::FixedUpdate(float dt)
-{
-	//May be some new things here
-	Fall(dt);
-
-	if (mDirection.x > 10 || mDirection.x < -10) {
-		mDirection.x -= AIRRESISANTCE + dt;
-		sf::Vector2f co = mShape.getPosition();
-		float dir = mDirection.x;
-		co.x += dir * dt;
-		mShape.setPosition(co);
-	}
-	else
-		mDirection.x = 0;
-
-	/* 
-	if (mVelocitySpeed > 0) {
-		mVelocitySpeed -= AIRRESISANTCE + dt ;
-		sf::Vector2f co = mShape.getPosition();
-		co.x += mVelocitySpeed * mDirection.x * dt;
-		mShape.setPosition(co);
-	}
-	else {
-		mVelocitySpeed = 0.f;
-		mDirection.x = 0;
-	}
-	*/
 }
 
 bool Entity::GoToDirection(int x, int y, float speed)

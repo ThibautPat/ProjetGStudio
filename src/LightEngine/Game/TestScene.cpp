@@ -78,12 +78,7 @@ void TestScene::OnEvent(const sf::Event& event)
 {	
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Joystick::isButtonPressed(0, 7))
 	{
-		if (escapeClockGap.getElapsedTime().asSeconds() < 0.15f)
-		{
-			return;
-		}
-		freeze = !freeze;
-		escapeClockGap.restart();
+		Debug::Pause(this);
 	}
 	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Y) < -10 && freeze && menuClock.getElapsedTime().asSeconds() > 0.2f)
 	{
@@ -117,7 +112,7 @@ void TestScene::OnUpdate()
 		{
 			mView.setCenter(entity->GetPosition().x + 200, entity->GetPosition().y - 115);
 			dynamic_cast<Player*>(entity)->Jump(GetDeltaTime());
-			dynamic_cast<Player*>(entity)->Move(dynamic_cast<Player*>(entity)->InputDirection(), GetDeltaTime());
+			
 		}
 	}
 

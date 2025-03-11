@@ -6,6 +6,7 @@
 #include <SFML/Graphics/Vertex.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
+#include "Scene.h"
 
 class GameManager;
 
@@ -37,7 +38,7 @@ public:
 	static void DrawCircle(float x, float y, float radius, const sf::Color& color);
 	static void DrawText(float x, float y, const std::string& text, const sf::Color& color);
 	static void DrawText(float x, float y, const std::string& text, float ratioX, float ratioY, const sf::Color& color);
-
+	static void Pause(Scene* scene);
 	static void ShowFPS(float x = 10, float y = 10, const sf::Color& color = sf::Color::White);
 
 	friend GameManager;

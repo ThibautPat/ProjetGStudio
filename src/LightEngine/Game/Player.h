@@ -3,15 +3,7 @@
 #include <iostream>
 #include "../Core/DummyEntity.h"
 #include "../Core/GameManager.h"
-struct PlayerData
-{
-	float mJumpHeight = 600.f; // #TODO: Change to jump force
-	float mJumpTime = 0.3f; 
-	float mMinSpeed = 0.f;
-	float mMaxSpeed = 20000.f;
-	float mAcceleration = 700.f; 
-	float mDeceleration = 500.f;
-};
+
 
 
 class Player : public Entity
@@ -26,7 +18,8 @@ public:
 	void Jump(float dt);
 	void Move(sf::Vector2f movement, float dt);
 	bool Crouch();
-
+	void FixedUpdate(float dt) override; 
+	
 
 	~Player();
 };

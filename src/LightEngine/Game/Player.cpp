@@ -150,6 +150,13 @@ bool Player::Crouch()
 		return false;
 }
 
+void Player::FixedUpdate(float dt)
+{
+	Fall(dt);
+	Jump(dt);
+	Move(InputDirection(), dt);
+}
+
 Player::~Player()
 {
 }
