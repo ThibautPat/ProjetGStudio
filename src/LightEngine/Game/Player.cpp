@@ -61,7 +61,7 @@ void Player::Inertia(float dt, sf::Vector2f movement)
 		{
 			mSpeed += mPData.mDeceleration * 50 * dt;
 		}
-		if (mSpeed < 200 && mSpeed > -200)
+		if (mSpeed < 500 && mSpeed > -500)
 		{
 			mSpeed = 0;
 		}
@@ -83,7 +83,6 @@ void Player::Jump(float dt)
 
 void Player::Move(sf::Vector2f movement, float dt)
 {
-	float speed = 0;
 	mSpeed += movement.x*50*dt*mPData.mAcceleration;
 
 	Inertia(dt, movement);

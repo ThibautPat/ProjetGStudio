@@ -77,10 +77,11 @@ void TestScene::OnUpdate()
 			entity->mBoolGravity = 1;
 			entity->mGravitySpeed = -500;
 		}
-
+		int lisibleSpeed = (int)entity->mSpeed;
+		lisibleSpeed = lisibleSpeed / 100;
 		std::string gravsp = std::to_string((int)entity->mGravitySpeed) + " grav speed";
 		Debug::DrawText(co.x - entity->GetRadius()/2, co.y , gravsp, sf::Color::White);
-		std::string velo = std::to_string((int)entity->GetDirection().x) + " velo speed";
+		std::string velo = std::to_string(lisibleSpeed) + " velo speed";
 		Debug::DrawText(co.x - entity->GetRadius() / 2, co.y + 20, velo, sf::Color::White);
 		std::string grav = std::to_string(entity->mBoolGravity) + " grav";
 		Debug::DrawText(co.x - entity->GetRadius() / 2, co.y + 40, grav, sf::Color::White);
