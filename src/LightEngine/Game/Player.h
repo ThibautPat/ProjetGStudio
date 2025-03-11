@@ -13,6 +13,7 @@ struct PlayerData
 	float mDeceleration = 300.f;
 };
 
+
 class Player : public DummyEntity
 {
 

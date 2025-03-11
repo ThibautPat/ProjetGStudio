@@ -15,7 +15,6 @@ void SampleScene::OnEvent(const sf::Event& event)
 {
 }
 
-
 void SampleScene::OnUpdate()
 { 
 	playerJumpTime += GetDeltaTime();
