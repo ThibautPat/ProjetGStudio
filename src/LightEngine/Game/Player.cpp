@@ -75,7 +75,6 @@ void Player::Move(sf::Vector2f movement, float dt)
 		}
 		
 	}
-	
 
 	if (mSpeed > 20000)
 		mSpeed = 20000;
