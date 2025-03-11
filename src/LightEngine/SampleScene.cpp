@@ -7,11 +7,11 @@
 
 void SampleScene::OnInitialize()
 {
-	pEntity1 = CreateRectEntity<DummyEntityRect>(100, 100, sf::Color::Red);
+	pEntity1 = CreateRectEntity<DummyEntityRect>(100, 200, sf::Color::Red);
 	pEntity1->SetPosition(100, 100);
 	pEntity1->SetRigidBody(true);
 
-	pEntity2 = CreateRectEntity<DummyEntityRect>(50, 50, sf::Color::Green);
+	pEntity2 = CreateRectEntity<DummyEntityRect>(50, 300, sf::Color::Green);
 	pEntity2->SetPosition(500, 500);
 	pEntity2->SetRigidBody(true);
 

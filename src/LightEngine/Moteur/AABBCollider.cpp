@@ -9,7 +9,18 @@ bool AABBCollider::IsColliding(Collider* pOther) {
 	sf::Rect bound(mXMin, mYMin, mWeight, mHeight);
 	sf::Rect otherBound(pOther->mXMin, pOther->mYMin, pOther->mWeight, pOther->mHeight);
 
-	return bound.intersects(otherBound);
+	if (!bound.intersects(otherBound)) {
+		return false;
+	}
+
+	//Colisions Verticales Top
+
+
+
+
+
+
+	return true;
 }
 
 void AABBCollider::Update(float newX, float newY) {
