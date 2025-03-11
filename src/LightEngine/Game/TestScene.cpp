@@ -38,10 +38,16 @@ void TestScene::OnUpdate()
 	{
 		if (dynamic_cast<Player*>(entity))
 		{
-			if(mInp->GetInput().y == -1)
-				dynamic_cast<Player*>(entity)->Jump(); 
+			Player* p = dynamic_cast<Player*>(entity);
+			if(mInp->GetInput() == InputManager::Key::Espace)
+				p->Jump();
 
-			dynamic_cast<Player*>(entity)->Move(mInp->GetInput(), GetDeltaTime());
+			if(mInp->GetInput() == InputManager::Key::Q || mInp->GetInput() == InputManager::Key::D)
+				p->Move(sf::Vector2f(), GetDeltaTime(), (int)mInp->GetInput());
+
+			p->Inertia((int)mInp->GetInput(), sf::Vector2f(), GetDeltaTime());
+
+
 		}
 
 		sf::Vector2f co = entity->GetPosition();

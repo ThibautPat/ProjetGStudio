@@ -1,11 +1,27 @@
 #include "Player.h"
 #include "../Core/InputManager.h"
 
-void Player::Inertia(float dt, sf::Vector2f movement)
+void Player::Inertia(int key, sf::Vector2f movement, float dt)
 {
-	if (!movement.x == 0)
+	float movX = 0;
+	//InputManager::Key Key = InputManager::Key::MAJ;
+	InputManager::Key nkey = (InputManager::Key)key;
+
+	switch (nkey)
 	{
-		mLastMovement = movement;
+	case InputManager::Key::Q:
+		movX = -1;
+		break;
+	case InputManager::Key::D:
+		movX = 1;
+		break;
+	default:
+		break;
+	}
+
+	if (!movX == 0)
+	{
+		mLastMovement.x = movX;
 	}
 	if (mLastMovement.x == -1 && mSpeed > 0)
 	{
@@ -15,7 +31,7 @@ void Player::Inertia(float dt, sf::Vector2f movement)
 	{
 		mSpeed += mPData.mDeceleration * 50 * dt;
 	}
-	if (movement.x == 0)
+	if (movX == 0)
 	{
 		if (mSpeed > 100)
 		{
@@ -42,17 +58,33 @@ void Player::Jump()
 	mBoolGravity = true;
 }
 
-void Player::Move(sf::Vector2f movement, float dt)
+void Player::Move(sf::Vector2f movement, float dt, int key)
 {
-	mSpeed += movement.x*50*dt*mPData.mAcceleration;
+	float movX = 0;
+	//InputManager::Key Key = InputManager::Key::MAJ;
+	InputManager::Key nkey = (InputManager::Key)key;
 
-	Inertia(dt, movement);
+	switch (nkey)
+	{
+	case InputManager::Key::Q :
+		movX = -1;
+		break;
+	case InputManager::Key::D:
+		movX = 1;
+		break;
+	default:
+		break;
+	}
+
+	mSpeed += movX*50*dt*mPData.mAcceleration;
+
+	//Inertia(movement, dt);
 	
 	bool crouched = Crouch();
 	if (crouched)
 	{
 
-		if (movement.x == 1)
+		if (movX == 1)
 		{
 			if (mSpeed > 0)
 			{
@@ -67,7 +99,7 @@ void Player::Move(sf::Vector2f movement, float dt)
 				mSpeed = 10000;
 			}
 		}
-		else if (movement.x == -1)
+		else if (movX == -1)
 		{
 			if (mSpeed < 0)
 			{
@@ -105,7 +137,7 @@ bool Player::Crouch()
 	{
 		return true;
 	}
-		return false;
+	return false;
 }
 
 void Player::OnUpdate()
