@@ -9,8 +9,8 @@ struct PlayerData
 	float mJumpTime = 2.f;
 	float mMinSpeed = 0.f;
 	float mMaxSpeed = 50.f;
-	float mAcceleration = 70.f; 
-	float mDeceleration = 90.f;
+	float mAcceleration = 600.f; 
+	float mDeceleration = 300.f;
 };
 
 class Player : public DummyEntity
@@ -25,6 +25,7 @@ public:
 	void Inertia(float dt, sf::Vector2f movement);
 	bool Jump(float dt, float pTime);
 	void Move(sf::Vector2f movement, float dt); 
+	bool Crouch();
 	~Player();
 };
 

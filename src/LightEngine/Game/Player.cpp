@@ -62,7 +62,7 @@ void Player::Inertia(float dt, sf::Vector2f movement)
 		{
 			mSpeed += mPData.mDeceleration * 50 * dt;
 		}
-		if (mSpeed < 200 && mSpeed > -200)
+		if (mSpeed < 300 && mSpeed > -300)
 		{
 			mSpeed = 0;
 		}
@@ -89,12 +89,35 @@ bool Player::Jump(float dt, float pTime)
 
 void Player::Move(sf::Vector2f movement, float dt)
 {
-	float speed = 0;
 	mSpeed += movement.x*50*dt*mPData.mAcceleration;
-
+	
 	Inertia(dt, movement);
+	bool crouched = Crouch();
+	if (crouched)
+	{
+		mSpeed = 10000*movement.x;
+	}
+	float speed = mSpeed;
 
-	SetDirection(dt,0, mSpeed);
+	if (mSpeed > 20000)
+	{
+		speed = 20000;
+	}
+	if (mSpeed < -20000)
+	{
+		speed = -20000;
+	}
+	std::cout << speed << std::endl;
+	SetDirection(dt,0, speed);
+}
+
+bool Player::Crouch()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Joystick::isButtonPressed(0, 1))
+	{
+		return true;
+	}
+		return false;
 }
 
 Player::~Player()
