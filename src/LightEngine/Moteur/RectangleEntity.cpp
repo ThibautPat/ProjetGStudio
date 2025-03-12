@@ -41,15 +41,13 @@ void RectangleEntity::Initialize(float height, float weight, const sf::Color& co
 
 void RectangleEntity::Repulse(Entity* other)
 {
-	RectangleEntity* otherRect = dynamic_cast<RectangleEntity*>(other); //TODO à changer si possible (faire sans dynamic_cast)
-
 	sf::Vector2f distance = GetPosition(0.5f, 0.5f) - other->GetPosition(0.5f, 0.5f);
 
 	float sqrLength = (distance.x * distance.x) + (distance.y * distance.y);
 	float length = std::sqrt(sqrLength);
 
 	float radius1 = mShape.getGlobalBounds().width;
-	float radius2 = otherRect->mShape.getGlobalBounds().width;
+	float radius2 = other->GetShape()->getGlobalBounds().width;
 
 	float overlap = (length - (radius1 + radius2)) * 0.5f;
 
@@ -62,8 +60,8 @@ void RectangleEntity::Repulse(Entity* other)
 	sf::Vector2f position1 = GetPosition(0.5f, 0.5f) - translation;
 	sf::Vector2f position2 = other->GetPosition(0.5f, 0.5f) + translation;
 
-	SetPosition(position1.x, position1.y, 0.5f, 0.5f);
-	other->SetPosition(position2.x, position2.y, 0.5f, 0.5f);
+	SetPosition(position1.x, position1.y, 1.f, 1.f);
+	other->SetPosition(position2.x, position2.y, 1.f, 1.f);
 }
 
 void RectangleEntity::Update()
