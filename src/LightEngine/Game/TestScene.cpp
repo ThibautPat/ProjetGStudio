@@ -5,143 +5,58 @@
 #include "../Core/Debug.h"
 #include "../Game/Player.h"
 
-void TestScene::Pause()
-{
-	//#TODO
-	Debug::DrawText(mView.getCenter().x - 40, mView.getCenter().y - 10, "PAUSE", sf::Color::White);
-	if (pauseMenu == 0)
-	{
-		Debug::DrawText(mView.getCenter().x - GetWindowWidth() / 2 + 10, mView.getCenter().y - GetWindowHeight() / 2 + 50, "Resume", sf::Color::Red);
-	}
-	else
-	{
-		Debug::DrawText(mView.getCenter().x - GetWindowWidth() / 2 + 10, mView.getCenter().y - GetWindowHeight() / 2 + 50, "Resume", sf::Color::White);
-	}
-	if (pauseMenu == 1)
-	{
-		Debug::DrawText(mView.getCenter().x - GetWindowWidth() / 2 + 10, mView.getCenter().y - GetWindowHeight() / 2 + 80, "Settings", sf::Color::Red);
-	}
-	else
-	{
-		Debug::DrawText(mView.getCenter().x - GetWindowWidth() / 2 + 10, mView.getCenter().y - GetWindowHeight() / 2 + 80, "Settings", sf::Color::White);
-	}
-	if (pauseMenu == 4)
-	{
-		Debug::DrawText(mView.getCenter().x - GetWindowWidth() / 2 + 10, mView.getCenter().y - GetWindowHeight() / 2 + 170, "Quit to desktop", sf::Color::Red);
-	}
-	else
-	{
-		Debug::DrawText(mView.getCenter().x - GetWindowWidth() / 2 + 10, mView.getCenter().y - GetWindowHeight() / 2 + 170, "Quit to desktop", sf::Color::White);
-	}
-	if (pauseMenu == 2)
-	{
-		Debug::DrawText(mView.getCenter().x - GetWindowWidth() / 2 + 10, mView.getCenter().y - GetWindowHeight() / 2 + 110, "Return to Checkpoint", sf::Color::Red);
-	}
-	else
-	{
-		Debug::DrawText(mView.getCenter().x - GetWindowWidth() / 2 + 10, mView.getCenter().y - GetWindowHeight() / 2 + 110, "Return to Checkpoint", sf::Color::White);
-	}
-	if (pauseMenu == 3)
-	{
-		Debug::DrawText(mView.getCenter().x - GetWindowWidth() / 2 + 10, mView.getCenter().y - GetWindowHeight() / 2 + 140, "Quit to main menu", sf::Color::Red);
-	}
-	else
-	{
-		Debug::DrawText(mView.getCenter().x - GetWindowWidth() / 2 + 10, mView.getCenter().y - GetWindowHeight() / 2 + 140, "Quit to main menu", sf::Color::White);
-	}
-
-}
 void TestScene::OnInitialize()
 {
-	mView = sf::View(sf::FloatRect(0, 0, 1280, 720));
-	Player* pEntity = CreateRectEntity<Player>(100, 100, sf::Color::Blue);
-	escapeClockGap.restart();
-	menuClock.restart();
-
-	mGm = GameManager::Get();
-
+	mView = new sf::View(sf::FloatRect(0, 0, GetWindowWidth(), GetWindowHeight())); // Ajout de la caméra
+	m_InstanceGameManager = GameManager::Get();
+	
+	Player* pEntity = CreateRectEntity<Player>(100, 100, sf::Color::Blue); // Ajout du Player et setup
 	pEntity->SetGravity(true);
 	pEntity->SetRigidBody(true);
-	pEntity->SetIsKinematic(true);
+	pEntity->SetIsKinematic(false);
 	pEntity->SetPosition(100, 100);
 
 	for (int i = 0; i <= ENTITY_NB; i++) 
 	{
-		RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(500, 500, sf::Color::Red);
+		RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(400, 400, sf::Color::Red); // Ajout d'autre entité et setup
 		pEntity->SetPosition(i*400 + 600, 0);
 		pEntity->SetRigidBody(true);
-		pEntity->SetIsKinematic(false);
+		pEntity->SetIsKinematic(true);
 		pEntity->SetGravity(true);
 	}
 }
 
 void TestScene::OnEvent(const sf::Event& event)
 {	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Joystick::isButtonPressed(0, 7))
-	{
-		Debug::Pause(this);
-	}
-	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Y) < -10 && freeze && menuClock.getElapsedTime().asSeconds() > 0.2f)
-	{
-		menuClock.restart();
-		pauseMenu--;
-		if (pauseMenu < 0)
-		{
-			pauseMenu = 4;
-		}
-	}
-	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Y) > 10 && freeze && menuClock.getElapsedTime().asSeconds() > 0.2f)
-	{
-		menuClock.restart();
-		pauseMenu++;
-		if (pauseMenu > 4)
-		{
-			pauseMenu = 0;
-		}
-	}
+	//TODO Refaire la pause coter moteur
 }
 
 void TestScene::OnUpdate()
 {
 
-	std::list<Entity*> entities = mGm->GetEntities<Entity>();
+	m_InstanceGameManager->GetWindow()->setView(*mView); // Voir si possibilité de ne pas call la view chaque frame
 
-
-	for (Entity* entity : entities)
+	for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entités du gameManager
 	{
 		if (dynamic_cast<Player*>(entity))
 		{
-			//Je sais pas si c'est normal mais avec la view c'est le bordel pour le moment 
-			mView.setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115);
-			dynamic_cast<Player*>(entity)->Jump(GetDeltaTime());
+			mView->setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la caméra sur le joueur chaque frame 
 		}
 
-		sf::Vector2f co = entity->GetPosition(0.f, 0.f);
+		sf::Vector2f cooEntity = entity->GetPosition(0.f, 0.f);
 
-		std::string textCo = std::to_string(co.x) + " : x		" + std::to_string(co.y) + " : y";
-		Debug::DrawText(co.x, co.y, textCo, sf::Color::White);
-
-		Debug::DrawCircle(co.x, co.y, 5, sf::Color::White);
-
-		if (co.y + entity->GetShape()->getGlobalBounds().height * 0.5f > 720)
+		if (cooEntity.y + entity->GetShape()->getGlobalBounds().height * 0.5f > 720)
 		{
 			entity->SetGravity(false);
-			entity->SetPosition(co.x, 720 - entity->GetShape()->getGlobalBounds().height * 0.5f, 0.f, 0.f);
+			entity->SetPosition(cooEntity.x, 720 - entity->GetShape()->getGlobalBounds().height * 0.5f, 0.f, 0.f);
 		}
-		else if (co.y + entity->GetShape()->getGlobalBounds().height * 0.5f < 720)
-		{
-			entity->SetGravity(true);
-		}
-			
-		//int lisibleSpeed = (int)entity->GetSpeed();
-		//lisibleSpeed = lisibleSpeed / 100;
-		//std::string gravsp = std::to_string((int)entity->GetGravitySpeed()) + " grav speed";
-		//Debug::DrawText(co.x, co.y , gravsp, sf::Color::White);
-		//std::string velo = std::to_string(lisibleSpeed) + " velo speed";
-		//Debug::DrawText(co.x, co.y + 20, velo, sf::Color::White);
-		//std::string gravi = std::to_string(entity->IsOnGround()) + " on ground";
-		//Debug::DrawText(co.x, co.y + 40, gravi, sf::Color::White);
+
+		// Affichage de quelque informations
+		std::string textCox = std::to_string(cooEntity.x) + " x ";
+		std::string textCoy = std::to_string(cooEntity.y) + " : y";
+		Debug::DrawText(cooEntity.x, cooEntity.y, textCox, sf::Color::White);
+		Debug::DrawText(cooEntity.x, cooEntity.y + 20, textCoy, sf::Color::White);
+		Debug::DrawCircle(cooEntity.x, cooEntity.y, 5, sf::Color::White);
 	}
-	mGm->GetWindow()->setView(mView);
-	Debug::ShowFPS(mView.getCenter().x - GetWindowWidth() / 2 + 10, mView.getCenter().y - GetWindowHeight() / 2 + 10);
+	Debug::ShowFPS(mView->getCenter().x - GetWindowWidth() / 2 + 10, mView->getCenter().y - GetWindowHeight() / 2 + 10);
 }

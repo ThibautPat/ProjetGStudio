@@ -14,8 +14,9 @@ class Collider;
 
 class RectangleEntity : public Entity
 {
-	AABBCollider* mCollider;
+protected: 
 
+	AABBCollider* mCollider;
 	sf::RectangleShape mShape;
 
 public:

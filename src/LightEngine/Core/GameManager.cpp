@@ -126,20 +126,14 @@ void GameManager::HandleInput()
 
 void GameManager::Update()
 {
-	if (!mpScene->freeze)
-	{
-		mpScene->OnUpdate();
-	}
-	else
-		mpScene->Pause();
+	mpScene->OnUpdate();
     //Update
     for (auto it = mEntities.begin(); it != mEntities.end(); )
     {
 		Entity* entity = *it;
-		if (!mpScene->freeze)
-		{
-			entity->Update();
-		}
+
+		entity->Update();
+		
         if (entity->ToDestroy() == false)
         {
             ++it;

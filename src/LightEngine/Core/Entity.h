@@ -9,15 +9,7 @@ namespace sf
 	class Shape;
     class Color;
 }
-struct PlayerData
-{
-	float mJumpHeight = 600.f; // #TODO: Change to jump force
-	float mJumpTime = 0.3f;
-	float mMinSpeed = 0.f;
-	float mMaxSpeed = 20000.f;
-	float mAcceleration = 700.f;
-	float mDeceleration = 500.f;
-};
+
 class Scene;
 class Collider;
 
