@@ -6,8 +6,8 @@ AABBCollider::AABBCollider(float xMin, float yMin, float xMax, float yMax) : Col
 
 bool AABBCollider::IsColliding(Collider* pOther) {
 
-	sf::Rect bound(mXMin, mYMin, mWeight, mHeight);
-	sf::Rect otherBound(pOther->mXMin, pOther->mYMin, pOther->mWeight, pOther->mHeight);
+	sf::Rect bound(mXMin, mYMin, mWidth, mHeight);
+	sf::Rect otherBound(pOther->mXMin, pOther->mYMin, pOther->mWidth, pOther->mHeight);
 
 	if (!bound.intersects(otherBound)) {
 		return false;

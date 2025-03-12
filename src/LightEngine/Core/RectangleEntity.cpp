@@ -21,17 +21,17 @@ bool RectangleEntity::IsInside(float x, float y)
     return mShape.getGlobalBounds().contains(sf::Vector2f(x, y));
 }
 
-void RectangleEntity::Initialize(float height, float weight, const sf::Color& color)
+void RectangleEntity::Initialize(float height, float Width, const sf::Color& color)
 {
-	mCollider = new AABBCollider(0.f, 0.f, height, weight);
+	mCollider = new AABBCollider(0.f, 0.f, height, Width);
 
-	mSizeX = weight / 2;
+	mSizeX = Width / 2;
 	mSizeY = height / 2;
 
 	mDirection = sf::Vector2f(0.0f, 0.0f);
 
 	mShape.setOrigin(0.f, 0.f);
-	mShape.setSize(sf::Vector2f(weight, height));
+	mShape.setSize(sf::Vector2f(Width, height));
 	mShape.setFillColor(color);
 
 	mTarget.isSet = false;
@@ -41,17 +41,33 @@ void RectangleEntity::Initialize(float height, float weight, const sf::Color& co
 
 void RectangleEntity::Repulse(Entity* other)
 {
-	RectangleEntity* otherRect = dynamic_cast<RectangleEntity*>(other); //TODO à changer si possible (faire sans dynamic_cast)
+	//Tests collisions
+
+	//float width1 = mShape.getGlobalBounds().width;
+	//float width2 = other->GetShape()->getGlobalBounds().width;
+
+	//float height1 = mShape.getGlobalBounds().height;
+	//float height2 = other->GetShape()->getGlobalBounds().height;
+
+	//sf::Vector2f position1 = GetPosition(0.f, 0.f);
+	//sf::Vector2f position2 = sf::Vector2f(other->GetPosition(1.f, 1.f).x - height1 - height2 * 0.5f - 1, other->GetPosition(1.f, 1.f).y - width1 - width2 * 0.5f - 1);
+
+	//SetPosition(position1.x, position2.y);
+
+	//if (other->IsKinematic()) {
+	//	sf::Vector2f position2 = other->GetPosition(0.f, 0.f);
+	//	other->SetPosition(position2.x, position2.y);
+	//}
 
 	sf::Vector2f distance = GetPosition(0.f, 0.f) - other->GetPosition(0.f, 0.f);
 
 	float sqrLength = (distance.x * distance.x) + (distance.y * distance.y);
 	float length = std::sqrt(sqrLength);
 
-	float radius1 = mShape.getGlobalBounds().width;
-	float radius2 = otherRect->mShape.getGlobalBounds().width;
+	float width1 = mShape.getGlobalBounds().width;
+	float width2 = other->GetShape()->getGlobalBounds().width;
 
-	float overlap = (length - (radius1 + radius2)) * 0.5f;
+	float overlap = (length - (width1 + width2)) * 0.5f;
 
 	sf::Vector2f normal = distance / length;
 
@@ -62,13 +78,13 @@ void RectangleEntity::Repulse(Entity* other)
 	sf::Vector2f position1 = GetPosition(0.f, 0.f) - translation;
 	sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation;
 
-	SetPosition(position1.x, position1.y, 0.f, 0.f);
-	other->SetPosition(position2.x, position2.y, 0.f, 0.f);
+	SetPosition(position1.x, position1.y);
+	other->SetPosition(position2.x, position2.y);
 }
 
 void RectangleEntity::Update()
 {
-    mCollider->Update(GetPosition(0.f, 0.f).x - mCollider->mWeight / 2.f, GetPosition(0.f, 0.f).y - mCollider->mHeight / 2.f);
+    mCollider->Update(GetPosition(0.f, 0.f).x - mCollider->mWidth / 2.f, GetPosition(0.f, 0.f).y - mCollider->mHeight / 2.f);
 
     Entity::Update();
 }

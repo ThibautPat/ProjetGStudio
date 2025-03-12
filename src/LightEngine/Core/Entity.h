@@ -39,6 +39,7 @@ protected:
     bool mToDestroy = false;
     int mTag = -1;
 	bool mRigidBody = false;
+	bool mKinematic = false;
 
 	bool mBoolGravity = true;
 	float mGravitySpeed = 0.f;
@@ -64,6 +65,8 @@ public:
 	sf::Vector2f GetDirection() const { return mDirection; }
 	void SetRigidBody(bool isRigitBody) { mRigidBody = isRigitBody; }
 	bool IsRigidBody() const { return mRigidBody; }
+	void SetIsKinematic(bool isKinematic) { mKinematic = isKinematic; }
+	bool IsKinematic() const { return mKinematic; }
 	virtual Collider* GetCollider() = 0; //
 
 	virtual sf::Shape* GetShape() = 0;
@@ -85,7 +88,7 @@ public:
 	T* CreateCircleEntity(float radius, const sf::Color& color);
 
 	template<typename T>
-	T* CreateRectEntity(float height, float weight, const sf::Color& color); //
+	T* CreateRectEntity(float height, float Width, const sf::Color& color); //
 
 protected:
     Entity() = default;
@@ -98,7 +101,7 @@ protected:
 	
     virtual void Update();
 	virtual void Initialize(float radius, const sf::Color& color) = 0; //
-	virtual void Initialize(float height, float weight, const sf::Color& color) = 0; //
+	virtual void Initialize(float height, float Width, const sf::Color& color) = 0; //
 	virtual void Repulse(Entity* other) = 0; // 
 
     friend class GameManager;
