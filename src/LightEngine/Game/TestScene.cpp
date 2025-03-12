@@ -74,7 +74,7 @@ void TestScene::OnUpdate()
 
 		// Affichage de quelque informations
 		std::string textCox = std::to_string(cooEntity.x) + " x ";
-		std::string textCoy = std::to_string(cooEntity.y) + " : y";
+		std::string textCoy = std::to_string(cooEntity.y) + " y";
 		Debug::DrawText(cooEntity.x, cooEntity.y, textCox, sf::Color::White);
 		Debug::DrawText(cooEntity.x, cooEntity.y + 20, textCoy, sf::Color::White);
 		Debug::DrawCircle(cooEntity.x, cooEntity.y, 5, sf::Color::White);
