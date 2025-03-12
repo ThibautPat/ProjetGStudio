@@ -1,5 +1,6 @@
 #include "RectangleEntity.h"
 #include "AABBCollider.h"
+#include <iostream>
 
 Collider* RectangleEntity::GetCollider()
 {
@@ -59,6 +60,53 @@ void RectangleEntity::Repulse(Entity* other)
 	//	other->SetPosition(position2.x, position2.y);
 	//}
 
+
+	/*
+	sf::Vector2f coOther = other->GetPosition(0.f, 0.f);
+	sf::Vector2f co = GetPosition(0.f, 0.f);
+
+	float width1 = mShape.getGlobalBounds().width/2;
+	float width2 = other->GetShape()->getGlobalBounds().width/2;
+	float width = width1 + width2;
+	float height1 = mShape.getGlobalBounds().height/2;
+	float height2 = other->GetShape()->getGlobalBounds().height/2;
+	float height = height1 + height2;
+
+
+	float diffx = 0;
+	if(co.x < coOther.x)
+		diffx = coOther.x - co.x;
+	else
+		diffx = co.x - coOther.x;
+	float diffy = 0;
+	if (co.y < coOther.y)
+		diffy = coOther.y - co.y;
+	else
+		diffx = co.y - coOther.y;
+
+	float penetrationx = width - diffx;
+	float penetrationy = height - diffy;
+
+	//Collision on y axe
+	if (penetrationx > penetrationy) {
+		std::cout << "penetration on y : " << penetrationx << " " << penetrationy << std::endl;
+		if (co.y < coOther.y)
+			SetPosition(co.y - penetrationx - 5, co.y);
+		//else
+		//	SetPosition(co.y + penetrationx + 5, co.y);
+	}
+	//Collision on x axe
+	if (penetrationx < penetrationy) {
+		if (co.x < coOther.x)
+			SetPosition(co.x - penetrationx - 5, co.y);
+		else
+			SetPosition(co.x + penetrationx + 5, co.y);
+		std::cout << "penetration on x : " << penetrationx << " " << penetrationy << std::endl;
+	}
+	*/
+
+
+
 	sf::Vector2f distance = GetPosition(0.f, 0.f) - other->GetPosition(0.f, 0.f);
 
 	float sqrLength = (distance.x * distance.x) + (distance.y * distance.y);
@@ -79,6 +127,10 @@ void RectangleEntity::Repulse(Entity* other)
 	sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation;
 
 	SetPosition(position1.x, position1.y);
+	mSpeed = 0;
+	mDirection.x = 0;
+	if (other->IsKinematic())
+		return;
 	other->SetPosition(position2.x, position2.y);
 }
 

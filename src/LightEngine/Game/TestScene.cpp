@@ -62,17 +62,38 @@ void TestScene::OnInitialize()
 
 	pEntity->SetGravity(true);
 	pEntity->SetRigidBody(true);
-	pEntity->SetIsKinematic(true);
+	pEntity->SetIsKinematic(false);
 	pEntity->SetPosition(100, 100);
 
-	for (int i = 0; i <= ENTITY_NB; i++) 
+
+	for (int i = 0; i <= ENTITY_NB; i++)
 	{
 		RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(500, 500, sf::Color::Red);
+		pEntity->SetPosition(i * 400 + 600, 0);
+		pEntity->SetRigidBody(true);
+		pEntity->SetIsKinematic(true);
+		pEntity->SetGravity(true);
+	}
+
+	/*
+	for (int i = 0; i <= ENTITY_NB; i++) 
+	{
+		RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(500, 100, sf::Color::Red);
 		pEntity->SetPosition(i*400 + 600, 0);
 		pEntity->SetRigidBody(true);
 		pEntity->SetIsKinematic(false);
 		pEntity->SetGravity(true);
 	}
+
+	for (int i = 0; i <= ENTITY_NB; i++)
+	{
+		RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(100, 500, sf::Color::Red);
+		pEntity->SetPosition(i * -400 - 600, 0);
+		pEntity->SetRigidBody(true);
+		pEntity->SetIsKinematic(false);
+		pEntity->SetGravity(true);
+	}
+	*/
 }
 
 void TestScene::OnEvent(const sf::Event& event)
@@ -112,17 +133,20 @@ void TestScene::OnUpdate()
 		if (dynamic_cast<Player*>(entity))
 		{
 			//Je sais pas si c'est normal mais avec la view c'est le bordel pour le moment 
+			// ?
 			mView.setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115);
 			dynamic_cast<Player*>(entity)->Jump(GetDeltaTime());
 		}
 
 		sf::Vector2f co = entity->GetPosition(0.f, 0.f);
 
-		std::string textCo = std::to_string(co.x) + " : x		" + std::to_string(co.y) + " : y";
-		Debug::DrawText(co.x, co.y, textCo, sf::Color::White);
+		std::string textCo = std::to_string((int)co.x) + " x " + std::to_string((int)co.y) + " y";
+		Debug::DrawText(co.x-40, co.y-40, textCo, sf::Color::White);
 
 		Debug::DrawCircle(co.x, co.y, 5, sf::Color::White);
 
+
+		//#TODO Collision
 		if (co.y + entity->GetShape()->getGlobalBounds().height * 0.5f > 720)
 		{
 			entity->SetGravity(false);
@@ -133,14 +157,14 @@ void TestScene::OnUpdate()
 			entity->SetGravity(true);
 		}
 			
-		//int lisibleSpeed = (int)entity->GetSpeed();
-		//lisibleSpeed = lisibleSpeed / 100;
-		//std::string gravsp = std::to_string((int)entity->GetGravitySpeed()) + " grav speed";
-		//Debug::DrawText(co.x, co.y , gravsp, sf::Color::White);
-		//std::string velo = std::to_string(lisibleSpeed) + " velo speed";
-		//Debug::DrawText(co.x, co.y + 20, velo, sf::Color::White);
-		//std::string gravi = std::to_string(entity->IsOnGround()) + " on ground";
-		//Debug::DrawText(co.x, co.y + 40, gravi, sf::Color::White);
+		int lisibleSpeed = (int)entity->GetSpeed();
+		lisibleSpeed = lisibleSpeed / 100;
+		std::string gravsp = std::to_string((int)entity->GetGravitySpeed()) + " grav speed";
+		Debug::DrawText(co.x - 40, co.y - 20, gravsp, sf::Color::White);
+		std::string velo = std::to_string(lisibleSpeed) + " velo speed";
+		Debug::DrawText(co.x - 40, co.y , velo, sf::Color::White);
+		std::string gravi = std::to_string(entity->IsOnGround()) + " on ground";
+		Debug::DrawText(co.x - 40, co.y + 20, gravi, sf::Color::White);
 	}
 	mGm->GetWindow()->setView(mView);
 	Debug::ShowFPS(mView.getCenter().x - GetWindowWidth() / 2 + 10, mView.getCenter().y - GetWindowHeight() / 2 + 10);

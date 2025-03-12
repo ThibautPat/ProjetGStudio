@@ -1,5 +1,6 @@
 #include "AABBCollider.h"
 #include "Entity.h"
+#include <iostream>
 
 AABBCollider::AABBCollider(float xMin, float yMin, float xMax, float yMax) : Collider(xMin, yMin, xMax, yMax) {
 }
@@ -9,8 +10,56 @@ bool AABBCollider::IsColliding(Collider* pOther) {
 	sf::Rect bound(mXMin, mYMin, mWidth, mHeight);
 	sf::Rect otherBound(pOther->mXMin, pOther->mYMin, pOther->mWidth, pOther->mHeight);
 
-	if (!bound.intersects(otherBound)) {
-		return false;
+	if (bound.intersects(otherBound)) {
+		//std::cout << "Collision Detected" << std::endl;
+
+		sf::Vector2f coOther = sf::Vector2f(pOther->mXMin + pOther->mWidth/2, pOther->mYMin + pOther->mHeight/2);
+		sf::Vector2f co = sf::Vector2f(mXMin + mWidth / 2, mYMin + mHeight / 2);
+
+
+		float width1 = mWidth / 2;
+		float width2 = pOther->mWidth / 2;
+		float width = width1 + width2;
+		float height1 = mHeight / 2;
+		float height2 = pOther->mHeight / 2;
+		float height = height1 + height2;
+
+		float diffx = abs(coOther.x - co.x);
+		char sideX = ' ';
+		if (co.x < coOther.x)
+			sideX = 'L';
+		if (co.x > coOther.x)
+			sideX = 'R';
+
+		float diffy = abs(coOther.y - co.y);
+		char sideY = ' ';
+		if (co.y < coOther.y)
+			sideY = 'T';
+		if (co.y > coOther.y)
+			sideY = 'B';
+
+
+
+		float penetrationx = width - diffx;
+		float penetrationy = height - diffy;
+
+		//Collision on y axe
+		if (penetrationx > penetrationy) {
+			if (sideX == 'T')
+				std::cout << "penetration on Top : " << penetrationx << " " << penetrationy << std::endl;
+			if (sideX == 'B')
+				std::cout << "penetration on Bottom : " << penetrationx << " " << penetrationy << std::endl;
+		}
+		//Collision on x axe
+		if (penetrationx < penetrationy) {
+			if (sideX == 'L')
+				std::cout << "penetration on Left : " << penetrationx << " " << penetrationy << std::endl;
+			if (sideX == 'R')
+				std::cout << "penetration on Right : " << penetrationx << " " << penetrationy << std::endl;
+		}
+
+
+		return true;
 	}
 
 	//Colisions Verticales Top
@@ -20,7 +69,7 @@ bool AABBCollider::IsColliding(Collider* pOther) {
 
 
 
-	return true;
+	return false;
 }
 
 void AABBCollider::Update(float newX, float newY) {

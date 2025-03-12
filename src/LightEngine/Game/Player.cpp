@@ -39,13 +39,13 @@ void Player::Jump(float dt)
 		return;
 	if (pJumpTime < mPData.mJumpTime)
 		return;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0))
-		{
-			secondjump -=1;
-			pJumpTime = 0;
-			mGravitySpeed = -mPData.mJumpHeight;
-			mBoolGravity = true;
-		}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0))
+	{
+		secondjump -=1;
+		pJumpTime = 0;
+		mGravitySpeed = -mPData.mJumpHeight;
+		mBoolGravity = true;
+	}
 }
 
 void Player::Move(sf::Vector2f movement, float dt)
