@@ -24,8 +24,10 @@ class Player : public RectangleEntity
 	PlayerData* mPData;
 	sf::Vector2f mLastMovement;
 
+	//Gestionnaire de texture de l'entity
 	Textured* mTextured;
 
+	//Gestionnaire de texture de la scene
 	AssetsManager* mAs;
 
 protected:
@@ -51,7 +53,6 @@ public:
 	void Move(sf::Vector2f movement, float dt);
 	void Crouch();
 
-	//void OnInitialize();
 	void OnUpdate() override;
 	void FixedUpdate(float dt) override; 
 	

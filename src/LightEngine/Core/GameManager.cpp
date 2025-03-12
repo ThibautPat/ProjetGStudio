@@ -17,7 +17,6 @@ GameManager::GameManager()
 	mpScene = nullptr;
 	mWindowWidth = -1;
 	mWindowHeight = -1;
-	mInp = new InputManager();
 	mAs = new AssetsManager();
 }
 
@@ -122,7 +121,6 @@ void GameManager::HandleInput()
 			mpWindow->close();
 		}
 
-		mInp->InputUpdate(event);
 		mpScene->OnEvent(event);
 	}
 }
@@ -181,16 +179,12 @@ void GameManager::Draw()
 	{
 		mpWindow->draw(*entity->GetShape());
 
-		//#REWORK
 		// Draw texture
-		//sf::Texture* text = entity->GetTexture();
 		if (entity->GetTextured()) {
 			sf::Texture* text = entity->GetTextured()->GetTexture();
-			
 			sf::Sprite spr;
 			spr.setTexture(*text);
 			float offset = 0.5f;
-			//#REWORK
 			sf::Vector2f renderPos = sf::Vector2f(
 				entity->GetPosition(0,0).x - text->getSize().x * offset, 
 				entity->GetPosition(0, 0).y - text->getSize().y * offset);

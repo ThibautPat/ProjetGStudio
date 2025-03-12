@@ -128,12 +128,13 @@ void Player::OnInitialize()
 {
 	mShape.setOrigin(mShape.getGlobalBounds().width / 2, mShape.getGlobalBounds().height / 2); //WTF pourquoi l'h�ritage n'est pas fait ?!
 	mPData = new PlayerData;
+	
+	mAs = GameManager::Get()->GetAssetsManager();
 
 	//Setup de la gestion de textures
-	mAs = GameManager::Get()->GetAssetsManager();
 	mTextured = new Textured();
 	mTextured->SetupTexture("../../../res/Assets/Tilemap/tilemap_packed.png", "tilemap");
-	mAs->SetTexture("tilemap", mTextured, sf::IntRect(0,0,18,18));
+	mAs->SetTexture(mTextured->GetTextName(), mTextured, sf::IntRect(0, 0, 18, 18));
 }
 
 sf::Vector2f Player::InputDirection()
