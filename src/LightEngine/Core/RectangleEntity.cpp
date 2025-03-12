@@ -59,6 +59,15 @@ void RectangleEntity::Repulse(Entity* other)
 	//	other->SetPosition(position2.x, position2.y);
 	//}
 
+	if (IsKinematic())
+	{
+		SetPosition(GetPosition(0.f, 0.f).x, GetPosition(0.f, 0.f).y);
+		return;
+	}
+	if (other->IsKinematic())
+	{
+		other->SetPosition(other->GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y); 
+	}
 	sf::Vector2f distance = GetPosition(0.f, 0.f) - other->GetPosition(0.f, 0.f);
 
 	float sqrLength = (distance.x * distance.x) + (distance.y * distance.y);
@@ -77,9 +86,9 @@ void RectangleEntity::Repulse(Entity* other)
 
 	sf::Vector2f position1 = GetPosition(0.f, 0.f) - translation;
 	sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation;
-
-	SetPosition(position1.x, position1.y);
-	other->SetPosition(position2.x, position2.y);
+	
+	mSpeed = 130000.f*-mDirection.x;
+	//SetPosition(position1.x, GetPosition(0.f, 0.f).y); 
 }
 
 void RectangleEntity::Update()

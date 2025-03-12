@@ -35,7 +35,7 @@ void Player::Inertia(float dt, sf::Vector2f movement)
 void Player::Jump(float dt)
 {
 	pJumpTime += dt;
-	if (mBoolGravity && secondjump == 0)
+	if (mBoolGravity && secondjump <= 0)
 		return;
 	if (pJumpTime < mPData.mJumpTime)
 		return;
@@ -50,6 +50,7 @@ void Player::Jump(float dt)
 
 void Player::Move(sf::Vector2f movement, float dt)
 {
+	mDirection.x = movement.x;
 	mSpeed += movement.x*50*dt*mPData.mAcceleration;
 
 	Inertia(dt, movement);

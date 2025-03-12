@@ -62,7 +62,7 @@ void TestScene::OnInitialize()
 
 	pEntity->SetGravity(true);
 	pEntity->SetRigidBody(true);
-	pEntity->SetIsKinematic(true);
+	pEntity->SetIsKinematic(false);
 	pEntity->SetPosition(100, 100);
 
 	for (int i = 0; i <= ENTITY_NB; i++) 
@@ -70,7 +70,7 @@ void TestScene::OnInitialize()
 		RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(500, 500, sf::Color::Red);
 		pEntity->SetPosition(i*400 + 600, 0);
 		pEntity->SetRigidBody(true);
-		pEntity->SetIsKinematic(false);
+		pEntity->SetIsKinematic(true);
 		pEntity->SetGravity(true);
 	}
 }
@@ -127,6 +127,7 @@ void TestScene::OnUpdate()
 		{
 			entity->SetGravity(false);
 			entity->SetPosition(co.x, 720 - entity->GetShape()->getGlobalBounds().height * 0.5f, 0.f, 0.f);
+			entity->secondjump = 2;
 		}
 		else if (co.y + entity->GetShape()->getGlobalBounds().height * 0.5f < 720)
 		{
