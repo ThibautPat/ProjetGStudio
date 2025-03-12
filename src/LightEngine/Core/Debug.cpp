@@ -6,6 +6,8 @@
 
 #include <string>
 
+#include "../Game/TestScene.h"
+
 Debug* Debug::Get()
 {
 	static Debug mInstance;
@@ -93,8 +95,23 @@ void Debug::DrawText(float x, float y, const std::string& text, float ratioX, fl
 	Debug::Get()->mTexts.push_back(sfText);
 }
 
+void Debug::Pause(Scene* scene)
+{
+	if (dynamic_cast<TestScene*>(scene)->escapeClockGap.getElapsedTime().asSeconds() < 0.15f)
+	{
+		return;
+	}
+	scene->freeze = !scene->freeze;
+	dynamic_cast<TestScene*>(scene)->escapeClockGap.restart();
+}
+
 void Debug::ShowFPS(float x, float y, const sf::Color& color)
 {
-	std::string text = std::to_string(1.f / GameManager::Get()->GetDeltaTime());
+	int fps = 1.f / GameManager::Get()->GetDeltaTime();
+	if (fps > 60)
+	{
+		fps = 60;
+	}
+	std::string text = std::to_string(fps) + " FPS";
 	DrawText(x, y, text, 0.f, 0.f, color);
 }

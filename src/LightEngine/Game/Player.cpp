@@ -34,12 +34,18 @@ void Player::Inertia(float dt, sf::Vector2f movement)
 
 void Player::Jump()
 {
-	
-	if (mBoolGravity)
+	pJumpTime += dt;
+	if (mBoolGravity && secondjump == 0)
 		return;
-
-	mGravitySpeed = -mPData.mJumpHeight;
-	mBoolGravity = true;
+	if (pJumpTime < mPData.mJumpTime)
+		return;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0))
+		{
+			secondjump -=1;
+			pJumpTime = 0;
+			mGravitySpeed = -mPData.mJumpHeight;
+			mBoolGravity = true;
+		}
 }
 
 void Player::Move(sf::Vector2f movement, float dt)
@@ -108,11 +114,11 @@ bool Player::Crouch()
 		return false;
 }
 
-void Player::OnUpdate()
+void Player::FixedUpdate(float dt)
 {
-	float dt = GameManager::Get()->GetDeltaTime();
-	InputManager* inp = GameManager::Get()->GetInputManager();
-
+	Fall(dt);
+	Jump(dt);
+	Move(InputDirection(), dt);
 }
 
 Player::~Player()
