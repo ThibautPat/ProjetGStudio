@@ -43,7 +43,7 @@ void RectangleEntity::Repulse(Entity* other)
 {
 	RectangleEntity* otherRect = dynamic_cast<RectangleEntity*>(other); //TODO à changer si possible (faire sans dynamic_cast)
 
-	sf::Vector2f distance = GetPosition(0.5f, 0.5f) - other->GetPosition(0.5f, 0.5f);
+	sf::Vector2f distance = GetPosition(0.f, 0.f) - other->GetPosition(0.f, 0.f);
 
 	float sqrLength = (distance.x * distance.x) + (distance.y * distance.y);
 	float length = std::sqrt(sqrLength);
@@ -59,16 +59,33 @@ void RectangleEntity::Repulse(Entity* other)
 
 	translation *= 0.05f;
 
-	sf::Vector2f position1 = GetPosition(0.5f, 0.5f) - translation;
-	sf::Vector2f position2 = other->GetPosition(0.5f, 0.5f) + translation;
+	sf::Vector2f position1 = GetPosition(0.f, 0.f) - translation;
+	sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation;
 
-	SetPosition(position1.x, position1.y, 0.5f, 0.5f);
-	other->SetPosition(position2.x, position2.y, 0.5f, 0.5f);
+	SetPosition(position1.x, position1.y, 0.f, 0.f);
+	other->SetPosition(position2.x, position2.y, 0.f, 0.f);
 }
 
 void RectangleEntity::Update()
 {
-    mCollider->Update(GetPosition(1.f, 1.f).x - mCollider->mWeight / 2.f, GetPosition(1.f, 1.f).y - mCollider->mHeight / 2.f);
+    mCollider->Update(GetPosition(0.f, 0.f).x - mCollider->mWeight / 2.f, GetPosition(0.f, 0.f).y - mCollider->mHeight / 2.f);
 
     Entity::Update();
+}
+
+void RectangleEntity::OnUpdate()
+{
+}
+
+void RectangleEntity::OnCollision(Entity* collidedWith)
+{
+}
+
+void RectangleEntity::OnInitialize()
+{
+	mShape.setOrigin(mShape.getGlobalBounds().width/2,mShape.getGlobalBounds().height/2);
+}
+
+void RectangleEntity::OnDestroy()
+{
 }

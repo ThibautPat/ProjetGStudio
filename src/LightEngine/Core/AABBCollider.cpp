@@ -1,5 +1,5 @@
 #include "AABBCollider.h"
-#include "../Entity.h"
+#include "Entity.h"
 
 AABBCollider::AABBCollider(float xMin, float yMin, float xMax, float yMax) : Collider(xMin, yMin, xMax, yMax) {
 }

@@ -74,3 +74,19 @@ void CircleEntity::Update() {
 
 	Entity::Update();
 }
+
+void CircleEntity::OnUpdate()
+{
+}
+
+void CircleEntity::OnCollision(Entity* collidedWith)
+{
+}
+
+void CircleEntity::OnInitialize()
+{
+}
+
+void CircleEntity::OnDestroy()
+{
+}

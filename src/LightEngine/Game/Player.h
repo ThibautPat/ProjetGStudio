@@ -3,6 +3,9 @@
 #include <iostream>
 #include "../Core/Entity.h"
 #include "../Core/GameManager.h"
+
+#include "../Core/RectangleEntity.h"
+
 struct PlayerData
 {
 	float mJumpHeight = 500.f;
@@ -13,8 +16,7 @@ struct PlayerData
 	float mDeceleration = 500.f;
 };
 
-
-class Player : public Entity
+class Player : public RectangleEntity
 {
 
 	PlayerData mPData;

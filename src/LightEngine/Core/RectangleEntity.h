@@ -1,5 +1,5 @@
 #pragma once
-#include "../Entity.h"
+#include "Entity.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 
 namespace sf
@@ -29,5 +29,10 @@ public:
 	void Initialize(float height, float weight, const sf::Color& color) override;
 	void Repulse(Entity* other) override;
 	void Update() override;
+
+	virtual void OnUpdate();
+	virtual void OnCollision(Entity* collidedWith);
+	virtual void OnInitialize();
+	virtual void OnDestroy();
 };
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "../Entity.h"
+#include "Entity.h"
 
 #include <SFML/Graphics/CircleShape.hpp>
 
@@ -31,5 +31,10 @@ public:
 	bool IsColliding(Entity* other);
 	bool IsInside(float x, float y);
 	void Update() override;
+
+	virtual void OnUpdate();
+	virtual void OnCollision(Entity* collidedWith);
+	virtual void OnInitialize();
+	virtual void OnDestroy();
 };
 

@@ -3,8 +3,8 @@
 #include "GameManager.h"
 #include "Utils.h"
 #include "Debug.h"
-#include "Moteur/CircleCollider.h"
-#include "Moteur/AABBCollider.h"
+#include "CircleCollider.h"
+#include "AABBCollider.h"
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
@@ -49,9 +49,9 @@ void Entity::Fall(float dt)
 		return;
 
 	mGravitySpeed += GRAVITYACCEL + dt;
-	sf::Vector2f co = mShape.getPosition();
+	sf::Vector2f co = GetShape()->getPosition();
 	co.y += mGravitySpeed * dt;
-	mShape.setPosition(co);
+	GetShape()->setPosition(co);
 }
 
 void Entity::FixedUpdate(float dt)
@@ -61,10 +61,10 @@ void Entity::FixedUpdate(float dt)
 
 	if (mDirection.x > 10 || mDirection.x < -10) {
 		mDirection.x -= AIRRESISANTCE + dt;
-		sf::Vector2f co = mShape.getPosition();
+		sf::Vector2f co = GetShape()->getPosition();
 		float dir = mDirection.x;
 		co.x += dir * dt;
-		mShape.setPosition(co);
+		GetShape()->setPosition(co);
 	}
 	else
 		mDirection.x = 0;
@@ -72,9 +72,9 @@ void Entity::FixedUpdate(float dt)
 	/* 
 	if (mVelocitySpeed > 0) {
 		mVelocitySpeed -= AIRRESISANTCE + dt ;
-		sf::Vector2f co = mShape.getPosition();
+		sf::Vector2f co = GetShape()->getPosition();
 		co.x += mVelocitySpeed * mDirection.x * dt;
-		mShape.setPosition(co);
+		GetShape()->setPosition(co);
 	}
 	else {
 		mVelocitySpeed = 0.f;

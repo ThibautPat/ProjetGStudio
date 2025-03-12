@@ -48,11 +48,11 @@ public:
     bool GoToPosition(int x, int y, float speed = -1.f);
     void SetPosition(float x, float y, float ratioX = 0.5f, float ratioY = 0.5f);
 	sf::Vector2f GetPosition(float ratioX, float ratioY);
+	void Fall(float dt);
 	void SetDirection(float x, float y, float speed = -1.f);
 	void SetSpeed(float speed) { mSpeed = speed; }
 	void SetTag(int tag) { mTag = tag; }
 	void SetGravity(bool gravity) { mBoolGravity = gravity; }
-	float GetRadius() const { return mShape.getRadius(); }
 	sf::Vector2f GetDirection() const { return mDirection; }
 	void SetRigidBody(bool isRigitBody) { mRigidBody = isRigitBody; }
 	bool IsRigidBody() const { return mRigidBody; }
@@ -83,10 +83,10 @@ protected:
     Entity() = default;
     ~Entity() = default;
 
-	virtual void OnUpdate() {};
-    virtual void OnCollision(Entity* collidedWith) {};
-	virtual void OnInitialize() {};
-	virtual void OnDestroy() {};
+	virtual void OnUpdate() = 0;
+    virtual void OnCollision(Entity* collidedWith) = 0;
+	virtual void OnInitialize() = 0;
+	virtual void OnDestroy() = 0;
 	
     virtual void Update();
 	virtual void Initialize(float radius, const sf::Color& color) = 0; //
