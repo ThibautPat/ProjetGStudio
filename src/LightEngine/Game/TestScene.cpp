@@ -7,7 +7,6 @@
 
 void TestScene::Pause()
 {
-	//#TODO
 	Debug::DrawText(mView.getCenter().x - 40, mView.getCenter().y - 10, "PAUSE", sf::Color::White);
 	if (pauseMenu == 0)
 	{
@@ -111,16 +110,15 @@ void TestScene::OnUpdate()
 	{
 		if (dynamic_cast<Player*>(entity))
 		{
-			//Je sais pas si c'est normal mais avec la view c'est le bordel pour le moment 
 			mView.setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115);
-			dynamic_cast<Player*>(entity)->Jump(GetDeltaTime());
 		}
 
 		sf::Vector2f co = entity->GetPosition(0.f, 0.f);
 
-		std::string textCo = std::to_string(co.x) + " : x		" + std::to_string(co.y) + " : y";
-		Debug::DrawText(co.x, co.y, textCo, sf::Color::White);
-
+		std::string textCox = std::to_string(co.x) + " x";
+		std::string textCoy = std::to_string(co.y) + " y";
+		Debug::DrawText(co.x, co.y-20, textCox, sf::Color::White);
+		Debug::DrawText(co.x, co.y, textCoy, sf::Color::White);
 		Debug::DrawCircle(co.x, co.y, 5, sf::Color::White);
 
 		if (co.y + entity->GetShape()->getGlobalBounds().height * 0.5f > 720)
@@ -129,19 +127,15 @@ void TestScene::OnUpdate()
 			entity->SetPosition(co.x, 720 - entity->GetShape()->getGlobalBounds().height * 0.5f, 0.f, 0.f);
 			entity->secondjump = 2;
 		}
-		else if (co.y + entity->GetShape()->getGlobalBounds().height * 0.5f < 720)
-		{
-			entity->SetGravity(true);
-		}
 			
-		//int lisibleSpeed = (int)entity->GetSpeed();
-		//lisibleSpeed = lisibleSpeed / 100;
-		//std::string gravsp = std::to_string((int)entity->GetGravitySpeed()) + " grav speed";
-		//Debug::DrawText(co.x, co.y , gravsp, sf::Color::White);
-		//std::string velo = std::to_string(lisibleSpeed) + " velo speed";
-		//Debug::DrawText(co.x, co.y + 20, velo, sf::Color::White);
-		//std::string gravi = std::to_string(entity->IsOnGround()) + " on ground";
-		//Debug::DrawText(co.x, co.y + 40, gravi, sf::Color::White);
+		int lisibleSpeed = (int)entity->GetSpeed();
+		lisibleSpeed = lisibleSpeed / 100;
+		std::string gravsp = std::to_string((int)entity->GetGravitySpeed()) + " grav speed";
+		Debug::DrawText(co.x, co.y +60, gravsp, sf::Color::White);
+		std::string velo = std::to_string(lisibleSpeed) + " velo speed";
+		Debug::DrawText(co.x, co.y + 20, velo, sf::Color::White);
+		std::string gravi = std::to_string(entity->IsOnGround()) + " on ground";
+		Debug::DrawText(co.x, co.y + 40, gravi, sf::Color::White);
 	}
 	mGm->GetWindow()->setView(mView);
 	Debug::ShowFPS(mView.getCenter().x - GetWindowWidth() / 2 + 10, mView.getCenter().y - GetWindowHeight() / 2 + 10);

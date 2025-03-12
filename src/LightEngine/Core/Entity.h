@@ -34,6 +34,7 @@ protected:
 	float mSizeX, mSizeY;
 
     sf::Vector2f mDirection;
+	sf::Vector2f mMove;
 	Target mTarget;
     
     bool mToDestroy = false;

@@ -3,30 +3,27 @@
 
 void Player::Inertia(float dt, sf::Vector2f movement)
 {
-	if (!movement.x == 0)
-	{
+	// Mise à jour de mLastMovement si movement.x n'est pas nul
+	if (movement.x != 0) {
 		mLastMovement = movement;
 	}
-	if (mLastMovement.x == -1 && mSpeed > 0)
-	{
-		mSpeed -= mPData.mDeceleration * 50 * dt;
+
+	// Gestion de la décélération si la direction du mouvement change
+	if ((mLastMovement.x == -1 && mSpeed > 0) || (mLastMovement.x == 1 && mSpeed < 0)) {
+		mSpeed += (mLastMovement.x == -1 ? -1 : 1) * mPData.mDeceleration * 50 * dt;
 	}
-	if (mLastMovement.x == 1 && mSpeed < 0)
-	{
-		mSpeed += mPData.mDeceleration * 50 * dt;
-	}
-	if (movement.x == 0)
-	{
-		if (mSpeed > 100)
-		{
-			mSpeed -= mPData.mDeceleration * 50 * dt;
+
+	// Si aucun mouvement, on ajuste la vitesse vers 0
+	if (movement.x == 0) {
+		float decelerationAmount = mPData.mDeceleration * 50 * dt;
+
+		// Décélérer ou accélérer vers zéro en fonction de la vitesse
+		if (std::abs(mSpeed) > 100) {
+			mSpeed += (mSpeed > 0 ? -1 : 1) * decelerationAmount;
 		}
-		if (mSpeed < 100)
-		{
-			mSpeed += mPData.mDeceleration * 50 * dt;
-		}
-		if (mSpeed < 500 && mSpeed > -500)
-		{
+
+		// Si la vitesse est proche de zéro, on la réinitialise
+		if (std::abs(mSpeed) < 500) {
 			mSpeed = 0;
 		}
 	}
@@ -50,7 +47,7 @@ void Player::Jump(float dt)
 
 void Player::Move(sf::Vector2f movement, float dt)
 {
-	mDirection.x = movement.x;
+	mMove.x = movement.x;
 	mSpeed += movement.x*50*dt*mPData.mAcceleration;
 
 	Inertia(dt, movement);
@@ -130,38 +127,22 @@ void Player::OnUpdate()
 sf::Vector2f Player::InputDirection()
 {
 	float x = 0;
-	float y = 0;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) < -10)
-	{
-		x = -100;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) > 10)
-	{
-		x = 100;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Joystick::getAxisPosition(0, sf::Joystick::Y) < -10)
-	{
-		y = -100;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Joystick::getAxisPosition(0, sf::Joystick::Y) > 10)
-	{
-		y = 100;
-	}
+	bool qPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) < -10;
+	bool dPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) > 10;
 
-	if (x > -10 && x < 10)
-		x = 0;
-	if (y > -10 && y < 10)
-		y = 0;
-	if (x < 0)
-		x = -1;
-	if (x > 0)
+	if (dPressed && !qPressed)
+	{
 		x = 1;
-	if (y < 0)
-		y = -1;
-	if (y > 0)
-		y = 1;
-
-	return sf::Vector2f(x, y);
+	}
+	else if (qPressed && !dPressed)
+	{
+		x = -1;
+	}
+	else
+	{
+		x = 0;
+	}
+	return sf::Vector2f(x, 0); 
 }
 
 Player::~Player()

@@ -11,9 +11,9 @@
 class Player : public RectangleEntity
 {
 	PlayerData mPData;
+
 	sf::Vector2f mLastMovement;
 public: 
-	int test = 0; // test variable
 	float pJumpTime = 0;
 	sf::Vector2f InputDirection();
 	void Inertia(float dt, sf::Vector2f movement);
