@@ -3,7 +3,7 @@
 #include "Entity.h"
 #include "AssetsManager.h"
 
-class TexturedEntity : public Entity
+class Textured //: public Entity
 {
 protected:
 	sf::Texture mText;
@@ -11,11 +11,13 @@ protected:
 
 public:
 
+	Textured() {};
+
 	void SetupTexture(const char* path, const char* textName);
 
 	const std::string& GetTextName() { return mTextName; }
-	void SetTexture(const sf::Texture& text) override { mText = text; }
-	sf::Texture* GetTexture() override { return &mText; }
+	void SetTexture(const sf::Texture& text) { mText = text; }
+	sf::Texture* GetTexture() { return &mText; }
 
 };
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include <iostream>
-#include "../Core/TexturedEntity.h"
+#include "../Core/Textured.h"
 #include "../Core/GameManager.h"
 #include "../Core/RectangleEntity.h"
 
@@ -19,10 +19,14 @@ struct PlayerData
 	float mDeceleration = 500.f;
 };
 
-class Player : public RectangleEntity, public TexturedEntity
+class Player : public RectangleEntity
 {
 	PlayerData* mPData;
 	sf::Vector2f mLastMovement;
+
+	Textured* mTextured;
+
+	AssetsManager* mAs;
 
 protected:
 
@@ -38,6 +42,8 @@ protected:
 
 public: 
 
+	Textured* GetTextured() { return mTextured; }
+
 	void OnInitialize() override;
 	sf::Vector2f InputDirection();
 	void Inertia(float dt, sf::Vector2f movement);
@@ -45,7 +51,7 @@ public:
 	void Move(sf::Vector2f movement, float dt);
 	void Crouch();
 
-	void OnInitialize();
+	//void OnInitialize();
 	void OnUpdate() override;
 	void FixedUpdate(float dt) override; 
 	

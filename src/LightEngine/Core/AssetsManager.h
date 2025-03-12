@@ -3,6 +3,8 @@
 #include "GameManager.h"
 #include <map>
 
+class Textured;
+
 class AssetsManager
 {
 
@@ -15,7 +17,7 @@ public:
 	AssetsManager();
 
 	sf::Texture* Load(const char* path, std::string name);
-	void SetTexture(std::string name, Entity* entity);
-	void SetTexture(std::string name, Entity* entity, sf::IntRect rect);
+	void SetTexture(std::string name, Textured* textured);
+	void SetTexture(std::string name, Textured* textured, sf::IntRect rect);
 };
 

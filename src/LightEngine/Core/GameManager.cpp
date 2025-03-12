@@ -1,6 +1,7 @@
 #include "GameManager.h"
 
 #include "Entity.h"
+#include "Textured.h"
 #include "Debug.h"
 #include "../Core/InputManager.h"
 #include "../Core/AssetsManager.h"
@@ -180,20 +181,24 @@ void GameManager::Draw()
 	{
 		mpWindow->draw(*entity->GetShape());
 
-		sf::Texture* text = entity->GetTexture();
-		if (entity->GetTexture() != nullptr) {
+		//#REWORK
+		// Draw texture
+		//sf::Texture* text = entity->GetTexture();
+		if (entity->GetTextured()) {
+			sf::Texture* text = entity->GetTextured()->GetTexture();
+			
 			sf::Sprite spr;
 			spr.setTexture(*text);
-
 			float offset = 0.5f;
+			//#REWORK
 			sf::Vector2f renderPos = sf::Vector2f(
-				entity->GetPosition().x - text->getSize().x * offset, 
-				entity->GetPosition().y - text->getSize().y * offset);
+				entity->GetPosition(0,0).x - text->getSize().x * offset, 
+				entity->GetPosition(0, 0).y - text->getSize().y * offset);
 			spr.setPosition(renderPos);
 
 			mpWindow->draw(spr);
 		}
-			
+		//-------------------	
 	}
 	
 	Debug::Get()->Draw(mpWindow);

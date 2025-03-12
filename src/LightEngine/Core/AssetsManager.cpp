@@ -1,4 +1,5 @@
 #include "AssetsManager.h"
+#include "Textured.h"
 
 AssetsManager::AssetsManager()
 {
@@ -14,12 +15,12 @@ sf::Texture* AssetsManager::Load(const char* path, std::string name)
 	return text;
 }
 
-void AssetsManager::SetTexture(std::string name, Entity* entity)
+void AssetsManager::SetTexture(std::string name, Textured* textured)
 {
-	entity->SetTexture(*mAssets.at(name));
+	textured->SetTexture(*mAssets.at(name));
 }
 
-void AssetsManager::SetTexture(std::string name, Entity* entity, sf::IntRect rect)
+void AssetsManager::SetTexture(std::string name, Textured* textured, sf::IntRect rect)
 {
 	sf::Texture texture = *mAssets.at(name);
 
@@ -34,6 +35,8 @@ void AssetsManager::SetTexture(std::string name, Entity* entity, sf::IntRect rec
 	renderTexture.draw(sprite);
 	renderTexture.display();
 
-	entity->SetTexture(renderTexture.getTexture());
+	//Textured* textured = (Textured*)entity;
+
+	textured->SetTexture(renderTexture.getTexture());
 
 }

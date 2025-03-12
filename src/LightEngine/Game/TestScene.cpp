@@ -1,4 +1,4 @@
-S#include "TestScene.h"
+#include "TestScene.h"
 
 #include "../Core/Entity.h"
 #include <iostream>
