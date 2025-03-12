@@ -7,7 +7,7 @@
 
 void TestScene::OnInitialize()
 {
-	mView = new sf::View(sf::FloatRect(0, 0, GetWindowWidth(), GetWindowHeight())); // Ajout de la caméra
+	mView = new sf::View(sf::FloatRect(0, 0, GetWindowWidth(), GetWindowHeight())); // Ajout de la camï¿½ra
 	m_InstanceGameManager = GameManager::Get();
 	
 	Player* pEntity = CreateRectEntity<Player>(100, 100, sf::Color::Blue); // Ajout du Player et setup
@@ -16,14 +16,35 @@ void TestScene::OnInitialize()
 	pEntity->SetIsKinematic(false);
 	pEntity->SetPosition(100, 100);
 
+
+	for (int i = 0; i <= ENTITY_NB; i++)
+	{
+		RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(300, 300, sf::Color::Red);
+		pEntity->SetPosition(i * 400 + 600, 0);
+		pEntity->SetRigidBody(true);
+		pEntity->SetIsKinematic(true);
+		pEntity->SetGravity(true);
+	}
+
+	/*
 	for (int i = 0; i <= ENTITY_NB; i++) 
 	{
-		RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(400, 400, sf::Color::Red); // Ajout d'autre entité et setup
+		RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(400, 400, sf::Color::Red); // Ajout d'autre entitï¿½ et setup
 		pEntity->SetPosition(i*400 + 600, 0);
 		pEntity->SetRigidBody(true);
 		pEntity->SetIsKinematic(true);
 		pEntity->SetGravity(true);
 	}
+
+	for (int i = 0; i <= ENTITY_NB; i++)
+	{
+		RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(100, 500, sf::Color::Red);
+		pEntity->SetPosition(i * -400 - 600, 0);
+		pEntity->SetRigidBody(true);
+		pEntity->SetIsKinematic(false);
+		pEntity->SetGravity(true);
+	}
+	*/
 }
 
 void TestScene::OnEvent(const sf::Event& event)
@@ -34,13 +55,13 @@ void TestScene::OnEvent(const sf::Event& event)
 void TestScene::OnUpdate()
 {
 
-	m_InstanceGameManager->GetWindow()->setView(*mView); // Voir si possibilité de ne pas call la view chaque frame
+	m_InstanceGameManager->GetWindow()->setView(*mView); // Voir si possibilitï¿½ de ne pas call la view chaque frame
 
-	for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entités du gameManager
+	for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entitï¿½s du gameManager
 	{
 		if (dynamic_cast<Player*>(entity))
 		{
-			mView->setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la caméra sur le joueur chaque frame 
+			mView->setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la camï¿½ra sur le joueur chaque frame 
 		}
 
 		sf::Vector2f cooEntity = entity->GetPosition(0.f, 0.f);

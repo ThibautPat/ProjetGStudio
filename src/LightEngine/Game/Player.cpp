@@ -4,11 +4,11 @@
 
 void Player::Inertia(float dt, sf::Vector2f movement)
 {
-	if (movement.x != 0) // Mise à jour de mLastMovement si movement.x n'est pas nul
+	if (movement.x != 0) // Mise ï¿½ jour de mLastMovement si movement.x n'est pas nul
 	{
 		mLastMovement = movement;
 	}
-	if ((mLastMovement.x == -1 && mSpeed > 0) || (mLastMovement.x == 1 && mSpeed < 0)) // Gestion de la décélération si la direction du mouvement change
+	if ((mLastMovement.x == -1 && mSpeed > 0) || (mLastMovement.x == 1 && mSpeed < 0)) // Gestion de la dï¿½cï¿½lï¿½ration si la direction du mouvement change
 	{
 		mSpeed += (mLastMovement.x == -1 ? -1 : 1) *mPData->mDeceleration * 50 * dt;
 	}
@@ -16,11 +16,11 @@ void Player::Inertia(float dt, sf::Vector2f movement)
 	{
 		float decelerationAmount =mPData->mDeceleration * 50 * dt;
 
-		if (std::abs(mSpeed) > 100)	// Décélérer ou accélérer vers zéro en fonction de la vitesse
+		if (std::abs(mSpeed) > 100)	// Dï¿½cï¿½lï¿½rer ou accï¿½lï¿½rer vers zï¿½ro en fonction de la vitesse
 		{
 			mSpeed += (mSpeed > 0 ? -1 : 1) * decelerationAmount;
 		}
-		if (std::abs(mSpeed) < 500)	// Si la vitesse est proche de zéro, on la réinitialise
+		if (std::abs(mSpeed) < 500)	// Si la vitesse est proche de zï¿½ro, on la rï¿½initialise
 		{
 			mSpeed = 0;
 		}
@@ -50,7 +50,7 @@ void Player::Move(sf::Vector2f movement, float dt)
 	Inertia(dt, movement);
 	Crouch();
 
-	if (PlayerState == CROUCH) //Possibilité de refacto 
+	if (PlayerState == CROUCH) //Possibilitï¿½ de refacto 
 	{
 		if (movement.x == 1)
 		{
@@ -125,7 +125,7 @@ void Player::OnUpdate()
 
 void Player::OnInitialize()
 {
-	mShape.setOrigin(mShape.getGlobalBounds().width / 2, mShape.getGlobalBounds().height / 2); //WTF pour quoi l'héritage n'est pas fait ?!
+	mShape.setOrigin(mShape.getGlobalBounds().width / 2, mShape.getGlobalBounds().height / 2); //WTF pour quoi l'hï¿½ritage n'est pas fait ?!
 	mPData = new PlayerData;
 }
 

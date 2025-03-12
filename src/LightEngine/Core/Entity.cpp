@@ -8,6 +8,7 @@
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
+#include <iostream>
 
 void Entity::Destroy()
 {
@@ -94,6 +95,8 @@ void Entity::SetDirection(float x, float y, float speed)
 
 void Entity::Update()
 {
+	sf::Vector2f oldPos = GetPosition(0.f, 0.f);
+
 	float dt = GetDeltaTime();
 	float distance = dt * mSpeed;
 	sf::Vector2f translation = distance * mDirection;
@@ -101,6 +104,9 @@ void Entity::Update()
 
 	if (mTarget.isSet) 
 	{
+		
+
+
 		float x1 = GetPosition(0.f, 0.f).x;
 		float y1 = GetPosition(0.f, 0.f).y;
 
@@ -109,9 +115,9 @@ void Entity::Update()
 
 		//TODO : enlever les draws
 
-		Debug::DrawLine(x1, y1, x2, y2, sf::Color::Cyan);
+		//Debug::DrawLine(x1, y1, x2, y2, sf::Color::Cyan);
 
-		Debug::DrawCircle(mTarget.position.x, mTarget.position.y, 5.f, sf::Color::Magenta);
+		//Debug::DrawCircle(mTarget.position.x, mTarget.position.y, 5.f, sf::Color::Magenta);
 
 		mTarget.distance -= distance;
 
@@ -121,8 +127,24 @@ void Entity::Update()
 			mDirection = sf::Vector2f(0.f, 0.f);
 			mTarget.isSet = false;
 		}
-
 	}
+
+	/*
+	for (Entity* entity : GameManager::Get()->GetEntities<Entity>())
+	{
+		if (entity == this)
+			continue;
+
+		if (IsColliding(entity))
+		{
+			SetPosition(oldPos.x, oldPos.y, 0.f, 0.f);
+			mSpeed = 0.f;
+			mDirection.x = 0.f;
+			std::cout << "COLLISION PREV" << std::endl;
+			break;
+		}
+	}
+	*/
 
 	OnUpdate();
 }
