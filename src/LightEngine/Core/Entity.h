@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/System/Vector2.hpp>
-#include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics.hpp>
 
 #define GRAVITYACCEL 9.81f
 #define AIRRESISANTCE GRAVITYACCEL/4
@@ -42,7 +42,7 @@ public:
 	float GetGravitySpeed() { return mGravitySpeed; }
 	float GetSpeed() { return mSpeed;  }
 
-	virtual void SetTexture(sf::Texture* text) {}
+	virtual void SetTexture(const sf::Texture& text) {}
 	virtual sf::Texture* GetTexture() { return nullptr; }
 
 	void FixedUpdate(float dt);

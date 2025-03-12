@@ -8,7 +8,6 @@
 
 void TestScene::OnInitialize()
 {
-	
 	Player* pEntity = CreateEntity<Player>(100, sf::Color::Red);
 	pEntity->SetGravity(true);
 	pEntity->SetRigidBody(true);

@@ -1,8 +1,10 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include <iostream>
-#include "../Core/Entity.h"
+#include "../Core/TexturedEntity.h"
 #include "../Core/GameManager.h"
+
+
 struct PlayerData
 {
 	float mJumpHeight = 500.f;
@@ -14,23 +16,19 @@ struct PlayerData
 };
 
 
-class Player : public Entity
+class Player : public TexturedEntity
 {
-	sf::Texture* mText;
-
 	PlayerData mPData;
 	sf::Vector2f mLastMovement;
 public: 
+
 	void Inertia(float dt, sf::Vector2f movement);
 	void Jump();
 	void Move(sf::Vector2f movement, float dt);
 	bool Crouch();
 
-	void OnInitialize() override;
+	void OnInitialize();
 	void OnUpdate() override;
-
-	void SetTexture(sf::Texture* text) override;
-	sf::Texture* GetTexture() override { return mText; }
 
 	~Player();
 };

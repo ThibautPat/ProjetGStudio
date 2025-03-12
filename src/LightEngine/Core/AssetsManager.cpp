@@ -16,7 +16,7 @@ sf::Texture* AssetsManager::Load(const char* path, std::string name)
 
 void AssetsManager::SetTexture(std::string name, Entity* entity)
 {
-	entity->SetTexture(mAssets.at(name));
+	entity->SetTexture(*mAssets.at(name));
 }
 
 void AssetsManager::SetTexture(std::string name, Entity* entity, sf::IntRect rect)
@@ -34,7 +34,6 @@ void AssetsManager::SetTexture(std::string name, Entity* entity, sf::IntRect rec
 	renderTexture.draw(sprite);
 	renderTexture.display();
 
-	sf::Texture* croppedTexture = entity->GetTexture();
-	*croppedTexture = renderTexture.getTexture();
-	entity->SetTexture(croppedTexture);
+	entity->SetTexture(renderTexture.getTexture());
+
 }

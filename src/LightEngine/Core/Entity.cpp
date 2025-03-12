@@ -123,16 +123,7 @@ void Entity::FixedUpdate(float dt)
 	//May be some new things here
 	Fall(dt);
 
-	/*if (mDirection.x > 10 || mDirection.x < -10) {
-		mDirection.x -= AIRRESISANTCE + dt;
-		sf::Vector2f co = mShape.getPosition();
-		float dir = mDirection.x;
-		co.x += dir * dt;
-		mShape.setPosition(co);
-	}
-	else
-		mDirection.x = 0;
-	*/
+
 }
 
 bool Entity::GoToDirection(int x, int y, float speed)

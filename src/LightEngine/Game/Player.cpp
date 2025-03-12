@@ -95,26 +95,13 @@ bool Player::Crouch()
 
 void Player::OnInitialize()
 {
-	AssetsManager* assetsManager = GameManager::Get()->mAs;
-	std::string tmName = "tilemap";
-	mText = assetsManager->Load("../../../res/Assets/Tilemap/tilemap_packed.png", tmName);
-
-	assetsManager->SetTexture(tmName, this, sf::IntRect(0, 0, 18*4, 18*4));
+	SetupTexture("../../../res/Assets/Tilemap/tilemap_packed.png", "tilemap");
 }
 
 void Player::OnUpdate()
 {
-	int rdm_x = std::rand() % (18 * 9) + 0;
-	int rdm_y = std::rand() % (18 * 3) + 0;
-
-	AssetsManager* assetsManager = GameManager::Get()->mAs;
-	std::string tmName = "tilemap";
-	//assetsManager->SetTexture(tmName, this, sf::IntRect(18 * rdm_x, 18 * rdm_y, 18 * 4, 18 * 4));
-}
-
-void Player::SetTexture(sf::Texture* text)
-{
-	mText = text;
+	//#TEST
+	//GameManager::Get()->mAs->SetTexture(GetTextName(), this, sf::IntRect(18, 18, 18 * 4, 18 * 4));
 }
 
 Player::~Player()

@@ -177,7 +177,7 @@ void GameManager::Draw()
 		mpWindow->draw(*entity->GetShape());
 
 		sf::Texture* text = entity->GetTexture();
-		if (text != nullptr) {
+		if (entity->GetTexture() != nullptr) {
 			sf::Sprite spr;
 			spr.setTexture(*text);
 

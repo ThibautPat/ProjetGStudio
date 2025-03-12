@@ -40,7 +40,8 @@ protected:
 
 	float mAccumulatedDt = 0.f;
 
-	InputManager* mInp;
+	InputManager* mInp;//#REMOVE
+	AssetsManager* mAs;
 	//---------------------------------------------
 	GameManager();
 
@@ -57,10 +58,9 @@ protected:
 	void FixedUpdate();
 
 public:
-	AssetsManager* mAs;
-
 	~GameManager();
 	static GameManager* Get();
+	AssetsManager* GetAssetsManager() { return mAs; }
 
 	void CreateWindow(unsigned int width, unsigned int height, const char* title, int fpsLimit = 60, sf::Color clearColor = sf::Color::Black);
 
