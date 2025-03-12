@@ -67,7 +67,7 @@ void TestScene::OnInitialize()
 
 	for (int i = 0; i <= ENTITY_NB; i++) 
 	{
-		RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(500, 500, sf::Color::Red);
+		RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(250, 600, sf::Color::Red);
 		pEntity->SetPosition(i*400 + 600, 0);
 		pEntity->SetRigidBody(true);
 		pEntity->SetIsKinematic(false);
@@ -111,7 +111,6 @@ void TestScene::OnUpdate()
 	{
 		if (dynamic_cast<Player*>(entity))
 		{
-			//Je sais pas si c'est normal mais avec la view c'est le bordel pour le moment 
 			mView.setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115);
 			dynamic_cast<Player*>(entity)->Jump(GetDeltaTime());
 		}

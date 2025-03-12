@@ -41,45 +41,46 @@ void RectangleEntity::Initialize(float height, float Width, const sf::Color& col
 
 void RectangleEntity::Repulse(Entity* other)
 {
-	//Tests collisions
+	float width1 = mShape.getGlobalBounds().width;
+	float width2 = other->GetShape()->getGlobalBounds().width;
 
-	//float width1 = mShape.getGlobalBounds().width;
-	//float width2 = other->GetShape()->getGlobalBounds().width;
+	float height1 = mShape.getGlobalBounds().height;
+	float height2 = other->GetShape()->getGlobalBounds().height;
 
-	//float height1 = mShape.getGlobalBounds().height;
-	//float height2 = other->GetShape()->getGlobalBounds().height;
 
-	//sf::Vector2f position1 = GetPosition(0.f, 0.f);
-	//sf::Vector2f position2 = sf::Vector2f(other->GetPosition(1.f, 1.f).x - height1 - height2 * 0.5f - 1, other->GetPosition(1.f, 1.f).y - width1 - width2 * 0.5f - 1);
+	//Collision Top
+	sf::Vector2f position = sf::Vector2f(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - (height1 * 0.5f) - (height2 * 0.5f) - 1);
 
-	//SetPosition(position1.x, position2.y);
+	sf::Vector2f pos = other->GetPosition(0.f, 0.f);
+
+	SetPosition(position.x, position.y);
 
 	//if (other->IsKinematic()) {
 	//	sf::Vector2f position2 = other->GetPosition(0.f, 0.f);
 	//	other->SetPosition(position2.x, position2.y);
 	//}
 
-	sf::Vector2f distance = GetPosition(0.f, 0.f) - other->GetPosition(0.f, 0.f);
+	//sf::Vector2f distance = GetPosition(0.f, 0.f) - other->GetPosition(0.f, 0.f);
 
-	float sqrLength = (distance.x * distance.x) + (distance.y * distance.y);
-	float length = std::sqrt(sqrLength);
+	//float sqrLength = (distance.x * distance.x) + (distance.y * distance.y);
+	//float length = std::sqrt(sqrLength);
 
-	float width1 = mShape.getGlobalBounds().width;
-	float width2 = other->GetShape()->getGlobalBounds().width;
+	//float width1 = mShape.getGlobalBounds().width;
+	//float width2 = other->GetShape()->getGlobalBounds().width;
 
-	float overlap = (length - (width1 + width2)) * 0.5f;
+	//float overlap = (length - (width1 + width2)) * 0.5f;
 
-	sf::Vector2f normal = distance / length;
+	//sf::Vector2f normal = distance / length;
 
-	sf::Vector2f translation = overlap * normal;
+	//sf::Vector2f translation = overlap * normal;
 
-	translation *= 0.05f;
+	//translation *= 0.05f;
 
-	sf::Vector2f position1 = GetPosition(0.f, 0.f) - translation;
-	sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation;
+	//sf::Vector2f position1 = GetPosition(0.f, 0.f) - translation;
+	//sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation;
 
-	SetPosition(position1.x, position1.y);
-	other->SetPosition(position2.x, position2.y);
+	//SetPosition(position1.x, position1.y);
+	//other->SetPosition(position2.x, position2.y);
 }
 
 void RectangleEntity::Update()
