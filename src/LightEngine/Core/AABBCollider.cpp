@@ -43,19 +43,19 @@ bool AABBCollider::IsColliding(Collider* pOther) {
 
 		//Collision on y axe
 		if (penetrationx > penetrationy) {
-			std::cout << "penetration on Y"<< std::endl;
+			std::cout << "penetration Y on ";
 			if (sideY == 'T')
-				std::cout << "penetration on Top : " << penetrationx << " " << penetrationy << std::endl;
+				std::cout << "Top : " << penetrationx << " " << penetrationy << std::endl;
 			if (sideY == 'B')
-				std::cout << "penetration on Bottom : " << penetrationx << " " << penetrationy << std::endl;
+				std::cout << "Bottom : " << penetrationx << " " << penetrationy << std::endl;
 		}
 		//Collision on x axe
 		if (penetrationx < penetrationy) {
-			std::cout << "penetration on X" << std::endl;
+			std::cout << "penetration X on ";
 			if (sideX == 'L')
-				std::cout << "penetration on Left : " << penetrationx << " " << penetrationy << std::endl;
+				std::cout << "Left : " << penetrationx << " " << penetrationy << std::endl;
 			if (sideX == 'R')
-				std::cout << "penetration on Right : " << penetrationx << " " << penetrationy << std::endl;
+				std::cout << "Right : " << penetrationx << " " << penetrationy << std::endl;
 		}
 		//--------------------------------------------------------------
 
