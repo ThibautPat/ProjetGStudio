@@ -2,8 +2,8 @@
 
 #include <list>
 
-#include <SFML/Graphics/Color.hpp>
-#include <SFML/Graphics/Text.hpp>
+
+#include <SFML/Graphics.hpp>
 
 #define FIXED_DT 0.0167f
 
@@ -11,6 +11,7 @@ class Entity;
 class Scene;
 class Debug;
 class InputManager;
+class AssetsManager;
 
 namespace sf 
 {
@@ -20,6 +21,7 @@ namespace sf
 
 class GameManager
 {
+protected:
 	std::list<Entity*> mEntities;
 	std::list<Entity*> mEntitiesToDestroy;
 	std::list<Entity*> mEntitiesToAdd;
@@ -37,9 +39,9 @@ class GameManager
 
 	float mAccumulatedDt = 0.f;
 
-	InputManager* mInp;
-
-private:
+	InputManager* mInp;//#REMOVE
+	AssetsManager* mAs;
+	//---------------------------------------------
 	GameManager();
 
 	void Run();
@@ -57,6 +59,7 @@ private:
 public:
 	~GameManager();
 	static GameManager* Get();
+	AssetsManager* GetAssetsManager() { return mAs; }
 
 	void CreateWindow(unsigned int width, unsigned int height, const char* title, int fpsLimit = 60, sf::Color clearColor = sf::Color::Black);
 	sf::RenderWindow* GetWindow() const { return mpWindow; }

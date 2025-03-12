@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "../Core/InputManager.h"
 #include "../Core/Debug.h"
+#include "../Core/AssetsManager.h"
 
 void Player::Inertia(float dt, sf::Vector2f movement)
 {
@@ -127,6 +128,8 @@ void Player::OnInitialize()
 {
 	mShape.setOrigin(mShape.getGlobalBounds().width / 2, mShape.getGlobalBounds().height / 2); //WTF pour quoi l'h�ritage n'est pas fait ?!
 	mPData = new PlayerData;
+
+	SetupTexture("../../../res/Assets/Tilemap/tilemap_packed.png", "tilemap");
 }
 
 sf::Vector2f Player::InputDirection()

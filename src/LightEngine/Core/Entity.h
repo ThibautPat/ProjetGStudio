@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics.hpp>
 
 #define GRAVITYACCEL 9.81f
 #define AIRRESISANTCE GRAVITYACCEL/4
@@ -43,6 +44,8 @@ public:
 	bool IsOnGround() { return not mBoolGravity; }
 	float GetGravitySpeed() { return mGravitySpeed; }
 	float GetSpeed() { return mSpeed;  }
+	virtual void SetTexture(const sf::Texture& text) {}
+	virtual sf::Texture* GetTexture() { return nullptr; }
 
 	virtual void FixedUpdate(float dt) { Fall(dt); };
 	bool GoToDirection(int x, int y, float speed = -1.f);

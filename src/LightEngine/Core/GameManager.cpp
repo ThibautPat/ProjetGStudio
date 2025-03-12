@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "Debug.h"
 #include "../Core/InputManager.h"
+#include "../Core/AssetsManager.h"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -16,6 +17,7 @@ GameManager::GameManager()
 	mWindowWidth = -1;
 	mWindowHeight = -1;
 	mInp = new InputManager();
+	mAs = new AssetsManager();
 }
 
 GameManager* GameManager::Get()
@@ -177,6 +179,21 @@ void GameManager::Draw()
 	for (Entity* entity : mEntities)
 	{
 		mpWindow->draw(*entity->GetShape());
+
+		sf::Texture* text = entity->GetTexture();
+		if (entity->GetTexture() != nullptr) {
+			sf::Sprite spr;
+			spr.setTexture(*text);
+
+			float offset = 0.5f;
+			sf::Vector2f renderPos = sf::Vector2f(
+				entity->GetPosition().x - text->getSize().x * offset, 
+				entity->GetPosition().y - text->getSize().y * offset);
+			spr.setPosition(renderPos);
+
+			mpWindow->draw(spr);
+		}
+			
 	}
 	
 	Debug::Get()->Draw(mpWindow);
