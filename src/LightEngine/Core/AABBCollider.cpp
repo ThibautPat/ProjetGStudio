@@ -11,11 +11,11 @@ bool AABBCollider::IsColliding(Collider* pOther) {
 	sf::Rect otherBound(pOther->mXMin, pOther->mYMin, pOther->mWidth, pOther->mHeight);
 
 	if (bound.intersects(otherBound)) {
-		//std::cout << "Collision Detected" << std::endl;
+		std::cout << "Collision Detected" << std::endl;
 
+		//Decting the side of the collision
 		sf::Vector2f coOther = sf::Vector2f(pOther->mXMin + pOther->mWidth/2, pOther->mYMin + pOther->mHeight/2);
 		sf::Vector2f co = sf::Vector2f(mXMin + mWidth / 2, mYMin + mHeight / 2);
-
 
 		float width1 = mWidth / 2;
 		float width2 = pOther->mWidth / 2;
@@ -38,26 +38,26 @@ bool AABBCollider::IsColliding(Collider* pOther) {
 		if (co.y > coOther.y)
 			sideY = 'B';
 
-
-
 		float penetrationx = width - diffx;
 		float penetrationy = height - diffy;
 
 		//Collision on y axe
 		if (penetrationx > penetrationy) {
-			if (sideX == 'T')
+			std::cout << "penetration on Y"<< std::endl;
+			if (sideY == 'T')
 				std::cout << "penetration on Top : " << penetrationx << " " << penetrationy << std::endl;
-			if (sideX == 'B')
+			if (sideY == 'B')
 				std::cout << "penetration on Bottom : " << penetrationx << " " << penetrationy << std::endl;
 		}
 		//Collision on x axe
 		if (penetrationx < penetrationy) {
+			std::cout << "penetration on X" << std::endl;
 			if (sideX == 'L')
 				std::cout << "penetration on Left : " << penetrationx << " " << penetrationy << std::endl;
 			if (sideX == 'R')
 				std::cout << "penetration on Right : " << penetrationx << " " << penetrationy << std::endl;
 		}
-
+		//--------------------------------------------------------------
 
 		return true;
 	}

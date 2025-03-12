@@ -129,6 +129,7 @@ void Entity::Update()
 		}
 	}
 
+	/*
 	for (Entity* entity : GameManager::Get()->GetEntities<Entity>())
 	{
 		if (entity == this)
@@ -143,6 +144,7 @@ void Entity::Update()
 			break;
 		}
 	}
+	*/
 
 	OnUpdate();
 }
