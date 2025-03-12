@@ -46,7 +46,7 @@ protected:
 
 public:
 
-
+	int secondjump = 2;
 	bool IsOnGround() { return not mBoolGravity; }
 	float GetGravitySpeed() { return mGravitySpeed; }
 	float GetSpeed() { return mSpeed;  }
@@ -54,7 +54,7 @@ public:
 	virtual void FixedUpdate(float dt) { Fall(dt); };
 	bool GoToDirection(int x, int y, float speed = -1.f);
     bool GoToPosition(int x, int y, float speed = -1.f);
-    void SetPosition(float x, float y, float ratioX = 0.5f, float ratioY = 0.5f);
+    void SetPosition(float x, float y, float ratioX = 0.f, float ratioY = 0.f);
 	sf::Vector2f GetPosition(float ratioX, float ratioY);
 	void Fall(float dt);
 	void SetDirection(float x, float y, float speed = -1.f);

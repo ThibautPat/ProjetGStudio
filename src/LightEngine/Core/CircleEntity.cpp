@@ -70,7 +70,7 @@ bool CircleEntity::IsInside(float x, float y)
 }
 
 void CircleEntity::Update() {
-	mCollider->Update(GetPosition(1.f, 1.f).x, GetPosition(1.f, 1.f).y);
+	mCollider->Update(GetPosition(0.f, 0.f).x, GetPosition(0.f, 0.f).y);
 
 	Entity::Update();
 }

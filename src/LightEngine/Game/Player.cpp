@@ -32,7 +32,7 @@ void Player::Inertia(float dt, sf::Vector2f movement)
 	}
 }
 
-void Player::Jump()
+void Player::Jump(float dt)
 {
 	pJumpTime += dt;
 	if (mBoolGravity && secondjump == 0)
@@ -119,6 +119,48 @@ void Player::FixedUpdate(float dt)
 	Fall(dt);
 	Jump(dt);
 	Move(InputDirection(), dt);
+}
+
+void Player::OnUpdate()
+{
+
+}
+
+sf::Vector2f Player::InputDirection()
+{
+	float x = 0;
+	float y = 0;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) < -10)
+	{
+		x = -100;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) > 10)
+	{
+		x = 100;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Joystick::getAxisPosition(0, sf::Joystick::Y) < -10)
+	{
+		y = -100;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Joystick::getAxisPosition(0, sf::Joystick::Y) > 10)
+	{
+		y = 100;
+	}
+
+	if (x > -10 && x < 10)
+		x = 0;
+	if (y > -10 && y < 10)
+		y = 0;
+	if (x < 0)
+		x = -1;
+	if (x > 0)
+		x = 1;
+	if (y < 0)
+		y = -1;
+	if (y > 0)
+		y = 1;
+
+	return sf::Vector2f(x, y);
 }
 
 Player::~Player()

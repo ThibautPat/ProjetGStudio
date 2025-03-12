@@ -6,15 +6,7 @@
 #include "../Core/RectangleEntity.h"
 
 
-struct PlayerData
-{
-	float mJumpHeight = 500.f;
-	float mJumpTime = 2.f;
-	float mMinSpeed = 0.f;
-	float mMaxSpeed = 20000.f;
-	float mAcceleration = 700.f; 
-	float mDeceleration = 500.f;
-};
+
 
 class Player : public RectangleEntity
 {
@@ -25,7 +17,7 @@ public:
 	float pJumpTime = 0;
 	sf::Vector2f InputDirection();
 	void Inertia(float dt, sf::Vector2f movement);
-	void Jump();
+	void Jump(float dt);
 	void Move(sf::Vector2f movement, float dt);
 	bool Crouch();
 

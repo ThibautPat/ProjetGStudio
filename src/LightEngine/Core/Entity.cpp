@@ -26,7 +26,7 @@ void Entity::SetPosition(float x, float y, float ratioX, float ratioY)
 	//#TODO Optimise
 	if (mTarget.isSet) 
 	{
-		sf::Vector2f position = GetPosition(1.f, 1.f);
+		sf::Vector2f position = GetPosition(0.f, 0.f);
 		mTarget.distance = Utils::GetDistance(position.x, position.y, mTarget.position.x, mTarget.position.y);
 		GoToDirection(mTarget.position.x, mTarget.position.y);
 		mTarget.isSet = true;
@@ -54,38 +54,10 @@ void Entity::Fall(float dt)
 	GetShape()->setPosition(co);
 }
 
-void Entity::FixedUpdate(float dt)
-{
-	//May be some new things here
-	Fall(dt);
-
-	if (mDirection.x > 10 || mDirection.x < -10) {
-		mDirection.x -= AIRRESISANTCE + dt;
-		sf::Vector2f co = GetShape()->getPosition();
-		float dir = mDirection.x;
-		co.x += dir * dt;
-		GetShape()->setPosition(co);
-	}
-	else
-		mDirection.x = 0;
-
-	/* 
-	if (mVelocitySpeed > 0) {
-		mVelocitySpeed -= AIRRESISANTCE + dt ;
-		sf::Vector2f co = GetShape()->getPosition();
-		co.x += mVelocitySpeed * mDirection.x * dt;
-		GetShape()->setPosition(co);
-	}
-	else {
-		mVelocitySpeed = 0.f;
-		mDirection.x = 0;
-	}
-	*/
-}
 
 bool Entity::GoToDirection(int x, int y, float speed)
 {
-	sf::Vector2f position = GetPosition(1.f, 1.f);
+	sf::Vector2f position = GetPosition(0.f, 0.f);
 	sf::Vector2f direction = sf::Vector2f(x - position.x, y - position.y);
 	
 	bool success = Utils::Normalize(direction);
@@ -102,7 +74,7 @@ bool Entity::GoToPosition(int x, int y, float speed)
 	if (GoToDirection(x, y, speed) == false)
 		return false;
 
-	sf::Vector2f position = GetPosition(1.f, 1.f);
+	sf::Vector2f position = GetPosition(0.f, 0.f);
 
 	mTarget.position = { x, y };
 	mTarget.distance = Utils::GetDistance(position.x, position.y, x, y);
@@ -129,8 +101,8 @@ void Entity::Update()
 
 	if (mTarget.isSet) 
 	{
-		float x1 = GetPosition(1.f, 1.f).x;
-		float y1 = GetPosition(1.f, 1.f).y;
+		float x1 = GetPosition(0.f, 0.f).x;
+		float y1 = GetPosition(0.f, 0.f).y;
 
 		float x2 = x1 + mDirection.x * mTarget.distance;
 		float y2 = y1 + mDirection.y * mTarget.distance;
