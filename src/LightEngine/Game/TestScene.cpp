@@ -112,7 +112,7 @@ void TestScene::OnUpdate()
 		if (dynamic_cast<Player*>(entity))
 		{
 			//Je sais pas si c'est normal mais avec la view c'est le bordel pour le moment 
-			//mView.setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115);
+			mView.setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115);
 			dynamic_cast<Player*>(entity)->Jump(GetDeltaTime());
 		}
 
