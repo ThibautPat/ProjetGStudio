@@ -95,7 +95,7 @@ void Entity::SetDirection(float x, float y, float speed)
 
 void Entity::Update()
 {
-	sf::Vector2f oldPos = GetPosition(0.f, 0.f);
+	//sf::Vector2f oldPos = GetPosition(0.f, 0.f);
 
 	float dt = GetDeltaTime();
 	float distance = dt * mSpeed;

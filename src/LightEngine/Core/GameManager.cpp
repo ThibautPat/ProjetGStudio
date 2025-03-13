@@ -127,6 +127,10 @@ void GameManager::HandleInput()
 void GameManager::Update()
 {
 	mpScene->OnUpdate();
+
+	//#TODO pas bo
+	mpScene->mCam->Update(mpScene->GetView());
+
     //Update
     for (auto it = mEntities.begin(); it != mEntities.end(); )
     {

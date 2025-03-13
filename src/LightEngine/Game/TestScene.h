@@ -13,7 +13,7 @@ class TestScene : public Scene
 protected:
 
 	GameManager* m_InstanceGameManager;
-	sf::View* mView;
+	//sf::View* mView;
 	sf::Clock menuClock;
 	sf::Clock escapeClockGap;
 

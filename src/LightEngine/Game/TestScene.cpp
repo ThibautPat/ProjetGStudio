@@ -61,7 +61,11 @@ void TestScene::OnUpdate()
 	{
 		if (dynamic_cast<Player*>(entity))
 		{
-			mView->setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame 
+			sf::Vector2f pos = sf::Vector2f(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115);
+			mCam->GoTo(pos);
+			//mView->setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame 
+			
+			//mCam->Zoom(mView, 0.99, 0.99);
 		}
 
 		sf::Vector2f cooEntity = entity->GetPosition(0.f, 0.f);
