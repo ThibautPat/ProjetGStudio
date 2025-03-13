@@ -66,7 +66,7 @@ void TestScene::OnInitialize()
 
 	for (int i = 0; i <= ENTITY_NB; i++) 
 	{
-		RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(500, 500, sf::Color::Red);
+		RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(400, 400, sf::Color::Red);
 		pEntity->SetPosition(i*400 + 600, 0);
 		pEntity->SetRigidBody(true);
 		pEntity->SetIsKinematic(true);

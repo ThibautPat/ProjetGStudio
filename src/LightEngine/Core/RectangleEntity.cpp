@@ -80,8 +80,7 @@ void RectangleEntity::Repulse(Entity* other)
     if ((mMove.x <= 0) || (mMove.x >= 0))
     {
 		SetPosition(other->GetPosition(0.f, 0.f).x-place*width2*0.5f - place * width1 * 0.5f, GetPosition(0.f,0.f).y);
-        // Le joueur se déplace vers l'autre objet, donc on l'arrête
-        mSpeed = 0.f;
+        mSpeed = 0.f; // Le joueur se déplace vers l'autre objet, donc on l'arrête
     }
 }
 
