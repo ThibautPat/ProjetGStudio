@@ -36,7 +36,7 @@ protected:
     int mTag = -1;
 	bool mRigidBody = false;
 	bool mKinematic = false;
-
+	bool hasCollidingLastFrame = false;
 	bool mBoolGravity = true;
 	float mGravitySpeed = 0.f;
 	float mSpeed = 0.f;

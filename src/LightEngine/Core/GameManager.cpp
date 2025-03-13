@@ -53,6 +53,11 @@ void GameManager::FixedUpdate()
 				entity->OnCollision(otherEntity);
 				otherEntity->OnCollision(entity);
 			}
+			else if (entity->hasCollidingLastFrame)
+			{
+				entity->mBoolGravity = true;
+				entity->hasCollidingLastFrame = false;
+			}
 		}
 	}
 }
