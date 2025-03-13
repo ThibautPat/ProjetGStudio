@@ -55,7 +55,7 @@ void TestScene::OnEvent(const sf::Event& event)
 void TestScene::OnUpdate()
 {
 
-	m_InstanceGameManager->GetWindow()->setView(*mView); // Voir si possibilit� de ne pas call la view chaque frame
+	
 
 	for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
 	{
@@ -80,4 +80,5 @@ void TestScene::OnUpdate()
 		Debug::DrawCircle(cooEntity.x, cooEntity.y, 5, sf::Color::White);
 	}
 	Debug::ShowFPS(mView->getCenter().x - GetWindowWidth() / 2 + 10, mView->getCenter().y - GetWindowHeight() / 2 + 10);
+	m_InstanceGameManager->GetWindow()->setView(*mView); // Voir si possibilit� de ne pas call la view chaque frame
 }
