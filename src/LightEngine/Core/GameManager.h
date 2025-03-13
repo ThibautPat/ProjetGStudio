@@ -2,12 +2,16 @@
 
 #include <list>
 
-#include <SFML/Graphics/Color.hpp>
-#include <SFML/Graphics/Text.hpp>
+
+#include <SFML/Graphics.hpp>
+
+#define FIXED_DT 0.0167f
 
 class Entity;
 class Scene;
 class Debug;
+class InputManager;
+class TextureManager;
 
 namespace sf 
 {
@@ -17,10 +21,10 @@ namespace sf
 
 class GameManager
 {
+protected:
 	std::list<Entity*> mEntities;
 	std::list<Entity*> mEntitiesToDestroy;
 	std::list<Entity*> mEntitiesToAdd;
-
 	sf::RenderWindow* mpWindow;
 	sf::Font mFont;
 
@@ -33,7 +37,10 @@ class GameManager
 
 	sf::Color mClearColor;
 
-private:
+	float mAccumulatedDt = 0.f;
+
+	TextureManager* mAs;
+
 	GameManager();
 
 	void Run();
@@ -46,18 +53,29 @@ private:
 
 	
 
+	void FixedUpdate();
+
 public:
 	~GameManager();
 	static GameManager* Get();
-	sf::RenderWindow* GetWindow() const { return mpWindow; }
-	void CreateWindow(unsigned int width, unsigned int height, const char* title, int fpsLimit = 60, sf::Color clearColor = sf::Color::Black);
+	TextureManager* GetAssetsManager() { return mAs; }
 
+	void UpdateCollision(Entity* mEntities);
+
+	void CreateWindow(unsigned int width, unsigned int height, const char* title, int fpsLimit = 60, sf::Color clearColor = sf::Color::Black);
+	sf::RenderWindow* GetWindow() const { return mpWindow; }
 	template<typename T>
 	void LaunchScene();
 
 	float GetDeltaTime() const { return mDeltaTime; }
 	Scene* GetScene() const { return mpScene; }
 	sf::Font& GetFont() { return mFont; };
+	
+	template<typename T>
+	std::list<T*>& GetEntities();
+
+	template<typename T>
+	T* GetEntity(int tag);
 
 	friend Debug;
 	friend Scene;

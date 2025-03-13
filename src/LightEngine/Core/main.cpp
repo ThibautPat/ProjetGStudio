@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "GameManager.h"
-#include "SampleScene.h"
+#include "../Game/TestScene.h"
 
 #include <cstdlib>
 #include <crtdbg.h>
@@ -12,9 +12,9 @@ int main()
 {
     GameManager* pInstance = GameManager::Get();
 
-	pInstance->CreateWindow(1280, 720, "SampleScene", 60, sf::Color::Black);
+	pInstance->CreateWindow(1280, 720, "TestScene", 63, sf::Color::Black);
 	
-	pInstance->LaunchScene<SampleScene>();
+	pInstance->LaunchScene<TestScene>();
 
 	return 0;
 }

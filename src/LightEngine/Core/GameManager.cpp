@@ -1,11 +1,13 @@
 #include "GameManager.h"
 
 #include "Entity.h"
+#include "TextureRender.h"
 #include "Debug.h"
+#include "../Core/InputManager.h"
+#include "../Core/TextureManager.h"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-
 #include <iostream>
 
 GameManager::GameManager()
@@ -15,6 +17,7 @@ GameManager::GameManager()
 	mpScene = nullptr;
 	mWindowWidth = -1;
 	mWindowHeight = -1;
+	mAs = new TextureManager();
 }
 
 GameManager* GameManager::Get()
@@ -22,6 +25,36 @@ GameManager* GameManager::Get()
 	static GameManager mInstance;
 
 	return &mInstance;
+}
+
+void GameManager::FixedUpdate()
+{
+	for (Entity* entity : mEntities) {
+		entity->FixedUpdate(FIXED_DT);
+	}
+	
+	//Collision
+	for (auto it1 = mEntities.begin(); it1 != mEntities.end(); ++it1)
+	{
+		auto it2 = it1;
+		++it2;
+		for (; it2 != mEntities.end(); ++it2)
+		{
+			Entity* entity = *it1;
+			Entity* otherEntity = *it2;
+
+			if (entity->IsColliding(otherEntity))
+			{
+				if (entity->IsRigidBody() && otherEntity->IsRigidBody())
+				{
+					entity->Repulse(otherEntity);
+				}
+
+				entity->OnCollision(otherEntity);
+				otherEntity->OnCollision(entity);
+			}
+		}
+	}
 }
 
 GameManager::~GameManager()
@@ -65,13 +98,15 @@ void GameManager::Run()
 	sf::Clock clock;
 	while (mpWindow->isOpen())
 	{
-		SetDeltaTime(clock.restart().asSeconds());
-
-		HandleInput();
-
-		Update();
 		
-		Draw();
+		SetDeltaTime(clock.restart().asSeconds());
+		
+		HandleInput();
+		
+			Update();
+		
+			Draw();
+		
 	}
 }
 
@@ -92,14 +127,13 @@ void GameManager::HandleInput()
 void GameManager::Update()
 {
 	mpScene->OnUpdate();
-
     //Update
     for (auto it = mEntities.begin(); it != mEntities.end(); )
     {
 		Entity* entity = *it;
 
-        entity->Update();
-
+		entity->Update();
+		
         if (entity->ToDestroy() == false)
         {
             ++it;
@@ -110,26 +144,16 @@ void GameManager::Update()
         it = mEntities.erase(it);
     }
 
-    //Collision
-    for (auto it1 = mEntities.begin(); it1 != mEntities.end(); ++it1)
-    {
-        auto it2 = it1;
-        ++it2;
-        for (; it2 != mEntities.end(); ++it2)
-        {
-            Entity* entity = *it1;
-            Entity* otherEntity = *it2;
-
-            if (entity->IsColliding(otherEntity))
-            {
-				if (entity->IsRigidBody() && otherEntity->IsRigidBody())
-					entity->Repulse(otherEntity);
-
-                entity->OnCollision(otherEntity);
-                otherEntity->OnCollision(entity);
-            }
-        }
-    }
+	//FixedUpdate
+	mAccumulatedDt += mDeltaTime;
+	while (mAccumulatedDt >= FIXED_DT)
+	{
+		if (!mpScene->freeze)
+		{
+			FixedUpdate();
+		}
+		mAccumulatedDt -= FIXED_DT;
+	}
 
 	for (auto it = mEntitiesToDestroy.begin(); it != mEntitiesToDestroy.end(); ++it) 
 	{
@@ -153,6 +177,21 @@ void GameManager::Draw()
 	for (Entity* entity : mEntities)
 	{
 		mpWindow->draw(*entity->GetShape());
+
+		// Draw texture
+		if (entity->GetTextured()) {
+			sf::Texture* text = entity->GetTextured()->GetTexture();
+			sf::Sprite spr;
+			spr.setTexture(*text);
+			float offset = 0.5f;
+			sf::Vector2f renderPos = sf::Vector2f(
+				entity->GetPosition(0,0).x - text->getSize().x * offset, 
+				entity->GetPosition(0, 0).y - text->getSize().y * offset);
+			spr.setPosition(renderPos);
+
+			mpWindow->draw(spr);
+		}
+		//-------------------	
 	}
 	
 	Debug::Get()->Draw(mpWindow);

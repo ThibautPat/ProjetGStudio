@@ -6,6 +6,8 @@
 
 #include <string>
 
+#include "../Game/TestScene.h"
+
 Debug* Debug::Get()
 {
 	static Debug mInstance;
@@ -91,4 +93,15 @@ void Debug::DrawText(float x, float y, const std::string& text, float ratioX, fl
 	sfText.setOrigin(bounds.width * ratioX, bounds.height * ratioY);
 
 	Debug::Get()->mTexts.push_back(sfText);
+}
+
+void Debug::ShowFPS(float x, float y, const sf::Color& color)
+{
+	int fps = 1.f / GameManager::Get()->GetDeltaTime();
+	if (fps > 60)
+	{
+		fps = 60;
+	}
+	std::string text = std::to_string(fps) + " FPS";
+	DrawText(x, y, text, 0.f, 0.f, color);
 }
