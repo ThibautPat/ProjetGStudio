@@ -1,11 +1,13 @@
 #pragma once
 
 #include "Entity.h"
-#include "AssetsManager.h"
+#include "TextureManager.h"
 
-class Textured
+class TextureRender
 {
 protected:
+
+	//Revoir avec un rect pour le rendu
 	sf::Texture mText;
 
 	//peut être utile pour les animations ?
@@ -13,7 +15,7 @@ protected:
 
 public:
 
-	Textured() {};
+	TextureRender() {};
 
 	/// <summary>
 	/// Charge une texture depuis un fichier et l'associe à un nom. Le tout est stocke dans l'AssetManager, puis la texture brute est liee à l'entity.

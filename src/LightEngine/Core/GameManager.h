@@ -11,7 +11,7 @@ class Entity;
 class Scene;
 class Debug;
 class InputManager;
-class AssetsManager;
+class TextureManager;
 
 namespace sf 
 {
@@ -39,7 +39,7 @@ protected:
 
 	float mAccumulatedDt = 0.f;
 
-	AssetsManager* mAs;
+	TextureManager* mAs;
 
 	GameManager();
 
@@ -58,7 +58,7 @@ protected:
 public:
 	~GameManager();
 	static GameManager* Get();
-	AssetsManager* GetAssetsManager() { return mAs; }
+	TextureManager* GetAssetsManager() { return mAs; }
 
 	void CreateWindow(unsigned int width, unsigned int height, const char* title, int fpsLimit = 60, sf::Color clearColor = sf::Color::Black);
 	sf::RenderWindow* GetWindow() const { return mpWindow; }

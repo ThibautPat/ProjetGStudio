@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "../Core/InputManager.h"
 #include "../Core/Debug.h"
-#include "../Core/AssetsManager.h"
+#include "../Core/TextureManager.h"
 
 void Player::Inertia(float dt, sf::Vector2f movement)
 {
@@ -132,9 +132,9 @@ void Player::OnInitialize()
 	mAs = GameManager::Get()->GetAssetsManager();
 
 	//Setup de la gestion de textures
-	mTextured = new Textured();
+	mTextured = new TextureRender();
 	mTextured->SetupTexture("../../../res/Assets/Tilemap/tilemap_packed.png", "tilemap");
-	mAs->SetTexture(mTextured->GetTextName(), mTextured, sf::IntRect(0, 0, 18, 18));
+	mAs->Find(mTextured->GetTextName(), mTextured, sf::IntRect(0, 0, 18, 18));
 }
 
 sf::Vector2f Player::InputDirection()

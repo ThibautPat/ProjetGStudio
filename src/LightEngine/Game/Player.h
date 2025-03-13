@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include <iostream>
-#include "../Core/Textured.h"
+#include "../Core/TextureRender.h"
 #include "../Core/GameManager.h"
 #include "../Core/RectangleEntity.h"
 
@@ -25,10 +25,10 @@ class Player : public RectangleEntity
 	sf::Vector2f mLastMovement;
 
 	//Gestionnaire de texture de l'entity
-	Textured* mTextured;
+	TextureRender* mTextured;
 
 	//Gestionnaire de texture de la scene
-	AssetsManager* mAs;
+	TextureManager* mAs;
 
 protected:
 
@@ -44,7 +44,7 @@ protected:
 
 public: 
 
-	Textured* GetTextured() { return mTextured; }
+	TextureRender* GetTextured() { return mTextured; }
 
 	void OnInitialize() override;
 	sf::Vector2f InputDirection();

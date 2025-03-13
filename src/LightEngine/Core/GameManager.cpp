@@ -1,10 +1,10 @@
 #include "GameManager.h"
 
 #include "Entity.h"
-#include "Textured.h"
+#include "TextureRender.h"
 #include "Debug.h"
 #include "../Core/InputManager.h"
-#include "../Core/AssetsManager.h"
+#include "../Core/TextureManager.h"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -17,7 +17,7 @@ GameManager::GameManager()
 	mpScene = nullptr;
 	mWindowWidth = -1;
 	mWindowHeight = -1;
-	mAs = new AssetsManager();
+	mAs = new TextureManager();
 }
 
 GameManager* GameManager::Get()
