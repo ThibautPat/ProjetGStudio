@@ -42,10 +42,11 @@ protected:
 	float mSpeed = 0.f;
 
 public:
-
+	bool isGrounded = false;
 	int secondjump = 2;
 	bool IsOnGround() { return not mBoolGravity; }
 	float GetGravitySpeed() { return mGravitySpeed; }
+	void SetGravitySpeed(float speed) { mGravitySpeed = speed; }
 	float GetSpeed() { return mSpeed;  }
 	virtual TextureRender* GetTextured() { return nullptr; }
 

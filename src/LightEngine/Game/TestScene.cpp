@@ -4,6 +4,34 @@
 #include <iostream>
 #include "../Core/Debug.h"
 #include "../Game/Player.h"
+#include "../Game/CheckPoint.h"
+void TestScene::Die()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) || sf::Joystick::isButtonPressed(0, 2))
+	{
+		playerDead = true;
+		respawnPlayer();
+	}
+}
+void TestScene::respawnPlayer()
+{
+
+	if (playerDead)
+	{
+		playerDead = false;
+
+		for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
+		{
+			if (dynamic_cast<Player*>(entity))
+			{
+				entity->SetPosition(spawnPoint.x, spawnPoint.y);
+				entity->SetGravity(true);
+				entity->SetGravitySpeed(0.f);
+				entity->SetSpeed(0.f);
+			}
+		}
+	}
+}
 
 void TestScene::OnInitialize()
 {
@@ -15,7 +43,13 @@ void TestScene::OnInitialize()
 	pEntity->SetRigidBody(true);
 	pEntity->SetIsKinematic(false);
 	pEntity->SetPosition(100, 100);
+	spawnPoint = pEntity->GetPosition(0.f, 0.f);
 
+	CheckPoint* pCheckPoint = CreateRectEntity<CheckPoint>(100, 100, sf::Color::Transparent); // Ajout du CheckPoint et setup
+	pCheckPoint->SetGravity(false);
+	pCheckPoint->SetRigidBody(false);
+	pCheckPoint->SetIsKinematic(true);
+	pCheckPoint->SetPosition(800, 670);
 
 	for (int i = 0; i <= ENTITY_NB; i++)
 	{
@@ -54,22 +88,34 @@ void TestScene::OnEvent(const sf::Event& event)
 
 void TestScene::OnUpdate()
 {
+	Die();
+	respawnPlayer();
 
-	
 
 	for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
 	{
 		if (dynamic_cast<Player*>(entity))
 		{
 			mView->setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame 
+			for (Entity* entiti : m_InstanceGameManager->GetEntities<Entity>())
+			{
+				if (dynamic_cast<CheckPoint*>(entiti))
+				{
+					if (entity->IsColliding(entiti))
+					{
+						spawnPoint = entiti->GetPosition(0.f, 0.f);
+						entiti->ToDestroy();
+					}
+				}
+			}
 		}
-
 		sf::Vector2f cooEntity = entity->GetPosition(0.f, 0.f);
 
 		if (cooEntity.y + entity->GetShape()->getGlobalBounds().height * 0.5f > 720)
 		{
 			entity->SetGravity(false);
 			entity->SetPosition(cooEntity.x, 720 - entity->GetShape()->getGlobalBounds().height * 0.5f, 0.f, 0.f);
+			entity->secondjump = 2;
 		}
 
 		// Affichage de quelque informations

@@ -14,13 +14,14 @@ class Collider;
 
 class RectangleEntity : public Entity
 {
+	
 protected: 
 
-	AABBCollider* mCollider;
+	
 	sf::RectangleShape mShape;
-
+	bool canJump = false;
 public:
-
+	AABBCollider* mCollider;
 	// Hérité via Entity
 	Collider* GetCollider() override;
 	sf::Shape* GetShape() override;

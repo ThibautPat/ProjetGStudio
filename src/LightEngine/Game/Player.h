@@ -44,6 +44,7 @@ protected:
 
 public: 
 
+
 	TextureRender* GetTextured() { return mTextured; }
 
 	void OnInitialize() override;

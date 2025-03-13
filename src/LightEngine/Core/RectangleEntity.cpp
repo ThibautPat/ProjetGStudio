@@ -72,17 +72,47 @@ void RectangleEntity::Repulse(Entity* other)
     // V�rifier si le joueur se d�place vers l'autre objet
     std::string debug = "mDirection.x: " + std::to_string(mMove.x) + ", normal.x: " + std::to_string(normal.x) + ", mSpeed: " + std::to_string(mSpeed);
     Debug::DrawText(GetPosition(0.f, 0.f).x, GetPosition(0.f, 0.f).y + 100, debug, sf::Color::Cyan);
-    int place;
-    if (normal.x < 0)
-        place = 1;
-    else
-        place = -1;
-    if ((mMove.x <= 0) || (mMove.x >= 0))
-    {
-        SetPosition(other->GetPosition(0.f, 0.f).x - place * width2 * 0.5f - place * width1 * 0.5f, GetPosition(0.f, 0.f).y);
-        // Le joueur se d�place vers l'autre objet, donc on l'arr�te
-        mSpeed = 0.f;
-    }
+
+        int place;
+
+        if (mCollider->GetCollideFace()->x != 0) 
+        {
+            if (mCollider->GetCollideFace()->x > 0)
+                place = 1;
+            else
+                place = -1;
+            if ((mMove.x <= 0) || (mMove.x >= 0))
+            {
+                SetPosition(other->GetPosition(0.f, 0.f).x - place * width2 * 0.5f - place * width1 * 0.5f, GetPosition(0.f, 0.f).y);
+                // Le joueur se d�place vers l'autre objet, donc on l'arr�te
+                mSpeed = 0.f;
+            }
+        }
+        else 
+        {
+            if (mCollider->GetCollideFace()->y > 0)
+            {
+                place = 1;
+				mBoolGravity = false;
+				canJump = true;
+                mGravitySpeed = 0.f;
+				secondjump = 2;
+            }
+            else
+            {
+				mGravitySpeed = 0.f;
+                place = -1;
+            }
+            if ((mMove.y <= 0) || (mMove.y >= 0))
+            {
+                SetGravity(false);
+                secondjump = 2;
+				SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * width2 * 0.5f - place * width1 * 0.5f - 0.1f);
+                // Le joueur se d�place vers l'autre objet, donc on l'arr�te
+                hasCollidingLastFrame = true;
+            }
+        }
+		mCollider->gap = 0.0000001f;
 }
 
 void RectangleEntity::Update()

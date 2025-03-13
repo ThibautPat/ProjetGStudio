@@ -6,13 +6,14 @@ class AABBCollider : public Collider
 {
 protected:
 	sf::Vector2f mCollideFace;
-
+	sf::Vector2f mCollidedFace;
+	
 public:
 	AABBCollider(float xMin, float yMin, float xMax, float yMax);
 
-	sf::Vector2f* GetCollideFace() { return &mCollideFace; }
-
-	// Hérité via Collider
+	sf::Vector2f* GetCollideFace() { return &mCollidedFace; }
+	float gap = 0;
+	// Hï¿½ritï¿½ via Collider
 	bool IsColliding(Collider* pOther) override;
 	/// <summary>
 	/// Update de la position du collider avant l'update de l'entity. Reset la face de collision de la frame d'avant.

@@ -31,13 +31,15 @@ void Player::Inertia(float dt, sf::Vector2f movement)
 void Player::Jump(float dt)
 {
 	mPData->pJumpDuration += dt;
-	if (mBoolGravity && secondjump == 0)
+	if (mBoolGravity && secondjump <= 0)
 		return;
 	if (mPData->pJumpDuration <mPData->mJumpTime)
 		return;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0))
 	{
+		SetPosition(GetPosition(0.f, 0.f).x, GetPosition(0.f, 0.f).y - 2);
 		secondjump -=1;
+		canJump = false;
 		mPData->pJumpDuration = 0;
 		mGravitySpeed = -mPData->mJumpHeight; // voir fonction ? 
 		mBoolGravity = true;
@@ -109,13 +111,16 @@ void Player::Crouch()
 
 void Player::FixedUpdate(float dt)
 {
-	Fall(dt);
-	Jump(dt);
-	Move(InputDirection(), dt);
+
+	
 }
 
 void Player::OnUpdate()
 {
+	float dt = GetDeltaTime();
+	Jump(dt);
+	Fall(dt);
+	Move(InputDirection(), dt);
 	// Debug de valeur
 	std::string text = std::to_string(PlayerState);
 	Debug::DrawText(mShape.getPosition().x,mShape.getPosition().y - 30, text ,sf::Color::White);
