@@ -1,4 +1,5 @@
 #pragma once
+
 class Collider {
 public:
 	Collider(float xMin, float yMin, float xMax, float yMax);
