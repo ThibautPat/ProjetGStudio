@@ -21,17 +21,17 @@ bool RectangleEntity::IsInside(float x, float y)
     return mShape.getGlobalBounds().contains(sf::Vector2f(x, y));
 }
 
-void RectangleEntity::Initialize(float height, float Width, const sf::Color& color)
+void RectangleEntity::Initialize(float height, float width, const sf::Color& color)
 {
-	mCollider = new AABBCollider(0.f, 0.f, height, Width);
+	mCollider = new AABBCollider(0.f, 0.f, width, height);
 
-	mSizeX = Width / 2;
+	mSizeX = width / 2;
 	mSizeY = height / 2;
 
 	mDirection = sf::Vector2f(0.0f, 0.0f);
 
 	mShape.setOrigin(0.f, 0.f);
-	mShape.setSize(sf::Vector2f(Width, height));
+	mShape.setSize(sf::Vector2f(width, height));
 	mShape.setFillColor(color);
 
 	mTarget.isSet = false;
@@ -41,46 +41,44 @@ void RectangleEntity::Initialize(float height, float Width, const sf::Color& col
 
 void RectangleEntity::Repulse(Entity* other)
 {
-	float width1 = mShape.getGlobalBounds().width;
-	float width2 = other->GetShape()->getGlobalBounds().width;
-
-	float height1 = mShape.getGlobalBounds().height;
-	float height2 = other->GetShape()->getGlobalBounds().height;
-
-
-	//Collision Top
-	sf::Vector2f position = sf::Vector2f(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - (height1 * 0.5f) - (height2 * 0.5f) - 1);
-
-	sf::Vector2f pos = other->GetPosition(0.f, 0.f);
-
-	SetPosition(position.x, position.y);
-
-	//if (other->IsKinematic()) {
-	//	sf::Vector2f position2 = other->GetPosition(0.f, 0.f);
-	//	other->SetPosition(position2.x, position2.y);
-	//}
-
-	//sf::Vector2f distance = GetPosition(0.f, 0.f) - other->GetPosition(0.f, 0.f);
-
-	//float sqrLength = (distance.x * distance.x) + (distance.y * distance.y);
-	//float length = std::sqrt(sqrLength);
-
 	//float width1 = mShape.getGlobalBounds().width;
 	//float width2 = other->GetShape()->getGlobalBounds().width;
 
-	//float overlap = (length - (width1 + width2)) * 0.5f;
+	//float height1 = mShape.getGlobalBounds().height;
+	//float height2 = other->GetShape()->getGlobalBounds().height;
 
-	//sf::Vector2f normal = distance / length;
 
-	//sf::Vector2f translation = overlap * normal;
+	//Collision Top
+	//sf::Vector2f position = sf::Vector2f(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - (height1 * 0.5f) - (height2 * 0.5f) - 1);
 
-	//translation *= 0.05f;
+	//sf::Vector2f pos = other->GetPosition(0.f, 0.f);
 
-	//sf::Vector2f position1 = GetPosition(0.f, 0.f) - translation;
-	//sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation;
+	//SetPosition(position.x, position.y);
 
-	//SetPosition(position1.x, position1.y);
-	//other->SetPosition(position2.x, position2.y);
+	sf::Vector2f distance = GetPosition(0.f, 0.f) - other->GetPosition(0.f, 0.f);
+
+	float sqrLength = (distance.x * distance.x) + (distance.y * distance.y);
+	float length = std::sqrt(sqrLength);
+
+	float width1 = mShape.getGlobalBounds().width;
+	float width2 = other->GetShape()->getGlobalBounds().width;
+
+	float overlap = (length - (width1 + width2)) * 0.5f;
+
+	sf::Vector2f normal = distance / length;
+
+	sf::Vector2f translation = overlap * normal;
+
+	translation *= 0.05f;
+
+	sf::Vector2f position1 = GetPosition(0.f, 0.f) - translation;
+
+	SetPosition(position1.x, position1.y);
+
+	if (other->IsKinematic()) {
+		sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation;
+		other->SetPosition(position2.x, position2.y);
+	}
 }
 
 void RectangleEntity::Update()
