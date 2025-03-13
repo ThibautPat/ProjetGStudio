@@ -53,7 +53,7 @@ public:
 	void Move(sf::Vector2f movement, float dt);
 	void Crouch();
 
-	void OnUpdate() override;
+	void OnUpdate() override; //Tout faire ici, car un override de Entity::Update() ne serait pas pris en compte par les colliders
 	void FixedUpdate(float dt) override; 
 	
 	~Player();

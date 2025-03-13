@@ -29,7 +29,7 @@ public:
 	void Initialize(float radius, const sf::Color& color) override {};
 	void Initialize(float height, float Width, const sf::Color& color) override;
 	void Repulse(Entity* other) override;
-	void Update(); //override
+	void Update() override; //override
 
 	virtual void OnUpdate();
 	virtual void OnCollision(Entity* collidedWith);
