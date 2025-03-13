@@ -1,5 +1,6 @@
 ﻿#include "RectangleEntity.h"
 #include "AABBCollider.h"
+#include "Debug.h"
 #include <iostream>
 
 Collider* RectangleEntity::GetCollider()
@@ -64,8 +65,6 @@ void RectangleEntity::Repulse(Entity* other)
     sf::Vector2f normal = distance / length;
 
     sf::Vector2f translation = overlap * normal;
-	
-	sf::Vector2f distance = GetPosition(0.f, 0.f) - other->GetPosition(0.f, 0.f);
 
     sf::Vector2f position1 = GetPosition(0.f, 0.f) - translation;
     sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation;
