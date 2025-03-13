@@ -42,23 +42,28 @@ void RectangleEntity::Initialize(float height, float Width, const sf::Color& col
 
 void RectangleEntity::Repulse(Entity* other)
 {
-	//Tests collisions
+    if (IsKinematic())
+    {
+        SetPosition(GetPosition(0.f, 0.f).x, GetPosition(0.f, 0.f).y);
+        return;
+    }
+    if (other->IsKinematic())
+    {
+        other->SetPosition(other->GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y);
+    }
+    sf::Vector2f distance = GetPosition(0.f, 0.f) - other->GetPosition(0.f, 0.f);
 
-	//float width1 = mShape.getGlobalBounds().width;
-	//float width2 = other->GetShape()->getGlobalBounds().width;
+    float sqrLength = (distance.x * distance.x) + (distance.y * distance.y);
+    float length = std::sqrt(sqrLength);
 
-	//float height1 = mShape.getGlobalBounds().height;
-	//float height2 = other->GetShape()->getGlobalBounds().height;
+    int width1 = mShape.getGlobalBounds().width;
+    int width2 = other->GetShape()->getGlobalBounds().width;
 
-	//sf::Vector2f position1 = GetPosition(0.f, 0.f);
-	//sf::Vector2f position2 = sf::Vector2f(other->GetPosition(1.f, 1.f).x - height1 - height2 * 0.5f - 1, other->GetPosition(1.f, 1.f).y - width1 - width2 * 0.5f - 1);
+    float overlap = (length - (width1 + width2)) * 0.5f;
 
-	//SetPosition(position1.x, position2.y);
+    sf::Vector2f normal = distance / length;
 
-	//if (other->IsKinematic()) {
-	//	sf::Vector2f position2 = other->GetPosition(0.f, 0.f);
-	//	other->SetPosition(position2.x, position2.y);
-	//}
+    sf::Vector2f translation = overlap * normal;
 
 
 	/*
@@ -109,8 +114,8 @@ void RectangleEntity::Repulse(Entity* other)
 
 	sf::Vector2f distance = GetPosition(0.f, 0.f) - other->GetPosition(0.f, 0.f);
 
-	float sqrLength = (distance.x * distance.x) + (distance.y * distance.y);
-	float length = std::sqrt(sqrLength);
+    sf::Vector2f position1 = GetPosition(0.f, 0.f) - translation;
+    sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation;
 
 	float width1 = mShape.getGlobalBounds().width;
 	float width2 = other->GetShape()->getGlobalBounds().width;
@@ -138,7 +143,7 @@ void RectangleEntity::Update()
 {
     mCollider->Update(GetPosition(0.f, 0.f).x - mCollider->mWidth / 2.f, GetPosition(0.f, 0.f).y - mCollider->mHeight / 2.f);
 
-	//#TODO : à revoir pour éviter de perdre les comportement des classes héritées ?
+	//#TODO : ï¿½ revoir pour ï¿½viter de perdre les comportement des classes hï¿½ritï¿½es ?
     Entity::Update();
 }
 
