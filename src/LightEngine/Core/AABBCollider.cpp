@@ -28,16 +28,16 @@ bool AABBCollider::IsColliding(Collider* pOther) {
 
 		
 		if (co.x < coOther.x)
-			mCollideFace.x = -1;
+			mCollideFace.x = 1;
 			
 		if (co.x > coOther.x) 
-			mCollideFace.x = 1;
+			mCollideFace.x = -1;
 
 		if (co.y < coOther.y)
-			mCollideFace.y = -1;
+			mCollideFace.y = 1;
 			
 		if (co.y > coOther.y)
-			mCollideFace.y = 1;
+			mCollideFace.y = -1;
 		
 		float diffx = abs(coOther.x - co.x);
 		float diffy = abs(coOther.y - co.y);
