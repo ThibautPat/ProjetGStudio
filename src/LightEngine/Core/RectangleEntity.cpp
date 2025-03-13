@@ -138,6 +138,7 @@ void RectangleEntity::Update()
 {
     mCollider->Update(GetPosition(0.f, 0.f).x - mCollider->mWidth / 2.f, GetPosition(0.f, 0.f).y - mCollider->mHeight / 2.f);
 
+	//#TODO : à revoir pour éviter de perdre les comportement des classes héritées ?
     Entity::Update();
 }
 
