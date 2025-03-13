@@ -1,4 +1,4 @@
-#include "RectangleEntity.h"
+ï»¿#include "RectangleEntity.h"
 #include "AABBCollider.h"
 #include "Debug.h"
 Collider* RectangleEntity::GetCollider()
@@ -69,18 +69,19 @@ void RectangleEntity::Repulse(Entity* other)
     sf::Vector2f position1 = GetPosition(0.f, 0.f) - translation;
     sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation;
 
-    // Vérifier si le joueur se déplace vers l'autre objet
+    // Vï¿½rifier si le joueur se dï¿½place vers l'autre objet
     std::string debug = "mDirection.x: " + std::to_string(mMove.x) + ", normal.x: " + std::to_string(normal.x) + ", mSpeed: " + std::to_string(mSpeed);
-	Debug::DrawText(GetPosition(0.f, 0.f).x, GetPosition(0.f, 0.f).y+100, debug, sf::Color::Cyan); 
+    Debug::DrawText(GetPosition(0.f, 0.f).x, GetPosition(0.f, 0.f).y + 100, debug, sf::Color::Cyan);
     int place;
     if (normal.x < 0)
-		place = 1;
-	else
-		place = -1;
+        place = 1;
+    else
+        place = -1;
     if ((mMove.x <= 0) || (mMove.x >= 0))
     {
-		SetPosition(other->GetPosition(0.f, 0.f).x-place*width2*0.5f - place * width1 * 0.5f, GetPosition(0.f,0.f).y);
-        mSpeed = 0.f; // Le joueur se déplace vers l'autre objet, donc on l'arrête
+        SetPosition(other->GetPosition(0.f, 0.f).x - place * width2 * 0.5f - place * width1 * 0.5f, GetPosition(0.f, 0.f).y);
+        // Le joueur se dï¿½place vers l'autre objet, donc on l'arrï¿½te
+        mSpeed = 0.f;
     }
 }
 
