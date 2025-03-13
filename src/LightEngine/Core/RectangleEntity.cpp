@@ -93,6 +93,7 @@ void RectangleEntity::Repulse(Entity* other)
             if (mCollider->GetCollideFace()->y > 0)
             {
                 place = 1;
+                mGravitySpeed = 0.f;
 				mBoolGravity = false;
             }
             else
