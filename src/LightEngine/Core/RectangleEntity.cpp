@@ -23,17 +23,17 @@ bool RectangleEntity::IsInside(float x, float y)
     return mShape.getGlobalBounds().contains(sf::Vector2f(x, y));
 }
 
-void RectangleEntity::Initialize(float height, float Width, const sf::Color& color)
+void RectangleEntity::Initialize(float height, float width, const sf::Color& color)
 {
-	mCollider = new AABBCollider(0.f, 0.f, height, Width);
+	mCollider = new AABBCollider(0.f, 0.f, width, height);
 
-	mSizeX = Width / 2;
+	mSizeX = width / 2;
 	mSizeY = height / 2;
 
 	mDirection = sf::Vector2f(0.0f, 0.0f);
 
 	mShape.setOrigin(0.f, 0.f);
-	mShape.setSize(sf::Vector2f(Width, height));
+	mShape.setSize(sf::Vector2f(width, height));
 	mShape.setFillColor(color);
 
 	mTarget.isSet = false;
@@ -102,7 +102,6 @@ void RectangleEntity::Repulse(Entity* other)
             }
             if ((mMove.y <= 0) || (mMove.y >= 0))
             {
-
 				SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * width2 * 0.5f - place * width1 * 0.5f);
                 // Le joueur se d�place vers l'autre objet, donc on l'arr�te
                 hasCollidingLastFrame = true;

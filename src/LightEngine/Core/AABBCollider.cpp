@@ -80,14 +80,6 @@ bool AABBCollider::IsColliding(Collider* pOther) {
 
 		return true;
 	}
-
-	//Colisions Verticales Top
-
-
-
-
-
-
 	return false;
 }
 
