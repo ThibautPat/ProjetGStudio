@@ -57,8 +57,10 @@ void TestScene::OnUpdate()
 
 	m_InstanceGameManager->GetWindow()->setView(*mView); // Voir si possibilit� de ne pas call la view chaque frame
 
+	int i = 0;
 	for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
 	{
+		i++;
 		if (dynamic_cast<Player*>(entity))
 		{
 			mView->setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame 
@@ -78,6 +80,10 @@ void TestScene::OnUpdate()
 		Debug::DrawText(cooEntity.x, cooEntity.y, textCox, sf::Color::White);
 		Debug::DrawText(cooEntity.x, cooEntity.y + 20, textCoy, sf::Color::White);
 		Debug::DrawCircle(cooEntity.x, cooEntity.y, 5, sf::Color::White);
+
+
 	}
+	std::string entitynb = std::to_string(i) + "nb entity";
+	Debug::DrawText(100, 500, entitynb, sf::Color::White);
 	Debug::ShowFPS(mView->getCenter().x - GetWindowWidth() / 2 + 10, mView->getCenter().y - GetWindowHeight() / 2 + 10);
 }

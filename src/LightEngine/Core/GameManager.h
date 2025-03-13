@@ -57,6 +57,9 @@ protected:
 
 public:
 	~GameManager();
+
+	void DrawTextureRender(Entity* entity);
+
 	static GameManager* Get();
 	TextureManager* GetAssetsManager() { return mAs; }
 

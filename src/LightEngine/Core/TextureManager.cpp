@@ -1,11 +1,8 @@
 #include "TextureManager.h"
 #include "TextureRender.h"
+#include <iostream>
 
-TextureManager::TextureManager()
-{
-}
-
-sf::Texture* TextureManager::Load(const char* path, std::string name)
+sf::Texture* TextureManager::LoadTexture(const char* path, std::string name)
 {
 	sf::Texture* text = new sf::Texture();
 	if (!text->loadFromFile(path))
@@ -15,13 +12,16 @@ sf::Texture* TextureManager::Load(const char* path, std::string name)
 	return text;
 }
 
-void TextureManager::Find(std::string name, TextureRender* textured)
+void TextureManager::FindTexture(std::string name, sf::Texture* text)
 {
-	textured->SetTexture(*mAssets.at(name));
+	*text = *mAssets.at(name);
+	//textured->SetTexture(*mAssets.at(name));
 }
 
-void TextureManager::Find(std::string name, TextureRender* textured, sf::IntRect rect)
+void TextureManager::FindTexture(std::string name, sf::IntRect rect, sf::Texture* text)
 {
+	if (mAssets.at(name) == nullptr)
+		std::cout << "Asset on assetmanager null" << std::endl;
 	sf::Texture texture = *mAssets.at(name);
 
 	sf::RenderTexture renderTexture;
@@ -35,6 +35,7 @@ void TextureManager::Find(std::string name, TextureRender* textured, sf::IntRect
 	renderTexture.draw(sprite);
 	renderTexture.display();
 
-	textured->SetTexture(renderTexture.getTexture());
+	*text = renderTexture.getTexture();
+	//textured->SetTexture(renderTexture.getTexture());
 
 }

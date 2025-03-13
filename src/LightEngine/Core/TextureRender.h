@@ -7,8 +7,7 @@ class TextureRender
 {
 protected:
 
-	//Revoir avec un rect pour le rendu
-	sf::Texture mText;
+	sf::IntRect mTextRect;
 
 	//peut être utile pour les animations ?
 	std::string mTextName;
@@ -18,15 +17,22 @@ public:
 	TextureRender() {};
 
 	/// <summary>
-	/// Charge une texture depuis un fichier et l'associe à un nom. Le tout est stocke dans l'AssetManager, puis la texture brute est liee à l'entity.
+	/// Selectionne une texture depuis un fichier et l'associe à un nom (l'ajoute dans l'AssetManager). Defini la zone de la texture (du disctionnaire) a conserver au rendu.
 	/// </summary>
 	/// <param name="path">Chemin d'acces du fichier</param>
-	/// <param name="textName">Nom du fichier attribuer dans le dictionnaire(std::map) de l'AssetManager</param>
-	void SetupTexture(const char* path, const char* textName);
+	/// <param name="textName">Nom du fichier attribuee dans le dictionnaire(std::map) de l'AssetManager</param>
+	/// <param name="rect">Shape de la texture a conserver lors des rendus</param>
+	void AddAndSelectTexture(const char* path, const char* textName, sf::IntRect rect);
+	/// <summary>
+	/// Selectionne une texture (stockee dans l'AssetManager) depuis un nom. Defini la zone de la texture (du disctionnaire) a conserver au rendu.
+	/// </summary>
+	/// <param name="textName">Nom du fichier attribuee dans le dictionnaire(std::map) de l'AssetManager</param>
+	/// <param name="rect">Shape de la texture a conserver lors des rendus</param>
+	void SelectTexture(const char* textName, sf::IntRect rect);
 
+	void SetTextureRect(sf::IntRect& rect) { mTextRect = rect; }
+	sf::IntRect* GetTextureRect() { return &mTextRect; }
 	const std::string& GetTextName() { return mTextName; }
-	void SetTexture(const sf::Texture& text) { mText = text; }
-	sf::Texture* GetTexture() { return &mText; }
 
 };
 

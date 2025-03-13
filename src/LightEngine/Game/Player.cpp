@@ -122,6 +122,14 @@ void Player::OnUpdate()
 
 	std::string text2 = std::to_string(mSpeed);
 	Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 50, text2, sf::Color::White);
+
+	if (testvar >= 110)
+		testvar = 0;
+
+	testvar += 18;
+
+	sf::IntRect rect = sf::IntRect(0, 0, 110, 110);
+	mTextured->SetTextureRect(rect);
 }
 
 void Player::OnInitialize()
@@ -132,9 +140,9 @@ void Player::OnInitialize()
 	mAs = GameManager::Get()->GetAssetsManager();
 
 	//Setup de la gestion de textures
+	mAs->LoadTexture("../../../res/Assets/Tilemap/tilemap_packed.png", "tilemap");
 	mTextured = new TextureRender();
-	mTextured->SetupTexture("../../../res/Assets/Tilemap/tilemap_packed.png", "tilemap");
-	mAs->Find(mTextured->GetTextName(), mTextured, sf::IntRect(0, 0, 18, 18));
+	mTextured->SelectTexture("tilemap", sf::IntRect(0, 0, 110, 110));
 }
 
 sf::Vector2f Player::InputDirection()

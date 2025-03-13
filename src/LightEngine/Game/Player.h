@@ -44,7 +44,9 @@ protected:
 
 public: 
 
-	TextureRender* GetTextured() { return mTextured; }
+	int testvar = 0;
+
+	TextureRender* GetTextureRender() { return mTextured; }
 
 	void OnInitialize() override;
 	sf::Vector2f InputDirection();
