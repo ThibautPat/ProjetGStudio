@@ -26,31 +26,21 @@ bool AABBCollider::IsColliding(Collider* pOther) {
 		float height2 = pOther->mHeight / 2;
 		float height = height1 + height2;
 
-		float diffx = abs(coOther.x - co.x);
-		char sideX = ' ';
-		if (co.x < coOther.x) {
-			sideX = 'L';
+		
+		if (co.x < coOther.x)
 			mCollideFace.x = -1;
-		}
 			
-		if (co.x > coOther.x) {
-			sideX = 'R';
+		if (co.x > coOther.x) 
 			mCollideFace.x = 1;
-		}
-			
 
-		float diffy = abs(coOther.y - co.y);
-		char sideY = ' ';
-		if (co.y < coOther.y) {
+		if (co.y < coOther.y)
 			mCollideFace.y = -1;
-			sideY = 'T';
-		}
 			
-		if (co.y > coOther.y) {
+		if (co.y > coOther.y)
 			mCollideFace.y = 1;
-			sideY = 'B';
-		}
-			
+		
+		float diffx = abs(coOther.x - co.x);
+		float diffy = abs(coOther.y - co.y);
 		float penetrationx = width - diffx;
 		float penetrationy = height - diffy;
 
