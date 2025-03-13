@@ -16,6 +16,9 @@ void GameManager::LaunchScene()
 	mpScene->SetGameManager(this);
 	mpScene->OnInitialize();
 
+	//Setup camera
+	mpScene->GetCamera()->SetView(mpScene->GetView());
+
 	Run();
 }
 

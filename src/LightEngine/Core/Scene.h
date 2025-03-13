@@ -12,7 +12,6 @@ protected:
 	GameManager* mpGameManager;
 
 	CameraMan* mCam = new CameraMan();
-
 	sf::View* mView;
 
 private:
@@ -36,6 +35,7 @@ public:
 
 	float GetDeltaTime() const;
 	sf::View* GetView() { return mView; }
+	CameraMan* GetCamera() { return mCam; }
 
 	bool freeze = false; 
 	int GetWindowWidth() const;

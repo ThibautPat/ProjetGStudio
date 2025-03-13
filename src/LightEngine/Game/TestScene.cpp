@@ -4,6 +4,7 @@
 #include <iostream>
 #include "../Core/Debug.h"
 #include "../Game/Player.h"
+#include "SFML/Graphics.hpp"
 
 void TestScene::OnInitialize()
 {
@@ -61,11 +62,14 @@ void TestScene::OnUpdate()
 	{
 		if (dynamic_cast<Player*>(entity))
 		{
-			sf::Vector2f pos = sf::Vector2f(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115);
+			sf::Vector2f notcenter = m_InstanceGameManager->GetScene()->GetView()->getSize();
+			notcenter.x /= 5;
+			notcenter.y /= 10;
+			sf::Vector2f pos = sf::Vector2f(entity->GetPosition(0.f, 0.f).x + notcenter.x, entity->GetPosition(0.f, 0.f).y - notcenter.y);
 			mCam->GoTo(pos);
-			//mView->setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame 
-			
-			//mCam->Zoom(mView, 0.99, 0.99);
+			//mView->setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115); //Ancien repositionnement de la cam�ra sur le joueur chaque frame 
+			//mCam->Zoom(mView, 0.99, 0.99); //Test avec le zoom (ne pas utiliser à chaque frame)
+			mCam->SetZoom(1, 1); //Test avec le zoom et le notcenter (decalage du personnage pour qu'il ne soit pas centre) VALIDE
 		}
 
 		sf::Vector2f cooEntity = entity->GetPosition(0.f, 0.f);
@@ -83,6 +87,6 @@ void TestScene::OnUpdate()
 		Debug::DrawText(cooEntity.x, cooEntity.y + 20, textCoy, sf::Color::White);
 		Debug::DrawCircle(cooEntity.x, cooEntity.y, 5, sf::Color::White);
 	}
-	Debug::ShowFPS(mView->getCenter().x - GetWindowWidth() / 2 + 10, mView->getCenter().y - GetWindowHeight() / 2 + 10);
+	Debug::ShowFPS(mView->getCenter().x - mView->getSize().x / 2 + 10, mView->getCenter().y - mView->getSize().y / 2 + 10);
 	m_InstanceGameManager->GetWindow()->setView(*mView); // Voir si possibilit� de ne pas call la view chaque frame
 }

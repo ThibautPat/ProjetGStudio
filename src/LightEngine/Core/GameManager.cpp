@@ -18,6 +18,7 @@ GameManager::GameManager()
 	mWindowWidth = -1;
 	mWindowHeight = -1;
 	mAs = new TextureManager();
+	//faire ça ailleur
 }
 
 GameManager* GameManager::Get()
@@ -129,7 +130,7 @@ void GameManager::Update()
 	mpScene->OnUpdate();
 
 	//#TODO pas bo
-	mpScene->mCam->Update(mpScene->GetView());
+	mpScene->mCam->Update();
 
     //Update
     for (auto it = mEntities.begin(); it != mEntities.end(); )

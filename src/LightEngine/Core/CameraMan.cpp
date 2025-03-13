@@ -2,36 +2,51 @@
 #include "GameManager.h"
 #include "Utils.h"
 
-void CameraMan::Update(sf::View* view)
+void CameraMan::SetView(sf::View* view)
 {
-	/*
-	float dt = GameManager::Get()->GetDeltaTime();
-	float distance = dt * 50;
-	sf::Vector2f translation = distance * mDirection;
-
-	sf::Vector2f position = view->getCenter();
-	
-	float x1 = position.x;
-	float y1 = position.y;
-
-	float distance = Utils::GetDistance(position.x, position.y, mDest.x, mDest.y);
-
-	float x2 = x1 + mDest.x * distance2;
-	float y2 = y1 + mDest.y * distance2;
-
-	//mTarget.distance -= distance;
-
-	if (distance <= 0.f)
-	{
-		view->setCenter(mTarget.position.x, mTarget.position.y, 1.f, 1.f);
-		mDirection = sf::Vector2f(0.f, 0.f);
-		mTarget.isSet = false;
-	}
-	*/
+	mView = view;
+	mOriginalSize = mView->getSize();
 }
 
-void CameraMan::Zoom(sf::View* view, float offsetx, float offsety)
+void CameraMan::Update()
 {
-	sf::Vector2f zoom = sf::Vector2f(view->getSize().x * offsetx, view->getSize().y * offsety);
-	view->setSize(zoom);
+	sf::Vector2f position = mView->getCenter();
+
+	if (mDest == position)
+		return;
+	
+	sf::Vector2f movement = mDest - position;
+	float distance = Utils::GetDistance(position.x, position.y, mDest.x, mDest.y);
+
+	float dt = GameManager::Get()->GetDeltaTime();
+	movement *= dt* mFollowSpeed;
+
+	mView->setCenter(position.x + movement.x, position.y + movement.y);
+}
+
+void CameraMan::Zoom(float offsetx, float offsety)
+{
+	sf::Vector2f zoom = sf::Vector2f(mView->getSize().x * offsetx, mView->getSize().y * offsety);
+	mView->setSize(zoom);
+}
+
+void CameraMan::SetZoom(float offsetx, float offsety)
+{
+	sf::Vector2f zoom = sf::Vector2f(mOriginalSize.x * offsetx, mOriginalSize.y * offsety);
+	mView->setSize(zoom);
+}
+
+void CameraMan::GoTo(sf::Vector2f& dest)
+{
+	mDest = dest; 
+
+	sf::Vector2f position = mView->getCenter();
+
+	if (mDest == position)
+		return;
+
+	sf::Vector2f movement = mDest - position;
+	float distance = Utils::GetDistance(position.x, position.y, mDest.x, mDest.y);
+
+	mFollowSpeed = distance/10 * mCamSpeed;
 }
