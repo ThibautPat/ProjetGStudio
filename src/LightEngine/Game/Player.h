@@ -52,8 +52,10 @@ public:
 	void Jump(float dt);
 	void Move(sf::Vector2f movement, float dt);
 	void Crouch();
-
-	void OnUpdate() override; //Tout faire ici, car un override de Entity::Update() ne serait pas pris en compte par les colliders
+	///---------------------------------------------------------------------------------------
+	//Ne pas override de Entity::Update(), car ne serait pas pris en compte par les colliders
+	///---------------------------------------------------------------------------------------
+	void OnUpdate() override; 
 	void FixedUpdate(float dt) override; 
 	
 	~Player();
