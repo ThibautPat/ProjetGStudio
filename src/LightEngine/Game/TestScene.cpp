@@ -44,42 +44,56 @@ void TestScene::OnInitialize()
 	Checkpoint2->SetRigidBody(false);
 	Checkpoint2->SetIsKinematic(true);
 	Checkpoint2->SetGravity(false);
+	Checkpoint2->SetTag((int)Tags::Checkpoint);
 
 	Checkpoint* Checkpoint1 = CreateRectEntity<Checkpoint>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
 	Checkpoint1->SetPosition(-100, 670);
 	Checkpoint1->SetRigidBody(false);
 	Checkpoint1->SetIsKinematic(true);
 	Checkpoint1->SetGravity(false);
+	Checkpoint1->SetTag((int)Tags::Checkpoint);
 
 	DeadlyObstacle* DeadlyObstacle1 = CreateRectEntity<DeadlyObstacle>(100, 100, sf::Color::Green); // Ajout du DeadlyObstacle et setup
 	DeadlyObstacle1->SetPosition(900, 670);
 	DeadlyObstacle1->SetRigidBody(false);
 	DeadlyObstacle1->SetIsKinematic(true);
 	DeadlyObstacle1->SetGravity(false);
+	DeadlyObstacle1->SetTag((int)Tags::DeadlyObstacle);
 
-	Player* pEntity = CreateRectEntity<Player>(100, 100, sf::Color::Blue); // Ajout du Player et setup
-	pEntity->SetGravity(true);
-	pEntity->SetRigidBody(true);
-	pEntity->SetIsKinematic(false);
-	pEntity->SetPosition(100, 100);
+	mPlayer = CreateRectEntity<Player>(100, 100, sf::Color::Blue); // Ajout du Player et setup
+	mPlayer->SetGravity(true);
+	mPlayer->SetRigidBody(true);
+	mPlayer->SetIsKinematic(true);
+	mPlayer->SetPosition(100, 0);
+	mPlayer->SetTag((int)Tags::Player);
+
+	RectangleEntity* pEntity4 = CreateRectEntity<RectangleEntity>(150, 150, sf::Color::Magenta); // Ajout d'un obstacle à déplacer
+	pEntity4->SetGravity(true);
+	pEntity4->SetRigidBody(true);
+	pEntity4->SetIsKinematic(false);
+	pEntity4->SetPosition(350, -200);
+	pEntity4->SetTag((int)Tags::Obstacle);
 
 	RectangleEntity* pEntity1 = CreateRectEntity<RectangleEntity>(50, 300, sf::Color::Red);
 	pEntity1->SetPosition(500, 500);
 	pEntity1->SetRigidBody(true);
 	pEntity1->SetIsKinematic(true);
 	pEntity1->SetGravity(false);
+	pEntity1->SetTag((int)Tags::Platform);
 
 	RectangleEntity* pEntity2 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Red);
 	pEntity2->SetPosition(1200, 300);
 	pEntity2->SetRigidBody(true);
 	pEntity2->SetIsKinematic(true);
 	pEntity2->SetGravity(false);
+	pEntity2->SetTag((int)Tags::Platform);
 
 	RectangleEntity* pEntity3 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Red);
 	pEntity3->SetPosition(200, 100);
 	pEntity3->SetRigidBody(true);
 	pEntity3->SetIsKinematic(true);
 	pEntity3->SetGravity(false);
+	pEntity3->SetTag((int)Tags::Platform);
 
 	//test can be remove
 	//mView->setSize(1920, 1080);

@@ -7,10 +7,23 @@
 #define ENTITY_NB 0
 
 class Entity;
+class Player;
 
 class TestScene : public Scene
 {
+	enum class Tags {
+		Player,
+		Obstacle,
+		Platform,
+		Checkpoint,
+		DeadlyObstacle,
+
+		Count
+	};
+
 protected:
+
+	Player* mPlayer;
 
 	GameManager* m_InstanceGameManager;
 	sf::View* mView;
@@ -21,6 +34,7 @@ protected:
 	bool playerIsDead = false;
 
 public:
+	Player* GetPlayer() { return mPlayer; };
 
 	void PlayerDeath();
 	void PlayerRespawn();

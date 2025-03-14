@@ -28,6 +28,7 @@ public:
 	void Initialize(float radius, const sf::Color& color) override;
 	void Initialize(float height, float Width, const sf::Color& color) override {};
 	void Repulse(Entity* other) override;
+	void Block(Entity* other) override {};
 	bool IsColliding(Entity* other);
 	bool IsInside(float x, float y);
 	void Update() override;
