@@ -67,6 +67,7 @@ void TestScene::OnUpdate()
 			notcenter.y /= 10;
 			sf::Vector2f pos = sf::Vector2f(entity->GetPosition(0.f, 0.f).x + notcenter.x, entity->GetPosition(0.f, 0.f).y - notcenter.y);
 			mCam->GoTo(pos);
+			//mView->setRotation(90);
 			//mView->setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115); //Ancien repositionnement de la cam�ra sur le joueur chaque frame 
 			//mCam->Zoom(0.99, 0.99); //Test avec le zoom (ne pas utiliser à chaque frame)
 			//mCam->SetZoom(1, 1); //Test avec le zoom et le notcenter (decalage du personnage pour qu'il ne soit pas centre) VALIDE
