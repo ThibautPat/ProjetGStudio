@@ -71,7 +71,7 @@ void RectangleEntity::Repulse(Entity* other)
     sf::Vector2f position1 = GetPosition(0.f, 0.f) - translation;
     sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation;
 
-    int place;
+    int place = 0;
 
     if (mCollider->GetCollideFace()->x != 0)
     {
@@ -79,55 +79,42 @@ void RectangleEntity::Repulse(Entity* other)
         place = (mCollider->GetCollideFace()->x > 0) ? 1 : -1;
         if ((mMove.x <= 0) || (mMove.x >= 0))
         {
-            SetPosition(other->GetPosition(0.f, 0.f).x - place * (otherWidth * 0.5f + entityWidth * 0.5f),
-                GetPosition(0.f, 0.f).y);
+            SetPosition(other->GetPosition(0.f, 0.f).x - place * (otherWidth * 0.5f + entityWidth * 0.5f), GetPosition(0.f, 0.f).y);
             mSpeed = 0.f;
         }
     }
     else
     {
         // Collision verticale : on utilise les hauteurs
-        if (mCollider->GetCollideFace()->y > 0)
-        {
-            if (mCollider->GetCollideFace()->y > 0)
+        
+
+            if (mCollider->GetCollideFace()->y == 1)
             {
                 place = 1;
                 mGravitySpeed = 0.f;
 				mBoolGravity = false;
             }
-            else
-            {
-				mGravitySpeed = 0.f;
-                place = -1;
-            }
+			else if (mCollider->GetCollideFace()->y == -1)
+			{
+                mGravitySpeed = 0.f;
+				place = -1;
+			}
             if ((mMove.y <= 0) || (mMove.y >= 0))
             {
 				if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !sf::Joystick::isButtonPressed(0, 0))
                 {
-                    SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * width2 * 0.5f - place * width1 * 0.5f);
+                    SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f));
                 }
                 else
                 {
 					secondjump -= 1;
 					mGravitySpeed = -600.f;
-                    SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * width2 * 0.5f - place * width1 * 0.5f-10);
+                    SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f)-10);
                 }
                 // Le joueur se d�place vers l'autre objet, donc on l'arr�te
                 hasCollidingLastFrame = true;
 				secondjump = 2;
             }
-        }
-        else
-        {
-            mGravitySpeed = 0.f;
-            place = -1;
-        }
-        if ((mMove.y <= 0) || (mMove.y >= 0))
-        {
-            SetPosition(GetPosition(0.f, 0.f).x,
-                other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f));
-            hasCollidingLastFrame = true;
-        }
     }
 }
 

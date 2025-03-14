@@ -39,23 +39,23 @@ void TestScene::OnInitialize()
 	
 	
 
-	Checkpoint* pEntity2 = CreateRectEntity<Checkpoint>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
-	pEntity2->SetPosition(300, 670);
-	pEntity2->SetRigidBody(false);
-	pEntity2->SetIsKinematic(true);
-	pEntity2->SetGravity(false);
+	Checkpoint* Checkpoint2 = CreateRectEntity<Checkpoint>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
+	Checkpoint2->SetPosition(300, 670);
+	Checkpoint2->SetRigidBody(false);
+	Checkpoint2->SetIsKinematic(true);
+	Checkpoint2->SetGravity(false);
 
-	Checkpoint* pEntity4 = CreateRectEntity<Checkpoint>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
-	pEntity4->SetPosition(-100, 670);
-	pEntity4->SetRigidBody(false);
-	pEntity4->SetIsKinematic(true);
-	pEntity4->SetGravity(false);
+	Checkpoint* Checkpoint1 = CreateRectEntity<Checkpoint>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
+	Checkpoint1->SetPosition(-100, 670);
+	Checkpoint1->SetRigidBody(false);
+	Checkpoint1->SetIsKinematic(true);
+	Checkpoint1->SetGravity(false);
 
-	DeadlyObstacle* pEntity3 = CreateRectEntity<DeadlyObstacle>(100, 100, sf::Color::Green); // Ajout du DeadlyObstacle et setup
-	pEntity3->SetPosition(900, 670);
-	pEntity3->SetRigidBody(false);
-	pEntity3->SetIsKinematic(true);
-	pEntity3->SetGravity(false);
+	DeadlyObstacle* DeadlyObstacle1 = CreateRectEntity<DeadlyObstacle>(100, 100, sf::Color::Green); // Ajout du DeadlyObstacle et setup
+	DeadlyObstacle1->SetPosition(900, 670);
+	DeadlyObstacle1->SetRigidBody(false);
+	DeadlyObstacle1->SetIsKinematic(true);
+	DeadlyObstacle1->SetGravity(false);
 
 	Player* pEntity = CreateRectEntity<Player>(100, 100, sf::Color::Blue); // Ajout du Player et setup
 	pEntity->SetGravity(true);
@@ -102,7 +102,7 @@ void TestScene::OnEvent(const sf::Event& event)
 
 void TestScene::OnUpdate()
 {
-	
+	int i = 0;
 	PlayerRespawn();
 	for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
 	{
