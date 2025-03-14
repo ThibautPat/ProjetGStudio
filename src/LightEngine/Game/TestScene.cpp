@@ -27,7 +27,7 @@ void TestScene::OnInitialize()
 	}
 
 	//test can be remove
-	mView->setSize(1920, 1080);
+	//mView->setSize(1920, 1080);
 
 	/*
 	for (int i = 0; i <= ENTITY_NB; i++) 
@@ -79,10 +79,12 @@ void TestScene::OnUpdate()
 		}
 
 		// Affichage de quelque informations
-		std::string textCox = std::to_string(cooEntity.x) + " x ";
-		std::string textCoy = std::to_string(cooEntity.y) + " y";
+		std::string textCox = std::to_string((int)cooEntity.x) + " x ";
+		std::string textCoy = std::to_string((int)cooEntity.y) + " y";
+		std::string textgrav = std::to_string((int)entity->GetGravitySpeed()) + " grav";
 		Debug::DrawText(cooEntity.x, cooEntity.y, textCox, sf::Color::White);
 		Debug::DrawText(cooEntity.x, cooEntity.y + 20, textCoy, sf::Color::White);
+		Debug::DrawText(cooEntity.x, cooEntity.y + 40, textgrav, sf::Color::White);
 		Debug::DrawCircle(cooEntity.x, cooEntity.y, 5, sf::Color::White);
 
 	}
