@@ -73,7 +73,6 @@ void RectangleEntity::Repulse(Entity* other)
     sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation;
 
     int place = 0;
-	mReverse = false;
     if (mCollider->GetCollideFace()->x != 0)
     {
         // Collision horizontale : on utilise les largeurs
@@ -115,24 +114,27 @@ void RectangleEntity::Repulse(Entity* other)
 		}
         if ((mMove.y <= 0) || (mMove.y >= 0))
         {
-            if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !sf::Joystick::isButtonPressed(0, 0))
+            if (mCollider->GetCollideFace()->y == -1 && !other->IsTag(TestScene::Tag::METALIC_OBSTACLE))
             {
-                SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f));
-            }
-            else if (mCollider->GetCollideFace()->y == 1 && Clockjump.getElapsedTime().asSeconds() > 0.3f && !other->IsTag(TestScene::Tag::METALIC_OBSTACLE))
+                SetGravity(true);
+                SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f)+1);
+			}
+            else if (mCollider->GetCollideFace()->y == 1 && Clockjump.getElapsedTime().asSeconds() > 0.3f && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0)))
             {
 				Clockjump.restart(); 
                 mGravitySpeed = -600.f;
                 SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) - gap);
             }
-			else if (mCollider->GetCollideFace()->y == -1 && !other->IsTag(TestScene::Tag::METALIC_OBSTACLE))
-                SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f));
-            else if (Clockjump.getElapsedTime().asSeconds() > 0.3f && mCollider->GetCollideFace()->y == -1 && other->IsTag(TestScene::Tag::METALIC_OBSTACLE))
+            else if (Clockjump.getElapsedTime().asSeconds() > 0.3f && mCollider->GetCollideFace()->y == -1 && other->IsTag(TestScene::Tag::METALIC_OBSTACLE) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0)))
             {
 				mReverse = true;
-				Clockjump.restart(); 
-				mGravitySpeed = 600.f;
+				Clockjump.restart();  
                 SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) - gap);
+            }
+
+            else
+            {
+                SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f));
             }
             // Le joueur se d�place vers l'autre objet, donc on l'arr�te
             hasCollidingLastFrame = true;

@@ -4,7 +4,6 @@
 #include "../Core/AABBCollider.h"
 void PlayerAction_Jump::OnStart(Player* pOwner)
 {
-	pOwner->SetGravitySpeed(-pOwner->mPData->mJumpHeight);
 	pOwner->mPData->pJumpDuration = 0;
 
 }
@@ -14,8 +13,16 @@ void PlayerAction_Jump::OnUpdate(Player* pOwner)
 	
 		pOwner->secondjump -= 1;
 		pOwner->mPData->pJumpDuration = 0;
-		if (!pOwner->mReverse)
-		pOwner->SetGravitySpeed(-pOwner->mPData->mJumpHeight);
+		if (pOwner->mReverse)
+		{
+			pOwner->SetPosition(pOwner->GetPosition(0,0).x, pOwner->GetPosition(0,0).y +10);
+			pOwner->mReverse = false;
+			pOwner->SetGravitySpeed(pOwner->mPData->mJumpHeight);
+		}
+		else
+		{
+			pOwner->SetGravitySpeed(-pOwner->mPData->mJumpHeight);
+		}
 		pOwner->SetGravity(true);
 }
 
