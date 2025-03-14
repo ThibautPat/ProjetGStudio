@@ -81,9 +81,9 @@ void TestScene::OnUpdate()
 		Debug::DrawText(cooEntity.x, cooEntity.y + 20, textCoy, sf::Color::White);
 		Debug::DrawCircle(cooEntity.x, cooEntity.y, 5, sf::Color::White);
 
+
 	}
 	std::string entitynb = std::to_string(i) + "nb entity";
 	Debug::DrawText(100, 500, entitynb, sf::Color::White);
 	Debug::ShowFPS(mView->getCenter().x - GetWindowWidth() / 2 + 10, mView->getCenter().y - GetWindowHeight() / 2 + 10);
-	m_InstanceGameManager->GetWindow()->setView(*mView); // Voir si possibilit� de ne pas call la view chaque frame
 }

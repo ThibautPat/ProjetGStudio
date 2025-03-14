@@ -48,15 +48,11 @@ void GameManager::FixedUpdate()
 				if (entity->IsRigidBody() && otherEntity->IsRigidBody())
 				{
 					entity->Repulse(otherEntity);
+					entity->mGravitySpeed = 0;
 				}
 
 				entity->OnCollision(otherEntity);
 				otherEntity->OnCollision(entity);
-			}
-			else if (entity->hasCollidingLastFrame)
-			{
-				entity->mBoolGravity = true;
-				entity->hasCollidingLastFrame = false;
 			}
 		}
 	}

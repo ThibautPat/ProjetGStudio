@@ -29,14 +29,13 @@ protected:
 	float mSizeX, mSizeY;
 
     sf::Vector2f mDirection;
-	sf::Vector2f mMove;
 	Target mTarget;
     
     bool mToDestroy = false;
     int mTag = -1;
 	bool mRigidBody = false;
 	bool mKinematic = false;
-	bool hasCollidingLastFrame = false;
+
 	bool mBoolGravity = true;
 	float mGravitySpeed = 0.f;
 	float mSpeed = 0.f;

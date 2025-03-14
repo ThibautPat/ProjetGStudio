@@ -63,8 +63,6 @@ public:
 	static GameManager* Get();
 	TextureManager* GetAssetsManager() { return mAs; }
 
-	void UpdateCollision(Entity* mEntities);
-
 	void CreateWindow(unsigned int width, unsigned int height, const char* title, int fpsLimit = 60, sf::Color clearColor = sf::Color::Black);
 	sf::RenderWindow* GetWindow() const { return mpWindow; }
 	template<typename T>
