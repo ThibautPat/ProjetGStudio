@@ -54,7 +54,7 @@ void TestScene::OnInitialize()
 	mPlayer->SetGravity(true);
 	mPlayer->SetRigidBody(true);
 	mPlayer->SetIsKinematic(false);
-	mPlayer->SetPosition(-200, 0);
+	mPlayer->SetPosition(0, 0);
 	mPlayer->SetTag(Tags::PLAYER);
 
 	RectangleEntity* pEntity4 = CreateRectEntity<RectangleEntity>(150, 150, sf::Color::Magenta); // Ajout d'un obstacle à déplacer

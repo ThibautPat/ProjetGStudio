@@ -77,6 +77,8 @@ void RectangleEntity::Repulse(Entity* other)
 
     Block(other);
 
+  // Il s'agit du code pour le repulse si on veut repusle vers le haut où le bas (aucune utilité pour le moment)
+  // 
   //  else
   //  {
   //      // Collision verticale
