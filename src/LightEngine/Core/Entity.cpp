@@ -49,6 +49,9 @@ void Entity::Fall(float dt)
 	if (mBoolGravity == false)
 		return;
 
+	if (mGravitySpeed >= 2000.f)
+		return;
+
 	mGravitySpeed += GRAVITYACCEL + dt;
 	sf::Vector2f co = GetShape()->getPosition();
 	co.y += mGravitySpeed * dt;
