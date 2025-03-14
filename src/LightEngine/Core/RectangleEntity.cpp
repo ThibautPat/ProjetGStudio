@@ -1,5 +1,6 @@
-#include "RectangleEntity.h"
+ï»¿#include "RectangleEntity.h"
 #include "AABBCollider.h"
+#include "Debug.h"
 #include <iostream>
 
 Collider* RectangleEntity::GetCollider()
@@ -22,17 +23,17 @@ bool RectangleEntity::IsInside(float x, float y)
     return mShape.getGlobalBounds().contains(sf::Vector2f(x, y));
 }
 
-void RectangleEntity::Initialize(float height, float Width, const sf::Color& color)
+void RectangleEntity::Initialize(float height, float width, const sf::Color& color)
 {
-	mCollider = new AABBCollider(0.f, 0.f, height, Width);
+	mCollider = new AABBCollider(0.f, 0.f, width, height);
 
-	mSizeX = Width / 2;
+	mSizeX = width / 2;
 	mSizeY = height / 2;
 
 	mDirection = sf::Vector2f(0.0f, 0.0f);
 
 	mShape.setOrigin(0.f, 0.f);
-	mShape.setSize(sf::Vector2f(Width, height));
+	mShape.setSize(sf::Vector2f(width, height));
 	mShape.setFillColor(color);
 
 	mTarget.isSet = false;
@@ -42,103 +43,79 @@ void RectangleEntity::Initialize(float height, float Width, const sf::Color& col
 
 void RectangleEntity::Repulse(Entity* other)
 {
-	//Tests collisions
+    if (IsKinematic())
+    {
+        SetPosition(GetPosition(0.f, 0.f).x, GetPosition(0.f, 0.f).y);
+        return;
+    }
+    if (other->IsKinematic())
+    {
+        other->SetPosition(other->GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y);
+    }
+    sf::Vector2f distance = GetPosition(0.f, 0.f) - other->GetPosition(0.f, 0.f);
 
-	//float width1 = mShape.getGlobalBounds().width;
-	//float width2 = other->GetShape()->getGlobalBounds().width;
+    float sqrLength = (distance.x * distance.x) + (distance.y * distance.y);
+    float length = std::sqrt(sqrLength);
 
-	//float height1 = mShape.getGlobalBounds().height;
-	//float height2 = other->GetShape()->getGlobalBounds().height;
+    int width1 = mShape.getGlobalBounds().width;
+    int width2 = other->GetShape()->getGlobalBounds().width;
 
-	//sf::Vector2f position1 = GetPosition(0.f, 0.f);
-	//sf::Vector2f position2 = sf::Vector2f(other->GetPosition(1.f, 1.f).x - height1 - height2 * 0.5f - 1, other->GetPosition(1.f, 1.f).y - width1 - width2 * 0.5f - 1);
+    float overlap = (length - (width1 + width2)) * 0.5f;
 
-	//SetPosition(position1.x, position2.y);
+    sf::Vector2f normal = distance / length;
 
-	//if (other->IsKinematic()) {
-	//	sf::Vector2f position2 = other->GetPosition(0.f, 0.f);
-	//	other->SetPosition(position2.x, position2.y);
-	//}
+    sf::Vector2f translation = overlap * normal;
 
+    sf::Vector2f position1 = GetPosition(0.f, 0.f) - translation;
+    sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation;
 
-	/*
-	sf::Vector2f coOther = other->GetPosition(0.f, 0.f);
-	sf::Vector2f co = GetPosition(0.f, 0.f);
+    // Vï¿½rifier si le joueur se dï¿½place vers l'autre objet
+    std::string debug = "mDirection.x: " + std::to_string(mMove.x) + ", normal.x: " + std::to_string(normal.x) + ", mSpeed: " + std::to_string(mSpeed);
+    Debug::DrawText(GetPosition(0.f, 0.f).x, GetPosition(0.f, 0.f).y + 100, debug, sf::Color::Cyan);
 
-	float width1 = mShape.getGlobalBounds().width/2;
-	float width2 = other->GetShape()->getGlobalBounds().width/2;
-	float width = width1 + width2;
-	float height1 = mShape.getGlobalBounds().height/2;
-	float height2 = other->GetShape()->getGlobalBounds().height/2;
-	float height = height1 + height2;
+        int place;
 
-
-	float diffx = 0;
-	if(co.x < coOther.x)
-		diffx = coOther.x - co.x;
-	else
-		diffx = co.x - coOther.x;
-	float diffy = 0;
-	if (co.y < coOther.y)
-		diffy = coOther.y - co.y;
-	else
-		diffx = co.y - coOther.y;
-
-	float penetrationx = width - diffx;
-	float penetrationy = height - diffy;
-
-	//Collision on y axe
-	if (penetrationx > penetrationy) {
-		std::cout << "penetration on y : " << penetrationx << " " << penetrationy << std::endl;
-		if (co.y < coOther.y)
-			SetPosition(co.y - penetrationx - 5, co.y);
-		//else
-		//	SetPosition(co.y + penetrationx + 5, co.y);
-	}
-	//Collision on x axe
-	if (penetrationx < penetrationy) {
-		if (co.x < coOther.x)
-			SetPosition(co.x - penetrationx - 5, co.y);
-		else
-			SetPosition(co.x + penetrationx + 5, co.y);
-		std::cout << "penetration on x : " << penetrationx << " " << penetrationy << std::endl;
-	}
-	*/
-
-
-
-	sf::Vector2f distance = GetPosition(0.f, 0.f) - other->GetPosition(0.f, 0.f);
-
-	float sqrLength = (distance.x * distance.x) + (distance.y * distance.y);
-	float length = std::sqrt(sqrLength);
-
-	float width1 = mShape.getGlobalBounds().width;
-	float width2 = other->GetShape()->getGlobalBounds().width;
-
-	float overlap = (length - (width1 + width2)) * 0.5f;
-
-	sf::Vector2f normal = distance / length;
-
-	sf::Vector2f translation = overlap * normal;
-
-	translation *= 0.05f;
-
-	sf::Vector2f position1 = GetPosition(0.f, 0.f) - translation;
-	sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation;
-
-	SetPosition(position1.x, position1.y);
-	mSpeed = 0;
-	mDirection.x = 0;
-	if (other->IsKinematic())
-		return;
-	other->SetPosition(position2.x, position2.y);
+        if (mCollider->GetCollideFace()->x != 0)
+        {
+            if (mCollider->GetCollideFace()->x > 0)
+                place = 1;
+            else
+                place = -1;
+            if ((mMove.x <= 0) || (mMove.x >= 0))
+            {
+                SetPosition(other->GetPosition(0.f, 0.f).x - place * width2 * 0.5f - place * width1 * 0.5f, GetPosition(0.f, 0.f).y);
+                // Le joueur se dï¿½place vers l'autre objet, donc on l'arrï¿½te
+                mSpeed = 0.f;
+            }
+        }
+        else 
+        {
+            if (mCollider->GetCollideFace()->y > 0)
+            {
+                place = 1;
+                mGravitySpeed = 0.f;
+				mBoolGravity = false;
+            }
+            else
+            {
+				mGravitySpeed = 0.f;
+                place = -1;
+            }
+            if ((mMove.y <= 0) || (mMove.y >= 0))
+            {
+				SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * width2 * 0.5f - place * width1 * 0.5f);
+                // Le joueur se dï¿½place vers l'autre objet, donc on l'arrï¿½te
+                hasCollidingLastFrame = true;
+            }
+        }
+		
 }
 
 void RectangleEntity::Update()
 {
     mCollider->Update(GetPosition(0.f, 0.f).x - mCollider->mWidth / 2.f, GetPosition(0.f, 0.f).y - mCollider->mHeight / 2.f);
 
-	//#TODO : à revoir pour éviter de perdre les comportement des classes héritées ?
+	//#TODO : ï¿½ revoir pour ï¿½viter de perdre les comportement des classes hï¿½ritï¿½es ?
     Entity::Update();
 }
 
