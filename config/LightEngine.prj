@@ -9,7 +9,7 @@
     "dependencies": [],
     "configuration": [
         {
-            "additional_dependencies": "sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;sfml-system-s-d.lib;opengl32.lib;glu32.lib;gdi32.lib;winmm.lib;dwmapi.lib;freetype.lib;%(AdditionalDependencies)",
+            "additional_dependencies": "sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;sfml-system-s-d.lib;opengl32.lib;glu32.lib;gdi32.lib;winmm.lib;dwmapi.lib;freetype.lib;%(AdditionalDependencies);openal32.lib;flac.lib;vorbis.lib;vorbisfile.lib;ogg.lib;",
             "additional_include_directories": "$(SolutionDir)../../SFML-2.5.1/include",
             "additional_library_directories": "$(SolutionDir)../../SFML-2.5.1/lib",
             "character_set": "Unicode",
