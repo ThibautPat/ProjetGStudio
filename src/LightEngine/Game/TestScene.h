@@ -16,9 +16,14 @@ protected:
 	sf::View* mView;
 	sf::Clock menuClock;
 	sf::Clock escapeClockGap;
+	sf::Clock RespawnClock;
+	sf::Vector2f mLastCheckPoint;
+	bool playerIsDead = false;
 
 public:
 
+	void PlayerDeath();
+	void PlayerRespawn();
 	void OnInitialize() override;
 	void OnEvent(const sf::Event& event) override;
 	void OnUpdate() override;

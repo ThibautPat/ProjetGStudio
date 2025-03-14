@@ -31,7 +31,7 @@ void Player::Inertia(float dt, sf::Vector2f movement)
 void Player::Jump(float dt)
 {
 	mPData->pJumpDuration += dt;
-	if (mBoolGravity && secondjump == 0)
+	if (mBoolGravity && secondjump <= 0)
 		return;
 	if (mPData->pJumpDuration <mPData->mJumpTime)
 		return;
@@ -109,9 +109,9 @@ void Player::Crouch()
 
 void Player::FixedUpdate(float dt)
 {
-	Fall(dt);
-	Jump(dt);
-	Move(InputDirection(), dt);
+	Fall(dt); 
+	Jump(dt); 
+	Move(InputDirection(), dt); 
 }
 
 void Player::OnUpdate()

@@ -57,6 +57,7 @@ public:
 	void Fall(float dt);
 	void SetDirection(float x, float y, float speed = -1.f);
 	void SetSpeed(float speed) { mSpeed = speed; }
+	void SetGravitySpeed(float speed) { mGravitySpeed = speed; }
 	void SetTag(int tag) { mTag = tag; }
 	void SetGravity(bool gravity) { mBoolGravity = gravity; }
 	sf::Vector2f GetDirection() const { return mDirection; }
