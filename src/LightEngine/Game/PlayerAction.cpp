@@ -1,5 +1,7 @@
 ﻿#include "PlayerAction.h"
+#include "TestScene.h"
 
+#include "../Core/AABBCollider.h"
 void PlayerAction_Jump::OnStart(Player* pOwner)
 {
 	pOwner->SetGravitySpeed(-pOwner->mPData->mJumpHeight);
@@ -9,8 +11,10 @@ void PlayerAction_Jump::OnStart(Player* pOwner)
 
 void PlayerAction_Jump::OnUpdate(Player* pOwner)
 {
-		pOwner->secondjump -= 1; 
-		pOwner->mPData->pJumpDuration = 0; 
+	
+		pOwner->secondjump -= 1;
+		pOwner->mPData->pJumpDuration = 0;
+		if (!pOwner->mReverse)
 		pOwner->SetGravitySpeed(-pOwner->mPData->mJumpHeight);
 		pOwner->SetGravity(true);
 }
@@ -75,6 +79,7 @@ void PlayerAction_Crouch::OnEnd(Player* pOwner)
 
 void PlayerAction_JumpOnCrouch::OnStart(Player* pOwner)
 {
+
 }
 
 void PlayerAction_JumpOnCrouch::OnUpdate(Player* pOwner)

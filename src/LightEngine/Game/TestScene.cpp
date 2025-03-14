@@ -81,6 +81,12 @@ void TestScene::OnInitialize()
 	pEntity3->SetIsKinematic(true);
 	pEntity3->SetGravity(false);
 
+	RectangleEntity* pEntity4 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::White);
+	pEntity4->SetPosition(200, 250);
+	pEntity4->SetRigidBody(true);
+	pEntity4->SetIsKinematic(true);
+	pEntity4->SetGravity(false);
+	pEntity4->SetTag(Tag::METALIC_OBSTACLE);
 	//test can be remove
 	//mView->setSize(1920, 1080);
 

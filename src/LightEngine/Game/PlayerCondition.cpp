@@ -4,7 +4,7 @@
 
 bool PlayerCondition_IsJumping::OnTest(Player* owner)
 {
-	if (owner->GetGravity() && owner->secondjump > 0)
+	if (owner->GetGravity() && owner->secondjump <= 0)
 		return false;
 	if (owner->mPData->pJumpDuration < owner->mPData->mJumpTime) 
 		return false;
@@ -46,9 +46,14 @@ bool PlayerCondition_IsGrounded::OnTest(Player* owner)
 {
 	for (Entity* entity : GameManager::Get()->GetEntities<Entity>())
 	{
-		if (owner->IsColliding(entity)&& owner != entity)
+		if (owner->IsColliding(entity) && owner != entity && (entity->IsTag(TestScene::Tag::OBSTACLE) || (entity->IsTag(TestScene::Tag::METALIC_OBSTACLE))))
 		{
-			static_cast<AABBCollider*>(owner->GetCollider())->GetCollideFace()->y = 1; 
+			static_cast<AABBCollider*>(owner->GetCollider())->GetCollideFace()->y = 1;
+			return true;
+		}
+		else if (owner->IsColliding(entity) && owner != entity && entity->IsTag(TestScene::Tag::METALIC_OBSTACLE))
+		{
+			static_cast<AABBCollider*>(owner->GetCollider())->GetCollideFace()->y = -1;
 			return true;
 		}
 	}
