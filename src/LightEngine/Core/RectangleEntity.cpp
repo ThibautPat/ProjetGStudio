@@ -87,17 +87,21 @@ void RectangleEntity::Repulse(Entity* other)
     {
         // Collision verticale : on utilise les hauteurs
         
-
+		int gap = 0;
             if (mCollider->GetCollideFace()->y == 1)
             {
                 place = 1;
                 mGravitySpeed = 0.f;
 				mBoolGravity = false;
+                secondjump = 2;
+				gap = 10;
             }
 			else if (mCollider->GetCollideFace()->y == -1)
 			{
+                mBoolGravity = true;
                 mGravitySpeed = 0.f;
 				place = -1;
+				gap = -10;
 			}
             if ((mMove.y <= 0) || (mMove.y >= 0))
             {
@@ -105,15 +109,17 @@ void RectangleEntity::Repulse(Entity* other)
                 {
                     SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f));
                 }
-                else
+				else if (mCollider->GetCollideFace()->y == 1)
                 {
 					secondjump -= 1;
 					mGravitySpeed = -600.f;
-                    SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f)-10);
+                    SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) - gap);
                 }
+                else
+                    SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f));
                 // Le joueur se d�place vers l'autre objet, donc on l'arr�te
                 hasCollidingLastFrame = true;
-				secondjump = 2;
+				
             }
     }
 }
