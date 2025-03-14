@@ -1,9 +1,10 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include <iostream>
-#include "../Core/TextureRender.h"
 #include "../Core/GameManager.h"
 #include "../Core/RectangleEntity.h"
+
+class AnimationRender;
 
 struct PlayerData
 {
@@ -25,7 +26,7 @@ class Player : public RectangleEntity
 	sf::Vector2f mLastMovement;
 
 	//Gestionnaire de texture de l'entity
-	TextureRender* mTextured;
+	Render* mTextured;
 
 	//Gestionnaire de texture de la scene
 	TextureManager* mAs;
@@ -46,7 +47,7 @@ public:
 
 	int testvar = 0;
 
-	TextureRender* GetTextureRender() { return mTextured; }
+	Render* GetRender() { return (Render*)mTextured; };
 
 	void OnInitialize() override;
 	sf::Vector2f InputDirection();

@@ -58,10 +58,10 @@ protected:
 public:
 	~GameManager();
 
-	void DrawTextureRender(Entity* entity);
+	void DrawRender(Entity* entity);
 
 	static GameManager* Get();
-	TextureManager* GetAssetsManager() { return mAs; }
+	TextureManager* GetTextureManager() { return mAs; }
 
 	void UpdateCollision(Entity* mEntities);
 

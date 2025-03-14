@@ -2,6 +2,7 @@
 #include "../Core/InputManager.h"
 #include "../Core/Debug.h"
 #include "../Core/TextureManager.h"
+#include "../Core/AnimationRender.h"
 
 void Player::Inertia(float dt, sf::Vector2f movement)
 {
@@ -123,15 +124,8 @@ void Player::OnUpdate()
 	std::string text2 = std::to_string(mSpeed);
 	Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 50, text2, sf::Color::White);
 
-	//Stress Test TextureManager
-	if (testvar >= 110)
-		testvar = 0;
-
-	testvar += 18;
-
-	sf::IntRect rect = sf::IntRect(0, 0, 18, 18);
-	mTextured->SetTextureRect(rect);
-	//-----
+	// c'est pas bo
+	((AnimationRender*)mTextured)->UpdateAnimation();
 }
 
 void Player::OnInitialize()
@@ -139,12 +133,12 @@ void Player::OnInitialize()
 	mShape.setOrigin(mShape.getGlobalBounds().width / 2, mShape.getGlobalBounds().height / 2); //WTF pourquoi l'h�ritage n'est pas fait ?!
 	mPData = new PlayerData;
 	
-	mAs = GameManager::Get()->GetAssetsManager();
+	mAs = GameManager::Get()->GetTextureManager();
 
 	//Setup de la gestion de textures
 	mAs->LoadTexture("../../../res/Assets/Tilemap/tilemap_packed.png", "tilemap");
-	mTextured = new TextureRender();
-	mTextured->SelectTexture("tilemap", sf::IntRect(0, 0, 110, 110));
+	mTextured = new AnimationRender(8, "tilemap", sf::IntRect(0, 0, 18, 18));
+	//mTextured->SelectTexture();
 }
 
 sf::Vector2f Player::InputDirection()

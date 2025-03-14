@@ -13,7 +13,7 @@ namespace sf
 
 class Scene;
 class Collider;
-class TextureRender;
+class Render;
 class TextureManager;
 
 class Entity
@@ -47,7 +47,8 @@ public:
 	bool IsOnGround() { return not mBoolGravity; }
 	float GetGravitySpeed() { return mGravitySpeed; }
 	float GetSpeed() { return mSpeed;  }
-	virtual TextureRender* GetTextureRender() { return nullptr; }
+	//in render
+	virtual Render* GetRender() { return nullptr; }
 
 	virtual void FixedUpdate(float dt) { Fall(dt); };
 	bool GoToDirection(int x, int y, float speed = -1.f);

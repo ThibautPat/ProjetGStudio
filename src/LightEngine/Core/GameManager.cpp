@@ -73,29 +73,12 @@ GameManager::~GameManager()
 	}
 }
 
-void GameManager::DrawTextureRender(Entity* entity)
+void GameManager::DrawRender(Entity* entity)
 {
-	if (entity->GetTextureRender() == nullptr) {
+	if (entity->GetRender() == nullptr)
 		return;
-	}
 
-	TextureRender* tr = entity->GetTextureRender();
-
-	std::string tname = tr->GetTextName();
-	sf::IntRect* textrect = tr->GetTextureRect();
-	sf::Texture text = sf::Texture();
-	mAs->FindTexture(tname, *textrect, &text);
-
-	sf::Sprite spr;
-	spr.setTexture(text);
-
-	float offset = 0.5f;
-	sf::Vector2f renderPos = sf::Vector2f(
-		entity->GetPosition(0, 0).x - text.getSize().x * offset,
-		entity->GetPosition(0, 0).y - text.getSize().y * offset);
-	spr.setPosition(renderPos);
-
-	mpWindow->draw(spr);
+	entity->GetRender()->Draw(entity, mpWindow);
 
 }
 
@@ -210,7 +193,7 @@ void GameManager::Draw()
 		//#TODO peut être remove à la fin
 		mpWindow->draw(*entity->GetShape());
 
-		DrawTextureRender(entity);
+		DrawRender(entity);
 	}
 	
 	Debug::Get()->Draw(mpWindow);
