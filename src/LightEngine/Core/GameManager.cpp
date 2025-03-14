@@ -75,7 +75,7 @@ GameManager::~GameManager()
 
 void GameManager::DrawTextureRender(Entity* entity)
 {
-	if (!entity->GetTextureRender()) {
+	if (entity->GetTextureRender() == nullptr) {
 		return;
 	}
 

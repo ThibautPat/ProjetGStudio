@@ -26,6 +26,9 @@ void TestScene::OnInitialize()
 		pEntity->SetGravity(true);
 	}
 
+	//test can be remove
+	mView->setSize(1920, 1080);
+
 	/*
 	for (int i = 0; i <= ENTITY_NB; i++) 
 	{
@@ -56,6 +59,7 @@ void TestScene::OnUpdate()
 {
 
 	m_InstanceGameManager->GetWindow()->setView(*mView); // Voir si possibilit� de ne pas call la view chaque frame
+	
 
 	int i = 0;
 	for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
@@ -83,7 +87,7 @@ void TestScene::OnUpdate()
 
 	}
 	std::string entitynb = std::to_string(i) + "nb entity";
-	Debug::DrawText(100, 500, entitynb, sf::Color::White);
-	Debug::ShowFPS(mView->getCenter().x - GetWindowWidth() / 2 + 10, mView->getCenter().y - GetWindowHeight() / 2 + 10);
+	Debug::DrawText(mView->getCenter().x - mView->getSize().x / 2 + 10, mView->getCenter().y - mView->getSize().y / 2 + 40, entitynb, sf::Color::White);
+	Debug::ShowFPS(mView->getCenter().x - mView->getSize().x / 2 + 10, mView->getCenter().y - mView->getSize().y / 2 + 10);
 	m_InstanceGameManager->GetWindow()->setView(*mView); // Voir si possibilit� de ne pas call la view chaque frame
 }
