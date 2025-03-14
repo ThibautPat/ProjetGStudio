@@ -3,8 +3,9 @@
 #include "Entity.h"
 #include "TextureRender.h"
 #include "Debug.h"
-#include "../Core/InputManager.h"
-#include "../Core/TextureManager.h"
+#include "InputManager.h"
+#include "TextureManager.h"
+#include "SceneManager.h"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -14,10 +15,11 @@ GameManager::GameManager()
 {
 	mpWindow = nullptr;
 	mDeltaTime = 0.0f;
-	mpScene = nullptr;
+	//mpScene = nullptr;
 	mWindowWidth = -1;
 	mWindowHeight = -1;
 	mAs = new TextureManager();
+	mScM = new SceneManager();
 }
 
 GameManager* GameManager::Get()
@@ -65,7 +67,8 @@ void GameManager::FixedUpdate()
 GameManager::~GameManager()
 {
 	delete mpWindow;
-	delete mpScene;
+	//delete mpScene;
+	delete mScM;
 
 	for (Entity* entity : mEntities)
 	{
@@ -95,6 +98,13 @@ void GameManager::CreateWindow(unsigned int width, unsigned int height, const ch
 	mClearColor = clearColor;
 }
 
+/*
+Scene* GameManager::GetScene() const
+{
+	return mScM->GetScene();
+}
+*/
+
 void GameManager::Run()
 {
 	if (mpWindow == nullptr) 
@@ -107,7 +117,8 @@ void GameManager::Run()
 	bool fontLoaded = mFont.loadFromFile("../../../res/Hack-Regular.ttf");
 	_ASSERT(fontLoaded);
 
-	_ASSERT(mpScene != nullptr);
+	//_ASSERT(mpScene != nullptr);
+	_ASSERT(mScM->GetScene() != nullptr);
 
 	sf::Clock clock;
 	while (mpWindow->isOpen())
@@ -134,13 +145,13 @@ void GameManager::HandleInput()
 			mpWindow->close();
 		}
 
-		mpScene->OnEvent(event);
+		mScM->GetScene()->OnEvent(event);
 	}
 }
 
 void GameManager::Update()
 {
-	mpScene->OnUpdate();
+	mScM->GetScene()->OnUpdate();
     //Update
     for (auto it = mEntities.begin(); it != mEntities.end(); )
     {
@@ -162,7 +173,7 @@ void GameManager::Update()
 	mAccumulatedDt += mDeltaTime;
 	while (mAccumulatedDt >= FIXED_DT)
 	{
-		if (!mpScene->freeze)
+		if (!mScM->GetScene()->freeze)
 		{
 			FixedUpdate();
 		}

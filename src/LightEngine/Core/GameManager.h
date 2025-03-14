@@ -1,9 +1,9 @@
 #pragma once
 
 #include <list>
-
-
 #include <SFML/Graphics.hpp>
+
+#include "SceneManager.h"
 
 #define FIXED_DT 0.0167f
 
@@ -12,6 +12,7 @@ class Scene;
 class Debug;
 class InputManager;
 class TextureManager;
+class SceneManager;
 
 namespace sf 
 {
@@ -28,8 +29,6 @@ protected:
 	sf::RenderWindow* mpWindow;
 	sf::Font mFont;
 
-	Scene* mpScene;
-
 	float mDeltaTime;
 
 	int mWindowWidth;
@@ -40,6 +39,7 @@ protected:
 	float mAccumulatedDt = 0.f;
 
 	TextureManager* mAs;
+	SceneManager* mScM;
 
 	GameManager();
 
@@ -62,16 +62,17 @@ public:
 
 	static GameManager* Get();
 	TextureManager* GetTextureManager() { return mAs; }
+	SceneManager* GetSceneManager() { return mScM; }
 
 	void UpdateCollision(Entity* mEntities);
 
 	void CreateWindow(unsigned int width, unsigned int height, const char* title, int fpsLimit = 60, sf::Color clearColor = sf::Color::Black);
 	sf::RenderWindow* GetWindow() const { return mpWindow; }
-	template<typename T>
-	void LaunchScene();
+	//template<typename T>
+	//void LaunchScene();
 
 	float GetDeltaTime() const { return mDeltaTime; }
-	Scene* GetScene() const { return mpScene; }
+	//Scene* GetScene() const;
 	sf::Font& GetFont() { return mFont; };
 	
 	template<typename T>
@@ -82,6 +83,7 @@ public:
 
 	friend Debug;
 	friend Scene;
+	friend SceneManager;
 };
 
 #include "GameManager.inl"
