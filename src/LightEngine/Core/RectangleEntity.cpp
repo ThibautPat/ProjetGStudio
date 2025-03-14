@@ -130,10 +130,14 @@ void RectangleEntity::Block(Entity* other)
         int gap = 0;
         if (mCollider->GetCollideFace()->y == 1)
         {
+            std::cout << "collision top" << std::endl;
             place = 1;
             mGravitySpeed = 0.f;
             mBoolGravity = false;
-            secondjump = 2;
+            if(this->IsTag(TestScene::Tags::PLAYER))
+            {
+                GetScene<TestScene>()->GetPlayer()->SetSecondJump(2);
+            }
             gap = 10;
         }
         else if (mCollider->GetCollideFace()->y == -1)
@@ -149,7 +153,7 @@ void RectangleEntity::Block(Entity* other)
         }
         else if (mCollider->GetCollideFace()->y == 1 && IsTag(GetScene<TestScene>()->GetPlayer()->GetTag()))
         {
-            secondjump -= 1;
+            GetScene<TestScene>()->GetPlayer()->AddSecondJump(-1);
             mGravitySpeed = -600.f;
             SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) - gap);
         }

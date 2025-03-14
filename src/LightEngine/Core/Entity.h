@@ -43,7 +43,6 @@ protected:
 
 public:
 
-	int secondjump = 2;
 	bool IsOnGround() { return not mBoolGravity; }
 	float GetGravitySpeed() { return mGravitySpeed; }
 	float GetSpeed() { return mSpeed;  }

@@ -11,16 +11,6 @@ class Player;
 
 class TestScene : public Scene
 {
-	enum class Tags {
-		Player,
-		Obstacle,
-		Platform,
-		Checkpoint,
-		DeadlyObstacle,
-
-		Count
-	};
-
 protected:
 
 	Player* mPlayer;
@@ -34,6 +24,16 @@ protected:
 	bool playerIsDead = false;
 
 public:
+	enum Tags {
+		PLAYER,
+		OBSTACLE,
+		PLATFORM,
+		CHECKPOINT,
+		DEADLY_OBSTACLE,
+
+		COUNT
+	};
+
 	Player* GetPlayer() { return mPlayer; };
 
 	void PlayerDeath();
@@ -42,4 +42,3 @@ public:
 	void OnEvent(const sf::Event& event) override;
 	void OnUpdate() override;
 };
-

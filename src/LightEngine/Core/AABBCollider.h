@@ -6,11 +6,11 @@ class AABBCollider : public Collider
 {
 protected:
 	sf::Vector2f mCollideFace;
-	sf::Vector2f mCollidedFace;
+	sf::Vector2f mCollidingFace;
 public:
 	AABBCollider(float xMin, float yMin, float xMax, float yMax);
 
-	sf::Vector2f* GetCollideFace() { return &mCollidedFace; }
+	sf::Vector2f* GetCollideFace() { return &mCollidingFace; }
 
 	// Hérité via Collider
 	bool IsColliding(Collider* pOther) override;

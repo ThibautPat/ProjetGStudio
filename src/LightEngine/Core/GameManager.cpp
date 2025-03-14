@@ -9,6 +9,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
+#include "../Game/TestScene.h"
+#include "../Game/Player.h"
 
 GameManager::GameManager()
 {

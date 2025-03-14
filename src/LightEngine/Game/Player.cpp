@@ -2,6 +2,7 @@
 #include "../Core/InputManager.h"
 #include "../Core/Debug.h"
 #include "../Core/TextureManager.h"
+#include "TestScene.h"
 
 void Player::Inertia(float dt, sf::Vector2f movement)
 {
@@ -31,13 +32,13 @@ void Player::Inertia(float dt, sf::Vector2f movement)
 void Player::Jump(float dt)
 {
 	mPData->pJumpDuration += dt;
-	if (mBoolGravity && secondjump <= 0)
+	if (mBoolGravity && GetSecondJump() <= 0)
 		return;
 	if (mPData->pJumpDuration <mPData->mJumpTime)
 		return;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0))
 	{
-		secondjump -=1;
+		AddSecondJump(-1);
 		mPData->pJumpDuration = 0;
 		mGravitySpeed = -mPData->mJumpHeight; // voir fonction ? 
 		mBoolGravity = true;
@@ -103,7 +104,7 @@ void Player::Crouch()
 		PlayerState = CROUCH;
 		return;
 	}
-	PlayerState = IDEL;
+	PlayerState = IDLE;
 	return;
 }
 

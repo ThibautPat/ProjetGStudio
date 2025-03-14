@@ -7,6 +7,7 @@
 
 struct PlayerData
 {
+	int mSecondJump = 2;
 	float mJumpHeight = 600.f;
 	float mJumpTime = 0.3f;
 	float pJumpDuration = 0;
@@ -34,7 +35,7 @@ protected:
 
 	enum PlayerStateList
 	{
-		IDEL,
+		IDLE,
 		CROUCH,
 		WALK,
 		JUMP
@@ -51,6 +52,9 @@ public:
 	void OnInitialize() override;
 	sf::Vector2f InputDirection();
 	void Inertia(float dt, sf::Vector2f movement);
+	int GetSecondJump() { return mPData->mSecondJump; }
+	void AddSecondJump(int nb) { mPData->mSecondJump += nb; }
+	void SetSecondJump(int nb) { mPData->mSecondJump = nb; }
 	void Jump(float dt);
 	void Move(sf::Vector2f movement, float dt);
 	void Crouch();
