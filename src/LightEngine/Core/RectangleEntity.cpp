@@ -52,69 +52,66 @@ void RectangleEntity::Repulse(Entity* other)
     {
         other->SetPosition(other->GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y);
     }
-    sf::Vector2f distance = GetPosition(0.f, 0.f) - other->GetPosition(0.f, 0.f);
 
+    // Calcul des positions, distances et normalisation
+    sf::Vector2f distance = GetPosition(0.f, 0.f) - other->GetPosition(0.f, 0.f);
     float sqrLength = (distance.x * distance.x) + (distance.y * distance.y);
     float length = std::sqrt(sqrLength);
 
-    int width1 = mShape.getGlobalBounds().width;
-    int width2 = other->GetShape()->getGlobalBounds().width;
+    // Récupération des dimensions avec des noms plus parlants
+    int entityWidth = mShape.getGlobalBounds().width;
+    int otherWidth = other->GetShape()->getGlobalBounds().width;
+    int entityHeight = mShape.getGlobalBounds().height;
+    int otherHeight = other->GetShape()->getGlobalBounds().height;
 
-    float overlap = (length - (width1 + width2)) * 0.5f;
-
+    float overlap = (length - (entityWidth + otherWidth)) * 0.5f;
     sf::Vector2f normal = distance / length;
-
     sf::Vector2f translation = overlap * normal;
 
     sf::Vector2f position1 = GetPosition(0.f, 0.f) - translation;
     sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation;
 
-    // V�rifier si le joueur se d�place vers l'autre objet
-    std::string debug = "mDirection.x: " + std::to_string(mMove.x) + ", normal.x: " + std::to_string(normal.x) + ", mSpeed: " + std::to_string(mSpeed);
-    Debug::DrawText(GetPosition(0.f, 0.f).x, GetPosition(0.f, 0.f).y + 100, debug, sf::Color::Cyan);
+    int place;
 
-        int place;
-
-        if (mCollider->GetCollideFace()->x != 0)
+    if (mCollider->GetCollideFace()->x != 0)
+    {
+        // Collision horizontale : on utilise les largeurs
+        place = (mCollider->GetCollideFace()->x > 0) ? 1 : -1;
+        if ((mMove.x <= 0) || (mMove.x >= 0))
         {
-            if (mCollider->GetCollideFace()->x > 0)
-                place = 1;
-            else
-                place = -1;
-            if ((mMove.x <= 0) || (mMove.x >= 0))
-            {
-                SetPosition(other->GetPosition(0.f, 0.f).x - place * width2 * 0.5f - place * width1 * 0.5f, GetPosition(0.f, 0.f).y);
-                // Le joueur se d�place vers l'autre objet, donc on l'arr�te
-                mSpeed = 0.f;
-            }
+            SetPosition(other->GetPosition(0.f, 0.f).x - place * (otherWidth * 0.5f + entityWidth * 0.5f),
+                GetPosition(0.f, 0.f).y);
+            mSpeed = 0.f;
         }
-        else 
+    }
+    else
+    {
+        // Collision verticale : on utilise les hauteurs
+        if (mCollider->GetCollideFace()->y > 0)
         {
-            if (mCollider->GetCollideFace()->y > 0)
-            {
-                place = 1;
-                mGravitySpeed = 0.f;
-				mBoolGravity = false;
-            }
-            else
-            {
-				mGravitySpeed = 0.f;
-                place = -1;
-            }
-            if ((mMove.y <= 0) || (mMove.y >= 0))
-            {
-				SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * width2 * 0.5f - place * width1 * 0.5f);
-                // Le joueur se d�place vers l'autre objet, donc on l'arr�te
-                hasCollidingLastFrame = true;
-            }
+            place = 1;
+            mGravitySpeed = 0.f;
+            mBoolGravity = false;
         }
-		
+        else
+        {
+            mGravitySpeed = 0.f;
+            place = -1;
+        }
+        if ((mMove.y <= 0) || (mMove.y >= 0))
+        {
+            SetPosition(GetPosition(0.f, 0.f).x,
+                other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f));
+            hasCollidingLastFrame = true;
+        }
+    }
 }
+
 
 void RectangleEntity::Update()
 {
     mCollider->Update(GetPosition(0.f, 0.f).x - mCollider->mWidth / 2.f, GetPosition(0.f, 0.f).y - mCollider->mHeight / 2.f);
-
+    Debug::DrawRectangle(GetPosition(-1.f, -1.f).x, GetPosition(-1.f, -1.f).y, mShape.getGlobalBounds().width, mShape.getGlobalBounds().height, sf::Color::Cyan);
 	//#TODO : � revoir pour �viter de perdre les comportement des classes h�rit�es ?
     Entity::Update();
 }

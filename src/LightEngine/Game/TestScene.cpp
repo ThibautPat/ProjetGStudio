@@ -10,21 +10,29 @@ void TestScene::OnInitialize()
 	mView = new sf::View(sf::FloatRect(0, 0, GetWindowWidth(), GetWindowHeight())); // Ajout de la cam�ra
 	m_InstanceGameManager = GameManager::Get();
 	
-	Player* pEntity = CreateRectEntity<Player>(100, 100, sf::Color::Blue); // Ajout du Player et setup
+	Player* pEntity = CreateRectEntity<Player>(150, 50, sf::Color::Blue); // Ajout du Player et setup
 	pEntity->SetGravity(true);
 	pEntity->SetRigidBody(true);
 	pEntity->SetIsKinematic(false);
 	pEntity->SetPosition(100, 100);
 
+	RectangleEntity* pEntity1 = CreateRectEntity<RectangleEntity>(50, 300, sf::Color::Red);
+	pEntity1->SetPosition(500, 500);
+	pEntity1->SetRigidBody(true);
+	pEntity1->SetIsKinematic(true);
+	pEntity1->SetGravity(false);
 
-	for (int i = 0; i <= ENTITY_NB; i++)
-	{
-		RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(300, 300, sf::Color::Red);
-		pEntity->SetPosition(i * 400 + 600, 0);
-		pEntity->SetRigidBody(true);
-		pEntity->SetIsKinematic(true);
-		pEntity->SetGravity(true);
-	}
+	RectangleEntity* pEntity2 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Red);
+	pEntity2->SetPosition(1200, 300);
+	pEntity2->SetRigidBody(true);
+	pEntity2->SetIsKinematic(true);
+	pEntity2->SetGravity(false);
+
+	RectangleEntity* pEntity3 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Red);
+	pEntity3->SetPosition(200, 100);
+	pEntity3->SetRigidBody(true);
+	pEntity3->SetIsKinematic(true);
+	pEntity3->SetGravity(false);
 
 	/*
 	for (int i = 0; i <= ENTITY_NB; i++) 
