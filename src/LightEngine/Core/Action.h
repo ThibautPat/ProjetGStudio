@@ -18,7 +18,7 @@ public:
 
     Transition<T>* CreateTransition(int state);
 
-protected:
+
 	virtual void OnStart(T* pOwner) = 0;
 	virtual void OnUpdate(T* pOwner) = 0;
 	virtual void OnEnd(T* pOwner) = 0;

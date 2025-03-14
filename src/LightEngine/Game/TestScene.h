@@ -21,7 +21,12 @@ protected:
 	bool playerIsDead = false;
 
 public:
-
+	enum Tag
+	{
+		PLAYER,
+		CHECKPOINT,
+		DEADLYOBSTACLE
+	};
 	void PlayerDeath();
 	void PlayerRespawn();
 	void OnInitialize() override;

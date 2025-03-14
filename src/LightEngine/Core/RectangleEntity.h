@@ -16,11 +16,11 @@ class RectangleEntity : public Entity
 {
 protected: 
 
-	AABBCollider* mCollider;
+	
 	sf::RectangleShape mShape;
 
 public:
-
+	AABBCollider* mCollider; 
 	// Hérité via Entity
 	Collider* GetCollider() override;
 	sf::Shape* GetShape() override;

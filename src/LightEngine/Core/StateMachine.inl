@@ -1,31 +1,32 @@
 #include "StateMachine.h"
 
-#include "Action.h"
+#include "Behaviour.h"
 
 template<typename T>
 StateMachine<T>::StateMachine(T* owner, int stateCount)
 {
 	mOwner = owner;
 	mCurrentState = -1;
-	mActions.resize(stateCount);
+	mBehaviour.resize(stateCount);
 }
 
 template<typename T>
 StateMachine<T>::~StateMachine()
 {
-	for (Action<T>* pAction : mActions)
-		delete pAction;
+	for (Behaviour<T>* pBehaviour : mBehaviour)
+		delete pBehaviour;
 }
+
 
 template<typename T>
 void StateMachine<T>::SetState(int state)
 {
-	if (mCurrentState > 0 && mCurrentState < mActions.size())
-		mActions[mCurrentState]->OnEnd(mOwner);
+	if (mCurrentState > 0 && mCurrentState < mBehaviour.size())
+		mBehaviour[mCurrentState]->End();
 
 	mCurrentState = state;
 
-	mActions[mCurrentState]->OnStart(mOwner);
+	mBehaviour[mCurrentState]->Start();
 }
 
 template<typename T>
@@ -34,26 +35,22 @@ void StateMachine<T>::Update()
 	if (mCurrentState == -1)
 		return;
 
-	int transitionState = mActions[mCurrentState]->Update(mOwner);
+	int transitionState = mBehaviour[mCurrentState]->Update();
 
 	if (transitionState == -1)
 		return;
 
 	SetState(transitionState);
+
 }
 
 template<typename T>
-template<typename U>
-U* StateMachine<T>::CreateAction(int state)
+Behaviour<T>* StateMachine<T>::CreateBehaviour(int state)
 {
-	_ASSERT(state >= 0 && state < mActions.size());
-	_ASSERT(mActions[state] == nullptr);
+	_ASSERT(state >= 0 && state < mBehaviour.size());
 
-	static_assert(std::is_base_of<Action<T>, U>::value, "U must derive from Action<T>");
+	Behaviour<T>* pBehaviour = new Behaviour<T>(mOwner);
+	mBehaviour[state] = pBehaviour;
 
-	U* pAction = new U();
-
-	mActions[state] = pAction;
-	
-	return pAction;
+	return pBehaviour;
 }

@@ -2,88 +2,13 @@
 #include "../Core/InputManager.h"
 #include "../Core/Debug.h"
 #include "../Core/TextureManager.h"
+#include "../Game/PlayerAction.h"
+#include "../Game/PlayerCondition.h"
+#include "../Game/TestScene.h"
 
-void Player::Inertia(float dt, sf::Vector2f movement)
-{
-	if (movement.x != 0) // Mise � jour de mLastMovement si movement.x n'est pas nul
-	{
-		mLastMovement = movement;
-	}
-	if ((mLastMovement.x == -1 && mSpeed > 0) || (mLastMovement.x == 1 && mSpeed < 0)) // Gestion de la d�c�l�ration si la direction du mouvement change
-	{
-		mSpeed += (mLastMovement.x == -1 ? -1 : 1) *mPData->mDeceleration * 50 * dt;
-	}
-	if (movement.x == 0) // Si aucun mouvement, on ajuste la vitesse vers 0
-	{
-		float decelerationAmount =mPData->mDeceleration * 50 * dt;
-
-		if (std::abs(mSpeed) > 100)	// D�c�l�rer ou acc�l�rer vers z�ro en fonction de la vitesse
-		{
-			mSpeed += (mSpeed > 0 ? -1 : 1) * decelerationAmount;
-		}
-		if (std::abs(mSpeed) < 500)	// Si la vitesse est proche de z�ro, on la r�initialise
-		{
-			mSpeed = 0;
-		}
-	}
-}
-
-void Player::Jump(float dt)
-{
-	mPData->pJumpDuration += dt;
-	if (mBoolGravity && secondjump <= 0)
-		return;
-	if (mPData->pJumpDuration <mPData->mJumpTime)
-		return;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0))
-	{
-		secondjump -=1;
-		mPData->pJumpDuration = 0;
-		mGravitySpeed = -mPData->mJumpHeight; // voir fonction ? 
-		mBoolGravity = true;
-	}
-}
 
 void Player::Move(sf::Vector2f movement, float dt)
 {
-	mSpeed += movement.x * 50 * dt * mPData->mAcceleration;
-
-	Inertia(dt, movement);
-	Crouch();
-
-	if (PlayerState == CROUCH) //Possibilit� de refacto 
-	{
-		if (movement.x == 1)
-		{
-			if (mSpeed > 0)
-			{
-				mSpeed -= mPData->mMaxSpeedWalk * dt;
-			}
-			if (mSpeed > mPData->mMaxSpeedCrouch)
-			{
-				mSpeed -= mPData->mMaxSpeedWalk * dt * 2;
-			}
-			if (mSpeed < 11000 && mSpeed > 9000)
-			{
-				mSpeed = mPData->mMaxSpeedCrouch;
-			}
-		}
-		else if (movement.x == -1)
-		{
-			if (mSpeed < 0)
-			{
-				mSpeed += mPData->mMaxSpeedWalk * dt;
-			}
-			if (mSpeed < -mPData->mMaxSpeedCrouch)
-			{
-				mSpeed += mPData->mMaxSpeedWalk * dt * 2;
-			}
-			if (mSpeed > -11000 && mSpeed < -9000)
-			{
-				mSpeed = -mPData->mMaxSpeedCrouch;
-			}
-		}
-	}
 	if (mSpeed > mPData->mMaxSpeedWalk)
 	{
 		mSpeed = mPData->mMaxSpeedWalk;
@@ -96,33 +21,23 @@ void Player::Move(sf::Vector2f movement, float dt)
 	SetDirection(dt, 0, mSpeed);
 }
 
-void Player::Crouch()
-{
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Joystick::isButtonPressed(0, 1))
-	{
-		PlayerState = CROUCH;
-		return;
-	}
-	PlayerState = IDEL;
-	return;
-}
-
 void Player::FixedUpdate(float dt)
 {
 	Fall(dt); 
-	Jump(dt); 
+	mPData->pJumpDuration += dt;
 	Move(InputDirection(), dt); 
 }
 
 void Player::OnUpdate()
 {
+	const char* stateName = GetStateName((PlayerStateList)mStateMachine.GetCurrentState());
 	// Debug de valeur
-	std::string text = std::to_string(PlayerState);
-	Debug::DrawText(mShape.getPosition().x,mShape.getPosition().y - 30, text ,sf::Color::White);
+
+	Debug::DrawText(mShape.getPosition().x,mShape.getPosition().y - 30, stateName ,sf::Color::White);
 
 	std::string text2 = std::to_string(mSpeed);
 	Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 50, text2, sf::Color::White);
-
+	mStateMachine.Update(); 
 	//Stress Test TextureManager
 	if (testvar >= 110)
 		testvar = 0;
@@ -165,4 +80,165 @@ sf::Vector2f Player::InputDirection()
 
 Player::~Player()
 {
+}
+
+Player::Player() : mStateMachine(this, PlayerStateList::COUNT)
+{
+	SetTag(TestScene::Tag::PLAYER); 
+
+	//IDLE
+	{
+		Behaviour<Player>* pStay = mStateMachine.CreateBehaviour(PlayerStateList::IDLE);
+		pStay->AddAction<PlayerAction_Idle>();
+		//-> WALK
+		{
+			auto transition = pStay->CreateTransition(PlayerStateList::WALK);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(true);
+		}
+		//-> JUMP
+		{
+			auto transition = pStay->CreateTransition(PlayerStateList::JUMP);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(false); 
+		}
+		//-> CROUCH
+		{
+			auto transition = pStay->CreateTransition(PlayerStateList::CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsJumping>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+		}
+		//-> JUMP ON CROUCH
+		{
+			auto transition = pStay->CreateTransition(PlayerStateList::JUMP_ON_CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+		}
+	}
+	//WALK
+	{
+		Behaviour<Player>* pWalk = mStateMachine.CreateBehaviour(PlayerStateList::WALK);
+		pWalk->AddAction<PlayerAction_Walk>();
+		//-> IDLE
+		{
+			auto transition = pWalk->CreateTransition(PlayerStateList::IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(false);
+		}
+		//-> JUMP
+		{
+			auto transition = pWalk->CreateTransition(PlayerStateList::JUMP);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_HasJump>(true);
+		}
+		//-> CROUCH
+		{
+			auto transition = pWalk->CreateTransition(PlayerStateList::CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsJumping>(false);
+		}
+	}
+	//JUMP
+	{
+		Behaviour<Player>* pJump = mStateMachine.CreateBehaviour(PlayerStateList::JUMP);
+		pJump->AddAction<PlayerAction_Jump>();
+		//-> IDLE
+		{
+			auto transition = pJump->CreateTransition(PlayerStateList::IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+		}
+		//-> WALK
+		{
+			auto transition = pJump->CreateTransition(PlayerStateList::WALK);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsJumping>(false);
+		}
+		//-> CROUCH
+		{
+			auto transition = pJump->CreateTransition(PlayerStateList::CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsJumping>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsWalking>(false);
+		}
+	}
+	//CROUCH
+	{
+		Behaviour<Player>* pCrouch = mStateMachine.CreateBehaviour(PlayerStateList::CROUCH);
+		pCrouch->AddAction<PlayerAction_Crouch>();
+		//-> IDLE
+		{
+			auto transition = pCrouch->CreateTransition(PlayerStateList::IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(false);
+		}
+		//-> WALK
+		{
+			auto transition = pCrouch->CreateTransition(PlayerStateList::WALK);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+		}
+		//-> JUMP ON CROUCH
+		{
+			auto transition = pCrouch->CreateTransition(PlayerStateList::JUMP_ON_CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+		}
+	}
+	//JUMP ON CROUCH
+	{
+		Behaviour<Player>* pJumpOnCrouch = mStateMachine.CreateBehaviour(PlayerStateList::JUMP_ON_CROUCH);
+		pJumpOnCrouch->AddAction<PlayerAction_JumpOnCrouch>();
+		//-> IDLE
+		{
+			auto transition = pJumpOnCrouch->CreateTransition(PlayerStateList::IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(false);
+
+		}
+		//-> WALK
+		{
+			auto transition = pJumpOnCrouch->CreateTransition(PlayerStateList::WALK);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsJumping>(false);
+		}
+		//-> CROUCH
+		{
+			auto transition = pJumpOnCrouch->CreateTransition(PlayerStateList::CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+		}
+	}
+	mStateMachine.SetState(PlayerStateList::IDLE);
+
+
+}
+const char* Player::GetStateName(PlayerStateList state) const
+{
+	switch (state)
+	{
+	case IDLE: return "IDLE";
+	case WALK: return "WALK";
+	case JUMP: return "JUMP";
+	case CROUCH: return "CROUCH";
+	case JUMP_ON_CROUCH: return "JUMP_ON_CROUCH";	
+	default: return "Unknown";
+	}
 }
