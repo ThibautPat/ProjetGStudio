@@ -93,11 +93,12 @@ void RectangleEntity::Repulse(Entity* other)
                 place = 1;
                 mGravitySpeed = 0.f;
 				mBoolGravity = false;
+                secondjump = 2;
             }
 			else if (mCollider->GetCollideFace()->y == -1)
 			{
                 mGravitySpeed = 0.f;
-				place = -1;
+     				place = -1;
 			}
             if ((mMove.y <= 0) || (mMove.y >= 0))
             {
@@ -113,8 +114,11 @@ void RectangleEntity::Repulse(Entity* other)
                 }
                 // Le joueur se d�place vers l'autre objet, donc on l'arr�te
                 hasCollidingLastFrame = true;
-				secondjump = 2;
+                return;
+				
             }
+
+            //secondjump = 2;
     }
 }
 
