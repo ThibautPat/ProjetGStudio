@@ -51,7 +51,7 @@ void TestScene::OnInitialize()
 	Checkpoint1->SetIsKinematic(true);
 	Checkpoint1->SetGravity(false);
 
-	DeadlyObstacle* DeadlyObstacle1 = CreateRectEntity<DeadlyObstacle>(100, 100, sf::Color::Green); // Ajout du DeadlyObstacle et setup
+	DeadlyObstacle* DeadlyObstacle1 = CreateRectEntity<DeadlyObstacle>(100, 100, sf::Color::Red); // Ajout du DeadlyObstacle et setup
 	DeadlyObstacle1->SetPosition(900, 670);
 	DeadlyObstacle1->SetRigidBody(false);
 	DeadlyObstacle1->SetIsKinematic(true);
@@ -63,36 +63,29 @@ void TestScene::OnInitialize()
 	pEntity->SetIsKinematic(false);
 	pEntity->SetPosition(100, 100);
 
-	RectangleEntity* pEntity1 = CreateRectEntity<RectangleEntity>(50, 300, sf::Color::Red);
+	RectangleEntity* pEntity1 = CreateRectEntity<RectangleEntity>(50, 300, sf::Color::Cyan);
 	pEntity1->SetPosition(500, 500);
 	pEntity1->SetRigidBody(true);
 	pEntity1->SetIsKinematic(true);
 	pEntity1->SetGravity(false);
 
-	RectangleEntity* pEntity2 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Red);
+	RectangleEntity* pEntity2 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Cyan);
 	pEntity2->SetPosition(1200, 300);
 	pEntity2->SetRigidBody(true);
 	pEntity2->SetIsKinematic(true);
 	pEntity2->SetGravity(false);
 
-	RectangleEntity* pEntity3 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Red);
+	RectangleEntity* pEntity3 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Cyan);
 	pEntity3->SetPosition(200, 100);
 	pEntity3->SetRigidBody(true);
 	pEntity3->SetIsKinematic(true);
 	pEntity3->SetGravity(false);
 
-	//test can be remove
-	//mView->setSize(1920, 1080);
-
-	/*
-	for (int i = 0; i <= ENTITY_NB; i++) 
-	{
-		RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(400, 400, sf::Color::Red); // Ajout d'autre entit� et setup
-		pEntity->SetPosition(i*400 + 600, 0);
-		pEntity->SetRigidBody(true);
-		pEntity->SetIsKinematic(true);
-		pEntity->SetGravity(true);
-	}*/
+	RectangleEntity* Ground = CreateRectEntity<RectangleEntity>(5000, 10000, sf::Color::Green);
+	Ground->SetPosition(0, 3220);
+	Ground->SetRigidBody(true);
+	Ground->SetIsKinematic(true);
+	Ground->SetGravity(false);
 }
 
 void TestScene::OnEvent(const sf::Event& event)
@@ -130,13 +123,6 @@ void TestScene::OnUpdate()
 		}
 
 		sf::Vector2f cooEntity = entity->GetPosition(0.f, 0.f);
-
-		if (cooEntity.y + entity->GetShape()->getGlobalBounds().height * 0.5f > 720)
-		{
-			entity->secondjump = 2;
-			entity->SetGravity(false);
-			entity->SetPosition(cooEntity.x, 720 - entity->GetShape()->getGlobalBounds().height * 0.5f, 0.f, 0.f);
-		}
 
 		// Affichage de quelque informations
 		std::string textCox = std::to_string((int)cooEntity.x) + " x ";
