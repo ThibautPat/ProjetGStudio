@@ -40,3 +40,11 @@ public:
 	void OnUpdate(Player* pOwner) override;
 	void OnEnd(Player* pOwner) override;
 };
+
+class PlayerAction_Dash : public Action<Player>
+{
+public:
+	void OnStart(Player* pOwner) override;
+	void OnUpdate(Player* pOwner) override;
+	void OnEnd(Player* pOwner) override;
+};

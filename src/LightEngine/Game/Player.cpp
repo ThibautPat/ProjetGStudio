@@ -9,14 +9,7 @@
 
 void Player::Move(sf::Vector2f movement, float dt)
 {
-	if (mSpeed > mPData->mMaxSpeedWalk)
-	{
-		mSpeed = mPData->mMaxSpeedWalk;
-	}
-	if (mSpeed < -mPData->mMaxSpeedWalk)
-	{
-		mSpeed = -mPData->mMaxSpeedWalk;
-	}
+	
 
 	SetDirection(dt, 0, mSpeed);
 }
@@ -118,6 +111,15 @@ Player::Player() : mStateMachine(this, PlayerStateList::COUNT)
 			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(true);
 			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(true);
 		}
+		//-> DASH
+		{
+			auto transition = pStay->CreateTransition(PlayerStateList::DASH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsDashing>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsGrounded>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_DashOnCoolDown>(false); 
+
+		}
 	}
 	//WALK
 	{
@@ -143,6 +145,14 @@ Player::Player() : mStateMachine(this, PlayerStateList::COUNT)
 
 			auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
 			auto condition2 = transition->AddCondition<PlayerCondition_IsJumping>(false);
+		}
+		//-> DASH
+		{
+			auto transition = pWalk->CreateTransition(PlayerStateList::DASH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsDashing>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsGrounded>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_DashOnCoolDown>(false);
 		}
 	}
 	//JUMP
@@ -198,6 +208,14 @@ Player::Player() : mStateMachine(this, PlayerStateList::COUNT)
 			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(true);
 			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(true);
 		}
+		//-> DASH
+		{
+			auto transition = pCrouch->CreateTransition(PlayerStateList::DASH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsDashing>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsGrounded>(true); 
+			auto condition3 = transition->AddCondition<PlayerCondition_DashOnCoolDown>(false);
+		}
 	}
 	//JUMP ON CROUCH
 	{
@@ -226,6 +244,44 @@ Player::Player() : mStateMachine(this, PlayerStateList::COUNT)
 			auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
 		}
 	}
+	// DASH
+	{
+		Behaviour<Player>* pDash = mStateMachine.CreateBehaviour(PlayerStateList::DASH);
+		pDash->AddAction<PlayerAction_Dash>();
+		//-> IDLE
+		{
+			auto transition = pDash->CreateTransition(PlayerStateList::IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsDashing>(false);
+		}
+		//-> WALK
+		{
+			auto transition = pDash->CreateTransition(PlayerStateList::WALK);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_HasDash>(false); 
+
+
+		}
+		//-> JUMP
+		{
+			auto transition = pDash->CreateTransition(PlayerStateList::JUMP);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+
+			auto condition3 = transition->AddCondition<PlayerCondition_HasDash>(false);
+		}
+		//-> CROUCH
+		{
+			auto transition = pDash->CreateTransition(PlayerStateList::CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsJumping>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_HasDash>(false);
+		}
+	}
 	mStateMachine.SetState(PlayerStateList::IDLE);
 
 
@@ -239,6 +295,7 @@ const char* Player::GetStateName(PlayerStateList state) const
 	case JUMP: return "JUMP";
 	case CROUCH: return "CROUCH";
 	case JUMP_ON_CROUCH: return "JUMP_ON_CROUCH";	
+	case DASH: return "DASH";
 	default: return "Unknown";
 	}
 }

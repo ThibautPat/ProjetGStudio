@@ -46,16 +46,45 @@ bool PlayerCondition_IsGrounded::OnTest(Player* owner)
 {
 	for (Entity* entity : GameManager::Get()->GetEntities<Entity>())
 	{
-		if (owner->IsColliding(entity) && owner != entity && (entity->IsTag(TestScene::Tag::OBSTACLE) || (entity->IsTag(TestScene::Tag::METALIC_OBSTACLE))))
+		if (owner->IsColliding(entity) && owner != entity && static_cast<AABBCollider*>(owner->GetCollider())->GetCollideFace()->y == 1)
 		{
-			static_cast<AABBCollider*>(owner->GetCollider())->GetCollideFace()->y = 1;
 			return true;
 		}
-		else if (owner->IsColliding(entity) && owner != entity && entity->IsTag(TestScene::Tag::METALIC_OBSTACLE))
+		else if (owner->IsColliding(entity) && owner != entity && static_cast<AABBCollider*>(owner->GetCollider())->GetCollideFace()->y == -1 && entity->IsTag(TestScene::Tag::METALIC_OBSTACLE))
 		{
-			static_cast<AABBCollider*>(owner->GetCollider())->GetCollideFace()->y = -1;
 			return true;
 		}
+	}
+	return false;
+}
+
+bool PlayerCondition_IsDashing::OnTest(Player* owner)
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || sf::Joystick::isButtonPressed(0, 2))
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Keyboard::isKeyPressed(sf::Keyboard::D) || std::abs(sf::Joystick::getAxisPosition(0, sf::Joystick::X)) > 10)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool PlayerCondition_HasDash::OnTest(Player* owner)
+{
+	if (owner->mPData->pDashDuration < owner->mPData->mDashTime)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool PlayerCondition_DashOnCoolDown::OnTest(Player* owner)
+{
+	if (owner->mPData->mDashCooldownDuration > owner->mPData->pDashCooldown) 
+	{
+		
+		return true;
 	}
 	return false;
 }

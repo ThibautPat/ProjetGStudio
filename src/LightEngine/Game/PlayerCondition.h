@@ -30,3 +30,21 @@ class PlayerCondition_IsGrounded : public Condition<Player>
 public:
 	bool OnTest(Player* owner) override;
 };
+
+class PlayerCondition_IsDashing : public Condition<Player>
+{
+public:
+	bool OnTest(Player* owner) override;
+};
+
+class PlayerCondition_HasDash : public Condition<Player>
+{
+public:
+	bool OnTest(Player* owner) override;
+};
+
+class PlayerCondition_DashOnCoolDown : public Condition<Player>
+{
+public:
+	bool OnTest(Player* owner) override;
+};

@@ -11,6 +11,7 @@ void PlayerAction_Jump::OnStart(Player* pOwner)
 void PlayerAction_Jump::OnUpdate(Player* pOwner)
 {
 	
+	pOwner->mPData->pDashCooldown += FIXED_DT;
 		pOwner->secondjump -= 1;
 		pOwner->mPData->pJumpDuration = 0;
 		if (pOwner->mReverse)
@@ -37,6 +38,7 @@ void PlayerAction_Crouch::OnStart(Player* pOwner)
 
 void PlayerAction_Crouch::OnUpdate(Player* pOwner)
 {
+	pOwner->mPData->pDashCooldown += FIXED_DT;
 	float dt = FIXED_DT;
 	float spd = pOwner->GetSpeed();
 	sf::Vector2f movement = pOwner->InputDirection();
@@ -90,6 +92,7 @@ void PlayerAction_JumpOnCrouch::OnStart(Player* pOwner)
 
 void PlayerAction_JumpOnCrouch::OnUpdate(Player* pOwner)
 {
+	pOwner->mPData->pDashCooldown += FIXED_DT;
 	if (pOwner->GetGravity() && pOwner->secondjump <= 0)
 		return;
 	if (pOwner->mPData->pJumpDuration < pOwner->mPData->mJumpTime) 
@@ -111,6 +114,7 @@ void PlayerAction_Walk::OnStart(Player* pOwner)
 
 void PlayerAction_Walk::OnUpdate(Player* pOwner)
 {
+	pOwner->mPData->pDashCooldown += FIXED_DT;
 	sf::Vector2f movement = pOwner->InputDirection();
 	float speed = pOwner->GetSpeed();
 	speed += movement.x * 50 * FIXED_DT * pOwner->mPData->mAcceleration; 
@@ -125,6 +129,14 @@ void PlayerAction_Walk::OnUpdate(Player* pOwner)
 		spd += (pOwner->mLastMovement.x == -1 ? -1 : 1) * pOwner->mPData->mDeceleration * 50 * FIXED_DT;
 		pOwner->SetSpeed(spd);
 	}
+	if (pOwner->GetSpeed() > pOwner->mPData->mMaxSpeedWalk) 
+	{
+		pOwner->SetSpeed(pOwner->GetSpeed() - 55000 * pOwner->GetDeltaTime());
+	}
+	if (pOwner->GetSpeed() < -pOwner->mPData->mMaxSpeedWalk)
+	{
+		pOwner->SetSpeed(pOwner->GetSpeed() + 55000 * pOwner->GetDeltaTime());
+	}
 }
 
 void PlayerAction_Walk::OnEnd(Player* pOwner)
@@ -138,7 +150,7 @@ void PlayerAction_Idle::OnStart(Player* pOwner)
 void PlayerAction_Idle::OnUpdate(Player* pOwner)
 {
 	float decelerationAmount = pOwner->mPData->mDeceleration * 50 * FIXED_DT;
-
+	pOwner->mPData->pDashCooldown += FIXED_DT; 
 	if (std::abs(pOwner->GetSpeed()) > 100)	// Decelerer ou accelerer vers z�ro en fonction de la vitesse
 	{
 		float spd = pOwner->GetSpeed();
@@ -153,4 +165,31 @@ void PlayerAction_Idle::OnUpdate(Player* pOwner)
 
 void PlayerAction_Idle::OnEnd(Player* pOwner)
 {
+}
+
+void PlayerAction_Dash::OnStart(Player* pOwner)
+{
+	pOwner->mPData->mMaxSpeedWalk = pOwner->mPData->mDashSpeed;
+}
+
+void PlayerAction_Dash::OnUpdate(Player* pOwner)
+{
+	if (pOwner->mPData->pDashDuration < pOwner->mPData->mDashTime) 
+	{
+		pOwner->mPData->pDashDuration += FIXED_DT;
+		pOwner->SetSpeed(pOwner->mLastMovement.x * pOwner->mPData->mDashSpeed);
+		
+	}
+	else
+	{
+		pOwner->mPData->pDashDuration = 0;
+		pOwner->SetSpeed(0);
+	}
+}
+
+void PlayerAction_Dash::OnEnd(Player* pOwner)
+{
+	pOwner->mPData->mMaxSpeedWalk = 20000.f;
+
+	pOwner->mPData->pDashCooldown = 0;
 }

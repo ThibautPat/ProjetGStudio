@@ -17,6 +17,12 @@ struct PlayerData
 
 	float mAcceleration = 700.f;
 	float mDeceleration = 500.f;
+
+	float pDashDuration = 0;
+	float mDashTime = 0.5f;
+	float mDashSpeed = 40000.f;
+	float mDashCooldownDuration = 1.f;
+	float pDashCooldown = 0;
 };
 
 class Player : public RectangleEntity
@@ -40,6 +46,7 @@ protected:
 		WALK,
 		JUMP,
 		JUMP_ON_CROUCH,
+		DASH,
 
 		COUNT
 	};
@@ -64,6 +71,7 @@ public:
 	
 	const char* GetStateName(PlayerStateList state) const;	
 	~Player();
+
 	Player();
 };
 

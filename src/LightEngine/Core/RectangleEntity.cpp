@@ -130,8 +130,7 @@ void RectangleEntity::Repulse(Entity* other)
 				mReverse = true;
 				Clockjump.restart();  
                 SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) - gap);
-            }
-
+            } 
             else
             {
                 SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f));
