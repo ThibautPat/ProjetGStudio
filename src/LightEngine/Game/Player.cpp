@@ -118,6 +118,33 @@ Player::Player() : mStateMachine(this, PlayerStateList::COUNT)
 			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(true);
 			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(true);
 		}
+		//-> FALL WALK
+		{
+			auto transition = pStay->CreateTransition(PlayerStateList::FALL_WALK); 
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_GravityPlus>(true);
+			auto condition4 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+		}
+		//-> FALL IDLE
+		{
+			auto transition = pStay->CreateTransition(PlayerStateList::FALL_IDLE); 
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_GravityPlus>(true);
+			auto condition4 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+		}
+		//-> FALL CROUCH
+		{
+			auto transition = pStay->CreateTransition(PlayerStateList::FALL_CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_GravityPlus>(true);
+			auto condition4 = transition->AddCondition<PlayerCondition_IsWalking>(false);
+		}
 	}
 	//WALK
 	{
@@ -143,35 +170,446 @@ Player::Player() : mStateMachine(this, PlayerStateList::COUNT)
 
 			auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
 			auto condition2 = transition->AddCondition<PlayerCondition_IsJumping>(false);
+
+		}
+		//-> FALL WALK 
+		{
+			auto transition = pWalk->CreateTransition(PlayerStateList::FALL_WALK);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_GravityPlus>(true);
+			auto condition4 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+		}
+		//-> FALL IDLE
+		{
+			auto transition = pWalk->CreateTransition(PlayerStateList::FALL_IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_GravityPlus>(true);
+			auto condition4 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+		}
+		//-> FALL CROUCH
+		{
+			auto transition = pWalk->CreateTransition(PlayerStateList::FALL_CROUCH); 
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_GravityPlus>(true);
+			auto condition4 = transition->AddCondition<PlayerCondition_IsWalking>(false);
 		}
 	}
 	//JUMP
 	{
-		Behaviour<Player>* pJump = mStateMachine.CreateBehaviour(PlayerStateList::JUMP);
+		Behaviour<Player>* pJump = mStateMachine.CreateBehaviour(PlayerStateList::JUMP); 
 		pJump->AddAction<PlayerAction_Jump>();
-		//-> IDLE
-		{
-			auto transition = pJump->CreateTransition(PlayerStateList::IDLE);
 
-			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(false);
-			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(false);
-			auto condition3 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
-		}
-		//-> WALK
+		//-> ON JUMP WALK
 		{
-			auto transition = pJump->CreateTransition(PlayerStateList::WALK);
+			auto transition = pJump->CreateTransition(PlayerStateList::ON_JUMP_WALK);
 
 			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(true);
 			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
-			auto condition3 = transition->AddCondition<PlayerCondition_IsJumping>(false);
+		}
+		//-> ON JUMP IDLE
+		{
+			auto transition = pJump->CreateTransition(PlayerStateList::ON_JUMP_IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+		}
+		//-> ON JUMP CROUCH
+		{
+			auto transition = pJump->CreateTransition(PlayerStateList::ON_JUMP_CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+		}
+	}
+	//ON JUMP WALK
+	{
+		Behaviour<Player>* pOnJumpWalk = mStateMachine.CreateBehaviour(PlayerStateList::ON_JUMP_WALK);
+		pOnJumpWalk->AddAction<PlayerAction_OnJumpWalk>();
+		//-> IDLE
+		{
+			auto transition = pOnJumpWalk->CreateTransition(PlayerStateList::IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsGrounded>(true);
+		}
+		//-> WALK
+		{
+			auto transition = pOnJumpWalk->CreateTransition(PlayerStateList::WALK);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsJumping>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsGrounded>(true);
+
 		}
 		//-> CROUCH
 		{
-			auto transition = pJump->CreateTransition(PlayerStateList::CROUCH);
+			auto transition = pOnJumpWalk->CreateTransition(PlayerStateList::CROUCH);
 
 			auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
 			auto condition2 = transition->AddCondition<PlayerCondition_IsJumping>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsGrounded>(true); 
+		}
+		//-> JUMP
+		{
+			auto transition = pOnJumpWalk->CreateTransition(PlayerStateList::JUMP);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_HasJump>(true);
+		}
+		//-> FALL WALK 
+		{
+			auto transition = pOnJumpWalk->CreateTransition(PlayerStateList::FALL_WALK);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_GravityPlus>(true);
+			auto condition4 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+		}
+		//-> FALL IDLE
+		{
+			auto transition = pOnJumpWalk->CreateTransition(PlayerStateList::FALL_IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_GravityPlus>(true);
+			auto condition4 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+		}
+		//-> FALL CROUCH
+		{
+			auto transition = pOnJumpWalk->CreateTransition(PlayerStateList::FALL_CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_GravityPlus>(true);
+			auto condition4 = transition->AddCondition<PlayerCondition_IsWalking>(false);
+		}
+		//-> ON JUMP IDLE
+		{
+			auto transition = pOnJumpWalk->CreateTransition(PlayerStateList::ON_JUMP_IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+		}
+		//-> ON JUMP CROUCH
+		{
+			auto transition = pOnJumpWalk->CreateTransition(PlayerStateList::ON_JUMP_CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+		}
+	}
+	//ON JUMP IDLE
+	{
+		Behaviour<Player>* pOnJumpIdle = mStateMachine.CreateBehaviour(PlayerStateList::ON_JUMP_IDLE);
+		pOnJumpIdle->AddAction<PlayerAction_OnJumpIdle>();
+		//-> IDLE
+		{
+			auto transition = pOnJumpIdle->CreateTransition(PlayerStateList::IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsGrounded>(true);
+		}
+		//-> WALK
+		{
+			auto transition = pOnJumpIdle->CreateTransition(PlayerStateList::WALK);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsJumping>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsGrounded>(true);
+
+		}
+		//-> CROUCH
+		{
+			auto transition = pOnJumpIdle->CreateTransition(PlayerStateList::CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsJumping>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsGrounded>(true);
+			auto condition4 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+		}
+		//-> JUMP
+		{
+			auto transition = pOnJumpIdle->CreateTransition(PlayerStateList::JUMP);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_HasJump>(true);
+		}
+		//-> FALL WALK 
+		{
+			auto transition = pOnJumpIdle->CreateTransition(PlayerStateList::FALL_WALK);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_GravityPlus>(true);
+			auto condition4 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+		}
+		//-> FALL IDLE
+		{
+			auto transition = pOnJumpIdle->CreateTransition(PlayerStateList::FALL_IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_GravityPlus>(true);
+		}
+		//-> FALL CROUCH
+		{
+			auto transition = pOnJumpIdle->CreateTransition(PlayerStateList::FALL_CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_GravityPlus>(true);
+			auto condition4 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+		}
+		//-> ON JUMP WALK
+		{
+			auto transition = pOnJumpIdle->CreateTransition(PlayerStateList::ON_JUMP_WALK);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+		}
+		//-> ON JUMP CROUCH
+		{
+			auto transition = pOnJumpIdle->CreateTransition(PlayerStateList::ON_JUMP_CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+		}
+	}
+	//ON JUMP CROUCH 
+	{
+		Behaviour<Player>* pOnJumpCrouch = mStateMachine.CreateBehaviour(PlayerStateList::ON_JUMP_CROUCH);
+		pOnJumpCrouch->AddAction<PlayerAction_OnJumpCrouch>();
+		//-> IDLE
+		{
+			auto transition = pOnJumpCrouch->CreateTransition(PlayerStateList::IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsGrounded>(true);
+		}
+		//-> WALK
+		{
+			auto transition = pOnJumpCrouch->CreateTransition(PlayerStateList::WALK);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsJumping>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsGrounded>(true);
+			auto condition4 = transition->AddCondition<PlayerCondition_IsCrouching>(false); 
+
+		}
+		//-> CROUCH
+		{
+			auto transition = pOnJumpCrouch->CreateTransition(PlayerStateList::CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsJumping>(false);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsGrounded>(true);
+			auto condition4 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+		}
+		//-> JUMP
+		{
+			auto transition = pOnJumpCrouch->CreateTransition(PlayerStateList::JUMP);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_HasJump>(true);
+		}
+		//-> FALL WALK 
+		{
+			auto transition = pOnJumpCrouch->CreateTransition(PlayerStateList::FALL_WALK);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_GravityPlus>(true);
+			auto condition4 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+		}
+		//-> FALL IDLE
+		{
+			auto transition = pOnJumpCrouch->CreateTransition(PlayerStateList::FALL_IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_GravityPlus>(true);
 			auto condition3 = transition->AddCondition<PlayerCondition_IsWalking>(false);
+		}
+		//-> FALL CROUCH
+		{
+			auto transition = pOnJumpCrouch->CreateTransition(PlayerStateList::FALL_CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+			auto condition3 = transition->AddCondition <PlayerCondition_GravityPlus>(true);
+			auto condition4 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+		}
+		//-> ON JUMP WALK
+		{
+			auto transition = pOnJumpCrouch->CreateTransition(PlayerStateList::ON_JUMP_WALK);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+		}
+		//-> ON JUMP IDLE
+		{
+			auto transition = pOnJumpCrouch->CreateTransition(PlayerStateList::ON_JUMP_IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+		}
+	}
+	//FALL WALK
+	{
+		Behaviour<Player>* pFallWalk = mStateMachine.CreateBehaviour(PlayerStateList::FALL_WALK);
+		pFallWalk->AddAction<PlayerAction_FallWalk>();
+		//-> IDLE
+		{
+			auto transition = pFallWalk->CreateTransition(PlayerStateList::IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(false);
+		}
+		//-> WALK
+		{
+			auto transition = pFallWalk->CreateTransition(PlayerStateList::WALK);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsGrounded>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+		}
+		//-> CROUCH
+		{
+			auto transition = pFallWalk->CreateTransition(PlayerStateList::CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsGrounded>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+		}
+		//-> JUMP
+		{
+			auto transition = pFallWalk->CreateTransition(PlayerStateList::JUMP);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_HasJump>(true);
+		}
+		//-> FALL CROUCH
+		{
+			auto transition = pFallWalk->CreateTransition(PlayerStateList::FALL_CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+		}
+		//-> FALL IDLE
+		{
+			auto transition = pFallWalk->CreateTransition(PlayerStateList::FALL_IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(false);
+		}
+	}
+	//FALL IDLE
+	{
+		Behaviour<Player>* pFallIdle = mStateMachine.CreateBehaviour(PlayerStateList::FALL_IDLE);
+		pFallIdle->AddAction<PlayerAction_FallIdle>();
+		//-> IDLE
+		{
+			auto transition = pFallIdle->CreateTransition(PlayerStateList::IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(false);
+		}
+		//-> WALK
+		{
+			auto transition = pFallIdle->CreateTransition(PlayerStateList::WALK);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsGrounded>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+		}
+		//-> CROUCH
+		{
+			auto transition = pFallIdle->CreateTransition(PlayerStateList::CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsGrounded>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+		}
+		//-> JUMP
+		{
+			auto transition = pFallIdle->CreateTransition(PlayerStateList::JUMP);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_HasJump>(true);
+		}
+		//-> FALL CROUCH
+		{
+			auto transition = pFallIdle->CreateTransition(PlayerStateList::FALL_CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+		}
+		//-> FALL WALK
+		{
+			auto transition = pFallIdle->CreateTransition(PlayerStateList::FALL_WALK);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+		}
+	}
+	//FALL CROUCH
+	{
+		Behaviour<Player>* pFallCrouch = mStateMachine.CreateBehaviour(PlayerStateList::FALL_CROUCH);
+		pFallCrouch->AddAction<PlayerAction_FallCrouch>();
+		//-> IDLE
+		{
+			auto transition = pFallCrouch->CreateTransition(PlayerStateList::IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(true); 
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(false); 
+		}
+		//-> WALK
+		{
+			auto transition = pFallCrouch->CreateTransition(PlayerStateList::WALK);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsGrounded>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+		}
+		//-> CROUCH
+		{
+			auto transition = pFallCrouch->CreateTransition(PlayerStateList::CROUCH);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsGrounded>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+		}
+		//-> JUMP
+		{
+			auto transition = pFallCrouch->CreateTransition(PlayerStateList::JUMP);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(true);
+			auto condition2 = transition->AddCondition<PlayerCondition_HasJump>(true);
+		}
+		//-> FALL IDLE
+		{
+			auto transition = pFallCrouch->CreateTransition(PlayerStateList::FALL_IDLE);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(false);
+		}
+		//-> FALL WALK
+		{
+			auto transition = pFallCrouch->CreateTransition(PlayerStateList::FALL_WALK);
+
+			auto condition = transition->AddCondition<PlayerCondition_IsGrounded>(false);
+			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			auto condition3 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
 		}
 	}
 	//CROUCH
@@ -203,33 +641,36 @@ Player::Player() : mStateMachine(this, PlayerStateList::COUNT)
 	{
 		Behaviour<Player>* pJumpOnCrouch = mStateMachine.CreateBehaviour(PlayerStateList::JUMP_ON_CROUCH);
 		pJumpOnCrouch->AddAction<PlayerAction_JumpOnCrouch>();
-		//-> IDLE
 		{
-			auto transition = pJumpOnCrouch->CreateTransition(PlayerStateList::IDLE);
 
-			auto condition = transition->AddCondition<PlayerCondition_IsJumping>(false);
-			auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(false);
+			//-> ON JUMP WALK
+			{
+				auto transition = pJumpOnCrouch->CreateTransition(PlayerStateList::ON_JUMP_WALK);
 
-		}
-		//-> WALK
-		{
-			auto transition = pJumpOnCrouch->CreateTransition(PlayerStateList::WALK);
+				auto condition = transition->AddCondition<PlayerCondition_IsWalking>(true);
+				auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+			}
+			//-> ON JUMP IDLE
+			{
+				auto transition = pJumpOnCrouch->CreateTransition(PlayerStateList::ON_JUMP_IDLE);
 
-			auto condition = transition->AddCondition<PlayerCondition_IsWalking>(true);
-			auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
-			auto condition3 = transition->AddCondition<PlayerCondition_IsJumping>(false);
-		}
-		//-> CROUCH
-		{
-			auto transition = pJumpOnCrouch->CreateTransition(PlayerStateList::CROUCH);
+				auto condition = transition->AddCondition<PlayerCondition_IsWalking>(false);
+				auto condition2 = transition->AddCondition<PlayerCondition_IsCrouching>(false);
+			}
+			//-> ON JUMP CROUCH
+			{
+				auto transition = pJumpOnCrouch->CreateTransition(PlayerStateList::ON_JUMP_CROUCH);
 
-			auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+				auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
+				auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(true);
+			}
 		}
 	}
 	mStateMachine.SetState(PlayerStateList::IDLE);
 
 
 }
+
 const char* Player::GetStateName(PlayerStateList state) const
 {
 	switch (state)
@@ -239,6 +680,12 @@ const char* Player::GetStateName(PlayerStateList state) const
 	case JUMP: return "JUMP";
 	case CROUCH: return "CROUCH";
 	case JUMP_ON_CROUCH: return "JUMP_ON_CROUCH";	
+	case FALL_CROUCH: return "FALL_CROUCH";
+	case FALL_WALK: return "FALL_WALK";
+	case FALL_IDLE: return "FALL_IDLE";
+	case ON_JUMP_CROUCH: return "ON_JUMP_CROUCH";
+	case ON_JUMP_WALK: return "ON_JUMP_WALK";
+	case ON_JUMP_IDLE: return "ON_JUMP_IDLE";
 	default: return "Unknown";
 	}
 }

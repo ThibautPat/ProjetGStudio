@@ -46,16 +46,27 @@ bool PlayerCondition_IsGrounded::OnTest(Player* owner)
 {
 	for (Entity* entity : GameManager::Get()->GetEntities<Entity>())
 	{
-		if (owner->IsColliding(entity) && owner != entity && (entity->IsTag(TestScene::Tag::OBSTACLE) || (entity->IsTag(TestScene::Tag::METALIC_OBSTACLE))))
+		if (entity->IsColliding(owner))
 		{
-			static_cast<AABBCollider*>(owner->GetCollider())->GetCollideFace()->y = 1;
-			return true;
+			if (entity->IsTag(TestScene::Tag::METALIC_OBSTACLE))
+			{
+				return true;
+			}
+			else if (entity->IsTag(TestScene::Tag::OBSTACLE) && static_cast<AABBCollider*>(owner->GetCollider())->GetCollideFace()->y == 1)
+
+			{
+				return true;
+			}
 		}
-		else if (owner->IsColliding(entity) && owner != entity && entity->IsTag(TestScene::Tag::METALIC_OBSTACLE))
-		{
-			static_cast<AABBCollider*>(owner->GetCollider())->GetCollideFace()->y = -1;
-			return true;
-		}
+	}
+	return false;
+}
+
+bool PlayerCondition_GravityPlus::OnTest(Player* owner)
+{
+	if (owner->GetGravitySpeed() >= 0)
+	{
+		return true;
 	}
 	return false;
 }

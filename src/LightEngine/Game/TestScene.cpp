@@ -67,18 +67,21 @@ void TestScene::OnInitialize()
 	pEntity1->SetRigidBody(true);
 	pEntity1->SetIsKinematic(true);
 	pEntity1->SetGravity(false);
+	pEntity1->SetTag(Tag::OBSTACLE);
 
 	RectangleEntity* pEntity2 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Red);
 	pEntity2->SetPosition(1200, 300);
 	pEntity2->SetRigidBody(true);
 	pEntity2->SetIsKinematic(true);
 	pEntity2->SetGravity(false);
+	pEntity2->SetTag(Tag::OBSTACLE);
 
 	RectangleEntity* pEntity3 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Red);
 	pEntity3->SetPosition(200, 100);
 	pEntity3->SetRigidBody(true);
 	pEntity3->SetIsKinematic(true);
 	pEntity3->SetGravity(false);
+	pEntity3->SetTag(Tag::OBSTACLE);
 
 	RectangleEntity* pEntity4 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::White);
 	pEntity4->SetPosition(100, 260);
@@ -93,18 +96,6 @@ void TestScene::OnInitialize()
 	pEntity5->SetIsKinematic(true);
 	pEntity5->SetGravity(false);
 	pEntity5->SetTag(Tag::END_LEVEL);
-	//test can be remove
-	//mView->setSize(1920, 1080);
-
-	/*
-	for (int i = 0; i <= ENTITY_NB; i++) 
-	{
-		RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(400, 400, sf::Color::Red); // Ajout d'autre entit� et setup
-		pEntity->SetPosition(i*400 + 600, 0);
-		pEntity->SetRigidBody(true);
-		pEntity->SetIsKinematic(true);
-		pEntity->SetGravity(true);
-	}*/
 }
 
 void TestScene::OnEvent(const sf::Event& event)

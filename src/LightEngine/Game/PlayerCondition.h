@@ -30,3 +30,9 @@ class PlayerCondition_IsGrounded : public Condition<Player>
 public:
 	bool OnTest(Player* owner) override;
 };
+
+class PlayerCondition_GravityPlus : public Condition<Player>
+{
+public:
+	bool OnTest(Player* owner) override;
+};

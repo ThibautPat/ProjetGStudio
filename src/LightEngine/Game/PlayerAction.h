@@ -40,3 +40,51 @@ public:
 	void OnUpdate(Player* pOwner) override;
 	void OnEnd(Player* pOwner) override;
 };
+
+class PlayerAction_OnJumpWalk : public Action<Player>
+{
+public:
+	void OnStart(Player* pOwner) override;
+	void OnUpdate(Player* pOwner) override;
+	void OnEnd(Player* pOwner) override;
+};
+
+class PlayerAction_OnJumpIdle : public Action<Player>
+{
+public:
+	void OnStart(Player* pOwner) override;
+	void OnUpdate(Player* pOwner) override;
+	void OnEnd(Player* pOwner) override;
+};
+
+class PlayerAction_OnJumpCrouch : public Action<Player>
+{
+public:
+	void OnStart(Player* pOwner) override;
+	void OnUpdate(Player* pOwner) override;
+	void OnEnd(Player* pOwner) override;
+};
+
+class PlayerAction_FallWalk : public Action<Player>
+{
+public:
+	void OnStart(Player* pOwner) override;
+	void OnUpdate(Player* pOwner) override;
+	void OnEnd(Player* pOwner) override;
+};
+
+class PlayerAction_FallIdle : public Action<Player>
+{
+public:
+	void OnStart(Player* pOwner) override;
+	void OnUpdate(Player* pOwner) override;
+	void OnEnd(Player* pOwner) override;
+};
+
+class PlayerAction_FallCrouch : public Action<Player>
+{
+public:
+	void OnStart(Player* pOwner) override;
+	void OnUpdate(Player* pOwner) override;
+	void OnEnd(Player* pOwner) override;
+};

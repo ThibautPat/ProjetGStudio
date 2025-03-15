@@ -154,3 +154,208 @@ void PlayerAction_Idle::OnUpdate(Player* pOwner)
 void PlayerAction_Idle::OnEnd(Player* pOwner)
 {
 }
+
+void PlayerAction_OnJumpWalk::OnStart(Player* pOwner)
+{
+}
+
+void PlayerAction_OnJumpWalk::OnUpdate(Player* pOwner)
+{
+	sf::Vector2f movement = pOwner->InputDirection(); 
+	float speed = pOwner->GetSpeed();
+	speed += movement.x * 50 * FIXED_DT * pOwner->mPData->mAcceleration;
+	pOwner->SetSpeed(speed);
+	if (movement.x != 0) // Mise � jour de mLastMovement si movement.x n'est pas nul
+	{
+		pOwner->mLastMovement = movement;
+	}
+	if ((pOwner->mLastMovement.x == -1 && pOwner->GetSpeed() > 0) || (pOwner->mLastMovement.x == 1 && pOwner->GetSpeed() < 0)) // Gestion de la d�c�l�ration si la direction du mouvement change
+	{
+		float spd = pOwner->GetSpeed();
+		spd += (pOwner->mLastMovement.x == -1 ? -1 : 1) * pOwner->mPData->mDeceleration * 50 * FIXED_DT;
+		pOwner->SetSpeed(spd);
+	}
+}
+
+void PlayerAction_OnJumpWalk::OnEnd(Player* pOwner)
+{
+}
+
+void PlayerAction_OnJumpIdle::OnStart(Player* pOwner)
+{
+}
+
+void PlayerAction_OnJumpIdle::OnUpdate(Player* pOwner)
+{
+	float decelerationAmount = pOwner->mPData->mDeceleration * 50 * FIXED_DT;
+
+	if (std::abs(pOwner->GetSpeed()) > 100)	// Decelerer ou accelerer vers z�ro en fonction de la vitesse
+	{
+		float spd = pOwner->GetSpeed();
+		spd += (pOwner->GetSpeed() > 0 ? -1 : 1) * decelerationAmount;
+		pOwner->SetSpeed(spd);
+	}
+	if (std::abs(pOwner->GetSpeed()) < 500)	// Si la vitesse est proche de 0, on la reinitialise
+	{
+		pOwner->SetSpeed(0);
+	}
+}
+
+void PlayerAction_OnJumpIdle::OnEnd(Player* pOwner)
+{
+}
+
+void PlayerAction_OnJumpCrouch::OnStart(Player* pOwner)
+{
+}
+
+void PlayerAction_OnJumpCrouch::OnUpdate(Player* pOwner)
+{
+	float dt = FIXED_DT;
+	float spd = pOwner->GetSpeed();
+	sf::Vector2f movement = pOwner->InputDirection();
+	if (movement.x == 1)
+	{
+		if (pOwner->GetSpeed() > -pOwner->mPData->mMaxSpeedWalk)
+		{
+			spd += pOwner->mPData->mMaxSpeedWalk * dt;
+			pOwner->SetSpeed(spd);
+		}
+		if (pOwner->GetSpeed() > pOwner->mPData->mMaxSpeedCrouch)
+		{
+			spd -= pOwner->mPData->mMaxSpeedWalk * dt * 2;
+			pOwner->SetSpeed(spd);
+		}
+		if (pOwner->GetSpeed() < 11000 && pOwner->GetSpeed() > 9000)
+		{
+			spd = pOwner->mPData->mMaxSpeedCrouch;
+			pOwner->SetSpeed(spd);
+		}
+	}
+	else if (movement.x == -1)
+	{
+		if (pOwner->GetSpeed() < pOwner->mPData->mMaxSpeedWalk)
+		{
+			spd -= pOwner->mPData->mMaxSpeedWalk * dt;
+			pOwner->SetSpeed(spd);
+		}
+		if (pOwner->GetSpeed() < -pOwner->mPData->mMaxSpeedCrouch)
+		{
+			spd += pOwner->mPData->mMaxSpeedWalk * dt * 2;
+			pOwner->SetSpeed(spd);
+		}
+		if (pOwner->GetSpeed() > -11000 && pOwner->GetSpeed() < -9000)
+		{
+			spd = -pOwner->mPData->mMaxSpeedCrouch;
+			pOwner->SetSpeed(spd);
+		}
+	}
+	pOwner->SetSpeed(spd);
+}
+
+void PlayerAction_OnJumpCrouch::OnEnd(Player* pOwner)
+{
+}
+
+void PlayerAction_FallWalk::OnStart(Player* pOwner)
+{
+}
+
+void PlayerAction_FallWalk::OnUpdate(Player* pOwner)
+{
+	sf::Vector2f movement = pOwner->InputDirection();
+	float speed = pOwner->GetSpeed();
+	speed += movement.x * 50 * FIXED_DT * pOwner->mPData->mAcceleration;
+	pOwner->SetSpeed(speed);
+	if (movement.x != 0) // Mise � jour de mLastMovement si movement.x n'est pas nul
+	{
+		pOwner->mLastMovement = movement;
+	}
+	if ((pOwner->mLastMovement.x == -1 && pOwner->GetSpeed() > 0) || (pOwner->mLastMovement.x == 1 && pOwner->GetSpeed() < 0)) // Gestion de la d�c�l�ration si la direction du mouvement change
+	{
+		float spd = pOwner->GetSpeed();
+		spd += (pOwner->mLastMovement.x == -1 ? -1 : 1) * pOwner->mPData->mDeceleration * 50 * FIXED_DT;
+		pOwner->SetSpeed(spd);
+	}
+
+}
+
+void PlayerAction_FallWalk::OnEnd(Player* pOwner)
+{
+}
+
+void PlayerAction_FallIdle::OnStart(Player* pOwner)
+{
+}
+
+void PlayerAction_FallIdle::OnUpdate(Player* pOwner)
+{
+	float decelerationAmount = pOwner->mPData->mDeceleration * 50 * FIXED_DT;
+
+	if (std::abs(pOwner->GetSpeed()) > 100)	// Decelerer ou accelerer vers z�ro en fonction de la vitesse
+	{
+		float spd = pOwner->GetSpeed();
+		spd += (pOwner->GetSpeed() > 0 ? -1 : 1) * decelerationAmount;
+		pOwner->SetSpeed(spd);
+	}
+	if (std::abs(pOwner->GetSpeed()) < 500)	// Si la vitesse est proche de 0, on la reinitialise
+	{
+		pOwner->SetSpeed(0);
+	}
+}
+
+void PlayerAction_FallIdle::OnEnd(Player* pOwner)
+{
+}
+
+void PlayerAction_FallCrouch::OnStart(Player* pOwner)
+{
+}
+
+void PlayerAction_FallCrouch::OnUpdate(Player* pOwner)
+{
+	float dt = FIXED_DT;
+	float spd = pOwner->GetSpeed();
+	sf::Vector2f movement = pOwner->InputDirection();
+	if (movement.x == 1)
+	{
+		if (pOwner->GetSpeed() > -pOwner->mPData->mMaxSpeedWalk)
+		{
+			spd += pOwner->mPData->mMaxSpeedWalk * dt;
+			pOwner->SetSpeed(spd);
+		}
+		if (pOwner->GetSpeed() > pOwner->mPData->mMaxSpeedCrouch)
+		{
+			spd -= pOwner->mPData->mMaxSpeedWalk * dt * 2;
+			pOwner->SetSpeed(spd);
+		}
+		if (pOwner->GetSpeed() < 11000 && pOwner->GetSpeed() > 9000)
+		{
+			spd = pOwner->mPData->mMaxSpeedCrouch;
+			pOwner->SetSpeed(spd);
+		}
+	}
+	else if (movement.x == -1)
+	{
+		if (pOwner->GetSpeed() < pOwner->mPData->mMaxSpeedWalk)
+		{
+			spd -= pOwner->mPData->mMaxSpeedWalk * dt;
+			pOwner->SetSpeed(spd);
+		}
+		if (pOwner->GetSpeed() < -pOwner->mPData->mMaxSpeedCrouch)
+		{
+			spd += pOwner->mPData->mMaxSpeedWalk * dt * 2;
+			pOwner->SetSpeed(spd);
+		}
+		if (pOwner->GetSpeed() > -11000 && pOwner->GetSpeed() < -9000)
+		{
+			spd = -pOwner->mPData->mMaxSpeedCrouch;
+			pOwner->SetSpeed(spd);
+		}
+	}
+	pOwner->SetSpeed(spd);
+}
+
+void PlayerAction_FallCrouch::OnEnd(Player* pOwner)
+{
+}

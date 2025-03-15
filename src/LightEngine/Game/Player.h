@@ -40,6 +40,12 @@ protected:
 		WALK,
 		JUMP,
 		JUMP_ON_CROUCH,
+		FALL_CROUCH,
+		FALL_WALK,
+		FALL_IDLE,
+		ON_JUMP_CROUCH,
+		ON_JUMP_WALK,
+		ON_JUMP_IDLE,
 
 		COUNT
 	};
