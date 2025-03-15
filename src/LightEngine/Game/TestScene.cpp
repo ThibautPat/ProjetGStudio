@@ -87,8 +87,8 @@ void TestScene::OnInitialize()
 	pEntity4->SetGravity(false);
 	pEntity4->SetTag(Tag::METALIC_OBSTACLE);
 
-	RectangleEntity* pEntity5 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::White);
-	pEntity5->SetPosition(-200, 670);
+	RectangleEntity* pEntity5 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::White);
+	pEntity5->SetPosition(-400, 670);
 	pEntity5->SetRigidBody(false);
 	pEntity5->SetIsKinematic(true);
 	pEntity5->SetGravity(false);
