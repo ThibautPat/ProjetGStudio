@@ -82,7 +82,7 @@ void TestScene::OnInitialize()
 	pEntity3->SetGravity(false);
 
 	RectangleEntity* pEntity4 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::White);
-	pEntity4->SetPosition(100, 250);
+	pEntity4->SetPosition(100, 260);
 	pEntity4->SetRigidBody(true);
 	pEntity4->SetIsKinematic(true);
 	pEntity4->SetGravity(false);

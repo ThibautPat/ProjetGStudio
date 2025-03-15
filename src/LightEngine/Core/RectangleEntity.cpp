@@ -95,14 +95,14 @@ void RectangleEntity::Repulse(Entity* other)
             mGravitySpeed = 0.f;
             mBoolGravity = false;
             secondjump = 2;
-            gap = 10;
+            gap = 1;
         }
         else if (mCollider->GetCollideFace()->y == -1 && !other->IsTag(TestScene::Tag::METALIC_OBSTACLE))
         {
             mBoolGravity = true;
             mGravitySpeed = 0.f;
             place = -1;
-            gap = -10;
+            gap = -1;
         }
 		else 
 		{
@@ -110,7 +110,7 @@ void RectangleEntity::Repulse(Entity* other)
             mBoolGravity = false;
             mGravitySpeed = 0.f;
             place = -1;
-            gap = -10;
+            gap = -1;
 		}
         if ((mMove.y <= 0) || (mMove.y >= 0))
         {

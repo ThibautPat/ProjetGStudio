@@ -15,9 +15,8 @@ void PlayerAction_Jump::OnUpdate(Player* pOwner)
 		pOwner->mPData->pJumpDuration = 0;
 		if (pOwner->mReverse)
 		{
-			pOwner->SetPosition(pOwner->GetPosition(0,0).x, pOwner->GetPosition(0,0).y +10);
 			pOwner->mReverse = false;
-			pOwner->SetGravitySpeed(pOwner->mPData->mJumpHeight);
+			pOwner->SetGravitySpeed(pOwner->mPData->mJumpHeight/2);
 		}
 		else
 		{
