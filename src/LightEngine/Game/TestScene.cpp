@@ -4,9 +4,12 @@
 #include <iostream>
 #include "../Core/Debug.h"
 #include "../Game/Player.h"
+#include "../Core/AudioManager.h"
+
 void TestScene::OnInitialize()
 {
-	
+	AudioM = new AudioManager(); 
+	AudioM->PlayCurrentMusic();
 	Player* pEntity = CreateEntity<Player>(100, sf::Color::Red);
 	pEntity->SetGravity(true);
 	pEntity->SetRigidBody(true);

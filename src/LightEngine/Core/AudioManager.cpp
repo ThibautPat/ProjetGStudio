@@ -2,7 +2,7 @@
 #include "GameManager.h"
 AudioManager::AudioManager()
 {
-    //LoadMusic("Level(1).mp3", true);
+    LoadMusic("Test.mp3", true);
     //LoadMusic("Level(2).mp3", true);
     //LoadMusic("Level(3).mp3", true);
     //LoadMusic("Level(4).mp3", true);
