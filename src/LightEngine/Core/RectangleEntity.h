@@ -34,9 +34,9 @@ public:
 	/// </summary>
 	void Update() override;
 
-	virtual void OnUpdate();
-	virtual void OnCollision(Entity* collidedWith);
+	virtual void OnUpdate() {};
+	virtual void OnCollision(Entity* collidedWith) {};
 	virtual void OnInitialize();
-	virtual void OnDestroy();
+	virtual void OnDestroy() {};
 };
 

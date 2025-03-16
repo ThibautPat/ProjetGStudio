@@ -133,19 +133,7 @@ void RectangleEntity::Update()
     Entity::Update();
 }
 
-void RectangleEntity::OnUpdate()
-{
-}
-
-void RectangleEntity::OnCollision(Entity* collidedWith)
-{
-}
-
 void RectangleEntity::OnInitialize()
 {
 	mShape.setOrigin(mShape.getGlobalBounds().width/2,mShape.getGlobalBounds().height/2);
-}
-
-void RectangleEntity::OnDestroy()
-{
 }
