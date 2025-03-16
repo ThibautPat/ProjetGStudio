@@ -120,7 +120,7 @@ void Player::OnUpdate()
 	std::string text = std::to_string(PlayerState);
 	Debug::DrawText(mShape.getPosition().x,mShape.getPosition().y - 30, text ,sf::Color::White);
 
-	std::string text2 = std::to_string(mSpeed);
+	std::string text2 = std::to_string((int)mSpeed);
 	Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 50, text2, sf::Color::White);
 
 	//Stress Test TextureManager
