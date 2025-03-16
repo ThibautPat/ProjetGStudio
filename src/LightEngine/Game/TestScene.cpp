@@ -6,6 +6,7 @@
 #include "../Game/Player.h"
 #include "../Game/Checkpoint.h"
 #include "../Game/DeadlyObstacle.h"
+#include "../Game/Moving_Platform.h"
 
 //TODO in player class ----------
 void TestScene::PlayerDeath()
@@ -111,6 +112,15 @@ void TestScene::OnInitialize()
 	pEntity5->SetIsKinematic(true);
 	pEntity5->SetGravity(false);
 	pEntity5->SetTag(Tag::END_LEVEL);
+
+	Moving_Platform* pEntity6 = CreateRectEntity<Moving_Platform>(100, 200, sf::Color::Cyan);
+	pEntity6->SetPosition(-400, 0);
+	pEntity6->SetRigidBody(true);
+	pEntity6->SetIsKinematic(false);
+	pEntity6->SetGravity(false);
+	pEntity6->setMaxTravelDistance(300);
+	pEntity6->SetStartPosition(pEntity6->GetPosition(0,0));
+	pEntity6->SetTag(Tag::OBSTACLE);
 }
 
 void TestScene::OnEvent(const sf::Event& event)
