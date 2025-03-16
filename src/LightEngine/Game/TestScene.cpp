@@ -88,6 +88,8 @@ void TestScene::OnInitialize()
 	Ground->SetRigidBody(true);
 	Ground->SetIsKinematic(true);
 	Ground->SetGravity(false);
+	Ground->SetTag(Tag::OBSTACLE);
+
 	RectangleEntity* pEntity4 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::White);
 	pEntity4->SetPosition(100, 260);
 	pEntity4->SetRigidBody(true);
