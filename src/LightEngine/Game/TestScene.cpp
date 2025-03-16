@@ -6,13 +6,14 @@
 #include "../Game/Player.h"
 #include "../Game/Checkpoint.h"
 #include "../Game/DeadlyObstacle.h"
+#include "../Game/Teleporter.h"
 
 //TODO in player class ----------
 void TestScene::PlayerDeath()
 {
 		RespawnClock.restart(); // On restart le timer de respawn
 		playerIsDead = true;
-		m_InstanceGameManager->GetSceneManager()->SelectScene("testscene2");
+		//m_InstanceGameManager->GetSceneManager()->SelectScene("testscene2");
 }
 //---------------------------------
 
@@ -45,6 +46,20 @@ void TestScene::OnInitialize()
 {
 	mView = new sf::View(sf::FloatRect(0, 0, GetWindowWidth(), GetWindowHeight())); // Ajout de la cam�ra
 	m_InstanceGameManager = GameManager::Get();
+
+	Teleporter* Teleporter1 = CreateRectEntity<Teleporter>(100, 100, sf::Color::Magenta); // Ajout du Teleporter et setup
+	Teleporter1->SetPosition(1200, 225);
+	Teleporter1->SetRigidBody(false);
+	Teleporter1->SetIsKinematic(true);
+	Teleporter1->SetGravity(false);
+	Teleporter1->SetTag(Tag::TELEPORTER);
+
+	Teleporter* Teleporter2 = CreateRectEntity<Teleporter>(100, 100, sf::Color::Magenta); // Ajout du Teleporter et setup
+	Teleporter2->SetPosition(700, 670);
+	Teleporter2->SetRigidBody(false);
+	Teleporter2->SetIsKinematic(true);
+	Teleporter2->SetGravity(false);
+	Teleporter2->SetTag(Tag::TELEPORTER);
 
 	Checkpoint* Checkpoint2 = CreateRectEntity<Checkpoint>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
 	Checkpoint2->SetPosition(300, 670);
@@ -157,6 +172,20 @@ void TestScene::OnUpdate()
 						{
 							if (!dynamic_cast<Player*>(entity3))
 							entity3->Destroy(); // On d�truit toutes les entit�s
+						}
+					}
+				}
+				if (entity2->IsTag(Tag::TELEPORTER))
+				{
+					if (entity->GetShape()->getGlobalBounds().intersects(entity2->GetShape()->getGlobalBounds())) // Si le joueur touche le teleporter
+					{
+						for (Entity* entity3 : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
+						{
+							if (entity3->IsTag(Tag::TELEPORTER) && entity3 != entity2 && TeleportClock.getElapsedTime().asSeconds() > 2) // Si l'entit� est un autre teleporter
+							{
+								entity->SetPosition(entity3->GetPosition(0.f, 0.f).x, entity3->GetPosition(0.f, 0.f).y); // On t�l�porte le joueur
+								TeleportClock.restart(); // On restart le timer de t�l�portation
+							}
 						}
 					}
 				}
