@@ -78,9 +78,11 @@ GameManager::~GameManager()
 
 void GameManager::DrawRender(Entity* entity)
 {
-	if (entity->GetRender() == nullptr)
+	if (entity->GetRender() == nullptr) {
 		return;
-
+	}
+		
+	render_nb++;
 	entity->GetRender()->Draw(entity, mpWindow);
 
 }
@@ -123,15 +125,22 @@ void GameManager::Run()
 	sf::Clock clock;
 	while (mpWindow->isOpen())
 	{
-		
 		SetDeltaTime(clock.restart().asSeconds());
 		
 		HandleInput();
 		
-			Update();
+		Update();
 		
-			Draw();
-		
+		Draw();
+
+		if (IsSceneChanged()) {
+
+			mEntities.clear();
+
+			mScM->LaunchScene();
+			return;
+		}
+
 	}
 }
 
@@ -207,6 +216,12 @@ void GameManager::Draw()
 		DrawRender(entity);
 	}
 	
+	//TODO remove if u want (for debug)
+	std::string render = std::to_string(render_nb);
+	Debug::DrawText(10, 60, render, sf::Color::White);
+	render_nb = 0;
+	//----------
+
 	Debug::Get()->Draw(mpWindow);
 
 	mpWindow->display();

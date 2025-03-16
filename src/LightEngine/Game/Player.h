@@ -47,7 +47,7 @@ public:
 
 	int testvar = 0;
 
-	Render* GetRender() { return (Render*)mTextured; };
+	Render* GetRender() { return mTextured; };
 
 	void OnInitialize() override;
 	sf::Vector2f InputDirection();

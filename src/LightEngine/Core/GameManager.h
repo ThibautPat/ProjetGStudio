@@ -39,7 +39,9 @@ protected:
 	float mAccumulatedDt = 0.f;
 
 	TextureManager* mAs;
+
 	SceneManager* mScM;
+	bool mIsSceneChanged = false;
 
 	GameManager();
 
@@ -51,11 +53,13 @@ protected:
 
 	void SetDeltaTime(float deltaTime) { mDeltaTime = deltaTime; }
 
-	
-
 	void FixedUpdate();
 
 public:
+
+	//TODO remove if u want (for debug)
+	int render_nb = 0;
+
 	~GameManager();
 
 	void DrawRender(Entity* entity);
@@ -63,6 +67,9 @@ public:
 	static GameManager* Get();
 	TextureManager* GetTextureManager() { return mAs; }
 	SceneManager* GetSceneManager() { return mScM; }
+
+	bool IsSceneChanged() { return mIsSceneChanged; }
+	void SetIsSceneChanged(bool isccenechanged) { mIsSceneChanged = isccenechanged; }
 
 	void UpdateCollision(Entity* mEntities);
 

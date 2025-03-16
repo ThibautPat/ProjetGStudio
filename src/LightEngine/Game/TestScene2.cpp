@@ -1,4 +1,4 @@
-#include "TestScene.h"
+#include "TestScene2.h"
 
 #include "../Core/Entity.h"
 #include <iostream>
@@ -7,17 +7,19 @@
 #include "../Game/Checkpoint.h"
 #include "../Game/DeadlyObstacle.h"
 
+////RENAME THIS SCENE NAME IS BAD
+
 //TODO in player class ----------
-void TestScene::PlayerDeath()
+void TestScene2::PlayerDeath()
 {
 		RespawnClock.restart(); // On restart le timer de respawn
 		playerIsDead = true;
-		m_InstanceGameManager->GetSceneManager()->SelectScene("testscene2");
+		m_InstanceGameManager->GetSceneManager()->SelectScene("testscene");
 }
 //---------------------------------
 
 //TODO in player class ----------
-void TestScene::PlayerRespawn()
+void TestScene2::PlayerRespawn()
 {
 
 	if (playerIsDead) // Si le joueur est mort
@@ -41,7 +43,7 @@ void TestScene::PlayerRespawn()
 //---------------------------------
 
 
-void TestScene::OnInitialize()
+void TestScene2::OnInitialize()
 {
 	mView = new sf::View(sf::FloatRect(0, 0, GetWindowWidth(), GetWindowHeight())); // Ajout de la cam�ra
 	m_InstanceGameManager = GameManager::Get();
@@ -70,24 +72,6 @@ void TestScene::OnInitialize()
 	pEntity->SetIsKinematic(false);
 	pEntity->SetPosition(100, 100);
 
-	RectangleEntity* pEntity1 = CreateRectEntity<RectangleEntity>(50, 300, sf::Color::Red);
-	pEntity1->SetPosition(500, 500);
-	pEntity1->SetRigidBody(true);
-	pEntity1->SetIsKinematic(true);
-	pEntity1->SetGravity(false);
-
-	RectangleEntity* pEntity2 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Red);
-	pEntity2->SetPosition(1200, 300);
-	pEntity2->SetRigidBody(true);
-	pEntity2->SetIsKinematic(true);
-	pEntity2->SetGravity(false);
-
-	RectangleEntity* pEntity3 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Red);
-	pEntity3->SetPosition(200, 100);
-	pEntity3->SetRigidBody(true);
-	pEntity3->SetIsKinematic(true);
-	pEntity3->SetGravity(false);
-
 	//test can be remove
 	//mView->setSize(1920, 1080);
 
@@ -102,14 +86,17 @@ void TestScene::OnInitialize()
 	}*/
 }
 
-void TestScene::OnEvent(const sf::Event& event)
+void TestScene2::OnEvent(const sf::Event& event)
 {	
 	//TODO Refaire la pause coter moteur
 }
 
-void TestScene::OnUpdate()
+void TestScene2::OnUpdate()
 {
-	std::cout << "Scene" << std::endl;
+	//TODO remove if u want (for debug)
+	std::cout << "Scene 2" << std::endl;
+
+
 	int i = 0;
 	PlayerRespawn();
 	for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager

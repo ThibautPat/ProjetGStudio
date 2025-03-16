@@ -46,8 +46,7 @@ public:
 	int secondjump = 2;
 	bool IsOnGround() { return not mBoolGravity; }
 	float GetGravitySpeed() { return mGravitySpeed; }
-	float GetSpeed() { return mSpeed;  }
-	//in render
+	float GetSpeed() { return mSpeed; }
 	virtual Render* GetRender() { return nullptr; }
 
 	virtual void FixedUpdate(float dt) { Fall(dt); };

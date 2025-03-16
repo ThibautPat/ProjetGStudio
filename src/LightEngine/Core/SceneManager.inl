@@ -1,30 +1,12 @@
 #include "SceneManager.h"
 
+/// <summary>
+/// Ajoute une nouvelle Scene a la map de SceneManager (la Scene n'est pas initialise : pScene = nullptr)
+/// </summary>
+/// <typeparam name="T">Class de la Scene</typeparam>
+/// <param name="name">Nom de la Scene stockee dans la map</param>
 template<typename T>
 inline void SceneManager::AddScene(const char* name)
 {
 	mListScene.insert({ name , new T() });
-}
-
-template<typename T>
-inline void SceneManager::LaunchScene()
-{
-	//static_assert(std::is_base_of<Scene, T>::value, "T must be derived from Scene");
-	//_ASSERT(mCurrentScene == nullptr);
-
-	//T* newScene = new T();
-	//mCurrentScene = newScene;
-
-	mCurrentScene = (T*)mCurrentScene;
-
-	mCurrentScene->SetGameManager(GameManager::Get());
-	mCurrentScene->OnInitialize();
-
-	//TODO mettre ailleur avec une scene par defaut dans le constructeur ?
-	GameManager::Get()->Run();
-}
-template<typename T>
-inline void SceneManager::SelectScene(const char* name)
-{
-	mCurrentScene = (T*)mListScene.at(name);
 }
