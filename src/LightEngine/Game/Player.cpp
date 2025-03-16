@@ -662,7 +662,6 @@ Player::Player() : mStateMachine(this, PlayerStateList::COUNT)
 				auto transition = pJumpOnCrouch->CreateTransition(PlayerStateList::ON_JUMP_CROUCH);
 
 				auto condition = transition->AddCondition<PlayerCondition_IsCrouching>(true);
-				auto condition2 = transition->AddCondition<PlayerCondition_IsWalking>(true);
 			}
 		}
 	}
