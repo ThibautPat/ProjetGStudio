@@ -2,7 +2,7 @@
 #include "GameManager.h"
 AudioManager::AudioManager()
 {
-    LoadMusic("Test.mp3", true);
+    LoadMusic("Test.wav", true);
     //LoadMusic("Level(2).mp3", true);
     //LoadMusic("Level(3).mp3", true);
     //LoadMusic("Level(4).mp3", true);
@@ -24,7 +24,6 @@ AudioManager::AudioManager()
     //LoadSound("hitmarker.mp3", false);
     //LoadSound("Ough.mp3", false);
     //LoadSound("InstallModule.mp3", false);
-
 }
 
 void AudioManager::PlaySound()
@@ -33,7 +32,7 @@ void AudioManager::PlaySound()
     {
 
         m_CurrentSounds[i]->play();
-        m_CurrentSounds[i]->setVolume(10.f);
+        m_CurrentSounds[i]->setVolume(100.f);
     }
 }
 
@@ -76,7 +75,6 @@ void AudioManager::AddLevelSound(std::vector<std::string*> sound)
 
 void AudioManager::LoadSound(std::string Name, bool Loop)
 {
-
     sf::SoundBuffer* buffer = new sf::SoundBuffer;
     if (!buffer->loadFromFile("../../../res/SOUND/" + Name))
     {
@@ -99,7 +97,8 @@ void AudioManager::LoadMusic(std::string Name, bool Loop) {
 }
 
 void AudioManager::AddLevelMusic(std::vector<std::string*>& sounds) {
-    for (std::size_t i = 0; i < sounds.size(); i++) {
+    for (std::size_t i = 0; i < sounds.size(); i++) 
+    {
         std::map<std::string, sf::Music*>::iterator it = m_MusicMap.find(*sounds[i]);
         if (it != m_MusicMap.end()) {
             m_CurrentMusic.push_back(it->second);
@@ -109,7 +108,8 @@ void AudioManager::AddLevelMusic(std::vector<std::string*>& sounds) {
 
 void AudioManager::PlayCurrentMusic() {
     for (std::size_t i = 0; i < m_CurrentMusic.size(); i++) {
-        if (m_CurrentMusic[i] != nullptr) {
+        if (m_CurrentMusic[i] != nullptr) 
+        {
             m_CurrentMusic[i]->play();
             m_CurrentMusic[i]->setVolume(20.f);
         }

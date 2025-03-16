@@ -13,6 +13,9 @@ protected:
 	AudioManager* AudioM;
 	GameManager* mGm;
 
+	std::vector<std::string*> m_soundList;
+	std::vector<std::string*> m_MusicList;
+
 public:
 	void OnInitialize() override;
 	void OnEvent(const sf::Event& event) override;

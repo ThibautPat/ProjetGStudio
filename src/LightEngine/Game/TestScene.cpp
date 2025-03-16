@@ -8,8 +8,17 @@
 
 void TestScene::OnInitialize()
 {
-	AudioM = new AudioManager(); 
+	AudioM = new AudioManager();
+	std::string* word = new std::string("Test.Wav");
+	m_MusicList.push_back(word);
+
+	std::string* word2 = new std::string("Fin");
+	m_MusicList.push_back(word2);
+
+	AudioM->AddLevelMusic(m_MusicList);
+
 	AudioM->PlayCurrentMusic();
+
 	Player* pEntity = CreateEntity<Player>(100, sf::Color::Red);
 	pEntity->SetGravity(true);
 	pEntity->SetRigidBody(true);
