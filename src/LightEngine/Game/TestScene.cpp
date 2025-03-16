@@ -6,20 +6,13 @@
 #include "../Game/Player.h"
 #include "../Game/Checkpoint.h"
 #include "../Game/DeadlyObstacle.h"
-
-//TODO in player class ----------
 void TestScene::PlayerDeath()
 {
 		RespawnClock.restart(); // On restart le timer de respawn
 		playerIsDead = true;
-		m_InstanceGameManager->GetSceneManager()->SelectScene("testscene2");
 }
-//---------------------------------
-
-//TODO in player class ----------
 void TestScene::PlayerRespawn()
 {
-
 	if (playerIsDead) // Si le joueur est mort
 	{
 		for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
@@ -38,13 +31,12 @@ void TestScene::PlayerRespawn()
 		}
 	}
 }
-//---------------------------------
-
-
 void TestScene::OnInitialize()
 {
 	mView = new sf::View(sf::FloatRect(0, 0, GetWindowWidth(), GetWindowHeight())); // Ajout de la cam�ra
 	m_InstanceGameManager = GameManager::Get();
+	
+	
 
 	Checkpoint* Checkpoint2 = CreateRectEntity<Checkpoint>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
 	Checkpoint2->SetPosition(300, 670);
@@ -120,9 +112,6 @@ void TestScene::OnEvent(const sf::Event& event)
 
 void TestScene::OnUpdate()
 {
-	//TODO remove if u want (for debug)
-	std::cout << "Scene" << std::endl;
-
 	int i = 0;
 	PlayerRespawn();
 	for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
@@ -130,9 +119,7 @@ void TestScene::OnUpdate()
 		i++;
 		if (dynamic_cast<Player*>(entity))
 		{
-			mView->setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame
-
-			//TODO in player class ----------
+			mView->setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame 
 			for (Entity* entity2 : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
 			{
 				if (dynamic_cast<Checkpoint*>(entity2))
@@ -161,7 +148,6 @@ void TestScene::OnUpdate()
 					}
 				}
 			}
-			//--------------------------------
 		}
 
 		sf::Vector2f cooEntity = entity->GetPosition(0.f, 0.f);

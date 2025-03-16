@@ -3,9 +3,8 @@
 #include "Entity.h"
 #include "TextureRender.h"
 #include "Debug.h"
-#include "InputManager.h"
-#include "TextureManager.h"
-#include "SceneManager.h"
+#include "../Core/InputManager.h"
+#include "../Core/TextureManager.h"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -15,11 +14,10 @@ GameManager::GameManager()
 {
 	mpWindow = nullptr;
 	mDeltaTime = 0.0f;
-	//mpScene = nullptr;
+	mpScene = nullptr;
 	mWindowWidth = -1;
 	mWindowHeight = -1;
 	mAs = new TextureManager();
-	mScM = new SceneManager();
 }
 
 GameManager* GameManager::Get()
@@ -67,8 +65,7 @@ void GameManager::FixedUpdate()
 GameManager::~GameManager()
 {
 	delete mpWindow;
-	//delete mpScene;
-	delete mScM;
+	delete mpScene;
 
 	for (Entity* entity : mEntities)
 	{
@@ -76,14 +73,29 @@ GameManager::~GameManager()
 	}
 }
 
-void GameManager::DrawRender(Entity* entity)
+void GameManager::DrawTextureRender(Entity* entity)
 {
-	if (entity->GetRender() == nullptr) {
+	if (entity->GetTextureRender() == nullptr) {
 		return;
 	}
-		
-	render_nb++;
-	entity->GetRender()->Draw(entity, mpWindow);
+
+	TextureRender* tr = entity->GetTextureRender();
+
+	std::string tname = tr->GetTextName();
+	sf::IntRect* textrect = tr->GetTextureRect();
+	sf::Texture text = sf::Texture();
+	mAs->FindTexture(tname, *textrect, &text);
+
+	sf::Sprite spr;
+	spr.setTexture(text);
+
+	float offset = 0.5f;
+	sf::Vector2f renderPos = sf::Vector2f(
+		entity->GetPosition(0, 0).x - text.getSize().x * offset,
+		entity->GetPosition(0, 0).y - text.getSize().y * offset);
+	spr.setPosition(renderPos);
+
+	mpWindow->draw(spr);
 
 }
 
@@ -100,13 +112,6 @@ void GameManager::CreateWindow(unsigned int width, unsigned int height, const ch
 	mClearColor = clearColor;
 }
 
-/*
-Scene* GameManager::GetScene() const
-{
-	return mScM->GetScene();
-}
-*/
-
 void GameManager::Run()
 {
 	if (mpWindow == nullptr) 
@@ -119,28 +124,20 @@ void GameManager::Run()
 	bool fontLoaded = mFont.loadFromFile("../../../res/Hack-Regular.ttf");
 	_ASSERT(fontLoaded);
 
-	//_ASSERT(mpScene != nullptr);
-	_ASSERT(mScM->GetScene() != nullptr);
+	_ASSERT(mpScene != nullptr);
 
 	sf::Clock clock;
 	while (mpWindow->isOpen())
 	{
+		
 		SetDeltaTime(clock.restart().asSeconds());
 		
 		HandleInput();
 		
-		Update();
+			Update();
 		
-		Draw();
-
-		if (IsSceneChanged()) {
-
-			mEntities.clear();
-
-			mScM->LaunchScene();
-			return;
-		}
-
+			Draw();
+		
 	}
 }
 
@@ -154,13 +151,13 @@ void GameManager::HandleInput()
 			mpWindow->close();
 		}
 
-		mScM->GetScene()->OnEvent(event);
+		mpScene->OnEvent(event);
 	}
 }
 
 void GameManager::Update()
 {
-	mScM->GetScene()->OnUpdate();
+	mpScene->OnUpdate();
     //Update
     for (auto it = mEntities.begin(); it != mEntities.end(); )
     {
@@ -182,7 +179,7 @@ void GameManager::Update()
 	mAccumulatedDt += mDeltaTime;
 	while (mAccumulatedDt >= FIXED_DT)
 	{
-		if (!mScM->GetScene()->freeze)
+		if (!mpScene->freeze)
 		{
 			FixedUpdate();
 		}
@@ -213,15 +210,9 @@ void GameManager::Draw()
 		//#TODO peut être remove à la fin
 		mpWindow->draw(*entity->GetShape());
 
-		DrawRender(entity);
+		DrawTextureRender(entity);
 	}
 	
-	//TODO remove if u want (for debug)
-	std::string render = std::to_string(render_nb);
-	Debug::DrawText(10, 60, render, sf::Color::White);
-	render_nb = 0;
-	//----------
-
 	Debug::Get()->Draw(mpWindow);
 
 	mpWindow->display();

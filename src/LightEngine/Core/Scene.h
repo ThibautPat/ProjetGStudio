@@ -1,7 +1,6 @@
 #pragma once
 
 class GameManager;
-class SceneManager;
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Color.hpp>
@@ -37,7 +36,6 @@ public:
 	int GetWindowHeight() const;
 
 	friend GameManager;
-	friend SceneManager;
 };
 
 #include "Scene.inl"

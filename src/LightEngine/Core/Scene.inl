@@ -14,7 +14,7 @@ T* Scene::CreateCircleEntity(float radius, const sf::Color& color)
 	Entity* entity = newEntity;
 	entity->Initialize(radius, color);
 	
-	GameManager::Get()->mEntitiesToAdd.push_back(newEntity);
+	mpGameManager->mEntitiesToAdd.push_back(newEntity);
 
 	return newEntity;
 }
@@ -29,7 +29,7 @@ T* Scene::CreateRectEntity(float height, float weight, const sf::Color& color)
 	Entity* entity = newEntity;
 	entity->Initialize(height, weight, color);
 
-	GameManager::Get()->mEntitiesToAdd.push_back(newEntity);
+	mpGameManager->mEntitiesToAdd.push_back(newEntity);
 
 	return newEntity;
 }

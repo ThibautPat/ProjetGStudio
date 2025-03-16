@@ -15,6 +15,7 @@ sf::Texture* TextureManager::LoadTexture(const char* path, std::string name)
 void TextureManager::FindTexture(std::string name, sf::Texture* text)
 {
 	*text = *mAssets.at(name);
+	//textured->SetTexture(*mAssets.at(name));
 }
 
 void TextureManager::FindTexture(std::string name, sf::IntRect rect, sf::Texture* text)
@@ -35,5 +36,6 @@ void TextureManager::FindTexture(std::string name, sf::IntRect rect, sf::Texture
 	renderTexture.display();
 
 	*text = renderTexture.getTexture();
+	//textured->SetTexture(renderTexture.getTexture());
 
 }

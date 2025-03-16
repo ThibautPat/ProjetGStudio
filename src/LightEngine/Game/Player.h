@@ -1,12 +1,10 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include <iostream>
+#include "../Core/TextureRender.h"
 #include "../Core/GameManager.h"
 #include "../Core/RectangleEntity.h"
 #include "../Core/StateMachine.h"
-
-class AnimationRender;
-
 struct PlayerData
 {
 	float mJumpHeight = 600.f;
@@ -28,7 +26,7 @@ class Player : public RectangleEntity
 	
 
 	//Gestionnaire de texture de l'entity
-	Render* mTextured;
+	TextureRender* mTextured;
 
 	//Gestionnaire de texture de la scene
 	TextureManager* mAs;
@@ -55,8 +53,8 @@ protected:
 public: 
 	PlayerData* mPData;
 	int testvar = 0;
-
-	Render* GetRender() { return mTextured; };
+	sf::Vector2f mLastMovement;
+	TextureRender* GetTextureRender() { return mTextured; }
 
 	void OnInitialize() override;
 	sf::Vector2f InputDirection();
