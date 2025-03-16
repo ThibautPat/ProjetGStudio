@@ -13,7 +13,7 @@ namespace sf
 
 class Scene;
 class Collider;
-class TextureRender;
+class Render;
 class TextureManager;
 
 class Entity
@@ -47,7 +47,8 @@ public:
 	bool IsOnGround() { return not mBoolGravity; }
 	float GetGravitySpeed() { return mGravitySpeed; }
 	float GetSpeed() { return mSpeed;  }
-	virtual TextureRender* GetTextureRender() { return nullptr; }
+	//in render
+	virtual Render* GetRender() { return nullptr; }
 
 	virtual void FixedUpdate(float dt) { Fall(dt); };
 	bool GoToDirection(int x, int y, float speed = -1.f);
@@ -57,6 +58,7 @@ public:
 	void Fall(float dt);
 	void SetDirection(float x, float y, float speed = -1.f);
 	void SetSpeed(float speed) { mSpeed = speed; }
+	void SetGravitySpeed(float speed) { mGravitySpeed = speed; }
 	void SetTag(int tag) { mTag = tag; }
 	void SetGravity(bool gravity) { mBoolGravity = gravity; }
 	sf::Vector2f GetDirection() const { return mDirection; }
