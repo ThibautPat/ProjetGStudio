@@ -4,6 +4,7 @@
 #include "../Core/TextureManager.h"
 #include "../Core/AnimationRender.h"
 
+
 void Player::Inertia(float dt, sf::Vector2f movement)
 {
 	if (movement.x != 0) // Mise � jour de mLastMovement si movement.x n'est pas nul
