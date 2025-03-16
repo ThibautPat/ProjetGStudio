@@ -1,2 +1,0 @@
-cd ..\
-.\SolutionGenerator.exe -make ./
