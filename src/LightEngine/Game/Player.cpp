@@ -5,6 +5,7 @@
 #include "../Game/PlayerAction.h"
 #include "../Game/PlayerCondition.h"
 #include "../Game/TestScene.h"
+#include "../Core/AnimationRender.h"
 
 
 void Player::Move(sf::Vector2f movement, float dt)

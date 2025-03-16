@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include "Entity.h"
 
+/*
 template<typename T>
 void GameManager::LaunchScene()
 {
@@ -20,6 +21,7 @@ void GameManager::LaunchScene()
 
 	Run();
 }
+*/
 
 template<typename T>
 inline std::list<T*>& GameManager::GetEntities()
