@@ -12,10 +12,14 @@
 int main() 
 {
     GameManager* pInstance = GameManager::Get();
+	SceneManager* pScM = pInstance->GetSceneManager();
 
 	pInstance->CreateWindow(1280, 720, "TestScene", 63, sf::Color::Black);
 	
-	pInstance->GetSceneManager()->LaunchScene<TestScene>();
+	pScM->AddScene<TestScene>("testsecne");
+	//pas de diff avec <>s
+	pScM->SelectScene<TestScene>("testsecne");
+	pScM->LaunchScene<TestScene>();
 
 	return 0;
 }

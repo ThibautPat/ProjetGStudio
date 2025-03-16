@@ -6,19 +6,21 @@ class SceneManager
 {
 protected:
 
-	std::vector<Scene*> mTabScene;
+	std::map<std::string, Scene*> mListScene;
 	Scene* mCurrentScene;
 public:
-	SceneManager() {}
+	SceneManager();
 
 	Scene* GetScene() { return mCurrentScene; }
 
 	template<typename T>
-	void AddScene();
+	void AddScene(const char* name);
 
 	template<typename T>
 	void LaunchScene();
 
+	template<typename T>
+	void SelectScene(const char* name);
 
 	friend Scene;
 	friend GameManager;
