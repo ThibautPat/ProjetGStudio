@@ -45,6 +45,7 @@ public:
 
 	int secondjump = 2;
 	bool IsOnGround() { return not mBoolGravity; }
+	bool GetGravity() { return mBoolGravity; }
 	float GetGravitySpeed() { return mGravitySpeed; }
 	float GetSpeed() { return mSpeed;  }
 	virtual TextureRender* GetTextureRender() { return nullptr; }

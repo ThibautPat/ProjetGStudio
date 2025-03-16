@@ -4,7 +4,7 @@
 #include "../Core/TextureRender.h"
 #include "../Core/GameManager.h"
 #include "../Core/RectangleEntity.h"
-
+#include "../Core/StateMachine.h"
 struct PlayerData
 {
 	float mJumpHeight = 600.f;
@@ -21,8 +21,9 @@ struct PlayerData
 
 class Player : public RectangleEntity
 {
-	PlayerData* mPData;
-	sf::Vector2f mLastMovement;
+	StateMachine<Player> mStateMachine;
+
+	
 
 	//Gestionnaire de texture de l'entity
 	TextureRender* mTextured;
@@ -31,35 +32,44 @@ class Player : public RectangleEntity
 	TextureManager* mAs;
 
 protected:
-
+	
 	enum PlayerStateList
 	{
-		IDEL,
+		IDLE,
 		CROUCH,
 		WALK,
-		JUMP
+		JUMP,
+		JUMP_ON_CROUCH,
+		FALL_CROUCH,
+		FALL_WALK,
+		FALL_IDLE,
+		ON_JUMP_CROUCH,
+		ON_JUMP_WALK,
+		ON_JUMP_IDLE,
+
+		COUNT
 	};
 
-	PlayerStateList PlayerState = WALK;
-
 public: 
-
+	PlayerData* mPData;
 	int testvar = 0;
-
+	sf::Vector2f mLastMovement;
 	TextureRender* GetTextureRender() { return mTextured; }
 
 	void OnInitialize() override;
 	sf::Vector2f InputDirection();
-	void Inertia(float dt, sf::Vector2f movement);
-	void Jump(float dt);
+	
+	
 	void Move(sf::Vector2f movement, float dt);
-	void Crouch();
+	
 	///---------------------------------------------------------------------------------------
 	//Ne pas override de Entity::Update(), car ne serait pas pris en compte par les colliders
 	///---------------------------------------------------------------------------------------
 	void OnUpdate() override; 
 	void FixedUpdate(float dt) override; 
 	
+	const char* GetStateName(PlayerStateList state) const;	
 	~Player();
+	Player();
 };
 

@@ -6,7 +6,6 @@
 #include "../Game/Player.h"
 #include "../Game/Checkpoint.h"
 #include "../Game/DeadlyObstacle.h"
-
 void TestScene::PlayerDeath()
 {
 		RespawnClock.restart(); // On restart le timer de respawn
@@ -68,24 +67,40 @@ void TestScene::OnInitialize()
 	pEntity1->SetRigidBody(true);
 	pEntity1->SetIsKinematic(true);
 	pEntity1->SetGravity(false);
+	pEntity1->SetTag(Tag::OBSTACLE);
 
 	RectangleEntity* pEntity2 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Cyan);
 	pEntity2->SetPosition(1200, 300);
 	pEntity2->SetRigidBody(true);
 	pEntity2->SetIsKinematic(true);
 	pEntity2->SetGravity(false);
+	pEntity2->SetTag(Tag::OBSTACLE);
 
 	RectangleEntity* pEntity3 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Cyan);
 	pEntity3->SetPosition(200, 100);
 	pEntity3->SetRigidBody(true);
 	pEntity3->SetIsKinematic(true);
 	pEntity3->SetGravity(false);
+	pEntity3->SetTag(Tag::OBSTACLE);
 
 	RectangleEntity* Ground = CreateRectEntity<RectangleEntity>(5000, 10000, sf::Color::Green);
 	Ground->SetPosition(0, 3220);
 	Ground->SetRigidBody(true);
 	Ground->SetIsKinematic(true);
 	Ground->SetGravity(false);
+	RectangleEntity* pEntity4 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::White);
+	pEntity4->SetPosition(100, 260);
+	pEntity4->SetRigidBody(true);
+	pEntity4->SetIsKinematic(true);
+	pEntity4->SetGravity(false);
+	pEntity4->SetTag(Tag::METALIC_OBSTACLE);
+
+	RectangleEntity* pEntity5 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::White);
+	pEntity5->SetPosition(-400, 670);
+	pEntity5->SetRigidBody(false);
+	pEntity5->SetIsKinematic(true);
+	pEntity5->SetGravity(false);
+	pEntity5->SetTag(Tag::END_LEVEL);
 }
 
 void TestScene::OnEvent(const sf::Event& event)
@@ -117,6 +132,17 @@ void TestScene::OnUpdate()
 					if (entity->GetShape()->getGlobalBounds().intersects(entity2->GetShape()->getGlobalBounds())) // Si le joueur touche le DeadlyObstacle
 					{
 						PlayerDeath(); // Le joueur meurt
+					}
+				}
+				if (entity2->IsTag(Tag::END_LEVEL))
+				{
+					if (entity->GetShape()->getGlobalBounds().intersects(entity2->GetShape()->getGlobalBounds())) // Si le joueur touche la fin du niveau
+					{
+						for (Entity* entity3 : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
+						{
+							if (!dynamic_cast<Player*>(entity3))
+							entity3->Destroy(); // On d�truit toutes les entit�s
+						}
 					}
 				}
 			}

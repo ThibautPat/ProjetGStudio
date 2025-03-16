@@ -2,12 +2,13 @@
 
 #include <vector>
 
-#include "Action.h"
+template<typename T>
+class Behaviour;
 
 template<typename T>
 class StateMachine
 {
-	std::vector<Action<T>*> mActions;
+	std::vector<Behaviour<T>*> mBehaviour;
 	int mCurrentState;
 
 	T* mOwner;
@@ -20,8 +21,7 @@ public:
 	void SetState(int state);
 	int GetCurrentState() const { return mCurrentState; }
 
-	template<typename U>
-	U* CreateAction(int state);
+	Behaviour<T>* CreateBehaviour(int state);
 };
 
 #include "StateMachine.inl"

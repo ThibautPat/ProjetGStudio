@@ -1,6 +1,7 @@
 #include "AABBCollider.h"
 #include "Entity.h"
 #include <iostream>
+#include "../Game/TestScene.h"
 
 AABBCollider::AABBCollider(float xMin, float yMin, float xMax, float yMax) : Collider(xMin, yMin, xMax, yMax) {
 	mCollideFace = sf::Vector2f(0, 0);
@@ -10,6 +11,9 @@ bool AABBCollider::IsColliding(Collider* pOther) {
 	int gap = 0;
 	if (mCollidedFace.y == 1) {
 		gap = 1;
+	}
+	if (mCollidedFace.y == -1) {
+		gap = -1;
 	}
 	sf::Rect bound(mXMin, mYMin+gap, mWidth, mHeight);
 	sf::Rect otherBound(pOther->mXMin, pOther->mYMin, pOther->mWidth, pOther->mHeight);

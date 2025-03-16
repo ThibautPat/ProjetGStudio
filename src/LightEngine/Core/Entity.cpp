@@ -50,7 +50,7 @@ void Entity::Fall(float dt)
 		return;
 
 	if (mGravitySpeed >= 2000.f)
-		return;
+		mGravitySpeed = 2000.f;
 
 	if (sf::Joystick::isButtonPressed(0, 4))
 	{

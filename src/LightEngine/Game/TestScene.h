@@ -21,8 +21,19 @@ protected:
 	bool playerIsDead = false;
 
 public:
-
 	void PlayerDeath();
+	enum Tag
+	{
+		PLAYER,
+		CHECKPOINT,
+		DEADLYOBSTACLE,
+		METALIC_OBSTACLE,
+		OBSTACLE,
+		END_LEVEL,
+
+		COUNT
+	};
+	
 	void PlayerRespawn();
 	void OnInitialize() override;
 	void OnEvent(const sf::Event& event) override;

@@ -16,11 +16,12 @@ class RectangleEntity : public Entity
 {
 protected: 
 
-	AABBCollider* mCollider;
+	
 	sf::RectangleShape mShape;
-
+	sf::Clock Clockjump;
 public:
-
+	bool mReverse = false;
+	AABBCollider* mCollider; 
 	// Hérité via Entity
 	Collider* GetCollider() override;
 	sf::Shape* GetShape() override;
