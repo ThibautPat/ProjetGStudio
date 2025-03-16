@@ -38,7 +38,9 @@ void Player::OnUpdate()
 	std::string text2 = std::to_string((int)mSpeed);
 	Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 50, text2, sf::Color::White);
 	mStateMachine.Update(); 
+	
 	//Stress Test TextureManager
+	/*
 	if (testvar >= 110)
 		testvar = 0;
 
@@ -46,6 +48,7 @@ void Player::OnUpdate()
 
 	sf::IntRect rect = sf::IntRect(0, 0, 18, 18);
 	mTextured->SetTextureRect(rect);
+	*/
 	//-----
 }
 
