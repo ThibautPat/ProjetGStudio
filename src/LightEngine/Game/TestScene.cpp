@@ -13,7 +13,7 @@ void TestScene::PlayerDeath()
 {
 		RespawnClock.restart(); // On restart le timer de respawn
 		playerIsDead = true;
-		m_InstanceGameManager->GetSceneManager()->SelectScene("testscene2");
+		
 }
 //---------------------------------
 
@@ -120,7 +120,7 @@ void TestScene::OnInitialize()
 	pEntity6->SetGravity(false);
 	pEntity6->setMaxTravelDistance(300);
 	pEntity6->SetStartPosition(pEntity6->GetPosition(0,0));
-	pEntity6->SetTag(Tag::OBSTACLE);
+	pEntity6->SetTag(Tag::METALIC_OBSTACLE);
 }
 
 void TestScene::OnEvent(const sf::Event& event)
@@ -163,11 +163,7 @@ void TestScene::OnUpdate()
 				{
 					if (entity->GetShape()->getGlobalBounds().intersects(entity2->GetShape()->getGlobalBounds())) // Si le joueur touche la fin du niveau
 					{
-						for (Entity* entity3 : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
-						{
-							if (!dynamic_cast<Player*>(entity3))
-							entity3->Destroy(); // On d�truit toutes les entit�s
-						}
+						m_InstanceGameManager->GetSceneManager()->SelectScene("testscene2");
 					}
 				}
 			}
