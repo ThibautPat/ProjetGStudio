@@ -76,7 +76,6 @@ void AnimationRender::UpdateAnimation()
             if (IsLoop()) {
                 mFrameCounter = 0;
                 mTextRect.left -= mTextRect.width * (mFrameNb);
-                std::cout << "Boucle" << std::endl;
             }
             else {
                 mFrameCounter = mFrameNb;
@@ -88,9 +87,6 @@ void AnimationRender::UpdateAnimation()
         //    //SetTextureRect(mTextRect);
         //}
         //else
-
-
-        std::cout << mFrameCounter << " " << mTextRect.left << std::endl;
 
     }
 }

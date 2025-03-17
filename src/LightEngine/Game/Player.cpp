@@ -57,7 +57,7 @@ void Player::OnInitialize()
 	std::string msg = Utils::GetInfo<std::string>(jsontest, "structure");
 	std::cout << msg << std::endl;
 
-	const char* msg2 = Utils::GetInfoFromArray<const char*>(jsontest, "frame_size", "width");
+	int msg2 = Utils::GetInfoFromArray<int>(jsontest, "frame_size", "width");
 	std::cout << msg2 << std::endl;
 
 	int msg3 = Utils::GetInfoFromArray<int>(jsontest, "walk", "frames");

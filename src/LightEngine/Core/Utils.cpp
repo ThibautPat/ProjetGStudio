@@ -51,7 +51,7 @@ namespace Utils
 
 		file >> *nJson;
 
-		std::cout << "Json parsed" << std::endl;
+		std::cout << "Json parsed form : " << path << std::endl;
 
 		return nJson;
 	}
