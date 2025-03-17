@@ -9,7 +9,7 @@ AABBCollider::AABBCollider(float xMin, float yMin, float xMax, float yMax) : Col
 
 bool AABBCollider::IsColliding(Collider* pOther) {
 	int gap = 0;
-	if (mCollidedFace.y == 1) {
+	if (mCollidingFace.y == 1) {
 		gap = 1;
 	}
 	if (mCollidedFace.y == -1) {
@@ -56,12 +56,12 @@ bool AABBCollider::IsColliding(Collider* pOther) {
 			std::cout << "penetration Y on ";
 			if (mCollideFace.y < 0)
 			{
-				mCollidedFace = sf::Vector2f(0, -1);
+				mCollidingFace = sf::Vector2f(0, -1);
 				std::cout << "Top : " << penetrationx << " " << penetrationy << std::endl;
 			}
 			if (mCollideFace.y > 0)
 			{
-				mCollidedFace = sf::Vector2f(0, 1);
+				mCollidingFace = sf::Vector2f(0, 1);
 				std::cout << "Bottom : " << penetrationx << " " << penetrationy << std::endl;
 			}
 		}
@@ -70,12 +70,12 @@ bool AABBCollider::IsColliding(Collider* pOther) {
 			std::cout << "penetration X on ";
 			if (mCollideFace.x < 0)
 			{
-				mCollidedFace = sf::Vector2f(-1, 0); 
+				mCollidingFace = sf::Vector2f(-1, 0); 
 				std::cout << "Left : " << penetrationx << " " << penetrationy << std::endl;
 			}
 			if (mCollideFace.x > 0)
 			{
-				mCollidedFace = sf::Vector2f(1, 0); 
+				mCollidingFace = sf::Vector2f(1, 0); 
 				std::cout << "Right : " << penetrationx << " " << penetrationy << std::endl;
 			}
 		}

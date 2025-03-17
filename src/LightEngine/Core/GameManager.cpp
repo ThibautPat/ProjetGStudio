@@ -10,6 +10,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
+#include "../Game/TestScene.h"
+#include "../Game/Player.h"
 
 GameManager::GameManager()
 {
@@ -49,16 +51,21 @@ void GameManager::FixedUpdate()
 			{
 				if (entity->IsRigidBody() && otherEntity->IsRigidBody())
 				{
-					entity->Repulse(otherEntity);
+					if (otherEntity->IsKinematic()) {
+						entity->Block(otherEntity);
+					}
+					else {
+						entity->Repulse(otherEntity);
+					}
 				}
 
 				entity->OnCollision(otherEntity);
 				otherEntity->OnCollision(entity);
 			}
-			else if (entity->hasCollidingLastFrame)
+			else if (entity->hasCollidedLastFrame)
 			{
 				entity->mBoolGravity = true;
-				entity->hasCollidingLastFrame = false;
+				entity->hasCollidedLastFrame = false;
 			}
 		}
 	}
