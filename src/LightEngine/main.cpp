@@ -16,10 +16,8 @@ int main()
 
 	pInstance->CreateWindow(1280, 720, "TestScene", 63, sf::Color(0,100,255));
 	
-	//Add all scenes
 	pScM->AddScene<TestScene>("testscene");
 	pScM->AddScene<TestScene2>("testscene2");
-
 
 	pScM->SelectScene("testscene");
 	pScM->LaunchScene();

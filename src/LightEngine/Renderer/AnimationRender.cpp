@@ -1,7 +1,5 @@
 #include "AnimationRender.h"
-
 #include "../Manager/TextureManager.h"
-
 #include <iostream>
 
 AnimationRender::AnimationRender(int frameNb, const char* textName, sf::IntRect rect)
@@ -18,10 +16,8 @@ void AnimationRender::UpdateAnimation()
 
     if (mTimer >= mTimePerFrame) {
 
-
         mFrameCounter++;
         mTimer = 0.f;
-
 
         if (mTextRect.left + mTextRect.width > mTextRect.width * mFrameNb)
         {
@@ -41,6 +37,5 @@ void AnimationRender::UpdateAnimation()
             mTextRect.width, mTextRect.height
         );
         SetTextureRect(nrect);
-
     }
 }

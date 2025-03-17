@@ -6,7 +6,6 @@
 #include "../GameScene/TestScene.h"
 #include "../Renderer/AnimationRender.h"
 
-
 void Player::Move(sf::Vector2f movement, float dt)
 {
 	if (mSpeed > mPData->mMaxSpeedWalk)
@@ -30,16 +29,14 @@ void Player::FixedUpdate(float dt)
 
 void Player::OnUpdate()
 {
-	const char* stateName = GetStateName((PlayerStateList)mStateMachine.GetCurrentState());
+	mStateMachine.Update();
+	mTextured->UpdateAnimation();
+
 	// Debug de valeur
-
-	Debug::DrawText(mShape.getPosition().x,mShape.getPosition().y - 30, stateName ,sf::Color::White);
-
+	const char* stateName = GetStateName((PlayerStateList)mStateMachine.GetCurrentState());
+	Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 30, stateName, sf::Color::White);
 	std::string text2 = std::to_string((int)mSpeed);
 	Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 50, text2, sf::Color::White);
-	mStateMachine.Update(); 
-
-	mTextured->UpdateAnimation();
 }
 
 void Player::OnInitialize()
@@ -52,7 +49,6 @@ void Player::OnInitialize()
 	//Setup de la gestion de textures
 	mAs->LoadTexture("../../../res/Assets/Tilemap/tilemap_packed.png", "tilemap");
 	mTextured = new AnimationRender(8, "tilemap", sf::IntRect(0, 0, 18, 18));
-	//mTextured->SelectTexture();
 }
 
 sf::Vector2f Player::InputDirection()

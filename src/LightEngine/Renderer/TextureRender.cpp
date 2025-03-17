@@ -10,9 +10,6 @@ void TextureRender::Draw(Entity* entity, sf::RenderWindow* window)
 	sf::Sprite spr;
 	spr.setTexture(text);
 
-	//TODO Remove this
-	mRenderRatio = sf::Vector2f(5, 5);
-	//-----
 	spr.setScale(mRenderRatio);
 
 	float offset = 0.5f;

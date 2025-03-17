@@ -54,12 +54,10 @@ void RectangleEntity::Repulse(Entity* other)
         other->SetPosition(other->GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y);
     }
 
-    // Calcul des positions, distances et normalisation
     sf::Vector2f distance = GetPosition(0.f, 0.f) - other->GetPosition(0.f, 0.f);
     float sqrLength = (distance.x * distance.x) + (distance.y * distance.y);
     float length = std::sqrt(sqrLength);
 
-    // Récupération des dimensions avec des noms plus parlants
     int entityWidth = mShape.getGlobalBounds().width;
     int otherWidth = other->GetShape()->getGlobalBounds().width;
     int entityHeight = mShape.getGlobalBounds().height;
@@ -85,16 +83,14 @@ void RectangleEntity::Repulse(Entity* other)
     }
     else
     {
-        
         // Collision verticale : on utilise les hauteurs
-
         int gap = 0;
         if (mCollider->GetCollideFace()->y == 1)
         {
             place = 1;
             mGravitySpeed = 0.f;
             mBoolGravity = false;
-            secondjump = 2;
+            secondJump = 2;
             gap = 1;
         }
         else if (mCollider->GetCollideFace()->y == -1 && !other->IsTag(TestScene::Tag::METALIC_OBSTACLE))
@@ -106,7 +102,7 @@ void RectangleEntity::Repulse(Entity* other)
         }
 		else 
 		{
-            secondjump = 2; 
+            secondJump = 2; 
             mBoolGravity = false;
             mGravitySpeed = 0.f;
             place = -1;
@@ -136,20 +132,15 @@ void RectangleEntity::Repulse(Entity* other)
             {
                 SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f));
             }
-            // Le joueur se d�place vers l'autre objet, donc on l'arr�te
             hasCollidingLastFrame = true;
-
         }
-
     }
 }
-
 
 void RectangleEntity::Update()
 {
     mCollider->Update(GetPosition(0.f, 0.f).x - mCollider->mWidth / 2.f, GetPosition(0.f, 0.f).y - mCollider->mHeight / 2.f);
     Debug::DrawRectangle(GetPosition(-1.f, -1.f).x, GetPosition(-1.f, -1.f).y, mShape.getGlobalBounds().width, mShape.getGlobalBounds().height, sf::Color::Cyan);
-	//#TODO : � revoir pour �viter de perdre les comportement des classes h�rit�es ?
     Entity::Update();
 }
 

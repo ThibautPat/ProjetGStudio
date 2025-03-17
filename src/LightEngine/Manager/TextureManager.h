@@ -1,10 +1,8 @@
 #pragma once
-
 #include "GameManager.h"
 #include <map>
 
 class TextureRender;
-
 
 class TextureManager
 {
@@ -24,12 +22,14 @@ public:
 	/// <param name="name">Nom de </param>
 	/// <returns></returns>
 	sf::Texture* LoadTexture(const char* path, std::string name);
+
 	/// <summary>
 	/// Cherche la texture dans le dictionnaire et l'associe à la texture envoyee en parametre.
 	/// </summary>
 	/// <param name="name">Nom de la texture dans le dictionnaire(std::map) du TextureManager</param>
 	/// <param name="textured">Texture a laquelle on applique la texture du dictionnaire</param>
 	void FindTexture(std::string name, sf::Texture* text);
+
 	/// <summary>
 	/// Cherche la texture dans le dictionnaire et l'associe à la texture en fonction de la shape.
 	/// </summary>

@@ -35,5 +35,4 @@ void TextureManager::FindTexture(std::string name, sf::IntRect rect, sf::Texture
 	renderTexture.display();
 
 	*text = renderTexture.getTexture();
-
 }

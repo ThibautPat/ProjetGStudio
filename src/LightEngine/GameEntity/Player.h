@@ -25,8 +25,6 @@ class Player : public RectangleEntity
 {
 	StateMachine<Player> mStateMachine;
 
-	
-
 	//Gestionnaire de texture de l'entity
 	AnimationRender* mTextured;
 

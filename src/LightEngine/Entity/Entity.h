@@ -1,110 +1,109 @@
 #pragma once
+
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
 
-#define GRAVITYACCEL 9.81f
-#define AIRRESISANTCE GRAVITYACCEL/4
-
-namespace sf 
-{
-	class Shape;
-    class Color;
-}
+constexpr float GRAVITY_ACCEL = 9.81f;
+constexpr float AIR_RESISTANCE = GRAVITY_ACCEL / 4.0f;
 
 class Scene;
 class Collider;
 class Render;
 class TextureManager;
 
-class Entity
-{
-    struct Target 
-    {
-		sf::Vector2i position;
-        float distance;
-		bool isSet;
+class Entity {
+public:
+    struct Target {
+        sf::Vector2i position;
+        float distance = 0.0f;
+        bool isSet = false;
     };
 
 protected:
-	float mSizeX, mSizeY;
-
+    float mSizeX = 0.0f, mSizeY = 0.0f;
     sf::Vector2f mDirection;
-	sf::Vector2f mMove;
-	Target mTarget;
-    
+    sf::Vector2f mMove;
+    Target mTarget;
+
     bool mToDestroy = false;
     int mTag = -1;
-	bool mRigidBody = false;
-	bool mKinematic = false;
-	bool hasCollidingLastFrame = false;
-	bool mBoolGravity = true;
-	float mGravitySpeed = 0.f;
-	float mSpeed = 0.f;
+    bool mRigidBody = false;
+    bool mKinematic = false;
+    bool hasCollidingLastFrame = false;
+    bool mBoolGravity = true;
+    float mGravitySpeed = 0.0f;
+    float mSpeed = 0.0f;
 
 public:
 
-	int secondjump = 2;
-	bool IsOnGround() { return not mBoolGravity; }
-	bool GetGravity() { return mBoolGravity; }
-	float GetGravitySpeed() { return mGravitySpeed; }
-	float GetSpeed() { return mSpeed; }
-	virtual Render* GetRender() { return nullptr; }
+    int secondJump = 2;
 
-	virtual void FixedUpdate(float dt) { Fall(dt); };
-	bool GoToDirection(int x, int y, float speed = -1.f);
-    bool GoToPosition(int x, int y, float speed = -1.f);
-    void SetPosition(float x, float y, float ratioX = 0.f, float ratioY = 0.f);
-	sf::Vector2f GetPosition(float ratioX, float ratioY);
-	void Fall(float dt);
-	void SetDirection(float x, float y, float speed = -1.f);
-	void SetSpeed(float speed) { mSpeed = speed; }
-	void SetGravitySpeed(float speed) { mGravitySpeed = speed; }
-	void SetTag(int tag) { mTag = tag; }
-	void SetGravity(bool gravity) { mBoolGravity = gravity; }
-	sf::Vector2f GetDirection() const { return mDirection; }
-	void SetRigidBody(bool isRigitBody) { mRigidBody = isRigitBody; }
-	bool IsRigidBody() const { return mRigidBody; }
-	void SetIsKinematic(bool isKinematic) { mKinematic = isKinematic; }
-	bool IsKinematic() const { return mKinematic; }
-	virtual Collider* GetCollider() = 0; //
+    Entity() = default;
+    virtual ~Entity() = default;
 
-	virtual sf::Shape* GetShape() = 0;
+    // Getters
+    bool IsOnGround() const { return !mBoolGravity; }
+    bool GetGravity() const { return mBoolGravity; }
+    float GetGravitySpeed() const { return mGravitySpeed; }
+    float GetSpeed() const { return mSpeed; }
+    sf::Vector2f GetDirection() const { return mDirection; }
+    bool IsRigidBody() const { return mRigidBody; }
+    bool IsKinematic() const { return mKinematic; }
+    bool ToDestroy() const { return mToDestroy; }
+    bool IsTag(int tag) const { return mTag == tag; }
+    sf::Vector2f GetPosition(float ratioX, float ratioY);
 
-	bool IsTag(int tag) const { return mTag == tag; }
-    virtual bool IsColliding(Entity* other) = 0; //
-	virtual bool IsInside(float x, float y) = 0; //
+    // Setters
+    void SetSpeed(float speed) { mSpeed = speed; }
+    void SetGravitySpeed(float speed) { mGravitySpeed = speed; }
+    void SetTag(int tag) { mTag = tag; }
+    void SetGravity(bool gravity) { mBoolGravity = gravity; }
+    void SetRigidBody(bool isRigidBody) { mRigidBody = isRigidBody; }
+    void SetIsKinematic(bool isKinematic) { mKinematic = isKinematic; }
+    void SetPosition(float x, float y, float ratioX = 0.0f, float ratioY = 0.0f);
+    void SetDirection(float x, float y, float speed = -1.0f);
 
+    // Movement & Physics
+    virtual void FixedUpdate(float dt) { Fall(dt); }
+    void Fall(float dt);
+    bool GoToDirection(int x, int y, float speed = -1.0f);
+    bool GoToPosition(int x, int y, float speed = -1.0f);
+
+    // Collision
+    virtual bool IsColliding(Entity* other) = 0;
+    virtual bool IsInside(float x, float y) = 0;
+    virtual Collider* GetCollider() = 0;
+    virtual sf::Shape* GetShape() = 0;
+    virtual void Repulse(Entity* other) = 0;
+
+    // Render
+    virtual Render* GetRender() { return nullptr; }
+
+    // Lifecycle
     void Destroy();
-	bool ToDestroy() const { return mToDestroy; }
-	
-	template<typename T>
-	T* GetScene() const;
+    virtual void OnUpdate() = 0;
+    virtual void OnCollision(Entity* collidedWith) = 0;
+    virtual void OnInitialize() = 0;
+    virtual void OnDestroy() = 0;
 
+    // Scene & Entity Creation
+    template<typename T> T* GetScene() const;
     Scene* GetScene() const;
-	float GetDeltaTime() const;
+    float GetDeltaTime() const;
 
     template<typename T>
-	T* CreateCircleEntity(float radius, const sf::Color& color);
+    T* CreateCircleEntity(float radius, const sf::Color& color);
 
-	template<typename T>
-	T* CreateRectEntity(float height, float Width, const sf::Color& color); //
+    template<typename T>
+    T* CreateRectEntity(float height, float width, const sf::Color& color);
 
 protected:
-    Entity() = default;
-    ~Entity() = default;
-
-	virtual void OnUpdate() = 0;
-    virtual void OnCollision(Entity* collidedWith) = 0;
-	virtual void OnInitialize() = 0;
-	virtual void OnDestroy() = 0;
-	
     virtual void Update();
-	virtual void Initialize(float radius, const sf::Color& color) = 0; //
-	virtual void Initialize(float height, float Width, const sf::Color& color) = 0; //
-	virtual void Repulse(Entity* other) = 0; // 
+    virtual void Initialize(float radius, const sf::Color& color) = 0;
+    virtual void Initialize(float height, float width, const sf::Color& color) = 0;
 
     friend class GameManager;
-    friend Scene;
+    friend class Scene;
 };
 
 #include "Entity.inl"

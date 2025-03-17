@@ -4,7 +4,7 @@
 
 bool PlayerCondition_IsJumping::OnTest(Player* owner)
 {
-	if (owner->GetGravity() && owner->secondjump <= 0)
+	if (owner->GetGravity() && owner->secondJump <= 0)
 		return false;
 	if (owner->mPData->pJumpDuration < owner->mPData->mJumpTime) 
 		return false;
@@ -35,7 +35,7 @@ bool PlayerCondition_IsWalking::OnTest(Player* owner)
 
 bool PlayerCondition_HasJump::OnTest(Player* owner)
 {
-	if (owner->secondjump > 0)
+	if (owner->secondJump > 0)
 	{
 		return true;
 	}

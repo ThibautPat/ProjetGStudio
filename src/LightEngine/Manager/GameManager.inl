@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GameManager.h"
-#include "../Other/Scene.h"
+#include "../GameScene/Scene.h"
 #include "../Entity/Entity.h"
 
 /*

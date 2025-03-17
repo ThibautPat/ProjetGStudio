@@ -18,7 +18,6 @@ class Behaviour
 
 public:
 
-
     Behaviour(T* owner);
     ~Behaviour();
 

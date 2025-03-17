@@ -15,8 +15,6 @@ protected:
 
 	sf::Vector2f mRenderRatio;
 
-	//TODO stocker info json
-
 public:
 
 	TextureRender() { mRenderRatio = sf::Vector2f(1.f, 1.f); }
@@ -35,6 +33,7 @@ public:
 	/// <param name="textName">Nom du fichier attribuee dans le dictionnaire(std::map) du TextureManager</param>
 	/// <param name="rect">Shape de la texture a conserver lors des rendus</param>
 	void AddAndSelectTexture(const char* path, const char* textName, sf::IntRect rect);
+
 	/// <summary>
 	/// Selectionne une texture (stockee dans le TextureManager) depuis un nom. Defini la zone de la texture (du disctionnaire) a conserver au rendu.
 	/// </summary>
@@ -45,6 +44,5 @@ public:
 	void SetTextureRect(sf::IntRect& rect) { mTextRect = rect; }
 	sf::IntRect* GetTextureRect() { return &mTextRect; }
 	const std::string& GetTextName() { return mTextName; }
-
 };
 
