@@ -15,7 +15,7 @@ protected:
 
 public:
 
-	TextureRender() { mRenderRatio = sf::Vector2f(1.f, 1.f); }
+	TextureRender(const char* spritesheetname, const char* spritename);
 
 	/// <summary>
 	/// Draw de la texture de l'entity (herite de Render)
@@ -30,13 +30,13 @@ public:
 	/// <param name="path">Chemin d'acces du fichier</param>
 	/// <param name="textName">Nom du fichier attribuee dans le dictionnaire(std::map) du TextureManager</param>
 	/// <param name="rect">Shape de la texture a conserver lors des rendus</param>
-	void AddAndSelectTexture(const char* path, const char* textName, sf::IntRect rect);
+	void SelectTexture(const char* spritesheetname, const char* spritename);
 	/// <summary>
 	/// Selectionne une texture (stockee dans le TextureManager) depuis un nom. Defini la zone de la texture (du disctionnaire) a conserver au rendu.
 	/// </summary>
 	/// <param name="textName">Nom du fichier attribuee dans le dictionnaire(std::map) du TextureManager</param>
 	/// <param name="rect">Shape de la texture a conserver lors des rendus</param>
-	void SelectTexture(const char* textName, sf::IntRect rect);
+	//void SelectTexture(const char* textName, sf::IntRect rect);
 
 };
 

@@ -64,7 +64,7 @@ void TestScene::OnInitialize()
 	DeadlyObstacle1->SetIsKinematic(true);
 	DeadlyObstacle1->SetGravity(false);
 
-	Player* pEntity = CreateRectEntity<Player>(100, 100, sf::Color::Blue); // Ajout du Player et setup
+	Player* pEntity = CreateRectEntity<Player>(256, 128, sf::Color::Blue); // Ajout du Player et setup
 	pEntity->SetGravity(true);
 	pEntity->SetRigidBody(true);
 	pEntity->SetIsKinematic(false);

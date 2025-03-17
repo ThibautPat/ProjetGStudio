@@ -1,38 +1,37 @@
 #include "TextureRender.h"
+#include "Utils.h"
+
+TextureRender::TextureRender(const char* spritesheetname, const char* spritename)
+{
+	mRenderRatio = sf::Vector2f(1.f, 1.f);
+
+	mSpriteSheetName = spritesheetname;
+	mSpriteName = spritename;
+
+	TextureManager* tm = GameManager::Get()->GetTextureManager();
+	json* njson = tm->GetJson(mSpriteSheetName);
+
+	mTextRect.width = Utils::GetInfoFromArray<int>(njson, "frame_size", "width");
+	mTextRect.height = Utils::GetInfoFromArray<int>(njson, "frame_size", "height");
+
+	const char* charArray = mSpriteName.c_str();
+
+	mTextRect.left = Utils::GetInfoFromArray<int>(njson, charArray, "x");
+	mTextRect.top = Utils::GetInfoFromArray<int>(njson, charArray, "y");
+}
 
 void TextureRender::Draw(Entity* entity, sf::RenderWindow* window)
 {
-	//TextureManager* tm = GameManager::Get()->GetTextureManager();
-	//sf::Texture text = *entity->GetRender()->GetTexture();
-
-	//sf::Sprite spr;
-	//spr.setTexture(mTexture);
-	//spr.setTextureRect(mTextRect);
-	//
-	////TODO Remove this
-	//mRenderRatio = sf::Vector2f(5, 5);
-	////-----
-	//spr.setScale(mRenderRatio);
-
-	//float offset = 0.5f;
-	//sf::Vector2f renderPos = sf::Vector2f(
-	//	entity->GetPosition(0, 0).x - text.getSize().x * offset * mRenderRatio.x,
-	//	entity->GetPosition(0, 0).y - text.getSize().y * offset * mRenderRatio.y);
-	//spr.setPosition(renderPos);
-
-	//window->draw(spr);
-
 	TextureManager* tm = GameManager::Get()->GetTextureManager();
 	sf::Texture text = sf::Texture();
 
-	tm->FindTexture(mSpriteSheetName, mTextRect, &text);
+	json* njson = tm->GetJson(mSpriteSheetName);
+
+	tm->SetTetxureWithRect(mSpriteSheetName, mTextRect, &text);
 
 	sf::Sprite spr;
 	spr.setTexture(text);
 
-	//TODO Remove this
-	//mRenderRatio = sf::Vector2f(5, 5);
-	//-----
 	spr.setScale(mRenderRatio);
 
 	float offset = 0.5f;
@@ -44,19 +43,7 @@ void TextureRender::Draw(Entity* entity, sf::RenderWindow* window)
 	window->draw(spr);
 }
 
-void TextureRender::AddAndSelectTexture(const char* path, const char* textName, sf::IntRect rect)
+void TextureRender::SelectTexture(const char* spritesheetname, const char* spritename)
 {
-	TextureManager* assetsManager = GameManager::Get()->GetTextureManager();
-	assetsManager->LoadTexture(path, mSpriteSheetName);
-
-	SelectTexture(textName, rect);
-}
-
-void TextureRender::SelectTexture(const char* textName, sf::IntRect rect)
-{
-	mSpriteSheetName = textName;
-	mTextRect = rect;
-
-	//TextureManager* tm = GameManager::Get()->GetTextureManager();
-	//tm->FindTexture(mSpriteSheetName, &mTexture);
+	TextureRender(spritesheetname, spritename);
 }

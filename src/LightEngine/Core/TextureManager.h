@@ -22,99 +22,29 @@ public:
 
 	TextureManager() {};
 
+	/// <summary>
+	/// Ajoute une SpriteSheet et son json aux maps, les relie tout les 2 par un nom
+	/// </summary>
+	/// <param name="jsonpath">: Chemin d'acces du json</param>
+	/// <param name="sourcepath">: Chemin d'acces de l'image</param>
+	/// <param name="name">: Nom de connexion</param>
+	/// <returns></returns>
 	sf::Texture* LoadSpriteSheet(const char* jsonpath, const char* sourcepath, std::string name);
 
-	//void FindTexture(std::string spritesheetname, std::string spritename, sf::IntRect* textrect);
-
-	template<typename T>
-	T GetAnimationInfo(std::string& spritesheetname, std::string& spritename, std::string& info);
-
-	template<typename T>
-	T GetSpriteSheetInfo(std::string& spritesheetname, std::string& infotype, std::string& info);
-
+	json* GetJson(std::string spritesheetname);
 
 	/// <summary>
-	/// Charge la texture dans le dictionnaire(std::map) du TextureManager.
+	/// Retourne une SpriteSheet entiere
 	/// </summary>
-	/// <param name="path">Chemin d'acces de la texture</param>
-	/// <param name="name">Nom de </param>
+	/// <param name="spritesheetname">: Nom de la SpriteSheet</param>
 	/// <returns></returns>
-	sf::Texture* LoadTexture(const char* path, std::string name);
+	sf::Texture* GetTexture(std::string spritesheetname);
 
 	/// <summary>
-	/// Cherche la texture dans le dictionnaire et l'associe à la texture envoyee en parametre.
+	/// Retourne un Sprite de la SpriteSheet
 	/// </summary>
-	/// <param name="name">Nom de la texture dans le dictionnaire(std::map) du TextureManager</param>
-	/// <param name="textured">Texture a laquelle on applique la texture du dictionnaire</param>
-	void FindTexture(std::string name, sf::Texture* text);
-	/// <summary>
-	/// Cherche la texture dans le dictionnaire et l'associe à la texture en fonction de la shape.
-	/// </summary>
-	/// <param name="name">Nom de la texture dans le dictionnaire(std::map) du TextureManager</param>
-	/// <param name="rect">Zone de la texture a conserver</param>
-	/// <param name="textured">Texture a laquelle on applique la texture du dictionnaire</param>
-	void FindTexture(std::string name, sf::IntRect rect, sf::Texture* text);
+	/// <param name="spritesheetname">: Nom de la SpriteSheet</param>
+	/// <param name="texturerender">: Zone du Sprite</param>
+	/// <param name="text">: Texture a definir</param>
+	void SetTetxureWithRect(std::string spritesheetname, sf::IntRect texturerender, sf::Texture* text);
 };
-
-template<typename T>
-inline T TextureManager::GetAnimationInfo(std::string& spritesheetname, std::string& spritename, std::string& info)
-{
-	std::string jsonPath = mJson.at(spritesheetname);
-
-	std::ifstream fichier(jsonPath);
-	if (fichier.is_open()) {
-		json data;
-		fichier >> data;
-		fichier.close();
-
-		json anim = data["animations"];
-
-		if (anim.contains(spritename))
-		{
-			json animstate = anim[spritename];
-
-			if (animstate.contains(info))
-			{
-				std::cout << spritename << " contain " << info << std::endl;
-				return (T)animstate[info];
-			}
-
-			std::cout << spritename << " not contain " << info << std::endl;
-		}
-
-		std::cout << spritename << " not contain in animations" << std::endl;
-	}
-
-	return NULL;
-}
-
-template<typename T>
-inline T TextureManager::GetSpriteSheetInfo(std::string& spritesheetname, std::string& infotype, std::string& info)
-{
-	std::string jsonPath = mJson.at(spritesheetname);
-
-	std::ifstream fichier(jsonPath);
-	if (fichier.is_open()) {
-		json data;
-		fichier >> data;
-		fichier.close();
-
-		if (data.contains(infotype)) {
-
-			json type = data[infotype];
-
-			if (type.contains(info)) {
-
-				std::cout << infotype << " is " << info << std::endl;
-				return (T)type[info];
-			}
-			else {
-
-				std::cout << "info has " << info << std::endl;
-				return (T)data[infotype];
-			}
-		}
-	}
-
-	return NULL;
-}

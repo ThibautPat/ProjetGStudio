@@ -1,5 +1,6 @@
 #include "TextureManager.h"
 #include "TextureRender.h"
+#include "Utils.h"
 
 sf::Texture* TextureManager::LoadSpriteSheet(const char* jsonpath, const char* sourcepath, std::string spritesheetname)
 {
@@ -8,82 +9,38 @@ sf::Texture* TextureManager::LoadSpriteSheet(const char* jsonpath, const char* s
 		return nullptr;
 	mSpriteSheet.insert({ spritesheetname , text });
 
-	json* njson = new json();
-
-	//TODO
-	std::ifstream fichier(jsonpath);
-	if (fichier.is_open()) {
-		json data;
-		fichier >> *njson;
-		fichier.close();
-		std::cout << "Json parse !" << std::endl;
-	}
+	json* njson = Utils::Parse(jsonpath);
 
 	mJson.insert({ spritesheetname , njson });
 
-	std::cout << "SpriteSheet loaded and Json path added" << std::endl;
 	return text;
 }
 
-//void TextureManager::FindTexture(std::string spritesheetname, std::string spritename, sf::IntRect* textrect)
-//{
-//	std::string jsonPath = mJson.at(spritesheetname);
-//
-//	std::ifstream fichier(jsonPath);
-//	if (fichier.is_open()) {
-//		json data;
-//		fichier >> data;
-//		fichier.close();
-//
-//		json anim = data["animations"];
-//
-//		if (anim.contains(spritename))
-//		{
-//			json animstate = anim[spritename];
-//
-//			std::string xinfo = "x";
-//			std::string yinfo = "y";
-//			textrect->left = GetSpriteInfo<int>(spritesheetname, spritename, xinfo);
-//			textrect->top = GetSpriteInfo<int>(spritesheetname, spritename, yinfo);
-//
-//			std::string width = "width";
-//			std::string height = "height";
-//			textrect->width = GetSpriteInfo<int>(spritesheetname, spritename, width);
-//			textrect->height = GetSpriteInfo<int>(spritesheetname, spritename, height);
-//		}
-//	}
-//
-//}
-
-sf::Texture* TextureManager::LoadTexture(const char* path, std::string name)
+json* TextureManager::GetJson(std::string name)
 {
-	sf::Texture* text = new sf::Texture();
-	if (!text->loadFromFile(path))
-		return nullptr;
-	mSpriteSheet.insert({ name , text });
-
-	return text;
+	return mJson.at(name);
 }
 
-void TextureManager::FindTexture(std::string name, sf::Texture* text)
+sf::Texture* TextureManager::GetTexture(std::string name)
 {
-	*text = *mSpriteSheet.at(name);
+	return mSpriteSheet.at(name);
 }
 
-void TextureManager::FindTexture(std::string name, sf::IntRect rect, sf::Texture* text)
+void TextureManager::SetTetxureWithRect(std::string spritesheetname, sf::IntRect texturerender, sf::Texture* text)
 {
-	if (mSpriteSheet.at(name) == nullptr)
-		std::cout << "Asset on assetmanager null" << std::endl;
-	sf::Texture texture = *mSpriteSheet.at(name);
+	if (!GetTexture(spritesheetname))
+		std::cout << "Pas de texture avec ce nom dans la map" << std::endl;
+
+	sf::Texture texture = *GetTexture(spritesheetname);
 
 	sf::RenderTexture renderTexture;
-	renderTexture.create(rect.width, rect.height); // Taille du recadrage
+	renderTexture.create(texturerender.width, texturerender.height); // Taille du recadrage
 
 	sf::Sprite sprite(texture);
-	sprite.setTextureRect(sf::IntRect(rect.left, rect.top, rect.width, rect.height)); // On recadre la texture
+	sprite.setTextureRect(sf::IntRect(texturerender.left, texturerender.top, texturerender.width, texturerender.height)); // On recadre la texture
 	sprite.setPosition(0, 0); // On le dessine en (0,0) pour que ça remplisse bien
 
-	renderTexture.clear(sf::Color(0,0,0,0));
+	renderTexture.clear(sf::Color(0,0,0,0)); //Color(0,0,0,0) pour supporter la transparence
 	renderTexture.draw(sprite);
 	renderTexture.display();
 

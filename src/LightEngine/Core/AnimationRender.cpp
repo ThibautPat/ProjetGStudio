@@ -4,50 +4,18 @@
 #include <iostream>
 #include <fstream>
 #include "../nlohmann/json.hpp"
+#include "Utils.h"
 
 using json = nlohmann::json;
 
-//AnimationRender::AnimationRender(std::string& spritesheetname, std::string& spritename)
-//{
-//    mSpriteName = spritename;
-//    mSpriteSheetName = spritesheetname;
-//
-//    TextureManager* tm = GameManager::Get()->GetTextureManager();
-//    tm->FindTexture(mSpriteSheetName, mSpriteName, &mTextRect);
-//
-//    //sf::IntRect renderRect = mTextRect;
-//
-//
-//    std::string xinfo = "x";
-//    mTextRect.left = tm->GetSpriteInfo<int>(mSpriteSheetName, mSpriteName, xinfo);
-//    std::string yinfo = "y";
-//    mTextRect.top = tm->GetSpriteInfo<int>(mSpriteSheetName, mSpriteName, yinfo);
-//
-//    std::string frameinfo = "frame_size";
-//    std::string width = "width";
-//    std::string height = "height";
-//    mTextRect.width = tm->GetSpriteSheetInfo<int>(mSpriteSheetName, frameinfo, width);
-//    mTextRect.height = tm->GetSpriteSheetInfo<int>(mSpriteSheetName, frameinfo, width);
-//
-//    std::string framenb = "frames";
-//    mFrameNb = tm->GetSpriteInfo<int>(mSpriteSheetName, mSpriteName, framenb);
-//    mTimePerFrame = 1.f / mFrameNb;
-//    
-//}
-//
-//void AnimationRender::Update()
-//{
-//    TextureManager* tm = GameManager::Get()->GetTextureManager();
-//}
-
-AnimationRender::AnimationRender(int frameNb, const char* textName, sf::IntRect rect)
+AnimationRender::AnimationRender(const char* spritesheetname, const char* spritename) : TextureRender(spritesheetname, spritename)
 {
+    TextureManager* tm = GameManager::Get()->GetTextureManager();
+    json* njson = tm->GetJson(mSpriteSheetName);
 
-    mFrameNb = frameNb;
-    SelectTexture(textName, rect);
+    mFrameNb = Utils::GetInfoFromArray<int>(njson, spritename, "frames");
+    mTimePerFrame = 1.f / (mFrameNb);
 
-    //TODO with a speed anim
-    mTimePerFrame = 1.f / (frameNb*2);
 }
 
 void AnimationRender::UpdateAnimation()
@@ -69,6 +37,8 @@ void AnimationRender::UpdateAnimation()
                 );
 
             SetTextureRect(nrect);
+
+            //std::cout << mTextRect.left << " " << mFrameCounter << std::endl;
         }
 
         if ( mTextRect.left + mTextRect.width > mTextRect.width * mFrameNb )
@@ -83,10 +53,6 @@ void AnimationRender::UpdateAnimation()
                
         }
 
-        //if (mFrameCounter == 0) {
-        //    //SetTextureRect(mTextRect);
-        //}
-        //else
 
     }
 }

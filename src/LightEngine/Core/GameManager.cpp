@@ -83,6 +83,7 @@ void GameManager::DrawRender(Entity* entity)
 	}
 		
 	render_nb++;
+
 	entity->GetRender()->Draw(entity, mpWindow);
 
 }

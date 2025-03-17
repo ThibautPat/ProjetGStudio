@@ -52,24 +52,9 @@ void Player::OnInitialize()
 	mAs = GameManager::Get()->GetTextureManager();
 
 	//Setup de la gestion de textures
-	json* jsontest = Utils::Parse("../../../res/Assets/SpriteSheet/JSON Sola.json");
+	mAs->LoadSpriteSheet("../../../res/Assets/SpriteSheet/JSON Sola.json", "../../../res/Assets/SpriteSheet/spitesheet_animation_personnage.png", "player");
 
-	std::string msg = Utils::GetInfo<std::string>(jsontest, "structure");
-	std::cout << msg << std::endl;
-
-	int msg2 = Utils::GetInfoFromArray<int>(jsontest, "frame_size", "width");
-	std::cout << msg2 << std::endl;
-
-	int msg3 = Utils::GetInfoFromArray<int>(jsontest, "walk", "frames");
-	std::cout << msg3 << std::endl;
-
-	//mAs->LoadSpriteSheet("../../../res/Assets/SpriteSheet/Sola.json", "../../../res/Assets/SpriteSheet/spitesheet_animation_personnage.png", "player");
-	//std::string spritesheet = "player";
-	//std::string sprite = "walk";
-	//mTextured = new AnimationRender(spritesheet, sprite);
-	mAs->LoadTexture("../../../res/Assets/SpriteSheet/spitesheet_animation_personnage.png", "player");
-	mTextured = new AnimationRender(6, "player", sf::IntRect(0,0,256,256));
-	//mTextured->SelectTexture();
+	mTextured = new AnimationRender("player", "walk");
 }
 
 sf::Vector2f Player::InputDirection()
@@ -79,10 +64,16 @@ sf::Vector2f Player::InputDirection()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) < -10)
 	{
 		dir_x = -1;
+		//TODO maybe somewhere better ?
+		sf::Vector2f nratio = sf::Vector2f(dir_x, 1);
+		mTextured->SetRation(nratio);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) > 10)
 	{
 		dir_x = 1;
+		//TODO maybe somewhere better ?
+		sf::Vector2f nratio = sf::Vector2f(dir_x, 1);
+		mTextured->SetRation(nratio);
 	}
 
 	return sf::Vector2f(dir_x, 0);
