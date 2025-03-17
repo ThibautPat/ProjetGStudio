@@ -102,7 +102,6 @@ void GameManager::Run()
 {
 	if (mpWindow == nullptr) 
 	{
-		std::cout << "Window not created, creating default window" << std::endl;
 		CreateWindow(1280, 720, "Default window");
 	}
 

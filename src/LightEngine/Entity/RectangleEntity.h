@@ -11,10 +11,11 @@ class RectangleEntity : public Entity
 {
 protected:
     sf::RectangleShape mShape;
-    sf::Clock mClockJump;
     AABBCollider* mCollider = nullptr;
+    sf::Clock mClockJump; //TODO A bouger de là !
 
-public:
+public:    
+
     bool mReverse = false;
 
     // Getters

@@ -20,7 +20,9 @@ void TextureManager::FindTexture(std::string name, sf::Texture* text)
 void TextureManager::FindTexture(std::string name, sf::IntRect rect, sf::Texture* text)
 {
 	if (mAssets.at(name) == nullptr)
-		std::cout << "Asset on assetmanager null" << std::endl;
+	{
+		return;
+	}
 	sf::Texture texture = *mAssets.at(name);
 
 	sf::RenderTexture renderTexture;
