@@ -2,7 +2,7 @@
 #include "AABBCollider.h"
 #include "Debug.h"
 #include <iostream>
-#include "../Game/TestScene.h"
+#include "TestScene.h"
 
 Collider* RectangleEntity::GetCollider()
 {

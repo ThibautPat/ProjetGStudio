@@ -1,6 +1,6 @@
 #pragma once
-#include "../Core/RectangleEntity.h"
-class DeadlyObstacle : public RectangleEntity
+#include "RectangleEntity.h"
+class Checkpoint : public RectangleEntity
 {
 public:
 	void OnInitialize() override;

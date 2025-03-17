@@ -1,23 +1,25 @@
-#include "TestScene.h"
+#include "TestScene2.h"
 
-#include "../Core/Entity.h"
+#include "Entity.h"
 #include <iostream>
-#include "../Core/Debug.h"
-#include "../Game/Player.h"
-#include "../Game/Checkpoint.h"
-#include "../Game/DeadlyObstacle.h"
+#include "Debug.h"
+#include "Player.h"
+#include "Checkpoint.h"
+#include "DeadlyObstacle.h"
+
+////RENAME THIS SCENE NAME IS BAD
 
 //TODO in player class ----------
-void TestScene::PlayerDeath()
+void TestScene2::PlayerDeath()
 {
 		RespawnClock.restart(); // On restart le timer de respawn
 		playerIsDead = true;
-		m_InstanceGameManager->GetSceneManager()->SelectScene("testscene2");
+		m_InstanceGameManager->GetSceneManager()->SelectScene("testscene");
 }
 //---------------------------------
 
 //TODO in player class ----------
-void TestScene::PlayerRespawn()
+void TestScene2::PlayerRespawn()
 {
 
 	if (playerIsDead) // Si le joueur est mort
@@ -41,7 +43,7 @@ void TestScene::PlayerRespawn()
 //---------------------------------
 
 
-void TestScene::OnInitialize()
+void TestScene2::OnInitialize()
 {
 	mView = new sf::View(sf::FloatRect(0, 0, GetWindowWidth(), GetWindowHeight())); // Ajout de la cam�ra
 	m_InstanceGameManager = GameManager::Get();
@@ -58,7 +60,7 @@ void TestScene::OnInitialize()
 	Checkpoint1->SetIsKinematic(true);
 	Checkpoint1->SetGravity(false);
 
-	DeadlyObstacle* DeadlyObstacle1 = CreateRectEntity<DeadlyObstacle>(100, 100, sf::Color::Red); // Ajout du DeadlyObstacle et setup
+	DeadlyObstacle* DeadlyObstacle1 = CreateRectEntity<DeadlyObstacle>(100, 100, sf::Color::Green); // Ajout du DeadlyObstacle et setup
 	DeadlyObstacle1->SetPosition(900, 670);
 	DeadlyObstacle1->SetRigidBody(false);
 	DeadlyObstacle1->SetIsKinematic(true);
@@ -70,58 +72,30 @@ void TestScene::OnInitialize()
 	pEntity->SetIsKinematic(false);
 	pEntity->SetPosition(100, 100);
 
-	RectangleEntity* pEntity1 = CreateRectEntity<RectangleEntity>(50, 300, sf::Color::Cyan);
-	pEntity1->SetPosition(500, 500);
-	pEntity1->SetRigidBody(true);
-	pEntity1->SetIsKinematic(true);
-	pEntity1->SetGravity(false);
-	pEntity1->SetTag(Tag::OBSTACLE);
+	//test can be remove
+	//mView->setSize(1920, 1080);
 
-	RectangleEntity* pEntity2 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Cyan);
-	pEntity2->SetPosition(1200, 300);
-	pEntity2->SetRigidBody(true);
-	pEntity2->SetIsKinematic(true);
-	pEntity2->SetGravity(false);
-	pEntity2->SetTag(Tag::OBSTACLE);
-
-	RectangleEntity* pEntity3 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Cyan);
-	pEntity3->SetPosition(200, 100);
-	pEntity3->SetRigidBody(true);
-	pEntity3->SetIsKinematic(true);
-	pEntity3->SetGravity(false);
-	pEntity3->SetTag(Tag::OBSTACLE);
-
-	RectangleEntity* Ground = CreateRectEntity<RectangleEntity>(5000, 10000, sf::Color::Green);
-	Ground->SetPosition(0, 3220);
-	Ground->SetRigidBody(true);
-	Ground->SetIsKinematic(true);
-	Ground->SetGravity(false);
-	Ground->SetTag(Tag::OBSTACLE);
-
-	RectangleEntity* pEntity4 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::White);
-	pEntity4->SetPosition(100, 260);
-	pEntity4->SetRigidBody(true);
-	pEntity4->SetIsKinematic(true);
-	pEntity4->SetGravity(false);
-	pEntity4->SetTag(Tag::METALIC_OBSTACLE);
-
-	RectangleEntity* pEntity5 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::White);
-	pEntity5->SetPosition(-400, 670);
-	pEntity5->SetRigidBody(false);
-	pEntity5->SetIsKinematic(true);
-	pEntity5->SetGravity(false);
-	pEntity5->SetTag(Tag::END_LEVEL);
+	/*
+	for (int i = 0; i <= ENTITY_NB; i++) 
+	{
+		RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(400, 400, sf::Color::Red); // Ajout d'autre entit� et setup
+		pEntity->SetPosition(i*400 + 600, 0);
+		pEntity->SetRigidBody(true);
+		pEntity->SetIsKinematic(true);
+		pEntity->SetGravity(true);
+	}*/
 }
 
-void TestScene::OnEvent(const sf::Event& event)
+void TestScene2::OnEvent(const sf::Event& event)
 {	
 	//TODO Refaire la pause coter moteur
 }
 
-void TestScene::OnUpdate()
+void TestScene2::OnUpdate()
 {
 	//TODO remove if u want (for debug)
-	std::cout << "Scene" << std::endl;
+	std::cout << "Scene 2" << std::endl;
+
 
 	int i = 0;
 	PlayerRespawn();
@@ -149,22 +123,18 @@ void TestScene::OnUpdate()
 						PlayerDeath(); // Le joueur meurt
 					}
 				}
-				if (entity2->IsTag(Tag::END_LEVEL))
-				{
-					if (entity->GetShape()->getGlobalBounds().intersects(entity2->GetShape()->getGlobalBounds())) // Si le joueur touche la fin du niveau
-					{
-						for (Entity* entity3 : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
-						{
-							if (!dynamic_cast<Player*>(entity3))
-							entity3->Destroy(); // On d�truit toutes les entit�s
-						}
-					}
-				}
 			}
 			//--------------------------------
 		}
 
 		sf::Vector2f cooEntity = entity->GetPosition(0.f, 0.f);
+
+		if (cooEntity.y + entity->GetShape()->getGlobalBounds().height * 0.5f > 720)
+		{
+			entity->secondjump = 2;
+			entity->SetGravity(false);
+			entity->SetPosition(cooEntity.x, 720 - entity->GetShape()->getGlobalBounds().height * 0.5f, 0.f, 0.f);
+		}
 
 		// Affichage de quelque informations
 		std::string textCox = std::to_string((int)cooEntity.x) + " x ";

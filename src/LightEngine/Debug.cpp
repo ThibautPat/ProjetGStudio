@@ -6,7 +6,7 @@
 
 #include <string>
 
-#include "../Game/TestScene.h"
+#include "TestScene.h"
 
 Debug* Debug::Get()
 {

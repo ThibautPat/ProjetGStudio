@@ -3,8 +3,8 @@
 #include <iostream>
 
 #include "GameManager.h"
-#include "../Game/TestScene.h"
-#include "../Game/TestScene2.h"
+#include "TestScene.h"
+#include "TestScene2.h"
 
 #include <cstdlib>
 #include <crtdbg.h>

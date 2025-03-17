@@ -1,6 +1,6 @@
 #include "PlayerCondition.h"
 #include "TestScene.h"
-#include "../Core/AABBCollider.h"
+#include "AABBCollider.h"
 
 bool PlayerCondition_IsJumping::OnTest(Player* owner)
 {

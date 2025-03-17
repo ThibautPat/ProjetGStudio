@@ -1,7 +1,7 @@
 ﻿#include "PlayerAction.h"
 #include "TestScene.h"
 
-#include "../Core/AABBCollider.h"
+#include "AABBCollider.h"
 void PlayerAction_Jump::OnStart(Player* pOwner)
 {
 	pOwner->mPData->pJumpDuration = 0;

@@ -1,9 +1,9 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include <iostream>
-#include "../Core/GameManager.h"
-#include "../Core/RectangleEntity.h"
-#include "../Core/StateMachine.h"
+#include "GameManager.h"
+#include "RectangleEntity.h"
+#include "StateMachine.h"
 
 class AnimationRender;
 

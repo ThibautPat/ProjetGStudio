@@ -1,7 +1,7 @@
 #include "AABBCollider.h"
 #include "Entity.h"
 #include <iostream>
-#include "../Game/TestScene.h"
+#include "TestScene.h"
 
 AABBCollider::AABBCollider(float xMin, float yMin, float xMax, float yMax) : Collider(xMin, yMin, xMax, yMax) {
 	mCollideFace = sf::Vector2f(0, 0);

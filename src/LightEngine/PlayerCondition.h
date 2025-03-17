@@ -1,5 +1,5 @@
 #pragma once
-#include "../Core/Condition.h"
+#include "Condition.h"
 #include "Player.h"
 class PlayerCondition_IsJumping : public Condition<Player>
 {

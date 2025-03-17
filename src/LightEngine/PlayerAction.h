@@ -1,5 +1,5 @@
 #pragma once
-#include "../Core/Action.h"
+#include "Action.h"
 #include "Player.h"
 class PlayerAction_Jump : public Action<Player>
 {
