@@ -94,7 +94,6 @@ void TestScene2::OnEvent(const sf::Event& event)
 void TestScene2::OnUpdate()
 {
 	//TODO remove if u want (for debug)
-	std::cout << "Scene 2" << std::endl;
 
 
 	int i = 0;

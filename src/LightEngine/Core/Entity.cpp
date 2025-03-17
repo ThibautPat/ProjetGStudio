@@ -63,7 +63,7 @@ void Entity::Fall(float dt)
 
 
 	sf::Vector2f co = GetShape()->getPosition();
-	co.y += mGravitySpeed * dt;
+	co.y += mGravitySpeed * dt*0.8f;
 	GetShape()->setPosition(co);
 }
 

@@ -95,14 +95,14 @@ void RectangleEntity::Repulse(Entity* other)
             mGravitySpeed = 0.f;
             mBoolGravity = false;
             secondjump = 2;
-            gap = 1;
+            gap = 5;
         }
         else if (mCollider->GetCollideFace()->y == -1 && !other->IsTag(TestScene::Tag::METALIC_OBSTACLE))
         {
             mBoolGravity = true;
             mGravitySpeed = 0.f;
             place = -1;
-            gap = -1;
+            gap = -5;
         }
 		else 
 		{
@@ -110,7 +110,7 @@ void RectangleEntity::Repulse(Entity* other)
             mBoolGravity = false;
             mGravitySpeed = 0.f;
             place = -1;
-            gap = -1;
+            gap = -5;
 		}
         if ((mMove.y <= 0) || (mMove.y >= 0))
         {
@@ -128,10 +128,11 @@ void RectangleEntity::Repulse(Entity* other)
             else if (Clockjump.getElapsedTime().asSeconds() > 0.3f && mCollider->GetCollideFace()->y == -1 && other->IsTag(TestScene::Tag::METALIC_OBSTACLE) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0)))
             {
 				mReverse = true;
-				Clockjump.restart();  
+				Clockjump.restart(); 
+
+                mGravitySpeed = 600.f;
                 SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) - gap);
             }
-
             else
             {
                 SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f));
