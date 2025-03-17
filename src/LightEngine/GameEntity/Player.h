@@ -1,9 +1,9 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include <iostream>
-#include "../Core/GameManager.h"
-#include "../Core/RectangleEntity.h"
-#include "../Core/StateMachine.h"
+#include "../Manager/GameManager.h"
+#include "../Entity/RectangleEntity.h"
+#include "../StateMachine/StateMachine.h"
 
 class AnimationRender;
 
@@ -24,8 +24,6 @@ struct PlayerData
 class Player : public RectangleEntity
 {
 	StateMachine<Player> mStateMachine;
-
-	
 
 	//Gestionnaire de texture de l'entity
 	AnimationRender* mTextured;

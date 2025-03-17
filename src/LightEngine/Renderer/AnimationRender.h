@@ -8,7 +8,6 @@
 class AnimationRender : public TextureRender
 {
 protected:
-
 	int mFrameNb = 0;
 	int mFrameCounter = 0;
 	float mTimer = 0.f;

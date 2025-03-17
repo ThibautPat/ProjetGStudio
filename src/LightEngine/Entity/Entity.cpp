@@ -1,10 +1,10 @@
 #include "Entity.h"
 
-#include "GameManager.h"
-#include "Utils.h"
-#include "Debug.h"
-#include "CircleCollider.h"
-#include "AABBCollider.h"
+#include "../Manager/GameManager.h"
+#include "../Other/Utils.h"
+#include "../Other/Debug.h"
+#include "../Collider/CircleCollider.h"
+#include "../Collider/AABBCollider.h"
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
@@ -54,11 +54,11 @@ void Entity::Fall(float dt)
 
 	if (sf::Joystick::isButtonPressed(0, 4))
 	{
-		mGravitySpeed -= GRAVITYACCEL + dt;
+		mGravitySpeed -= GRAVITY_ACCEL + dt;
 	}
 	else
 	{
-		mGravitySpeed += GRAVITYACCEL + dt;
+		mGravitySpeed += GRAVITY_ACCEL + dt;
 	}
 
 
@@ -116,20 +116,11 @@ void Entity::Update()
 
 	if (mTarget.isSet) 
 	{
-		
-
-
 		float x1 = GetPosition(0.f, 0.f).x;
 		float y1 = GetPosition(0.f, 0.f).y;
 
 		float x2 = x1 + mDirection.x * mTarget.distance;
 		float y2 = y1 + mDirection.y * mTarget.distance;
-
-		//TODO : enlever les draws
-
-		//Debug::DrawLine(x1, y1, x2, y2, sf::Color::Cyan);
-
-		//Debug::DrawCircle(mTarget.position.x, mTarget.position.y, 5.f, sf::Color::Magenta);
 
 		mTarget.distance -= distance;
 
@@ -140,23 +131,6 @@ void Entity::Update()
 			mTarget.isSet = false;
 		}
 	}
-
-	/*
-	for (Entity* entity : GameManager::Get()->GetEntities<Entity>())
-	{
-		if (entity == this)
-			continue;
-
-		if (IsColliding(entity))
-		{
-			SetPosition(oldPos.x, oldPos.y, 0.f, 0.f);
-			mSpeed = 0.f;
-			mDirection.x = 0.f;
-			std::cout << "COLLISION PREV" << std::endl;
-			break;
-		}
-	}
-	*/
 
 	OnUpdate();
 }

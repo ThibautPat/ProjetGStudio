@@ -38,12 +38,11 @@ void TextureManager::SetTetxureWithRect(std::string spritesheetname, sf::IntRect
 
 	sf::Sprite sprite(texture);
 	sprite.setTextureRect(sf::IntRect(texturerender.left, texturerender.top, texturerender.width, texturerender.height)); // On recadre la texture
-	sprite.setPosition(0, 0); // On le dessine en (0,0) pour que ça remplisse bien
+	sprite.setPosition(0, 0); // On le dessine en (0,0) pour que ï¿½a remplisse bien
 
 	renderTexture.clear(sf::Color(0,0,0,0)); //Color(0,0,0,0) pour supporter la transparence
 	renderTexture.draw(sprite);
 	renderTexture.display();
 
 	*text = renderTexture.getTexture();
-
 }

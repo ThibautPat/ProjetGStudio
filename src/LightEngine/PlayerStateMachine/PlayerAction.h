@@ -1,6 +1,7 @@
 #pragma once
-#include "../Core/Action.h"
-#include "Player.h"
+#include "../StateMachine/Action.h"
+#include "../GameEntity/Player.h"
+
 class PlayerAction_Jump : public Action<Player>
 {
 public:

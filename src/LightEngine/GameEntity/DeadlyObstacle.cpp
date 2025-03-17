@@ -7,5 +7,4 @@ void DeadlyObstacle::OnInitialize()
 
 void DeadlyObstacle::OnUpdate()
 {
-
 }

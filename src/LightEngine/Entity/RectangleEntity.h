@@ -1,12 +1,7 @@
 #pragma once
+
 #include "Entity.h"
 #include <SFML/Graphics/RectangleShape.hpp>
-
-namespace sf
-{
-	class Shape;
-	class Color;
-}
 
 class Scene;
 class AABBCollider;
@@ -14,30 +9,34 @@ class Collider;
 
 class RectangleEntity : public Entity
 {
-protected: 
+protected:
+    sf::RectangleShape mShape;
+    AABBCollider* mCollider = nullptr;
+    sf::Clock mClockJump; //TODO A bouger de lï¿½ !
 
-	
-	sf::RectangleShape mShape;
-	sf::Clock Clockjump;
-public:
-	bool mReverse = false;
-	AABBCollider* mCollider; 
-	// Hérité via Entity
-	Collider* GetCollider() override;
-	sf::Shape* GetShape() override;
-	bool IsColliding(Entity* other) override;
-	bool IsInside(float x, float y) override;
-	void Initialize(float radius, const sf::Color& color) override {};
-	void Initialize(float height, float Width, const sf::Color& color) override;
-	void Repulse(Entity* other) override;
-	/// <summary>
-	/// Update du collider puis de l'entity
-	/// </summary>
-	void Update() override;
+public:    
 
-	virtual void OnUpdate() {};
-	virtual void OnCollision(Entity* collidedWith) {};
-	virtual void OnInitialize();
-	virtual void OnDestroy() {};
+    bool mReverse = false;
+
+    // Getters
+    Collider* GetCollider() override;
+    sf::Shape* GetShape() override;
+
+    // Collision & Position
+    bool IsColliding(Entity* other) override;
+    bool IsInside(float x, float y) override;
+
+    // Initialisation
+    void Initialize(float radius, const sf::Color& color) override {}
+    void Initialize(float height, float width, const sf::Color& color) override;
+
+    // Physique
+    void Repulse(Entity* other) override;
+    void Update() override;
+
+protected:
+    virtual void OnUpdate() override {}
+    virtual void OnCollision(Entity* collidedWith) override {}
+    virtual void OnInitialize() override;
+    virtual void OnDestroy() override {}
 };
-

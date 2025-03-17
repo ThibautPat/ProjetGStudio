@@ -52,7 +52,5 @@ void AnimationRender::UpdateAnimation()
             }
                
         }
-
-
     }
 }

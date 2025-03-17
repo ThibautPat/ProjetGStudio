@@ -1,13 +1,10 @@
 #include "Player.h"
-#include "../Core/InputManager.h"
-#include "../Core/Debug.h"
-#include "../Core/TextureManager.h"
-#include "../Game/PlayerAction.h"
-#include "../Game/PlayerCondition.h"
-#include "../Game/TestScene.h"
-#include "../Core/AnimationRender.h"
-#include "../Core/Utils.h"
-
+#include "../Other/Debug.h"
+#include "../Manager/TextureManager.h"
+#include "../PlayerStateMachine/PlayerAction.h"
+#include "../PlayerStateMachine/PlayerCondition.h"
+#include "../GameScene/TestScene.h"
+#include "../Renderer/AnimationRender.h"
 
 void Player::Move(sf::Vector2f movement, float dt)
 {
@@ -32,16 +29,14 @@ void Player::FixedUpdate(float dt)
 
 void Player::OnUpdate()
 {
-	const char* stateName = GetStateName((PlayerStateList)mStateMachine.GetCurrentState());
+	mStateMachine.Update();
+	mTextured->UpdateAnimation();
+
 	// Debug de valeur
-
-	Debug::DrawText(mShape.getPosition().x,mShape.getPosition().y - 30, stateName ,sf::Color::White);
-
+	const char* stateName = GetStateName((PlayerStateList)mStateMachine.GetCurrentState());
+	Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 30, stateName, sf::Color::White);
 	std::string text2 = std::to_string((int)mSpeed);
 	Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 50, text2, sf::Color::White);
-	mStateMachine.Update(); 
-
-	mTextured->UpdateAnimation();
 }
 
 void Player::OnInitialize()

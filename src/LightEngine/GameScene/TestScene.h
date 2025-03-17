@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Core/Scene.h"
+#include "../GameScene/Scene.h"
 #include <SFML/Graphics/View.hpp>
 #include <SFML/System/Clock.hpp>
 

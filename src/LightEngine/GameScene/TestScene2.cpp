@@ -1,18 +1,16 @@
 #include "TestScene2.h"
 
-#include "../Core/Entity.h"
+#include "../Entity/Entity.h"
+#include "../Other/Debug.h"
 #include <iostream>
-#include "../Core/Debug.h"
-#include "../Game/Player.h"
-#include "../Game/Checkpoint.h"
-#include "../Game/DeadlyObstacle.h"
-
-////RENAME THIS SCENE NAME IS BAD
+#include "../GameEntity/Player.h"
+#include "../GameEntity/Checkpoint.h"
+#include "../GameEntity/DeadlyObstacle.h"
 
 //TODO in player class ----------
 void TestScene2::PlayerDeath()
 {
-		RespawnClock.restart(); // On restart le timer de respawn
+		RespawnClock.restart();
 		playerIsDead = true;
 		m_InstanceGameManager->GetSceneManager()->SelectScene("testscene");
 }
@@ -71,19 +69,6 @@ void TestScene2::OnInitialize()
 	pEntity->SetRigidBody(true);
 	pEntity->SetIsKinematic(false);
 	pEntity->SetPosition(100, 100);
-
-	//test can be remove
-	//mView->setSize(1920, 1080);
-
-	/*
-	for (int i = 0; i <= ENTITY_NB; i++) 
-	{
-		RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(400, 400, sf::Color::Red); // Ajout d'autre entit� et setup
-		pEntity->SetPosition(i*400 + 600, 0);
-		pEntity->SetRigidBody(true);
-		pEntity->SetIsKinematic(true);
-		pEntity->SetGravity(true);
-	}*/
 }
 
 void TestScene2::OnEvent(const sf::Event& event)
@@ -93,10 +78,6 @@ void TestScene2::OnEvent(const sf::Event& event)
 
 void TestScene2::OnUpdate()
 {
-	//TODO remove if u want (for debug)
-	std::cout << "Scene 2" << std::endl;
-
-
 	int i = 0;
 	PlayerRespawn();
 	for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
@@ -131,7 +112,7 @@ void TestScene2::OnUpdate()
 
 		if (cooEntity.y + entity->GetShape()->getGlobalBounds().height * 0.5f > 720)
 		{
-			entity->secondjump = 2;
+			entity->secondJump = 2;
 			entity->SetGravity(false);
 			entity->SetPosition(cooEntity.x, 720 - entity->GetShape()->getGlobalBounds().height * 0.5f, 0.f, 0.f);
 		}
@@ -145,9 +126,10 @@ void TestScene2::OnUpdate()
 		Debug::DrawText(cooEntity.x, cooEntity.y + 40, textgrav, sf::Color::White);
 		Debug::DrawCircle(cooEntity.x, cooEntity.y, 5, sf::Color::White);
 
+		std::string entitynb = std::to_string(i) + "nb entity";
+		Debug::DrawText(mView->getCenter().x - mView->getSize().x / 2 + 10, mView->getCenter().y - mView->getSize().y / 2 + 40, entitynb, sf::Color::White);
+		Debug::ShowFPS(mView->getCenter().x - mView->getSize().x / 2 + 10, mView->getCenter().y - mView->getSize().y / 2 + 10);
 	}
-	std::string entitynb = std::to_string(i) + "nb entity";
-	Debug::DrawText(mView->getCenter().x - mView->getSize().x / 2 + 10, mView->getCenter().y - mView->getSize().y / 2 + 40, entitynb, sf::Color::White);
-	Debug::ShowFPS(mView->getCenter().x - mView->getSize().x / 2 + 10, mView->getCenter().y - mView->getSize().y / 2 + 10);
-	m_InstanceGameManager->GetWindow()->setView(*mView); // Voir si possibilit� de ne pas call la view chaque frame
+	
+	m_InstanceGameManager->GetWindow()->setView(*mView);
 }

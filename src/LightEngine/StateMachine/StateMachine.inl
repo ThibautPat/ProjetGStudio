@@ -1,6 +1,6 @@
 #include "StateMachine.h"
 
-#include "Behaviour.h"
+#include "../Other/Behaviour.h"
 
 template<typename T>
 StateMachine<T>::StateMachine(T* owner, int stateCount)

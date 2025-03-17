@@ -1,5 +1,5 @@
-#include "CircleEntity.h"
-#include "CircleCollider.h"
+#include "../Entity/CircleEntity.h"
+#include "../Collider/CircleCollider.h"
 
 Collider* CircleEntity::GetCollider()
 {
@@ -30,7 +30,7 @@ void CircleEntity::Initialize(float radius, const sf::Color& color) {
 
 void CircleEntity::Repulse(Entity* other)
 {
-	CircleEntity* otherCircle = dynamic_cast<CircleEntity*>(other); //TODO à changer si possible (faire sans dynamic_cast)
+	CircleEntity* otherCircle = dynamic_cast<CircleEntity*>(other); 
 
 	sf::Vector2f distance = GetPosition(0.5f, 0.5f) - other->GetPosition(0.5f, 0.5f);
 

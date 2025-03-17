@@ -1,17 +1,13 @@
 #pragma once
 
-#include "Entity.h"
-#include "TextureManager.h"
+#include "../Entity/Entity.h"
+#include "../Manager/TextureManager.h"
 
 #include "Render.h"
 
 class TextureRender : public Render
 {
 protected:
-
-
-
-	//TODO stocker info json
 
 public:
 
@@ -25,7 +21,7 @@ public:
 	void Draw(Entity* entity, sf::RenderWindow* window) override;
 
 	/// <summary>
-	/// Selectionne une texture depuis un fichier et l'associe à un nom (l'ajoute dans le TextureManager). Defini la zone de la texture (du disctionnaire) a conserver au rendu.
+	/// Selectionne une texture depuis un fichier et l'associe ï¿½ un nom (l'ajoute dans le TextureManager). Defini la zone de la texture (du disctionnaire) a conserver au rendu.
 	/// </summary>
 	/// <param name="path">Chemin d'acces du fichier</param>
 	/// <param name="textName">Nom du fichier attribuee dans le dictionnaire(std::map) du TextureManager</param>
