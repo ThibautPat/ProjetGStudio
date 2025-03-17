@@ -11,7 +11,7 @@ sf::Texture* TextureManager::LoadSpriteSheet(const char* jsonpath, const char* s
 	json* njson = new json();
 
 	//TODO
-	auto fichier(jsonpath);
+	std::ifstream fichier(jsonpath);
 	if (fichier.is_open()) {
 		json data;
 		fichier >> *njson;

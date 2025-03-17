@@ -6,6 +6,7 @@
 #include "../Game/PlayerCondition.h"
 #include "../Game/TestScene.h"
 #include "../Core/AnimationRender.h"
+#include "../Core/Utils.h"
 
 
 void Player::Move(sf::Vector2f movement, float dt)
@@ -51,7 +52,18 @@ void Player::OnInitialize()
 	mAs = GameManager::Get()->GetTextureManager();
 
 	//Setup de la gestion de textures
-	mAs->LoadSpriteSheet("../../../res/Assets/SpriteSheet/Sola.json", "../../../res/Assets/SpriteSheet/spitesheet_animation_personnage.png", "player");
+	json* jsontest = Utils::Parse("../../../res/Assets/SpriteSheet/JSON Sola.json");
+
+	std::string msg = Utils::GetInfo<std::string>(jsontest, "structure");
+	std::cout << msg << std::endl;
+
+	const char* msg2 = Utils::GetInfoFromArray<const char*>(jsontest, "frame_size", "width");
+	std::cout << msg2 << std::endl;
+
+	int msg3 = Utils::GetInfoFromArray<int>(jsontest, "walk", "frames");
+	std::cout << msg3 << std::endl;
+
+	//mAs->LoadSpriteSheet("../../../res/Assets/SpriteSheet/Sola.json", "../../../res/Assets/SpriteSheet/spitesheet_animation_personnage.png", "player");
 	//std::string spritesheet = "player";
 	//std::string sprite = "walk";
 	//mTextured = new AnimationRender(spritesheet, sprite);
