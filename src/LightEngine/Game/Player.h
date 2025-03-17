@@ -6,6 +6,7 @@
 #include "../Core/StateMachine.h"
 
 class AnimationRender;
+class ActionPlayer;
 
 struct PlayerData
 {
@@ -23,18 +24,7 @@ struct PlayerData
 
 class Player : public RectangleEntity
 {
-	StateMachine<Player> mStateMachine;
-
-	
-
-	//Gestionnaire de texture de l'entity
-	AnimationRender* mTextured;
-
-	//Gestionnaire de texture de la scene
-	TextureManager* mAs;
-
-protected:
-	
+public:
 	enum PlayerStateList
 	{
 		IDLE,
@@ -51,6 +41,23 @@ protected:
 
 		COUNT
 	};
+	static constexpr int STATE_COUNT = static_cast<int>(PlayerStateList::COUNT);
+
+private:
+
+	PlayerStateList mState = PlayerStateList::IDLE;
+
+	bool mTransitions[STATE_COUNT][STATE_COUNT];
+
+	ActionPlayer* mActions[STATE_COUNT];
+
+	//Gestionnaire de texture de l'entity
+	AnimationRender* mTextured;
+
+	//Gestionnaire de texture de la scene
+	TextureManager* mAs;
+
+	void SetTransition(PlayerStateList from, PlayerStateList to, bool value) { mTransitions[(int)from][(int)to] = value; }
 
 public: 
 	PlayerData* mPData;
@@ -60,7 +67,10 @@ public:
 
 	void OnInitialize() override;
 	sf::Vector2f InputDirection();
-	
+
+	bool SetState(PlayerStateList newState);
+
+	bool IsCrouched();
 	
 	void Move(sf::Vector2f movement, float dt);
 	
@@ -68,10 +78,24 @@ public:
 	//Ne pas override de Entity::Update(), car ne serait pas pris en compte par les colliders
 	///---------------------------------------------------------------------------------------
 	void OnUpdate() override; 
-	void FixedUpdate(float dt) override; 
+	void FixedUpdate(float dt) override;
+	bool Jump();
 	
-	const char* GetStateName(PlayerStateList state) const;	
 	~Player();
 	Player();
+
+	const char* GetStateName(PlayerStateList state) const;
+
+	friend class PlayerAction_Jump;
+	friend class PlayerAction_Crouch;
+	friend class PlayerAction_JumpOnCrouch;
+	friend class PlayerAction_Walk;
+	friend class PlayerAction_Idle;
+	friend class PlayerAction_OnJumpWalk;
+	friend class PlayerAction_OnJumpIdle;
+	friend class PlayerAction_OnJumpCrouch;
+	friend class PlayerAction_FallWalk;
+	friend class PlayerAction_FallIdle;
+	friend class PlayerAction_FallCrouch;
 };
 

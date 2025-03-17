@@ -1,90 +1,94 @@
 #pragma once
-#include "../Core/Action.h"
 #include "Player.h"
-class PlayerAction_Jump : public Action<Player>
+
+class ActionPlayer
 {
 public:
-	void OnStart(Player* pOwner) override;
-	void OnUpdate(Player* pOwner) override;
-	void OnEnd(Player* pOwner) override;
+	virtual void OnStart(Player* pOwner) = 0;
+	virtual void OnUpdate(Player* pOwner) = 0;
 };
 
-class PlayerAction_Crouch : public Action<Player>
+class PlayerAction_Jump : public ActionPlayer
 {
 public:
 	void OnStart(Player* pOwner) override;
 	void OnUpdate(Player* pOwner) override;
-	void OnEnd(Player* pOwner) override;
 };
 
-class PlayerAction_JumpOnCrouch : public Action<Player>
+class PlayerAction_Crouch : public ActionPlayer
 {
 public:
 	void OnStart(Player* pOwner) override;
 	void OnUpdate(Player* pOwner) override;
-	void OnEnd(Player* pOwner) override;
 };
 
-class PlayerAction_Walk : public Action<Player>
+class PlayerAction_JumpOnCrouch : public ActionPlayer
 {
 public:
 	void OnStart(Player* pOwner) override;
 	void OnUpdate(Player* pOwner) override;
-	void OnEnd(Player* pOwner) override;
 };
 
-class PlayerAction_Idle : public Action<Player>
+class PlayerAction_Walk : public ActionPlayer
 {
 public:
 	void OnStart(Player* pOwner) override;
 	void OnUpdate(Player* pOwner) override;
-	void OnEnd(Player* pOwner) override;
+
 };
 
-class PlayerAction_OnJumpWalk : public Action<Player>
+class PlayerAction_Idle : public ActionPlayer
 {
 public:
 	void OnStart(Player* pOwner) override;
 	void OnUpdate(Player* pOwner) override;
-	void OnEnd(Player* pOwner) override;
+
 };
 
-class PlayerAction_OnJumpIdle : public Action<Player>
+class PlayerAction_OnJumpWalk : public ActionPlayer
 {
 public:
 	void OnStart(Player* pOwner) override;
 	void OnUpdate(Player* pOwner) override;
-	void OnEnd(Player* pOwner) override;
+
 };
 
-class PlayerAction_OnJumpCrouch : public Action<Player>
+class PlayerAction_OnJumpIdle : public ActionPlayer
 {
 public:
 	void OnStart(Player* pOwner) override;
 	void OnUpdate(Player* pOwner) override;
-	void OnEnd(Player* pOwner) override;
+
 };
 
-class PlayerAction_FallWalk : public Action<Player>
+class PlayerAction_OnJumpCrouch : public ActionPlayer
 {
 public:
 	void OnStart(Player* pOwner) override;
 	void OnUpdate(Player* pOwner) override;
-	void OnEnd(Player* pOwner) override;
+
 };
 
-class PlayerAction_FallIdle : public Action<Player>
+class PlayerAction_FallWalk : public ActionPlayer
 {
 public:
 	void OnStart(Player* pOwner) override;
 	void OnUpdate(Player* pOwner) override;
-	void OnEnd(Player* pOwner) override;
+
 };
 
-class PlayerAction_FallCrouch : public Action<Player>
+class PlayerAction_FallIdle : public ActionPlayer
 {
 public:
 	void OnStart(Player* pOwner) override;
 	void OnUpdate(Player* pOwner) override;
-	void OnEnd(Player* pOwner) override;
+
+};
+
+class PlayerAction_FallCrouch : public ActionPlayer
+{
+public:
+	void OnStart(Player* pOwner) override;
+	void OnUpdate(Player* pOwner) override;
+
 };

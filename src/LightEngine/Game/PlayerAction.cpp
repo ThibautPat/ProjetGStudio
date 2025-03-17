@@ -2,15 +2,15 @@
 #include "TestScene.h"
 
 #include "../Core/AABBCollider.h"
+
+
 void PlayerAction_Jump::OnStart(Player* pOwner)
 {
 	pOwner->mPData->pJumpDuration = 0;
 
 }
-
 void PlayerAction_Jump::OnUpdate(Player* pOwner)
 {
-	
 		pOwner->secondjump -= 1;
 		pOwner->mPData->pJumpDuration = 0;
 		if (pOwner->mReverse)
@@ -25,16 +25,10 @@ void PlayerAction_Jump::OnUpdate(Player* pOwner)
 		pOwner->SetGravity(true);
 }
 
-void PlayerAction_Jump::OnEnd(Player* pOwner)
-{
-
-}
-
 void PlayerAction_Crouch::OnStart(Player* pOwner)
 {
 
 }
-
 void PlayerAction_Crouch::OnUpdate(Player* pOwner)
 {
 	float dt = FIXED_DT;
@@ -79,15 +73,10 @@ void PlayerAction_Crouch::OnUpdate(Player* pOwner)
 	pOwner->SetSpeed(spd);
 }
 
-void PlayerAction_Crouch::OnEnd(Player* pOwner)
-{
-}
-
 void PlayerAction_JumpOnCrouch::OnStart(Player* pOwner)
 {
 
 }
-
 void PlayerAction_JumpOnCrouch::OnUpdate(Player* pOwner)
 {
 	if (pOwner->GetGravity() && pOwner->secondjump <= 0)
@@ -101,14 +90,9 @@ void PlayerAction_JumpOnCrouch::OnUpdate(Player* pOwner)
 	pOwner->SetGravity(true); 
 }
 
-void PlayerAction_JumpOnCrouch::OnEnd(Player* pOwner)
-{
-}
-
 void PlayerAction_Walk::OnStart(Player* pOwner)
 {
 }
-
 void PlayerAction_Walk::OnUpdate(Player* pOwner)
 {
 	sf::Vector2f movement = pOwner->InputDirection();
@@ -127,14 +111,9 @@ void PlayerAction_Walk::OnUpdate(Player* pOwner)
 	}
 }
 
-void PlayerAction_Walk::OnEnd(Player* pOwner)
-{
-}
-
 void PlayerAction_Idle::OnStart(Player* pOwner)
 {
 }
-
 void PlayerAction_Idle::OnUpdate(Player* pOwner)
 {
 	float decelerationAmount = pOwner->mPData->mDeceleration * 50 * FIXED_DT;
@@ -151,14 +130,9 @@ void PlayerAction_Idle::OnUpdate(Player* pOwner)
 	}
 }
 
-void PlayerAction_Idle::OnEnd(Player* pOwner)
-{
-}
-
 void PlayerAction_OnJumpWalk::OnStart(Player* pOwner)
 {
 }
-
 void PlayerAction_OnJumpWalk::OnUpdate(Player* pOwner)
 {
 	sf::Vector2f movement = pOwner->InputDirection(); 
@@ -177,14 +151,9 @@ void PlayerAction_OnJumpWalk::OnUpdate(Player* pOwner)
 	}
 }
 
-void PlayerAction_OnJumpWalk::OnEnd(Player* pOwner)
-{
-}
-
 void PlayerAction_OnJumpIdle::OnStart(Player* pOwner)
 {
 }
-
 void PlayerAction_OnJumpIdle::OnUpdate(Player* pOwner)
 {
 	float decelerationAmount = pOwner->mPData->mDeceleration * 50 * FIXED_DT;
@@ -201,14 +170,9 @@ void PlayerAction_OnJumpIdle::OnUpdate(Player* pOwner)
 	}
 }
 
-void PlayerAction_OnJumpIdle::OnEnd(Player* pOwner)
-{
-}
-
 void PlayerAction_OnJumpCrouch::OnStart(Player* pOwner)
 {
 }
-
 void PlayerAction_OnJumpCrouch::OnUpdate(Player* pOwner)
 {
 	float dt = FIXED_DT;
@@ -253,14 +217,9 @@ void PlayerAction_OnJumpCrouch::OnUpdate(Player* pOwner)
 	pOwner->SetSpeed(spd);
 }
 
-void PlayerAction_OnJumpCrouch::OnEnd(Player* pOwner)
-{
-}
-
 void PlayerAction_FallWalk::OnStart(Player* pOwner)
 {
 }
-
 void PlayerAction_FallWalk::OnUpdate(Player* pOwner)
 {
 	sf::Vector2f movement = pOwner->InputDirection();
@@ -280,14 +239,9 @@ void PlayerAction_FallWalk::OnUpdate(Player* pOwner)
 
 }
 
-void PlayerAction_FallWalk::OnEnd(Player* pOwner)
-{
-}
-
 void PlayerAction_FallIdle::OnStart(Player* pOwner)
 {
 }
-
 void PlayerAction_FallIdle::OnUpdate(Player* pOwner)
 {
 	float decelerationAmount = pOwner->mPData->mDeceleration * 50 * FIXED_DT;
@@ -304,14 +258,9 @@ void PlayerAction_FallIdle::OnUpdate(Player* pOwner)
 	}
 }
 
-void PlayerAction_FallIdle::OnEnd(Player* pOwner)
-{
-}
-
 void PlayerAction_FallCrouch::OnStart(Player* pOwner)
 {
 }
-
 void PlayerAction_FallCrouch::OnUpdate(Player* pOwner)
 {
 	float dt = FIXED_DT;
@@ -354,8 +303,4 @@ void PlayerAction_FallCrouch::OnUpdate(Player* pOwner)
 		}
 	}
 	pOwner->SetSpeed(spd);
-}
-
-void PlayerAction_FallCrouch::OnEnd(Player* pOwner)
-{
 }
