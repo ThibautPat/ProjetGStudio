@@ -76,16 +76,15 @@ public:
 
 	bool IsCrouched();
 	
-	void Inertia(float dt, sf::Vector2f movement);
 	int GetSecondJump() { return mPData->mSecondJump; }
 	void AddSecondJump(int nb) { mPData->mSecondJump += nb; }
 	void SetSecondJump(int nb) { mPData->mSecondJump = nb; }
-	void Jump(float dt);
 	void Move(sf::Vector2f movement, float dt);
 	
 	///---------------------------------------------------------------------------------------
 	//Ne pas override de Entity::Update(), car ne serait pas pris en compte par les colliders
 	///---------------------------------------------------------------------------------------
+
 	void OnUpdate() override; 
 	void FixedUpdate(float dt) override;
 	bool Jump();

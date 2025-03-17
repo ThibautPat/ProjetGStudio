@@ -12,7 +12,7 @@ bool AABBCollider::IsColliding(Collider* pOther) {
 	if (mCollidingFace.y == 1) {
 		gap = 1;
 	}
-	if (mCollidedFace.y == -1) {
+	if (mCollidingFace.y == -1) {
 		gap = -1;
 	}
 	sf::Rect bound(mXMin, mYMin+gap, mWidth, mHeight);

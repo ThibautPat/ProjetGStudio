@@ -6,10 +6,27 @@
 
 #define ENTITY_NB 0
 
+class Player;
+
 class Entity;
 
 class TestScene2 : public Scene
 {
+	Player* mPlayer;
+
+	enum Tags
+	{
+		PLAYER,
+		CHECKPOINT,
+		DEADLY_OBSTACLE,
+		METALIC_OBSTACLE,
+		OBSTACLE,
+		END_LEVEL,
+		PLATFORM,
+
+		COUNT
+	};
+
 protected:
 
 	GameManager* m_InstanceGameManager;
@@ -21,6 +38,8 @@ protected:
 	bool playerIsDead = false;
 
 public:
+
+	Player* GetPlayer() { return mPlayer; }
 
 	void PlayerDeath();
 	void PlayerRespawn();

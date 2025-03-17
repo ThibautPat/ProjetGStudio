@@ -11,7 +11,7 @@ void PlayerAction_Jump::OnStart(Player* pOwner)
 }
 void PlayerAction_Jump::OnUpdate(Player* pOwner)
 {
-		pOwner->secondjump -= 1;
+		pOwner->AddSecondJump(-1);
 		pOwner->mPData->pJumpDuration = 0;
 		if (pOwner->mReverse)
 		{
@@ -79,12 +79,12 @@ void PlayerAction_JumpOnCrouch::OnStart(Player* pOwner)
 }
 void PlayerAction_JumpOnCrouch::OnUpdate(Player* pOwner)
 {
-	if (pOwner->GetGravity() && pOwner->secondjump <= 0)
+	if (pOwner->GetGravity() && pOwner->GetSecondJump() <= 0)
 		return;
 	if (pOwner->mPData->pJumpDuration < pOwner->mPData->mJumpTime) 
 		return;
 
-	pOwner->secondjump -= 1;  
+	pOwner->AddSecondJump(-1);  
 	pOwner->mPData->pJumpDuration = 0; 
 	pOwner->SetGravitySpeed(-pOwner->mPData->mJumpHeight/1.5f); 
 	pOwner->SetGravity(true); 

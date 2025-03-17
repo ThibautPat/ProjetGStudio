@@ -2,48 +2,9 @@
 #include "../Core/InputManager.h"
 #include "../Core/Debug.h"
 #include "../Core/TextureManager.h"
+#include "../Core/AnimationRender.h"
 #include "TestScene.h"
-
-void Player::Inertia(float dt, sf::Vector2f movement)
-{
-	if (movement.x != 0) // Mise � jour de mLastMovement si movement.x n'est pas nul
-	{
-		mLastMovement = movement;
-	}
-	if ((mLastMovement.x == -1 && mSpeed > 0) || (mLastMovement.x == 1 && mSpeed < 0)) // Gestion de la d�c�l�ration si la direction du mouvement change
-	{
-		mSpeed += (mLastMovement.x == -1 ? -1 : 1) *mPData->mDeceleration * 50 * dt;
-	}
-	if (movement.x == 0) // Si aucun mouvement, on ajuste la vitesse vers 0
-	{
-		float decelerationAmount =mPData->mDeceleration * 50 * dt;
-
-		if (std::abs(mSpeed) > 100)	// D�c�l�rer ou acc�l�rer vers z�ro en fonction de la vitesse
-		{
-			mSpeed += (mSpeed > 0 ? -1 : 1) * decelerationAmount;
-		}
-		if (std::abs(mSpeed) < 500)	// Si la vitesse est proche de z�ro, on la r�initialise
-		{
-			mSpeed = 0;
-		}
-	}
-}
-
-void Player::Jump(float dt)
-{
-	mPData->pJumpDuration += dt;
-	if (mBoolGravity && GetSecondJump() <= 0)
-		return;
-	if (mPData->pJumpDuration <mPData->mJumpTime)
-		return;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0))
-	{
-		AddSecondJump(-1);
-		mPData->pJumpDuration = 0;
-		mGravitySpeed = -mPData->mJumpHeight; // voir fonction ? 
-		mBoolGravity = true;
-	}
-}
+#include "PlayerAction.h"
 
 void Player::Move(sf::Vector2f movement, float dt)
 {
@@ -57,17 +18,6 @@ void Player::Move(sf::Vector2f movement, float dt)
 	}
 
 	SetDirection(dt, 0, mSpeed);
-}
-
-void Player::Crouch()
-{
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Joystick::isButtonPressed(0, 1))
-	{
-		PlayerState = CROUCH;
-		return;
-	}
-	PlayerState = IDLE;
-	return;
 }
 
 void Player::FixedUpdate(float dt)

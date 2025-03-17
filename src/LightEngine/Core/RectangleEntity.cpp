@@ -136,7 +136,7 @@ void RectangleEntity::Block(Entity* other)
             place = 1;
             mGravitySpeed = 0.f;
             mBoolGravity = false;
-            if(this->IsTag(TestScene::Tags::PLAYER))
+            if(this->IsTag(TestScene::Tag::PLAYER))
             {
                 GetScene<TestScene>()->GetPlayer()->SetSecondJump(2);
             }
@@ -177,19 +177,7 @@ void RectangleEntity::Update()
     Entity::Update();
 }
 
-void RectangleEntity::OnUpdate()
-{
-}
-
-void RectangleEntity::OnCollision(Entity* collidedWith)
-{
-}
-
 void RectangleEntity::OnInitialize()
 {
 	mShape.setOrigin(mShape.getGlobalBounds().width/2,mShape.getGlobalBounds().height/2);
-}
-
-void RectangleEntity::OnDestroy()
-{
 }

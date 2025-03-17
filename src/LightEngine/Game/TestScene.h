@@ -25,17 +25,18 @@ protected:
 
 public:
 
-	Player* GetPlayer() { return mPlayer; };
+	Player* GetPlayer() { return mPlayer; }
 
 	void PlayerDeath();
 	enum Tag
 	{
 		PLAYER,
 		CHECKPOINT,
-		DEADLYOBSTACLE,
+		DEADLY_OBSTACLE,
 		METALIC_OBSTACLE,
 		OBSTACLE,
 		END_LEVEL,
+		PLATFORM,
 
 		COUNT
 	};

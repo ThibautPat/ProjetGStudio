@@ -4,8 +4,7 @@
 #include <iostream>
 #include "../Core/Debug.h"
 #include "../Game/Player.h"
-#include "../Game/Checkpoint.h"
-#include "../Game/DeadlyObstacle.h"
+#include "TestScene.h"
 
 ////RENAME THIS SCENE NAME IS BAD
 
@@ -14,7 +13,7 @@ void TestScene2::PlayerDeath()
 {
 		RespawnClock.restart(); // On restart le timer de respawn
 		playerIsDead = true;
-		m_InstanceGameManager->GetSceneManager()->SelectScene("testscene");
+		//m_InstanceGameManager->GetSceneManager()->SelectScene("testscene");
 }
 //---------------------------------
 
@@ -48,19 +47,19 @@ void TestScene2::OnInitialize()
 	mView = new sf::View(sf::FloatRect(0, 0, GetWindowWidth(), GetWindowHeight())); // Ajout de la cam�ra
 	m_InstanceGameManager = GameManager::Get();
 
-	Checkpoint* Checkpoint2 = CreateRectEntity<Checkpoint>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
+	RectangleEntity* Checkpoint2 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
 	Checkpoint2->SetPosition(300, 670);
 	Checkpoint2->SetRigidBody(false);
 	Checkpoint2->SetIsKinematic(true);
 	Checkpoint2->SetGravity(false);
 
-	Checkpoint* Checkpoint1 = CreateRectEntity<Checkpoint>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
+	RectangleEntity* Checkpoint1 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
 	Checkpoint1->SetPosition(-100, 670);
 	Checkpoint1->SetRigidBody(false);
 	Checkpoint1->SetIsKinematic(true);
 	Checkpoint1->SetGravity(false);
 
-	DeadlyObstacle* DeadlyObstacle1 = CreateRectEntity<DeadlyObstacle>(100, 100, sf::Color::Green); // Ajout du DeadlyObstacle et setup
+	RectangleEntity* DeadlyObstacle1 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Green); // Ajout du DeadlyObstacle et setup
 	DeadlyObstacle1->SetPosition(900, 670);
 	DeadlyObstacle1->SetRigidBody(false);
 	DeadlyObstacle1->SetIsKinematic(true);
@@ -102,38 +101,35 @@ void TestScene2::OnUpdate()
 	for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
 	{
 		i++;
-		if (dynamic_cast<Player*>(entity))
-		{
-			mView->setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame
+		mView->setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame
 
-			//TODO in player class ----------
-			for (Entity* entity2 : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
+		//TODO in player class ----------
+		for (Entity* entity2 : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
+		{
+			if (entity->IsTag(Tags::CHECKPOINT))
 			{
-				if (dynamic_cast<Checkpoint*>(entity2))
+				if (entity->GetShape()->getGlobalBounds().intersects(entity2->GetShape()->getGlobalBounds())) // Si le joueur touche le checkpoint
 				{
-					if (entity->GetShape()->getGlobalBounds().intersects(entity2->GetShape()->getGlobalBounds())) // Si le joueur touche le checkpoint
-					{
-						mLastCheckPoint = entity2->GetPosition(0.f, 0.f); // On set le dernier checkpoint
-					}
+					mLastCheckPoint = entity2->GetPosition(0.f, 0.f); // On set le dernier checkpoint
 				}
-				if (dynamic_cast<DeadlyObstacle*>(entity2))
+			}
+			if (entity->IsTag(Tags::DEADLY_OBSTACLE))
+			{
+				if (entity->GetShape()->getGlobalBounds().intersects(entity2->GetShape()->getGlobalBounds())) // Si le joueur touche le DeadlyObstacle
 				{
-					if (entity->GetShape()->getGlobalBounds().intersects(entity2->GetShape()->getGlobalBounds())) // Si le joueur touche le DeadlyObstacle
-					{
-						PlayerDeath(); // Le joueur meurt
-					}
+					PlayerDeath(); // Le joueur meurt
 				}
 			}
 			//--------------------------------
 		}
 
-		sf::Vector2f cooEntity = entity->GetPosition(0.f, 0.f);
+		sf::Vector2f cooEntity = mPlayer->GetPosition(0.f, 0.f);
 
-		if (cooEntity.y + entity->GetShape()->getGlobalBounds().height * 0.5f > 720)
+		if (cooEntity.y + mPlayer->GetShape()->getGlobalBounds().height * 0.5f > 720)
 		{
-			entity->secondjump = 2;
-			entity->SetGravity(false);
-			entity->SetPosition(cooEntity.x, 720 - entity->GetShape()->getGlobalBounds().height * 0.5f, 0.f, 0.f);
+			mPlayer->SetSecondJump(2);
+			mPlayer->SetGravity(false);
+			mPlayer->SetPosition(cooEntity.x, 720 - mPlayer->GetShape()->getGlobalBounds().height * 0.5f, 0.f, 0.f);
 		}
 
 		// Affichage de quelque informations
