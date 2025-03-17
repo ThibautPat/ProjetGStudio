@@ -1,6 +1,6 @@
-#include "TextureManager.h"
-#include "TextureRender.h"
-#include "Utils.h"
+#include "../Manager/TextureManager.h"
+#include "../Renderer/TextureRender.h"
+#include "../Other/Utils.h"
 
 sf::Texture* TextureManager::LoadSpriteSheet(const char* jsonpath, const char* sourcepath, std::string spritesheetname)
 {

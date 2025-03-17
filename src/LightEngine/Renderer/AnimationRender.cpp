@@ -1,10 +1,10 @@
-#include "AnimationRender.h"
-#include "TextureManager.h"
+#include "../Renderer/AnimationRender.h"
+#include "../Manager/TextureManager.h"
 
 #include <iostream>
 #include <fstream>
-#include "../nlohmann/json.hpp"
-#include "Utils.h"
+#include "../Library/json.hpp"
+#include "../Other/Utils.h"
 
 using json = nlohmann::json;
 

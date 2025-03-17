@@ -1,5 +1,5 @@
-#include "TextureRender.h"
-#include "Utils.h"
+#include "../Renderer/TextureRender.h"
+#include "../Other/Utils.h"
 
 TextureRender::TextureRender(const char* spritesheetname, const char* spritename)
 {
