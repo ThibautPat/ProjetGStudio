@@ -6,6 +6,7 @@
 #include "../Game/Player.h"
 #include "../Game/Checkpoint.h"
 #include "../Game/DeadlyObstacle.h"
+#include "../Core/AABBCollider.h"
 
 //TODO in player class ----------
 void TestScene::PlayerDeath()
@@ -105,17 +106,25 @@ void TestScene::OnInitialize()
 	pEntity4->SetGravity(false);
 	pEntity4->SetTag(Tag::METALIC_OBSTACLE);
 
-	RectangleEntity* pEntity5 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::White);
+	RectangleEntity* pEntity5 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Black);
 	pEntity5->SetPosition(-400, 670);
 	pEntity5->SetRigidBody(false);
 	pEntity5->SetIsKinematic(true);
 	pEntity5->SetGravity(false);
 	pEntity5->SetTag(Tag::END_LEVEL);
+
+	RectangleEntity* pEntity6 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::White);
+	pEntity6->SetPosition(-400, 0);
+	pEntity6->SetRigidBody(true);
+	pEntity6->SetIsKinematic(true);
+	pEntity6->SetGravity(false); 
+	pEntity6->SetTag(Tag::BOUCING_OBSTACLE);
+
 }
 
 void TestScene::OnEvent(const sf::Event& event)
 {	
-	//TODO Refaire la pause coter moteur
+	
 }
 
 void TestScene::OnUpdate()
