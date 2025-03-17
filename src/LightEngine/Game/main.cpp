@@ -2,9 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-#include "GameManager.h"
-#include "TestScene.h"
-#include "TestScene2.h"
+#include "../Core/Manager/GameManager.h"
+#include "../Game/GameScene/TestScene.h"
+#include "../Game/GameScene/TestScene2.h"
 
 #include <cstdlib>
 #include <crtdbg.h>

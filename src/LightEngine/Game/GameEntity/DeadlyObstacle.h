@@ -1,5 +1,5 @@
 #pragma once
-#include "RectangleEntity.h"
+#include "../../Core/Entity/RectangleEntity.h"
 class DeadlyObstacle : public RectangleEntity
 {
 public:

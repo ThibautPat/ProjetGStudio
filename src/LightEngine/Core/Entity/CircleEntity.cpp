@@ -1,5 +1,5 @@
-#include "CircleEntity.h"
-#include "CircleCollider.h"
+#include "../../Core/Entity/CircleEntity.h"
+#include "../../Core/Collider/CircleCollider.h"
 
 Collider* CircleEntity::GetCollider()
 {

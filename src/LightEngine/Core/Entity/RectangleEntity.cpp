@@ -1,8 +1,8 @@
 ﻿#include "RectangleEntity.h"
-#include "AABBCollider.h"
-#include "Debug.h"
+#include "../../Core/Collider/AABBCollider.h"
+#include "../../Core/Other/Debug.h"
 #include <iostream>
-#include "TestScene.h"
+#include "../../Game/GameScene/TestScene.h"
 
 Collider* RectangleEntity::GetCollider()
 {

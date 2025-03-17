@@ -1,6 +1,7 @@
 #include "Scene.h"
 
-#include "GameManager.h"
+
+#include "../../Core/Manager/GameManager.h"
 
 int Scene::GetWindowWidth() const
 {

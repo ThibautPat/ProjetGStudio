@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Entity.h"
-#include "TextureManager.h"
+#include "../../Core/Entity/Entity.h"
+#include "../../Core/Manager/TextureManager.h"
 
 #include "Render.h"
 

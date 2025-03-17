@@ -1,9 +1,8 @@
 #include "GameManager.h"
 
-#include "Entity.h"
-#include "TextureRender.h"
-#include "Debug.h"
-#include "InputManager.h"
+#include "../../Core/Entity/Entity.h"
+#include "../../Core/Renderer/TextureRender.h"
+#include "../../Core/Other/Debug.h"
 #include "TextureManager.h"
 #include "SceneManager.h"
 

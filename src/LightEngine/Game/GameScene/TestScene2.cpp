@@ -1,13 +1,11 @@
 #include "TestScene2.h"
 
-#include "Entity.h"
+#include "../../Core/Entity/Entity.h"
+#include "../../Core/Other/Debug.h"
 #include <iostream>
-#include "Debug.h"
-#include "Player.h"
-#include "Checkpoint.h"
-#include "DeadlyObstacle.h"
-
-////RENAME THIS SCENE NAME IS BAD
+#include "../GameEntity/Player.h"
+#include "../GameEntity/Checkpoint.h"
+#include "../GameEntity/DeadlyObstacle.h"
 
 //TODO in player class ----------
 void TestScene2::PlayerDeath()

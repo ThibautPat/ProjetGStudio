@@ -1,5 +1,6 @@
 #include "AnimationRender.h"
-#include "TextureManager.h"
+
+#include "../../Core/Manager/TextureManager.h"
 
 #include <iostream>
 

@@ -1,6 +1,7 @@
 #pragma once
-#include "Condition.h"
-#include "Player.h"
+#include "../../Core/StateMachine/Condition.h"
+#include "../../Game/GameEntity/Player.h"
+
 class PlayerCondition_IsJumping : public Condition<Player>
 {
 public:

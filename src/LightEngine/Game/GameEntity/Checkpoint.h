@@ -1,5 +1,5 @@
 #pragma once
-#include "RectangleEntity.h"
+#include "../../Core/Entity/RectangleEntity.h"
 class Checkpoint : public RectangleEntity
 {
 public:

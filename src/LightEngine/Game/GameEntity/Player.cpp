@@ -1,11 +1,10 @@
 #include "Player.h"
-#include "InputManager.h"
-#include "Debug.h"
-#include "TextureManager.h"
-#include "PlayerAction.h"
-#include "PlayerCondition.h"
-#include "TestScene.h"
-#include "AnimationRender.h"
+#include "../../Core/Other/Debug.h"
+#include "../../Core/Manager/TextureManager.h"
+#include "../../Game/PlayerStateMachine/PlayerAction.h"
+#include "../../Game/PlayerStateMachine/PlayerCondition.h"
+#include "../../Game/GameScene/TestScene.h"
+#include "../../Core/Renderer/AnimationRender.h"
 
 
 void Player::Move(sf::Vector2f movement, float dt)

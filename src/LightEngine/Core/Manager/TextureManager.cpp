@@ -1,5 +1,5 @@
 #include "TextureManager.h"
-#include "TextureRender.h"
+#include "../../Core/Renderer/TextureRender.h"
 #include <iostream>
 
 sf::Texture* TextureManager::LoadTexture(const char* path, std::string name)

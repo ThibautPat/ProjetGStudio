@@ -1,10 +1,10 @@
 #include "Entity.h"
 
-#include "GameManager.h"
-#include "Utils.h"
-#include "Debug.h"
-#include "CircleCollider.h"
-#include "AABBCollider.h"
+#include "../../Core/Manager/GameManager.h"
+#include "../../Core/Other/Utils.h"
+#include "../../Core/Other/Debug.h"
+#include "../../Core/Collider/CircleCollider.h"
+#include "../../Core/Collider/AABBCollider.h"
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
