@@ -54,7 +54,6 @@ protected:
 
 public: 
 	PlayerData* mPData;
-	int testvar = 0;
 	sf::Vector2f mLastMovement;
 
 	Render* GetRender() { return (Render*)mTextured; };
