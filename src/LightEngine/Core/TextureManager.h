@@ -2,9 +2,13 @@
 
 #include "GameManager.h"
 #include <map>
+#include <iostream>
+#include <fstream>
+#include "../nlohmann/json.hpp"
+
+using json = nlohmann::json;
 
 class TextureRender;
-
 
 class TextureManager
 {
@@ -12,18 +16,18 @@ class TextureManager
 protected:
 
 	std::map<std::string, sf::Texture*> mSpriteSheet;
-	std::map<std::string, std::string> mJson;
+	std::map<std::string, json*> mJson;
 
 public:
 
 	TextureManager() {};
 
-	//sf::Texture* LoadSpriteSheet(const char* jsonpath, const char* sourcepath, std::string name);
+	sf::Texture* LoadSpriteSheet(const char* jsonpath, const char* sourcepath, std::string name);
 
 	//void FindTexture(std::string spritesheetname, std::string spritename, sf::IntRect* textrect);
 
 	template<typename T>
-	T GetSpriteInfo(std::string& spritesheetname, std::string& spritename, std::string& info);
+	T GetAnimationInfo(std::string& spritesheetname, std::string& spritename, std::string& info);
 
 	template<typename T>
 	T GetSpriteSheetInfo(std::string& spritesheetname, std::string& infotype, std::string& info);
@@ -52,14 +56,8 @@ public:
 	void FindTexture(std::string name, sf::IntRect rect, sf::Texture* text);
 };
 
-#include <iostream>
-#include <fstream>
-#include "../nlohmann/json.hpp"
-
-using json = nlohmann::json;
-
 template<typename T>
-inline T TextureManager::GetSpriteInfo(std::string& spritesheetname, std::string& spritename, std::string& info)
+inline T TextureManager::GetAnimationInfo(std::string& spritesheetname, std::string& spritename, std::string& info)
 {
 	std::string jsonPath = mJson.at(spritesheetname);
 

@@ -19,7 +19,7 @@ protected:
 
 public:
 
-	void SetTextureRect(std::string spritesheetname, std::string spritename);
+	void SetNames(std::string spritesheetname, std::string spritename);
 
 	void SetTextureRect(sf::IntRect& rect) { mTextRect = rect; }
 	sf::IntRect* GetTextureRect() { return &mTextRect; }

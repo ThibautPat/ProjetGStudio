@@ -71,7 +71,7 @@ public:
 	bool IsSceneChanged() { return mIsSceneChanged; }
 	void SetIsSceneChanged(bool isccenechanged) { mIsSceneChanged = isccenechanged; }
 
-	void UpdateCollision(Entity* mEntities);
+	//void UpdateCollision(Entity* mEntities);
 
 	void CreateWindow(unsigned int width, unsigned int height, const char* title, int fpsLimit = 60, sf::Color clearColor = sf::Color::Black);
 	sf::RenderWindow* GetWindow() const { return mpWindow; }

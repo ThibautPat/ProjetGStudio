@@ -1,18 +1,29 @@
 #include "TextureManager.h"
 #include "TextureRender.h"
 
-//sf::Texture* TextureManager::LoadSpriteSheet(const char* jsonpath, const char* sourcepath, std::string spritesheetname)
-//{
-//	sf::Texture* text = new sf::Texture();
-//	if (!text->loadFromFile(sourcepath))
-//		return nullptr;
-//	mSpriteSheet.insert({ spritesheetname , text });
-//
-//	mJson.insert({ spritesheetname , jsonpath });
-//
-//	std::cout << "SpriteSheet loaded and Json path added" << std::endl;
-//	return text;
-//}
+sf::Texture* TextureManager::LoadSpriteSheet(const char* jsonpath, const char* sourcepath, std::string spritesheetname)
+{
+	sf::Texture* text = new sf::Texture();
+	if (!text->loadFromFile(sourcepath))
+		return nullptr;
+	mSpriteSheet.insert({ spritesheetname , text });
+
+	json* njson = new json();
+
+	//TODO
+	auto fichier(jsonpath);
+	if (fichier.is_open()) {
+		json data;
+		fichier >> *njson;
+		fichier.close();
+		std::cout << "Json parse !" << std::endl;
+	}
+
+	mJson.insert({ spritesheetname , njson });
+
+	std::cout << "SpriteSheet loaded and Json path added" << std::endl;
+	return text;
+}
 
 //void TextureManager::FindTexture(std::string spritesheetname, std::string spritename, sf::IntRect* textrect)
 //{
@@ -72,7 +83,7 @@ void TextureManager::FindTexture(std::string name, sf::IntRect rect, sf::Texture
 	sprite.setTextureRect(sf::IntRect(rect.left, rect.top, rect.width, rect.height)); // On recadre la texture
 	sprite.setPosition(0, 0); // On le dessine en (0,0) pour que ça remplisse bien
 
-	renderTexture.clear();
+	renderTexture.clear(sf::Color(0,0,0,0));
 	renderTexture.draw(sprite);
 	renderTexture.display();
 
