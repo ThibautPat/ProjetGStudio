@@ -24,15 +24,6 @@ protected:
 	bool playerIsDead = false;
 
 public:
-	enum Tags {
-		PLAYER,
-		OBSTACLE,
-		PLATFORM,
-		CHECKPOINT,
-		DEADLY_OBSTACLE,
-
-		COUNT
-	};
 
 	Player* GetPlayer() { return mPlayer; };
 
@@ -45,6 +36,7 @@ public:
 		METALIC_OBSTACLE,
 		OBSTACLE,
 		END_LEVEL,
+		PLATFORM,
 
 		COUNT
 	};
