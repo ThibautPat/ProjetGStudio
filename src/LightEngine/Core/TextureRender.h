@@ -9,11 +9,7 @@ class TextureRender : public Render
 {
 protected:
 
-	sf::IntRect mTextRect;
 
-	std::string mTextName;
-
-	sf::Vector2f mRenderRatio;
 
 	//TODO stocker info json
 
@@ -41,10 +37,6 @@ public:
 	/// <param name="textName">Nom du fichier attribuee dans le dictionnaire(std::map) du TextureManager</param>
 	/// <param name="rect">Shape de la texture a conserver lors des rendus</param>
 	void SelectTexture(const char* textName, sf::IntRect rect);
-
-	void SetTextureRect(sf::IntRect& rect) { mTextRect = rect; }
-	sf::IntRect* GetTextureRect() { return &mTextRect; }
-	const std::string& GetTextName() { return mTextName; }
 
 };
 

@@ -121,7 +121,7 @@ void TestScene::OnEvent(const sf::Event& event)
 void TestScene::OnUpdate()
 {
 	//TODO remove if u want (for debug)
-	std::cout << "Scene" << std::endl;
+	//std::cout << "Scene" << std::endl;
 
 	int i = 0;
 	PlayerRespawn();

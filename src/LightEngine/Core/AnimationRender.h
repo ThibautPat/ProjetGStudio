@@ -8,6 +8,7 @@
 class AnimationRender : public TextureRender
 {
 protected:
+
 	int mFrameNb = 0;
 	int mFrameCounter = 0;
 	float mTimer = 0.f;
@@ -15,6 +16,11 @@ protected:
 	bool mIsLoop = true;
 	
 public:
+
+	//AnimationRender(std::string& spritesheetname, std::string& spritename);
+
+	//void Update();
+
 
 	/// <summary>
 	/// Cree une Animation avec un nombre de frame, le nom de la texture (deja chargee dans le TextureManager), et un masque (zone selectionnee de la texture)

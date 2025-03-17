@@ -19,7 +19,7 @@ bool AABBCollider::IsColliding(Collider* pOther) {
 	sf::Rect otherBound(pOther->mXMin, pOther->mYMin, pOther->mWidth, pOther->mHeight);
 
 	if (bound.intersects(otherBound)) {
-		std::cout << "Collision Detected" << std::endl;
+		//std::cout << "Collision Detected" << std::endl;
 
 		
 		//Decting the side of the collision
@@ -53,30 +53,30 @@ bool AABBCollider::IsColliding(Collider* pOther) {
 
 		//Collision on y axe
 		if (penetrationx > penetrationy) {
-			std::cout << "penetration Y on ";
+			//std::cout << "penetration Y on ";
 			if (mCollideFace.y < 0)
 			{
 				mCollidedFace = sf::Vector2f(0, -1);
-				std::cout << "Top : " << penetrationx << " " << penetrationy << std::endl;
+				//std::cout << "Top : " << penetrationx << " " << penetrationy << std::endl;
 			}
 			if (mCollideFace.y > 0)
 			{
 				mCollidedFace = sf::Vector2f(0, 1);
-				std::cout << "Bottom : " << penetrationx << " " << penetrationy << std::endl;
+				//std::cout << "Bottom : " << penetrationx << " " << penetrationy << std::endl;
 			}
 		}
 		//Collision on x axe
 		if (penetrationx < penetrationy) {
-			std::cout << "penetration X on ";
+			//std::cout << "penetration X on ";
 			if (mCollideFace.x < 0)
 			{
 				mCollidedFace = sf::Vector2f(-1, 0); 
-				std::cout << "Left : " << penetrationx << " " << penetrationy << std::endl;
+				//std::cout << "Left : " << penetrationx << " " << penetrationy << std::endl;
 			}
 			if (mCollideFace.x > 0)
 			{
 				mCollidedFace = sf::Vector2f(1, 0); 
-				std::cout << "Right : " << penetrationx << " " << penetrationy << std::endl;
+				//std::cout << "Right : " << penetrationx << " " << penetrationy << std::endl;
 			}
 		}
 		//--------------------------------------------------------------

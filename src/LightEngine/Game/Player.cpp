@@ -51,8 +51,12 @@ void Player::OnInitialize()
 	mAs = GameManager::Get()->GetTextureManager();
 
 	//Setup de la gestion de textures
-	mAs->LoadTexture("../../../res/Assets/Tilemap/tilemap_packed.png", "tilemap");
-	mTextured = new AnimationRender(8, "tilemap", sf::IntRect(0, 0, 18, 18));
+	//mAs->LoadSpriteSheet("../../../res/Assets/SpriteSheet/Sola.json", "../../../res/Assets/SpriteSheet/spitesheet_animation_personnage.png", "player");
+	//std::string spritesheet = "player";
+	//std::string sprite = "walk";
+	//mTextured = new AnimationRender(spritesheet, sprite);
+	mAs->LoadTexture("../../../res/Assets/SpriteSheet/spitesheet_animation_personnage.png", "player");
+	mTextured = new AnimationRender(6, "player", sf::IntRect(0,0,256,256));
 	//mTextured->SelectTexture();
 }
 
