@@ -36,14 +36,13 @@ protected:
     int mTag = -1;
 	bool mRigidBody = false;
 	bool mKinematic = false;
-	bool hasCollidingLastFrame = false;
+	bool hasCollidedLastFrame = false;
 	bool mBoolGravity = true;
 	float mGravitySpeed = 0.f;
 	float mSpeed = 0.f;
 
 public:
 
-	int secondjump = 2;
 	bool IsOnGround() { return not mBoolGravity; }
 	bool GetGravity() { return mBoolGravity; }
 	float GetGravitySpeed() { return mGravitySpeed; }
@@ -60,6 +59,7 @@ public:
 	void SetSpeed(float speed) { mSpeed = speed; }
 	void SetGravitySpeed(float speed) { mGravitySpeed = speed; }
 	void SetTag(int tag) { mTag = tag; }
+	int GetTag() { return mTag; }
 	void SetGravity(bool gravity) { mBoolGravity = gravity; }
 	sf::Vector2f GetDirection() const { return mDirection; }
 	void SetRigidBody(bool isRigitBody) { mRigidBody = isRigitBody; }
@@ -102,6 +102,7 @@ protected:
 	virtual void Initialize(float radius, const sf::Color& color) = 0; //
 	virtual void Initialize(float height, float Width, const sf::Color& color) = 0; //
 	virtual void Repulse(Entity* other) = 0; // 
+	virtual void Block(Entity* other) = 0; // 
 
     friend class GameManager;
     friend Scene;

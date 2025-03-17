@@ -9,6 +9,7 @@ class AnimationRender;
 
 struct PlayerData
 {
+	int mSecondJump = 2;
 	float mJumpHeight = 600.f;
 	float mJumpTime = 0.3f;
 	float pJumpDuration = 0;
@@ -60,8 +61,9 @@ public:
 
 	void OnInitialize() override;
 	sf::Vector2f InputDirection();
-	
-	
+	int GetSecondJump() { return mPData->mSecondJump; }
+	void AddSecondJump(int nb) { mPData->mSecondJump += nb; }
+	void SetSecondJump(int nb) { mPData->mSecondJump = nb; }
 	void Move(sf::Vector2f movement, float dt);
 	
 	///---------------------------------------------------------------------------------------

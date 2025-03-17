@@ -30,6 +30,7 @@ public:
 	void Initialize(float radius, const sf::Color& color) override {};
 	void Initialize(float height, float Width, const sf::Color& color) override;
 	void Repulse(Entity* other) override;
+	void Block(Entity* other) override;
 	/// <summary>
 	/// Update du collider puis de l'entity
 	/// </summary>
