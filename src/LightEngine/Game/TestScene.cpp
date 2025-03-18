@@ -74,6 +74,7 @@ void TestScene::OnInitialize()
 
 	for (int i = 0; i < donnees["Rows"]; i++) {
 		for (int j = 0; j < donnees["Columns"]; j++) {
+
 			if (donnees["Cases"][i][j] == "P") { 
 				RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Cyan); // Ajout du DeadlyObstacle et setup
 				pEntity->SetGravity(false);
@@ -182,13 +183,7 @@ void TestScene::OnUpdate()
 		sf::Vector2f cooEntity = entity->GetPosition(0.f, 0.f);
 
 		// Affichage de quelque informations
-		std::string textCox = std::to_string((int)cooEntity.x) + " x ";
-		std::string textCoy = std::to_string((int)cooEntity.y) + " y";
-		std::string textgrav = std::to_string((int)entity->GetGravitySpeed()) + " grav";
-		Debug::DrawText(cooEntity.x, cooEntity.y, textCox, sf::Color::White);
-		Debug::DrawText(cooEntity.x, cooEntity.y + 20, textCoy, sf::Color::White);
-		Debug::DrawText(cooEntity.x, cooEntity.y + 40, textgrav, sf::Color::White);
-		Debug::DrawCircle(cooEntity.x, cooEntity.y, 5, sf::Color::White);
+
 
 	}
 	std::string entitynb = std::to_string(i) + "nb entity";

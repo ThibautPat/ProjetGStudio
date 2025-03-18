@@ -186,14 +186,7 @@ void TestScene2::OnUpdate()
 
 		
 
-		// Affichage de quelque informations
-		std::string textCox = std::to_string((int)cooEntity.x) + " x ";
-		std::string textCoy = std::to_string((int)cooEntity.y) + " y";
-		std::string textgrav = std::to_string((int)entity->GetGravitySpeed()) + " grav";
-		Debug::DrawText(cooEntity.x, cooEntity.y, textCox, sf::Color::White);
-		Debug::DrawText(cooEntity.x, cooEntity.y + 20, textCoy, sf::Color::White);
-		Debug::DrawText(cooEntity.x, cooEntity.y + 40, textgrav, sf::Color::White);
-		Debug::DrawCircle(cooEntity.x, cooEntity.y, 5, sf::Color::White);
+
 
 	}
 	std::string entitynb = std::to_string(i) + "nb entity";
