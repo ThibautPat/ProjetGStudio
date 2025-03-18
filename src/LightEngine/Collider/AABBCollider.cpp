@@ -51,22 +51,22 @@ bool AABBCollider::IsColliding(Collider* pOther) {
 	if (penetrationx > penetrationy) {
 		if (mCollideFace.y < 0)
 		{
-			mCollidedFace = sf::Vector2f(0, -1);
+			mCollidingFace = sf::Vector2f(0, -1);
 		}
 		if (mCollideFace.y > 0)
 		{
-			mCollidedFace = sf::Vector2f(0, 1);
+			mCollidingFace = sf::Vector2f(0, 1);
 		}
 	}
 	//Collision on x axe
 	if (penetrationx < penetrationy) {
 		if (mCollideFace.x < 0)
 		{
-			mCollidedFace = sf::Vector2f(-1, 0); 
+			mCollidingFace = sf::Vector2f(-1, 0); 
 		}
 		if (mCollideFace.x > 0)
 		{
-			mCollidedFace = sf::Vector2f(1, 0); 
+			mCollidingFace = sf::Vector2f(1, 0); 
 		}
 	}
 	//--------------------------------------------------------------

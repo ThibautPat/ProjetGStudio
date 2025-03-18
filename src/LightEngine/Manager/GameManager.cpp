@@ -5,12 +5,11 @@
 #include "../Other/Debug.h"
 #include "TextureManager.h"
 #include "SceneManager.h"
-
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
-#include "../Game/TestScene.h"
-#include "../Game/Player.h"
+#include "../GameScene/TestScene.h"
+#include "../GameEntity/Player.h"
 
 GameManager::GameManager()
 {

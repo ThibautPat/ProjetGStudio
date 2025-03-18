@@ -5,6 +5,7 @@
 #include "../PlayerStateMachine/PlayerCondition.h"
 #include "../GameScene/TestScene.h"
 #include "../Renderer/AnimationRender.h"
+#include "../Collider/AABBCollider.h"
 
 void Player::Move(sf::Vector2f movement, float dt)
 {
@@ -20,6 +21,122 @@ void Player::Move(sf::Vector2f movement, float dt)
 	SetDirection(dt, 0, mSpeed);
 }
 
+void Player::Block(Entity* other)
+{
+	// Si aucune face de collision n'est détectée, ne rien faire
+	if (*mCollider->GetCollideFace() == sf::Vector2f(0.f, 0.f)) {
+		return;
+	}
+
+	// Récupération des dimensions de l'entité et de l'objet avec lequel elle entre en collision
+	const int entityWidth = mShape.getGlobalBounds().width;
+	const int otherWidth = other->GetShape()->getGlobalBounds().width;
+	const int entityHeight = mShape.getGlobalBounds().height;
+	const int otherHeight = other->GetShape()->getGlobalBounds().height;
+
+	// Récupérer la direction de la collision
+	const sf::Vector2f collideFace = *mCollider->GetCollideFace();
+
+	// Si la collision est horizontale
+	if (collideFace.x != 0.f)
+	{
+		HandleHorizontalCollision(other, otherWidth, entityWidth, collideFace.x);
+	}
+	// Si la collision est verticale
+	else
+	{
+		HandleVerticalCollision(other, otherHeight, entityHeight, collideFace.y);
+	}
+
+	hasCollidedLastFrame = true;
+}
+
+void Player::HandleHorizontalCollision(Entity* other, int otherWidth, int entityWidth, float direction)
+{
+	int place = (direction > 0) ? 1 : -1; // Déterminer la direction de la collision
+
+	// Positionner l'entité selon la direction de la collision
+	SetPosition(other->GetPosition(0.f, 0.f).x - place * (otherWidth * 0.5f + entityWidth * 0.5f), GetPosition(0.f, 0.f).y);
+	mSpeed = 0.f; // Stopper le mouvement horizontal
+}
+
+void Player::HandleVerticalCollision(Entity* other, int otherHeight, int entityHeight, float direction)
+{
+	int gap = 0;
+	int place = 0;
+
+	if (direction == 1.f)
+	{
+		// Collision avec le sol
+		HandleGroundCollision(other, otherHeight, entityHeight);
+		place = 1;
+		gap = 1;
+	}
+	else if (direction == -1.f && !other->IsTag(TestScene::Tag::METALIC_OBSTACLE))
+	{
+		// Collision avec un plafond ou un autre obstacle non métallique
+		HandleCeilingCollision(other, otherHeight, entityHeight);
+		place = -1;
+		gap = -1;
+	}
+	else
+	{
+		// Traitement par défaut pour d'autres types de collision
+		HandleOtherVerticalCollision(other, otherHeight, entityHeight);
+		place = -1;
+		gap = -1;
+	}
+
+	// Vérifier si l'utilisateur appuie sur la touche pour sauter ou un bouton de joystick
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !sf::Joystick::isButtonPressed(0, 0))
+	{
+		SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f));
+	}
+	else
+	{
+		//HandleJumpingCollision(other, otherHeight, entityHeight, gap, place);
+	}
+}
+
+void Player::HandleGroundCollision(Entity* other, int otherHeight, int entityHeight)
+{
+	mGravitySpeed = 0.f;
+	mBoolGravity = false;
+
+	if (this->IsTag(TestScene::Tag::PLAYER))
+	{
+		SetSecondJump(2);
+	}
+}
+
+void Player::HandleCeilingCollision(Entity* other, int otherHeight, int entityHeight)
+{
+	mBoolGravity = true;
+	mGravitySpeed = 0.f;
+}
+
+void Player::HandleOtherVerticalCollision(Entity* other, int otherHeight, int entityHeight)
+{
+	SetSecondJump(2);
+	mBoolGravity = false;
+	mGravitySpeed = 0.f;
+}
+
+void Player::HandleJumpingCollision(Entity* other, int otherHeight, int entityHeight, int gap, int place)
+{
+	// Vérification pour sauter avec un délai après la collision
+	if (mCollider->GetCollideFace()->y == 1 && IsTag(TestScene::Tag::PLAYER))
+	{
+		SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) - gap - 1);
+	}
+	else if (mCollider->GetCollideFace()->y == -1 && other->IsTag(TestScene::Tag::METALIC_OBSTACLE))
+	{
+		mReverse = true;
+		mClockJump.restart();
+		SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) - gap - 1);
+	}
+}
+
 void Player::FixedUpdate(float dt)
 {
 	Fall(dt); 
@@ -31,6 +148,7 @@ void Player::OnUpdate()
 {
 	mStateMachine.Update();
 	mTextured->UpdateAnimation();
+
 
 	// Debug de valeur
 	const char* stateName = GetStateName((PlayerStateList)mStateMachine.GetCurrentState());

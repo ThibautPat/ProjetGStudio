@@ -112,7 +112,7 @@ void TestScene2::OnUpdate()
 
 		if (cooEntity.y + entity->GetShape()->getGlobalBounds().height * 0.5f > 720)
 		{
-			mPlayer->secondJump = 2;
+			mPlayer->SetSecondJump(2);
 			entity->SetGravity(false);
 			entity->SetPosition(cooEntity.x, 720 - entity->GetShape()->getGlobalBounds().height * 0.5f, 0.f, 0.f);
 		}

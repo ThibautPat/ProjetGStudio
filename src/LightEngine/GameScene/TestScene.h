@@ -13,8 +13,6 @@ class TestScene : public Scene
 {
 protected:
 
-	Player* mPlayer;
-
 	GameManager* m_InstanceGameManager;
 	sf::View* mView;
 	sf::Clock menuClock;
@@ -24,8 +22,6 @@ protected:
 	bool playerIsDead = false;
 
 public:
-
-	Player* GetPlayer() { return mPlayer; };
 
 	void PlayerDeath();
 	enum Tag

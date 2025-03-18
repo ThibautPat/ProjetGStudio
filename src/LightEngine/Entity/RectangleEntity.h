@@ -32,7 +32,7 @@ public:
 
     // Physique
     void Repulse(Entity* other) override;
-	void Block(Entity* other) override;
+	virtual void Block(Entity* other) override;
     void Update() override;
 
 protected:

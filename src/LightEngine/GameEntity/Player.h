@@ -33,7 +33,8 @@ class Player : public RectangleEntity
 	TextureManager* mAs;
 
 protected:
-	
+	bool isGrounded = false;
+
 	enum PlayerStateList
 	{
 		IDLE,
@@ -55,7 +56,10 @@ public:
 	PlayerData* mPData;
 	sf::Vector2f mLastMovement;
 
-	Render* GetRender() { return (Render*)mTextured; };
+	Render* GetRender() { return (Render*)mTextured; }
+
+	void SetIsGrounded(bool value) { isGrounded = value; }
+	bool GetIsGrounded() { return isGrounded; }
 
 	void OnInitialize() override;
 	sf::Vector2f InputDirection();
@@ -63,12 +67,25 @@ public:
 	void AddSecondJump(int nb) { mPData->mSecondJump += nb; }
 	void SetSecondJump(int nb) { mPData->mSecondJump = nb; }
 	void Move(sf::Vector2f movement, float dt);
-	
+	virtual void Block(Entity* other) override;
+
+	void HandleHorizontalCollision(Entity* other, int otherWidth, int entityWidth, float direction);
+
+	void HandleVerticalCollision(Entity* other, int otherHeight, int entityHeight, float direction);
+
+	void HandleGroundCollision(Entity* other, int otherHeight, int entityHeight);
+
+	void HandleCeilingCollision(Entity* other, int otherHeight, int entityHeight);
+
+	void HandleOtherVerticalCollision(Entity* other, int otherHeight, int entityHeight);
+
+	void HandleJumpingCollision(Entity* other, int otherHeight, int entityHeight, int gap, int place);
+
 	///---------------------------------------------------------------------------------------
 	//Ne pas override de Entity::Update(), car ne serait pas pris en compte par les colliders
 	///---------------------------------------------------------------------------------------
 	void OnUpdate() override; 
-	void FixedUpdate(float dt) override; 
+	void FixedUpdate(float dt) override;
 	
 	const char* GetStateName(PlayerStateList state) const;	
 	~Player();

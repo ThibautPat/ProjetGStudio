@@ -4,12 +4,14 @@
 
 bool PlayerCondition_IsJumping::OnTest(Player* owner)
 {
-	if (owner->GetGravity() && owner->secondJump <= 0)
+	owner->SetIsGrounded(false);
+	if (owner->GetGravity() && owner->GetSecondJump() > 0)
 		return false;
 	if (owner->mPData->pJumpDuration < owner->mPData->mJumpTime) 
 		return false;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0))
 	{
+		owner->SetIsGrounded(true);
 		return true;
 	}
 	return false;
@@ -35,7 +37,7 @@ bool PlayerCondition_IsWalking::OnTest(Player* owner)
 
 bool PlayerCondition_HasJump::OnTest(Player* owner)
 {
-	if (owner->secondJump > 0)
+	if (owner->GetSecondJump() > 0)
 	{
 		return true;
 	}
@@ -50,15 +52,17 @@ bool PlayerCondition_IsGrounded::OnTest(Player* owner)
 		{
 			if (entity->IsTag(TestScene::Tag::METALIC_OBSTACLE))
 			{
+				std::cout << "Grounded by metalic object" << std::endl;
 				return true;
 			}
-			else if (entity->IsTag(TestScene::Tag::OBSTACLE) && static_cast<AABBCollider*>(owner->GetCollider())->GetCollideFace()->y == 1)
-
+			else if (entity->IsTag(TestScene::Tag::PLATFORM) && static_cast<AABBCollider*>(owner->GetCollider())->GetCollideFace()->y == 1)
 			{
+				std::cout << "Grounded by obstacle" << std::endl;
 				return true;
 			}
 		}
 	}
+	std::cout << "Not Grounded" << std::endl;
 	return false;
 }
 

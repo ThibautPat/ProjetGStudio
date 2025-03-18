@@ -7,11 +7,11 @@
 #define ENTITY_NB 0
 
 class Entity;
+class Player;
 
 class TestScene2 : public Scene
 {
 protected:
-
 	GameManager* m_InstanceGameManager;
 	sf::View* mView;
 	sf::Clock menuClock;

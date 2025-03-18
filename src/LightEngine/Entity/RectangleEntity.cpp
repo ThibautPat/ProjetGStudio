@@ -96,62 +96,25 @@ void RectangleEntity::Block(Entity* other)
         SetPosition(other->GetPosition(0.f, 0.f).x - place * (otherWidth * 0.5f + entityWidth * 0.5f), GetPosition(0.f, 0.f).y);
         mSpeed = 0.f;
     }
-    else
-    {
-        // Collision verticale : on utilise les hauteurs
+	else
+	{
+		// Collision verticale : on utilise les hauteurs
+		if (mCollider->GetCollideFace()->y == 1)
+		{
+			place = 1;
+			mGravitySpeed = 0.f;
+			mBoolGravity = false;
+		}
+		else {
+			mBoolGravity = true;
+			mGravitySpeed = 0.f;
+			place = -1;
+		}
 
-        int gap = 0;
-        if (mCollider->GetCollideFace()->y == 1)
-        {
-            std::cout << "collision top" << std::endl;
-            place = 1;
-            mGravitySpeed = 0.f;
-            mBoolGravity = false;
-            if (this->IsTag(TestScene::Tag::PLAYER))
-            {
-                GetScene<TestScene>()->GetPlayer()->SetSecondJump(2);
-            }
-            gap = 1;
-        }
-        else if (mCollider->GetCollideFace()->y == -1 && !other->IsTag(TestScene::Tag::METALIC_OBSTACLE))
-        {
-            mBoolGravity = true;
-            mGravitySpeed = 0.f;
-            place = -1;
-            gap = -1;
-        }
-        else
-        {
-            GetScene<TestScene>()->GetPlayer()->SetSecondJump(2);
-            mBoolGravity = false;
-            mGravitySpeed = 0.f;
-            place = -1;
-            gap = -1;
-        }
-        if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !sf::Joystick::isButtonPressed(0, 0))
-        {
-            SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f));
-        }
-        else if (mCollider->GetCollideFace()->y == 1 && IsTag(TestScene::Tag::PLAYER) && Clockjump.getElapsedTime().asSeconds() > 0.3f && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0)))
-        {
-            SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) - gap);
-        }
-        else if (Clockjump.getElapsedTime().asSeconds() > 0.3f && mCollider->GetCollideFace()->y == -1 && other->IsTag(TestScene::Tag::METALIC_OBSTACLE) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0)))
-        {
-            mReverse = true;
-            Clockjump.restart();
-            SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) - gap);
-        }
-        if (mCollider->GetCollideFace()->y == -1 && !other->IsTag(TestScene::Tag::METALIC_OBSTACLE))
-        {
-            SetGravity(true);
-            SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) + 1);
-        }
-            // Le joueur se d�place vers l'autre objet, donc on l'arr�te
-            hasCollidedLastFrame = true;
-    }
+		SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f));
+		hasCollidedLastFrame = true;
+	}
 }
-
 
 void RectangleEntity::Update()
 {
