@@ -44,6 +44,8 @@ public:
     // Getters
     bool IsOnGround() const { return !mBoolGravity; }
     bool GetGravity() const { return mBoolGravity; }
+    int GetSizeX() const { return mSizeX; }
+    int GetSizeY() const { return mSizeY; }
     float GetGravitySpeed() const { return mGravitySpeed; }
     float GetSpeed() const { return mSpeed; }
     sf::Vector2f GetDirection() const { return mDirection; }

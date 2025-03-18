@@ -6,6 +6,7 @@
 #include "../GameEntity/Player.h"
 #include "../GameEntity/Checkpoint.h"
 #include "../GameEntity/DeadlyObstacle.h"
+#include "../GameEntity/Laser.h"
 
 #include "../Puzzle/Puzzle.h"
 #include "../Puzzle/PuzzleAction.h"
@@ -75,6 +76,11 @@ void TestScene::OnInitialize()
 	pEntity->SetPosition(100, -100);
 	pEntity->SetTag(Scene::Tag::PLAYER);
 
+	//Test du laser
+	sf::Vector2f dir(1, 0);
+	sf::IntRect rect(-500, -500, 128, 256);
+	mLaser = new Laser(10, dir, rect);
+
 	RectangleEntity* pEntity1 = CreateRectEntity<RectangleEntity>(50, 300, sf::Color::Cyan);
 	pEntity1->SetPosition(500, 500);
 	pEntity1->SetRigidBody(true);
@@ -118,14 +124,24 @@ void TestScene::OnInitialize()
 	pEntity5->SetTag(Tag::END_LEVEL);
 
 	//Test du puzzle
-	mPuzzle1 = new Puzzle(Checkpoint1, DeadlyObstacle1);
-	mPuzzle1->AddCondition(mPuzzle1->GetKey(), new PuzzleCondition_PlayerIsTouched(), true);
-	mPuzzle1->AddCondition(mPuzzle1->GetKey(), new PuzzleCondition_PlayerUpTo500y(), false);
-	mPuzzle1->AddAction(mPuzzle1->GetActivable(), new PuzzleAction_RectDestroy);
+	Puzzle* puzzle = new Puzzle(Checkpoint1, DeadlyObstacle1);
+	puzzle->AddCondition(puzzle->GetKey(), new PuzzleCondition_PlayerIsTouched(), true);
+	puzzle->AddCondition(puzzle->GetKey(), new PuzzleCondition_PlayerUpTo500y(), false);
+	puzzle->AddAction(puzzle->GetActivable(), new PuzzleAction_RectDestroy);
+	mTabPuzzle.push_back(puzzle);
 }
 
 void TestScene::OnEvent(const sf::Event& event)
 {	
+
+	if (event.type != sf::Event::KeyPressed)
+		return;
+	if (event.key.code != sf::Keyboard::Key::L)
+		return;
+
+	//stv qq chose avec la touche L xD
+
+
 	//TODO Refaire la pause coter moteur
 }
 
@@ -133,15 +149,27 @@ void TestScene::OnUpdate()
 {
 	//Don't Remove "if (UpdateStartTimer()) {}"
 	if (UpdateStartTimer()) {
-		//Update Puzzle
-		mPuzzle1->TestConditions();
+		//Update des Puzzles
+		UpdatePuzzle();
+
+		//Update du laser (peut etre faire comme Puzzle : list, vector ...)
+		mLaser->Update();
+
+		//test de laser
+		Player* p = m_InstanceGameManager->GetEntity<Player>(Tag::PLAYER);
+
+		if (mLaser->IsCollidingWithLaser(p))
+			std::cout << "Player touched Laser" << std::endl;
 	}
+
+
 
 	int i = 0;
 	PlayerRespawn();
 	for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
 	{
 		i++;
+
 		if (dynamic_cast<Player*>(entity))
 		{
 			mView->setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame
@@ -149,6 +177,7 @@ void TestScene::OnUpdate()
 			//TODO in player class ----------
 			for (Entity* entity2 : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
 			{
+				//Faire avec des tags
 				if (dynamic_cast<Checkpoint*>(entity2))
 				{
 					if (entity->GetShape()->getGlobalBounds().intersects(entity2->GetShape()->getGlobalBounds())) // Si le joueur touche le checkpoint
@@ -156,6 +185,7 @@ void TestScene::OnUpdate()
 						mLastCheckPoint = entity2->GetPosition(0.f, 0.f); // On set le dernier checkpoint
 					}
 				}
+				//Faire avec des tags
 				if (dynamic_cast<DeadlyObstacle*>(entity2))
 				{
 					if (entity->GetShape()->getGlobalBounds().intersects(entity2->GetShape()->getGlobalBounds())) // Si le joueur touche le DeadlyObstacle

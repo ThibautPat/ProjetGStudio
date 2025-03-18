@@ -1,7 +1,6 @@
 #include "Scene.h"
-
-
 #include "../Manager/GameManager.h"
+#include "../Puzzle/Puzzle.h"
 
 int Scene::GetWindowWidth() const
 {
@@ -22,6 +21,13 @@ bool Scene::UpdateStartTimer()
 
 	mStartTimerProgress += dt;
 	return false;
+}
+
+void Scene::UpdatePuzzle()
+{
+	for (Puzzle* puzzle : mTabPuzzle) {
+		puzzle->TestConditions();
+	}
 }
 
 float Scene::GetDeltaTime() const

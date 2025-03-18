@@ -2,16 +2,16 @@
 
 class GameManager;
 class SceneManager;
+class Puzzle;
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Color.hpp>
+#include <vector>
 
 class Scene
 {
 private:
 	GameManager* mpGameManager;
-
-private:
 	void SetGameManager(GameManager* pGameManager) { mpGameManager = pGameManager; }
 	
 protected:
@@ -23,12 +23,14 @@ protected:
 
 	float mStartTimer = 1.f;
 	float mStartTimerProgress = 0.f;
+	std::vector<Puzzle*> mTabPuzzle;
 
 public:
 
 	enum Tag
 	{
 		PLAYER,
+		LASER,
 		CHECKPOINT,
 		DEADLYOBSTACLE,
 		METALIC_OBSTACLE,
@@ -43,6 +45,8 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	bool UpdateStartTimer();
+
+	void UpdatePuzzle();
 
 	template<typename T>
 	T* CreateCircleEntity(float radius, const sf::Color& color);
