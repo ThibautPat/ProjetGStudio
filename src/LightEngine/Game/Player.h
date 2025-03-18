@@ -9,7 +9,7 @@ class AnimationRender;
 
 struct PlayerData
 {
-	float mJumpHeight = 600.f;
+	float mJumpHeight = 400.f;
 	float mJumpTime = 0.3f;
 	float pJumpDuration = 0;
 

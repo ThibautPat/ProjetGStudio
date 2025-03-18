@@ -1,0 +1,22 @@
+{
+  "Rows": 15,
+  "Columns": 12,
+  "Cases": [
+    [ "P", "P", "P", "P", "P", "M", "P", "P", "P", "P", "P", "P" ],
+    [ "P", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "P" ],
+    [ "P", "A", "A", "A", "P", "A", "A", "A", "A", "A", "A", "P" ],
+    [ "P", "A", "A", "P", "P", "P", "A", "A", "P", "A", "A", "P" ],
+    [ "P", "M", "P", "P", "P", "A", "A", "A", "A", "A", "A", "P" ],
+    [ "P", "A", "A", "P", "A", "A", "A", "A", "P", "A", "A", "P" ],
+    [ "M", "P", "P", "P", "P", "A", "A", "A", "A", "A", "A", "A" ],
+    [ "A", "A", "A", "P", "P", "P", "M", "P", "M", "PL", "P", "P" ],
+    [ "M", "P", "M", "P", "A", "A", "A", "A", "A", "A", "A", "A" ],
+    [ "A", "A", "A", "P", "A", "P", "P", "P", "M", "P", "P", "P" ],
+    [ "P", "P", "P", "P", "A", "A", "A", "A", "A", "A", "A", "A" ],
+    [ "A", "A", "A", "P", "A", "A", "P", "M", "P", "P", "A", "A" ],
+    [ "M", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A" ],
+    [ "A", "A", "A", "P", "P", "P", "P", "P", "P", "P", "P", "P" ] 
+    ],
+  "Acronym": "PL = player, P = platform, A = empty, C = Checkpoint, D = Death, E = Exit, M = Metalic platform",
+  "Acronym_of_Dir": "U = Up, D = Down, L = Left, R = Right"
+}

@@ -19,6 +19,9 @@ protected:
 	sf::Clock RespawnClock;
 	sf::Vector2f mLastCheckPoint;
 	bool playerIsDead = false;
+	bool GreenKey = false;
+	bool RedKey = false;
+	bool BlueKey = false;
 
 public:
 	void PlayerDeath();
@@ -30,6 +33,12 @@ public:
 		METALIC_OBSTACLE,
 		OBSTACLE,
 		END_LEVEL,
+		BLUE_KEY,
+		RED_KEY,
+		GREEN_KEY,
+		BLUE_DOOR,
+		RED_DOOR,
+		GREEN_DOOR,
 
 		COUNT
 	};

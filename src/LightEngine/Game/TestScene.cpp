@@ -49,7 +49,7 @@ void TestScene::OnInitialize()
 	mView = new sf::View(sf::FloatRect(0, 0, GetWindowWidth(), GetWindowHeight())); // Ajout de la cam�ra
 	m_InstanceGameManager = GameManager::Get();
 
-	std::ifstream fichier("..//..//..//src//LightEngine//nlohmann//map.json");
+	std::ifstream fichier("..//..//..//src//LightEngine//nlohmann//map2.json");
 	if (!fichier.is_open()) {
 		std::cerr << "Erreur : impossible d'ouvrir le fichier JSON." << std::endl;
 		return;
@@ -62,11 +62,11 @@ void TestScene::OnInitialize()
 	for (int i = 0; i < donnees["Rows"]; i++) {
 		for (int j = 0; j < donnees["Columns"]; j++)
 			if (donnees["Cases"][i][j] == "PL") { // Si la case est un Player
-				Player* pEntity1 = CreateRectEntity<Player>(100, 100, sf::Color::Blue); // Ajout du Player et setup
+				Player* pEntity1 = CreateRectEntity<Player>(95, 95, sf::Color::Blue); // Ajout du Player et setup
 				pEntity1->SetGravity(true);
 				pEntity1->SetRigidBody(true);
 				pEntity1->SetIsKinematic(false);
-				pEntity1->SetPosition(100, 100);
+				pEntity1->SetPosition(100*j, 100*i);
 			}
 	}
 
@@ -75,44 +75,53 @@ void TestScene::OnInitialize()
 	for (int i = 0; i < donnees["Rows"]; i++) {
 		for (int j = 0; j < donnees["Columns"]; j++) {
 			if (donnees["Cases"][i][j] == "P") { 
-				RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Red); // Ajout du DeadlyObstacle et setup
+				RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Cyan); // Ajout du DeadlyObstacle et setup
+				pEntity->SetGravity(false);
+				pEntity->SetRigidBody(true);
+				pEntity->SetIsKinematic(true);
+				pEntity->SetPosition(j * 100, i * 100);
+				pEntity->SetTag(Tag::OBSTACLE);
+			}
+
+			else if (donnees["Cases"][i][j] == "C") { // Si la case est un Checkpoint
+				Checkpoint* pEntity = CreateRectEntity<Checkpoint>(i * 100, j * 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
+				pEntity->SetGravity(false);
+				pEntity->SetRigidBody(false);
+				pEntity->SetIsKinematic(false);
+				pEntity->SetPosition(i * 100, j * 100);
+				pEntity->SetTag(Tag::CHECKPOINT);
+			}
+
+			else if (donnees["Cases"][i][j] == "D") { // Si la case est un DeadlyObstacle
+				DeadlyObstacle* pEntity = CreateRectEntity<DeadlyObstacle>(i * 100, j * 100, sf::Color::Red); // Ajout du DeadlyObstacle et setup
+				pEntity->SetGravity(false);
+				pEntity->SetRigidBody(true);
+				pEntity->SetIsKinematic(true);
+				pEntity->SetPosition(i * 100, j * 100);
+				pEntity->SetTag(Tag::DEADLYOBSTACLE);
+			}
+
+			else if (donnees["Cases"][i][j] == "E") { // Si la case est la fin du niveau
+				RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Magenta); // Ajout de la fin du niveau et setup
+				pEntity->SetGravity(false);
+				pEntity->SetRigidBody(false);
+				pEntity->SetIsKinematic(false);
+				pEntity->SetPosition(i * 100, j * 100);
+				pEntity->SetTag(Tag::END_LEVEL);
+			}
+
+			else if (donnees["Cases"][i][j] == "M") { // Si la case est un MetalicObstacle
+				RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::White); // Ajout du MetalicObstacle et setup
 				pEntity->SetGravity(false);
 				pEntity->SetRigidBody(true);
 				pEntity->SetIsKinematic(true);
 				pEntity->SetPosition(j * 100, i * 100);
 				pEntity->SetTag(Tag::METALIC_OBSTACLE);
 			}
-
-			if (donnees["Cases"][i][j] == "C") { // Si la case est un Checkpoint
-				Checkpoint* pEntity = CreateRectEntity<Checkpoint>(i * 100, j * 100, sf::Color::Green); // Ajout du Checkpoint et setup
-				pEntity->SetGravity(false);
-				pEntity->SetRigidBody(false);
-				pEntity->SetIsKinematic(false);
-				pEntity->SetPosition(i * 100, j * 100);
-			}
-
-			std::cout << donnees["Cases"][i][j] << std::endl;
 		}
-		//if (donnees["Cases"][i] == "PL") {
-		//	Player* pEntity = CreateRectEntity<Player>(donnees["Cases"][i] * 100, donnees["Cases"][i] * 100, sf::Color::Blue); // Ajout du Player et setup
-		//	pEntity->SetGravity(true);
-		//	pEntity->SetRigidBody(true);
-		//	pEntity->SetIsKinematic(false);
-		//	pEntity->SetPosition(donnees["Cases"][i] * 100, donnees["Cases"][i] * 100);
-		//}
-		//else if (donnees["Cases"][i] == "C") {
-		//	Checkpoint* pEntity = CreateRectEntity<Checkpoint>(donnees["Cases"][i] * 100, donnees["Cases"][i] * 100, sf::Color::Green); // Ajout du Checkpoint et setup
-		//	pEntity->SetGravity(false);
-		//	pEntity->SetRigidBody(false);
-		//	pEntity->SetIsKinematic(false);
-		//	pEntity->SetPosition(donnees["Cases"][i] * 100, donnees["Cases"][i] * 100);
-		//}
-		//else {
-		//	std::cerr << "Erreur : impossible de trouver le type de l'entit�." << std::endl;
-		//}
 	}
 	RectangleEntity* Ground = CreateRectEntity<RectangleEntity>(5000, 10000, sf::Color::Green);
-	Ground->SetPosition(0, 3220);
+	Ground->SetPosition(0, 3850);
 	Ground->SetRigidBody(true);
 	Ground->SetIsKinematic(true);
 	Ground->SetGravity(false);
@@ -160,9 +169,10 @@ void TestScene::OnUpdate()
 					{
 						for (Entity* entity3 : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
 						{
-							//if (!dynamic_cast<Player*>(entity3))
-							//entity3->Destroy(); // On d�truit toutes les entit�s
+							entity3->Destroy(); // On d�truit toutes les entit�s
+
 						}
+						m_InstanceGameManager->GetSceneManager()->SelectScene("testscene2");
 					}
 				}
 			}
