@@ -3,8 +3,8 @@
 
 struct Data
 {
-	
 	float mMovement = 1;
+	bool mDirectionx = true;
 };
 
 class Moving_Platform : public RectangleEntity
@@ -18,5 +18,6 @@ public :
 	void OnInitialize() override;
 	void setMaxTravelDistance(int distance) { mMaxTravelDistance = distance; }
 	void SetStartPosition(sf::Vector2f position) { mStartPosition = position; }
+	void SetLinearDirection(bool dir) { mData->mDirectionx = dir; }
 };
 

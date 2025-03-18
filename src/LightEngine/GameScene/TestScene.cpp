@@ -144,6 +144,7 @@ void TestScene::OnInitialize()
 	pEntity5->SetGravity(false);
 	pEntity5->setMaxTravelDistance(200);
 	pEntity5->SetStartPosition(pEntity5->GetPosition(0,0));
+	pEntity5->SetLinearDirection(false);
 	pEntity5->SetTag(Tag::BOUCING_OBSTACLE);
 
 	DeadlyObstacle* pEntity10 = CreateRectEntity<DeadlyObstacle>(100, 100, sf::Color::Red); // Ajout du DeadlyObstacle et setup
@@ -214,7 +215,7 @@ void TestScene::OnUpdate()
 				{
 
 					if (entity2->IsTag(Tag::BACK_GROUND1) && !screenTouched)
-						entity2->SetPosition(mView->getCenter().x - entity->GetPosition(0, 0).x / 8 - 100, 205);
+						entity2->SetPosition(mView->getCenter().x - entity->GetPosition(0, 0).x / 5.5f - 100, 205);
 					for (Entity* entity3 : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
 					{
 						if (entity2->IsTag(Tag::BACK_GROUND2BIS) && entity->GetPosition(0, 0).x > entity3->GetPosition(0, 0).x && entity3->IsTag(Tag::BACK_GROUND2) && !screenTouched)
