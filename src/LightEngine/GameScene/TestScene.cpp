@@ -6,6 +6,7 @@
 #include "../GameEntity/Player.h"
 #include "../GameEntity/Checkpoint.h"
 #include "../GameEntity/DeadlyObstacle.h"
+#include "../GameEntity/BackGround.h"
 
 //TODO in player class ----------
 void TestScene::PlayerDeath()
@@ -43,74 +44,61 @@ void TestScene::PlayerRespawn()
 
 void TestScene::OnInitialize()
 {
-	mView = new sf::View(sf::FloatRect(0, 0, GetWindowWidth(), GetWindowHeight())); // Ajout de la cam�ra
+	mView = new sf::View(sf::FloatRect(0, -340, GetWindowWidth()+56.25f, GetWindowHeight()+100)); // Ajout de la cam�ra
 	m_InstanceGameManager = GameManager::Get();
 
-	Checkpoint* Checkpoint2 = CreateRectEntity<Checkpoint>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
-	Checkpoint2->SetPosition(300, 670);
-	Checkpoint2->SetRigidBody(false);
-	Checkpoint2->SetIsKinematic(true);
-	Checkpoint2->SetGravity(false);
 
-	Checkpoint* Checkpoint1 = CreateRectEntity<Checkpoint>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
-	Checkpoint1->SetPosition(-100, 670);
-	Checkpoint1->SetRigidBody(false);
-	Checkpoint1->SetIsKinematic(true);
-	Checkpoint1->SetGravity(false);
+	BackGround* pEntity7 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
+	pEntity7->SetPosition(0, 205); 
+	pEntity7->SetRigidBody(false);
+	pEntity7->SetIsKinematic(true);
+	pEntity7->SetGravity(false);
+	pEntity7->SetBackGroundTexture("..//..//..//res//Assets//Background//sky_mercure.png");
+	pEntity7->SetTag(Tag::BACK_GROUND1);
 
-	DeadlyObstacle* DeadlyObstacle1 = CreateRectEntity<DeadlyObstacle>(100, 100, sf::Color::Red); // Ajout du DeadlyObstacle et setup
-	DeadlyObstacle1->SetPosition(900, 670);
-	DeadlyObstacle1->SetRigidBody(false);
-	DeadlyObstacle1->SetIsKinematic(true);
-	DeadlyObstacle1->SetGravity(false);
+	BackGround* pEntity8 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
+	pEntity8->SetPosition(mView->getCenter().x, 205);
+	pEntity8->SetRigidBody(false);
+	pEntity8->SetIsKinematic(true);
+	pEntity8->SetGravity(false);
+	pEntity8->SetBackGroundTexture("..//..//..//res//Assets//Background//upsky_background_mercure.png");
+	pEntity8->SetTag(Tag::BACK_GROUND2BIS);
 
-	Player* pEntity = CreateRectEntity<Player>(256, 128, sf::Color::Blue); // Ajout du Player et setup
+	BackGround* pEntity9 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
+	pEntity9->SetPosition(mView->getCenter().x-30, 205);
+	pEntity9->SetRigidBody(false);
+	pEntity9->SetIsKinematic(true);
+	pEntity9->SetGravity(false);
+	pEntity9->SetBackGroundTexture("..//..//..//res//Assets//Background//upsky_background_mercure.png");
+	pEntity9->SetTag(Tag::BACK_GROUND2);
+
+	Player* pEntity = CreateRectEntity<Player>(256, 128, sf::Color::Transparent); // Ajout du Player et setup
 	pEntity->SetGravity(true);
 	pEntity->SetRigidBody(true);
 	pEntity->SetIsKinematic(false);
-	pEntity->SetPosition(100, 100);
+	pEntity->SetPosition(0, 0);
 
-	RectangleEntity* pEntity1 = CreateRectEntity<RectangleEntity>(50, 300, sf::Color::Cyan);
-	pEntity1->SetPosition(500, 500);
-	pEntity1->SetRigidBody(true);
-	pEntity1->SetIsKinematic(true);
-	pEntity1->SetGravity(false);
-	pEntity1->SetTag(Tag::OBSTACLE);
+	RectangleEntity* Ground = CreateRectEntity<RectangleEntity>(5000, 10000, sf::Color::Green);
+	Ground->SetPosition(0, 3250);
+	Ground->SetRigidBody(true);
+	Ground->SetIsKinematic(true);
+	Ground->SetGravity(false);
 
-	RectangleEntity* pEntity2 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Cyan);
-	pEntity2->SetPosition(1200, 300);
-	pEntity2->SetRigidBody(true);
-	pEntity2->SetIsKinematic(true);
-	pEntity2->SetGravity(false);
-	pEntity2->SetTag(Tag::OBSTACLE);
 
-	RectangleEntity* pEntity3 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Cyan);
-	pEntity3->SetPosition(200, 100);
+
+	RectangleEntity* pEntity3 = CreateRectEntity<RectangleEntity>(2000, 100, sf::Color::Transparent);
+	pEntity3->SetPosition(-3300, 0);
 	pEntity3->SetRigidBody(true);
 	pEntity3->SetIsKinematic(true);
 	pEntity3->SetGravity(false);
 	pEntity3->SetTag(Tag::OBSTACLE);
 
-	RectangleEntity* Ground = CreateRectEntity<RectangleEntity>(5000, 10000, sf::Color::Green);
-	Ground->SetPosition(0, 3220);
-	Ground->SetRigidBody(true);
-	Ground->SetIsKinematic(true);
-	Ground->SetGravity(false);
-	Ground->SetTag(Tag::OBSTACLE);
-
-	RectangleEntity* pEntity4 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::White);
-	pEntity4->SetPosition(100, 260);
+	RectangleEntity* pEntity4 = CreateRectEntity<RectangleEntity>(2000, 200, sf::Color::Transparent);
+	pEntity4->SetPosition(4850, 0);
 	pEntity4->SetRigidBody(true);
 	pEntity4->SetIsKinematic(true);
 	pEntity4->SetGravity(false);
-	pEntity4->SetTag(Tag::METALIC_OBSTACLE);
-
-	RectangleEntity* pEntity5 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::White);
-	pEntity5->SetPosition(-400, 670);
-	pEntity5->SetRigidBody(false);
-	pEntity5->SetIsKinematic(true);
-	pEntity5->SetGravity(false);
-	pEntity5->SetTag(Tag::END_LEVEL);
+	pEntity4->SetTag(Tag::OBSTACLE);
 }
 
 void TestScene::OnEvent(const sf::Event& event)
@@ -120,15 +108,32 @@ void TestScene::OnEvent(const sf::Event& event)
 
 void TestScene::OnUpdate()
 {
+	//if (sf::Joystick::isButtonPressed(0, 0))
+	//{
+	//	RectangleEntity* pEntity2 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Green);
+	//	pEntity2->SetPosition(100, 0);
+	//	pEntity2->SetRigidBody(true);
+	//	pEntity2->SetIsKinematic(true);
+	//	pEntity2->SetGravity(false);
+	//	pEntity2->SetTag(Tag::METALIC_OBSTACLE); 
+	//}
 	int i = 0;
 	PlayerRespawn();
+	bool screenTouched = false;
 	for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
 	{
 		i++;
 		if (dynamic_cast<Player*>(entity))
 		{
-			mView->setCenter(entity->GetPosition(0.f, 0.f).x + 200, entity->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame
+			if (entity->GetPosition(0.f, 0.f).x > -2450 && entity->GetPosition(0.f, 0.f).x < 3550)
+			{
+				mView->setCenter(entity->GetPosition(0.f, 0.f).x + 200, mView->getCenter().y); //Repositionnement de la cam�ra sur le joueur chaque frame
 
+			}
+			else
+			{
+				screenTouched = true;
+			}
 			//TODO in player class ----------
 			for (Entity* entity2 : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
 			{
@@ -157,10 +162,22 @@ void TestScene::OnUpdate()
 						}
 					}
 				}
+				if (dynamic_cast<BackGround*>(entity2))
+				{
+
+					if (entity2->IsTag(Tag::BACK_GROUND1)&& !screenTouched) 
+						entity2->SetPosition(mView->getCenter().x - entity->GetPosition(0,0).x/8 -100, 205);
+					for (Entity* entity3 : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
+					{
+						if (entity2->IsTag(Tag::BACK_GROUND2BIS) && entity->GetPosition(0, 0).x > entity3->GetPosition(0, 0).x && entity3->IsTag(Tag::BACK_GROUND2) && !screenTouched)
+							entity2->SetPosition(mView->getCenter().x - entity->GetPosition(0, 0).x + entity2->GetShape()->getGlobalBounds().width*1.227f, 205);
+						else if (entity2->IsTag(Tag::BACK_GROUND2BIS) && entity->GetPosition(0, 0).x < entity3->GetPosition(0, 0).x && entity3->IsTag(Tag::BACK_GROUND2) && !screenTouched)
+							entity2->SetPosition(mView->getCenter().x - entity->GetPosition(0, 0).x - entity2->GetShape()->getGlobalBounds().width/1.294f, 205);
+					}
+				}
 			}
 			//--------------------------------
 		}
-
 		sf::Vector2f cooEntity = entity->GetPosition(0.f, 0.f);
 
 		// Affichage de quelque informations
@@ -176,5 +193,6 @@ void TestScene::OnUpdate()
 	std::string entitynb = std::to_string(i) + "nb entity";
 	Debug::DrawText(mView->getCenter().x - mView->getSize().x / 2 + 10, mView->getCenter().y - mView->getSize().y / 2 + 40, entitynb, sf::Color::White);
 	Debug::ShowFPS(mView->getCenter().x - mView->getSize().x / 2 + 10, mView->getCenter().y - mView->getSize().y / 2 + 10);
+
 	m_InstanceGameManager->GetWindow()->setView(*mView); // Voir si possibilit� de ne pas call la view chaque frame
 }

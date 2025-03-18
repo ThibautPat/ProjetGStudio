@@ -115,13 +115,13 @@ void RectangleEntity::Repulse(Entity* other)
                 SetGravity(true);
                 SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f)+1);
 			}
-            else if (mCollider->GetCollideFace()->y == 1 && mClockJump.getElapsedTime().asSeconds() > 0.3f && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0)))
+            else if (mCollider->GetCollideFace()->y == 1 && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0)))
             {
 				mClockJump.restart(); 
                 mGravitySpeed = -600.f;
                 SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) - gap);
             }
-            else if (mClockJump.getElapsedTime().asSeconds() > 0.3f && mCollider->GetCollideFace()->y == -1 && other->IsTag(TestScene::Tag::METALIC_OBSTACLE) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0)))
+            else if (mCollider->GetCollideFace()->y == -1 && other->IsTag(TestScene::Tag::METALIC_OBSTACLE) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0)))
             {
 				mReverse = true;
 				mClockJump.restart();  
@@ -140,7 +140,7 @@ void RectangleEntity::Repulse(Entity* other)
 void RectangleEntity::Update()
 {
     mCollider->Update(GetPosition(0.f, 0.f).x - mCollider->mWidth / 2.f, GetPosition(0.f, 0.f).y - mCollider->mHeight / 2.f);
-    Debug::DrawRectangle(GetPosition(-1.f, -1.f).x, GetPosition(-1.f, -1.f).y, mShape.getGlobalBounds().width, mShape.getGlobalBounds().height, sf::Color::Cyan);
+    //Debug::DrawRectangle(GetPosition(-1.f, -1.f).x, GetPosition(-1.f, -1.f).y, mShape.getGlobalBounds().width, mShape.getGlobalBounds().height, sf::Color::Cyan);
     Entity::Update();
 }
 
