@@ -3,9 +3,10 @@
 #include <iostream>
 #include "../Manager/GameManager.h"
 #include "../Entity/RectangleEntity.h"
-#include "../StateMachine/StateMachine.h"
 
 class AnimationRender;
+class Render;
+class TextureRender;
 class ActionPlayer;
 class TextureManager;
 
@@ -22,6 +23,8 @@ struct PlayerData
 
     float mAcceleration = 700.f;  // Accélération du joueur
     float mDeceleration = 500.f;  // Décélération du joueur
+
+    sf::Vector2f mDirection = sf::Vector2f(0.f, 0.f);
 };
 
 // Classe représentant un joueur, héritant de RectangleEntity
@@ -69,11 +72,11 @@ public:
     void OnUpdate() override;
     void FixedUpdate(float dt) override;
 
+    //Au moment d'une collision
+    void OnCollision(Entity* other) override;
+
     // Gestion du rendu du joueur
-    Render* GetRender() { 
-        Render* Temporary = static_cast<Render*>(mTextured);
-        return Temporary;
-    }
+    Render* GetRender() { return (Render*)mTextured; };
 
     // Méthode pour initialiser le joueur
     void OnInitialize() override;

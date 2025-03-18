@@ -26,6 +26,8 @@ public:
 	/// </summary>
 	void UpdateAnimation();
 
+	void Draw(Entity* entity, sf::RenderWindow* window) override {};
+
 	bool IsLoop() { return mIsLoop; }
 
 };

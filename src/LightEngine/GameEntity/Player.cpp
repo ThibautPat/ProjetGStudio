@@ -1,4 +1,4 @@
-#include "Player.h"
+﻿#include "Player.h"
 #include "../Other/Debug.h"
 #include "../Manager/TextureManager.h"
 #include "../PlayerStateMachine/PlayerAction.h"
@@ -7,10 +7,74 @@
 #include "../Renderer/AnimationRender.h"
 #include "../Collider/AABBCollider.h"
 
+void Player::OnInitialize() 
+{
+    mShape.setOrigin(mShape.getGlobalBounds().width / 2, mShape.getGlobalBounds().height / 2); //WTF pourquoi l'h�ritage n'est pas fait ?!
+    mPData = new PlayerData;
+
+    mAs = GameManager::Get()->GetTextureManager();
+
+    //Setup de la gestion de textures
+    mAs->LoadSpriteSheet("../../../res/Assets/SpriteSheet/JSON Sola.json", "../../../res/Assets/SpriteSheet/spitesheet_animation_personnage.png", "player");
+    mTextured = new AnimationRender("player", "walk");
+}
+
+void Player::OnUpdate() 
+{
+    //mTextured->UpdateAnimation();
+
+    if (isGrounded && mDirection.x == 0) {
+        SetState(IDLE);
+    }
+
+    mActions[(int)mState]->OnUpdate(this);
+
+    std::string text2 = std::to_string((int)mSpeed);
+    Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 50, text2, sf::Color::White);
+}
+
+void Player::OnCollision(Entity* other)
+{
+    if (other->IsTag(TestScene::Tag::METALIC_OBSTACLE))
+    {
+        isGrounded = true;
+    }
+    else if (other->IsTag(TestScene::Tag::PLATFORM) && static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->y == 1)
+    {
+        isGrounded = true;
+    }
+    else {
+        isGrounded = false;
+    }
+}
+
+void Player::Move(sf::Vector2f movement, float dt)
+{
+    if (mSpeed > mPData->mMaxSpeedWalk)
+    {
+        mSpeed = mPData->mMaxSpeedWalk;
+    }
+    if (mSpeed < -mPData->mMaxSpeedWalk)
+    {
+        mSpeed = -mPData->mMaxSpeedWalk;
+    }
+
+    SetDirection(dt, 0, mSpeed);
+}
+
+void Player::FixedUpdate(float dt)
+{
+    Fall(dt);
+    mPData->pJumpDuration += dt;
+
+    Move(mPData->mDirection, dt);
+}
+
 bool Player::SetState(PlayerStateList newState)
 {
 	if (mTransitions[(int)mState][(int)newState]) {
 		mState = newState;
+        mActions[(int)mState]->OnStart(this);
 		return true;
 	}
 	return false;
@@ -28,10 +92,10 @@ Player::Player()
         }
     }
 
-    mActions[(int)PlayerStateList::IDLE] = new PlayerAction_Idle();  
-    mActions[(int)PlayerStateList::CROUCH] = new PlayerAction_Crouch(); 
-    mActions[(int)PlayerStateList::WALK] = new PlayerAction_Walk();  
-    mActions[(int)PlayerStateList::JUMP] = new PlayerAction_Jump(); 
+    mActions[(int)PlayerStateList::IDLE] = new PlayerAction_Idle();
+    mActions[(int)PlayerStateList::CROUCH] = new PlayerAction_Crouch();
+    mActions[(int)PlayerStateList::WALK] = new PlayerAction_Walk();
+    mActions[(int)PlayerStateList::JUMP] = new PlayerAction_Jump();
 
     SetTransition(PlayerStateList::IDLE, PlayerStateList::WALK, true);
     SetTransition(PlayerStateList::IDLE, PlayerStateList::JUMP, true);
@@ -39,7 +103,17 @@ Player::Player()
 
     SetTransition(PlayerStateList::CROUCH, PlayerStateList::WALK, true);
     SetTransition(PlayerStateList::CROUCH, PlayerStateList::IDLE, true);
+    SetTransition(PlayerStateList::CROUCH, PlayerStateList::JUMP, true);
 
     SetTransition(PlayerStateList::WALK, PlayerStateList::JUMP, true);
     SetTransition(PlayerStateList::WALK, PlayerStateList::IDLE, true);
     SetTransition(PlayerStateList::WALK, PlayerStateList::CROUCH, true);
+
+    SetTransition(PlayerStateList::JUMP, PlayerStateList::WALK, true);
+    SetTransition(PlayerStateList::JUMP, PlayerStateList::IDLE, true);
+
+}
+
+Player::~Player()
+{
+}

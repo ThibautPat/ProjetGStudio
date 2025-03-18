@@ -38,26 +38,26 @@ void TestScene::OnInitialize()
 	mView = new sf::View(sf::FloatRect(0, 0, GetWindowWidth(), GetWindowHeight())); // Ajout de la cam�ra
 	m_InstanceGameManager = GameManager::Get();
 	
-	//RectangleEntity* Checkpoint2 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
-	//Checkpoint2->SetPosition(300, 670);
-	//Checkpoint2->SetRigidBody(false);
-	//Checkpoint2->SetIsKinematic(true);
-	//Checkpoint2->SetGravity(false);
-	//Checkpoint2->SetTag(Tag::CHECKPOINT);
+	RectangleEntity* Checkpoint2 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
+	Checkpoint2->SetPosition(300, 670);
+	Checkpoint2->SetRigidBody(false);
+	Checkpoint2->SetIsKinematic(true);
+	Checkpoint2->SetGravity(false);
+	Checkpoint2->SetTag(Tag::CHECKPOINT);
 
-	//RectangleEntity* Checkpoint1 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
-	//Checkpoint1->SetPosition(-100, 670);
-	//Checkpoint1->SetRigidBody(false);
-	//Checkpoint1->SetIsKinematic(true);
-	//Checkpoint1->SetGravity(false);
-	//Checkpoint1->SetTag(Tag::CHECKPOINT);
+	RectangleEntity* Checkpoint1 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
+	Checkpoint1->SetPosition(-100, 670);
+	Checkpoint1->SetRigidBody(false);
+	Checkpoint1->SetIsKinematic(true);
+	Checkpoint1->SetGravity(false);
+	Checkpoint1->SetTag(Tag::CHECKPOINT);
 
-	//RectangleEntity* DeadlyObstacle1 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Green); // Ajout du DeadlyObstacle et setup
-	//DeadlyObstacle1->SetPosition(900, 670);
-	//DeadlyObstacle1->SetRigidBody(false);
-	//DeadlyObstacle1->SetIsKinematic(true);
-	//DeadlyObstacle1->SetGravity(false);
-	//DeadlyObstacle1->SetTag(Tag::DEADLYOBSTACLE);
+	RectangleEntity* DeadlyObstacle1 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Green); // Ajout du DeadlyObstacle et setup
+	DeadlyObstacle1->SetPosition(900, 670);
+	DeadlyObstacle1->SetRigidBody(false);
+	DeadlyObstacle1->SetIsKinematic(true);
+	DeadlyObstacle1->SetGravity(false);
+	DeadlyObstacle1->SetTag(Tag::DEADLYOBSTACLE);
 
 	mPlayer = CreateRectEntity<Player>(256, 128, sf::Color::Blue); // Ajout du Player et setup
 	mPlayer->SetGravity(true);
@@ -66,12 +66,12 @@ void TestScene::OnInitialize()
 	mPlayer->SetPosition(0, 0);
 	mPlayer->SetTag(Tag::PLAYER);
 
-	//RectangleEntity* pEntity6 = CreateRectEntity<RectangleEntity>(150, 150, sf::Color::Magenta); // Ajout d'un obstacle à déplacer
-	//pEntity6->SetGravity(true);
-	//pEntity6->SetRigidBody(true);
-	//pEntity6->SetIsKinematic(false);
-	//pEntity6->SetPosition(350, -200);
-	//pEntity6->SetTag(Tag::OBSTACLE);
+	RectangleEntity* pEntity6 = CreateRectEntity<RectangleEntity>(150, 150, sf::Color::Magenta); // Ajout d'un obstacle à déplacer
+	pEntity6->SetGravity(true);
+	pEntity6->SetRigidBody(true);
+	pEntity6->SetIsKinematic(false);
+	pEntity6->SetPosition(350, -200);
+	pEntity6->SetTag(Tag::OBSTACLE);
 
 	RectangleEntity* pEntity1 = CreateRectEntity<RectangleEntity>(50, 300, sf::Color::Cyan);
 	pEntity1->SetPosition(500, 500);
@@ -80,19 +80,19 @@ void TestScene::OnInitialize()
 	pEntity1->SetGravity(false);
 	pEntity1->SetTag(Tag::PLATFORM);
 
-	//RectangleEntity* pEntity2 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Cyan);
-	//pEntity2->SetPosition(1200, 300);
-	//pEntity2->SetRigidBody(true);
-	//pEntity2->SetIsKinematic(true);
-	//pEntity2->SetGravity(false);
-	//pEntity2->SetTag(Tag::PLATFORM);
+	RectangleEntity* pEntity2 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Cyan);
+	pEntity2->SetPosition(1200, 300);
+	pEntity2->SetRigidBody(true);
+	pEntity2->SetIsKinematic(true);
+	pEntity2->SetGravity(false);
+	pEntity2->SetTag(Tag::PLATFORM);
 
-	//RectangleEntity* pEntity3 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Cyan);
-	//pEntity3->SetPosition(200, 100);
-	//pEntity3->SetRigidBody(true);
-	//pEntity3->SetIsKinematic(true);
-	//pEntity3->SetGravity(false);
-	//pEntity3->SetTag(Tag::PLATFORM);
+	RectangleEntity* pEntity3 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::Cyan);
+	pEntity3->SetPosition(200, 100);
+	pEntity3->SetRigidBody(true);
+	pEntity3->SetIsKinematic(true);
+	pEntity3->SetGravity(false);
+	pEntity3->SetTag(Tag::PLATFORM);
 
 	RectangleEntity* Ground = CreateRectEntity<RectangleEntity>(5000, 10000, sf::Color::Green);
 	Ground->SetPosition(0, 3220);
@@ -101,39 +101,125 @@ void TestScene::OnInitialize()
 	Ground->SetGravity(false);
 	Ground->SetTag(Tag::PLATFORM);
 
-	//RectangleEntity* pEntity4 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::White);
-	//pEntity4->SetPosition(100, 260);
-	//pEntity4->SetRigidBody(true);
-	//pEntity4->SetIsKinematic(true);
-	//pEntity4->SetGravity(false);
-	//pEntity4->SetTag(Tag::METALIC_OBSTACLE);
+	RectangleEntity* pEntity4 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::White);
+	pEntity4->SetPosition(100, 260);
+	pEntity4->SetRigidBody(true);
+	pEntity4->SetIsKinematic(true);
+	pEntity4->SetGravity(false);
+	pEntity4->SetTag(Tag::METALIC_OBSTACLE);
 
-	//RectangleEntity* pEntity5 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::White);
-	//pEntity5->SetPosition(-400, 670);
-	//pEntity5->SetRigidBody(false);
-	//pEntity5->SetIsKinematic(true);
-	//pEntity5->SetGravity(false);
-	//pEntity5->SetTag(Tag::END_LEVEL);
+	RectangleEntity* pEntity5 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::White);
+	pEntity5->SetPosition(-400, 670);
+	pEntity5->SetRigidBody(false);
+	pEntity5->SetIsKinematic(true);
+	pEntity5->SetGravity(false);
+	pEntity5->SetTag(Tag::END_LEVEL);
 }
 
 void TestScene::OnEvent(const sf::Event& event)
 {	
-	if (event.joystickButton.button == sf::Joystick::R) {
+	////Joystick
+	//if (event.joystickButton.button == sf::Joystick::R) {
+	//	GetPlayer()->SetState(Player::PlayerStateList::JUMP);
+	//}
+	//if (event.joystickButton.button == sf::Joystick::Z) {
+	//	GetPlayer()->SetState(Player::PlayerStateList::CROUCH);
+	//}
+
+	////TODO : essayer de faire les joystick avec l'event.
+	//if (sf::Joystick::getAxisPosition(0, sf::Joystick::X) < -10) {
+	//	mPlayer->GetPlayerData()->mDirection.x = 1;
+	//	GetPlayer()->SetState(Player::PlayerStateList::WALK);
+	//}
+
+	//else if (sf::Joystick::getAxisPosition(0, sf::Joystick::X) < 10) {
+	//	mPlayer->GetPlayerData()->mDirection.x = -1;
+	//	GetPlayer()->SetState(Player::PlayerStateList::WALK);
+	//}
+	//else {
+	//	mPlayer->GetPlayerData()->mDirection.x = 0;
+	//	GetPlayer()->SetState(Player::PlayerStateList::IDLE);
+	//}
+
+	////Clavier
+	//if (event.key.code == sf::Keyboard::Space) {
+	//	GetPlayer()->SetState(Player::PlayerStateList::JUMP);
+	//}
+	//if (event.key.code == sf::Keyboard::LShift) {
+	//	GetPlayer()->SetState(Player::PlayerStateList::CROUCH);
+	//}
+
+	//if (event.key.code == sf::Keyboard::Q) {
+	//	GetPlayer()->SetState(Player::PlayerStateList::WALK);
+	//	mPlayer->GetPlayerData()->mDirection.x = -1;
+	//}
+	//else if (event.key.code == sf::Keyboard::D) {
+	//	GetPlayer()->SetState(Player::PlayerStateList::WALK);
+	//	mPlayer->GetPlayerData()->mDirection.x = 1;
+	//}
+	//else {
+	//	mPlayer->GetPlayerData()->mDirection.x = 0;
+	//	GetPlayer()->SetState(Player::PlayerStateList::IDLE);
+	//}
+}
+
+void TestScene::HandleEvent()
+{
+	//Joystick
+	//if (sf::Joystick::isButtonPressed(0, 0)) {
+	//	GetPlayer()->SetState(Player::PlayerStateList::JUMP);
+	//}
+	//if (sf::Joystick::isButtonPressed(0, 1)) {
+	//	GetPlayer()->SetState(Player::PlayerStateList::CROUCH);
+	//}
+
+	//if (sf::Joystick::getAxisPosition(0, sf::Joystick::X) < -10) {
+	//	mPlayer->GetPlayerData()->mDirection.x = 1;
+	//	GetPlayer()->SetState(Player::PlayerStateList::WALK);
+	//}
+
+	//else if (sf::Joystick::getAxisPosition(0, sf::Joystick::X) < 10) {
+	//	mPlayer->GetPlayerData()->mDirection.x = -1;
+	//	GetPlayer()->SetState(Player::PlayerStateList::WALK);
+	//}
+	//else {
+	//	mPlayer->GetPlayerData()->mDirection.x = 0;
+	//	GetPlayer()->SetState(Player::PlayerStateList::IDLE);
+	//}
+
+	//Clavier
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 		GetPlayer()->SetState(Player::PlayerStateList::JUMP);
 	}
-	if (event.key.code == sf::Keyboard::Space) {
-		GetPlayer()->SetState(Player::PlayerStateList::JUMP);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
+		GetPlayer()->SetState(Player::PlayerStateList::CROUCH);
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+		GetPlayer()->SetState(Player::PlayerStateList::WALK);
+		mPlayer->GetPlayerData()->mDirection.x = -1;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		GetPlayer()->SetState(Player::PlayerStateList::WALK);
+		mPlayer->GetPlayerData()->mDirection.x = 1;
+	}
+	else {
+		mPlayer->GetPlayerData()->mDirection.x = 0;
+		GetPlayer()->SetState(Player::PlayerStateList::IDLE);
 	}
 }
 
 void TestScene::OnUpdate()
 {
+	HandleEvent();
+
 	int i = 0;
 	PlayerRespawn();
 
 	mView->setCenter(mPlayer->GetPosition(0.f, 0.f).x + 200, mPlayer->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame 
 	for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
 	{
+		//TODO : NE PAS REFAIRE DES TESTS DE COLLISION QUAND ON PEUT JUSTE ULTILISER LE "OnCollision" DES ENTITIES !!!!!!
 		i++;
 		if (entity->IsTag(Tag::CHECKPOINT))
 		{
