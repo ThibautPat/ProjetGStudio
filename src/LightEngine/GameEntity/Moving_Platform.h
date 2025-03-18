@@ -1,5 +1,5 @@
 #pragma once
-#include "../Core/RectangleEntity.h"
+#include "../Entity/RectangleEntity.h"
 
 struct Data
 {

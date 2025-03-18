@@ -8,6 +8,7 @@
 #include "../GameEntity/DeadlyObstacle.h"
 #include "../GameEntity/BackGround.h"
 #include "../GameEntity/Teleporter.h"
+#include "../GameEntity/Moving_Platform.h"
 
 //TODO in player class ----------
 void TestScene::PlayerDeath()
@@ -136,6 +137,16 @@ void TestScene::OnInitialize()
 	Checkpoint2->SetIsKinematic(true);
 	Checkpoint2->SetGravity(false);
 
+	Moving_Platform* pEntity5 = CreateRectEntity<Moving_Platform>(100, 100, sf::Color::White);
+	pEntity5->SetPosition(1000, 200);
+	pEntity5->SetRigidBody(true);
+	pEntity5->SetIsKinematic(true);
+	pEntity5->SetGravity(false);
+	pEntity5->setMaxTravelDistance(200);
+	pEntity5->SetStartPosition(pEntity5->GetPosition(0,0));
+	pEntity5->SetTag(Tag::BOUCING_OBSTACLE);
+
+
 }
 
 void TestScene::OnEvent(const sf::Event& event)
@@ -211,7 +222,7 @@ void TestScene::OnUpdate()
 					{
 						for (Entity* entity3 : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
 						{
-							if (entity3->IsTag(Tag::TELEPORTER) && entity3 != entity2 && TeleportClock.getElapsedTime().asSeconds() > 0.6f) // Si l'entit� est un autre teleporter
+							if (entity3->IsTag(Tag::TELEPORTER) && entity3 != entity2 && TeleportClock.getElapsedTime().asSeconds() > 0.7f) // Si l'entit� est un autre teleporter
 							{
 								entity->SetPosition(entity3->GetPosition(0.f, 0.f).x, entity3->GetPosition(0.f, 0.f).y); // On t�l�porte le joueur
 								TeleportClock.restart(); // On restart le timer de t�l�portation
