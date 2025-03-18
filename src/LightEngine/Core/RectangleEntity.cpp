@@ -64,8 +64,8 @@ void RectangleEntity::Repulse(Entity* other)
     sf::Vector2f normal = distance / length;
     sf::Vector2f translation = overlap * normal;
 
-    sf::Vector2f position1 = GetPosition(0.f, 0.f) - translation * 0.03f;
-    sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation * 0.1f;
+    sf::Vector2f position1 = GetPosition(0.f, 0.f) - translation * 0.01f;
+    sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation * 0.12f;
 
     if (mCollider->GetCollideFace()->x != 0)
     {
