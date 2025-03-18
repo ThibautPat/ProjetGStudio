@@ -17,6 +17,7 @@ protected:
 	sf::Clock menuClock;
 	sf::Clock escapeClockGap;
 	sf::Clock RespawnClock;
+	sf::Clock TeleportClock;
 	sf::Vector2f mLastCheckPoint;
 	bool playerIsDead = false;
 
@@ -35,6 +36,8 @@ public:
 		BACK_GROUND1BIS,
 		BACK_GROUND2BIS,
 		BOUCING_OBSTACLE,
+		TELEPORTER,
+		TELEPORTER_2,
 
 		COUNT
 	};
