@@ -6,89 +6,91 @@
 #include "../StateMachine/StateMachine.h"
 
 class AnimationRender;
+class ActionPlayer;
+class TextureManager;
 
+// Structure contenant les données liées au joueur, comme la hauteur du saut, les vitesses, etc.
 struct PlayerData
 {
-	int mSecondJump = 2;
-	float mJumpHeight = 600.f;
-	float mJumpTime = 0.3f;
-	float pJumpDuration = 0;
+    float mJumpHeight = 600.f;  // Hauteur du saut
+    float mJumpTime = 0.3f;     // Durée du saut
+    float pJumpDuration = 0;    // Durée actuelle du saut
 
-	float mMinSpeed = 0.f;
-	float mMaxSpeedWalk = 20000.f;
-	float mMaxSpeedCrouch= 10000.f;
+    float mMinSpeed = 0.f;      // Vitesse minimale
+    float mMaxSpeedWalk = 20000.f; // Vitesse maximale en marchant
+    float mMaxSpeedCrouch = 10000.f; // Vitesse maximale en accroupi
 
-	float mAcceleration = 700.f;
-	float mDeceleration = 500.f;
+    float mAcceleration = 700.f;  // Accélération du joueur
+    float mDeceleration = 500.f;  // Décélération du joueur
 };
 
+// Classe représentant un joueur, héritant de RectangleEntity
 class Player : public RectangleEntity
 {
-	StateMachine<Player> mStateMachine;
+public:
+    // Énumération des états possibles du joueur
+    enum PlayerStateList
+    {
+        IDLE,
+        CROUCH,
+        WALK,
+        JUMP,
 
-	//Gestionnaire de texture de l'entity
-	AnimationRender* mTextured;
+        COUNT // Nombre total d'états
+    };
 
-	//Gestionnaire de texture de la scene
-	TextureManager* mAs;
+    static constexpr int STATE_COUNT = static_cast<int>(PlayerStateList::COUNT);
 
-protected:
-	bool isGrounded = false;
+private:
+    // Gestionnaires de textures
+    AnimationRender* mTextured;
+    TextureManager* mAs;
 
-	enum PlayerStateList
-	{
-		IDLE,
-		CROUCH,
-		WALK,
-		JUMP,
-		JUMP_ON_CROUCH,
-		FALL_CROUCH,
-		FALL_WALK,
-		FALL_IDLE,
-		ON_JUMP_CROUCH,
-		ON_JUMP_WALK,
-		ON_JUMP_IDLE,
+    // État actuel du joueur
+    PlayerStateList mState = PlayerStateList::IDLE;
+    PlayerData* mPData;
+    sf::Vector2f mLastMovement;
 
-		COUNT
-	};
+    // Tableau des transitions d'état
+    bool mTransitions[STATE_COUNT][STATE_COUNT];
 
-public: 
-	PlayerData* mPData;
-	sf::Vector2f mLastMovement;
+    // Actions associées aux états
+    ActionPlayer* mActions[STATE_COUNT];
 
-	Render* GetRender() { return (Render*)mTextured; }
+    // Méthode pour définir une transition d'état
+    void SetTransition(PlayerStateList from, PlayerStateList to, bool value) { mTransitions[(int)from][(int)to] = value; }
 
-	void SetIsGrounded(bool value) { isGrounded = value; }
-	bool GetIsGrounded() { return isGrounded; }
+    // Indicateur pour vérifier si le joueur est au sol
+    bool isGrounded = false;
 
-	void OnInitialize() override;
-	sf::Vector2f InputDirection();
-	int GetSecondJump() { return mPData->mSecondJump; }
-	void AddSecondJump(int nb) { mPData->mSecondJump += nb; }
-	void SetSecondJump(int nb) { mPData->mSecondJump = nb; }
-	void Move(sf::Vector2f movement, float dt);
-	virtual void Block(Entity* other) override;
+public:
+    // Méthodes pour déplacer le joueur
+    void Move(sf::Vector2f movement, float dt);
+    void OnUpdate() override;
+    void FixedUpdate(float dt) override;
 
-	void HandleHorizontalCollision(Entity* other, int otherWidth, int entityWidth, float direction);
+    // Gestion du rendu du joueur
+    Render* GetRender() { 
+        Render* Temporary = static_cast<Render*>(mTextured);
+        return Temporary;
+    }
 
-	void HandleVerticalCollision(Entity* other, int otherHeight, int entityHeight, float direction);
+    // Méthode pour initialiser le joueur
+    void OnInitialize() override;
 
-	void HandleGroundCollision(Entity* other, int otherHeight, int entityHeight);
+    // Gestion de l'état du joueur
+    bool SetState(PlayerStateList newState);
 
-	void HandleCeilingCollision(Entity* other, int otherHeight, int entityHeight);
+    // Destructeur
+    ~Player();
+    Player();
 
-	void HandleOtherVerticalCollision(Entity* other, int otherHeight, int entityHeight);
+    // Accesseurs pour les données du joueur (PData)
+    PlayerData* GetPlayerData() const { return mPData; }
 
-	void HandleJumpingCollision(Entity* other, int otherHeight, int entityHeight, int gap, int place);
-
-	///---------------------------------------------------------------------------------------
-	//Ne pas override de Entity::Update(), car ne serait pas pris en compte par les colliders
-	///---------------------------------------------------------------------------------------
-	void OnUpdate() override; 
-	void FixedUpdate(float dt) override;
-	
-	const char* GetStateName(PlayerStateList state) const;	
-	~Player();
-	Player();
+    // Amis de la classe (accès à des méthodes privées)
+    friend class PlayerAction_Jump;
+    friend class PlayerAction_Crouch;
+    friend class PlayerAction_Walk;
+    friend class PlayerAction_Idle;
 };
-

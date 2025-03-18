@@ -1,8 +1,6 @@
 #pragma once
-
 #include <vector>
 #include <string>
-
 #include "TextureRender.h"
 
 class AnimationRender : public TextureRender

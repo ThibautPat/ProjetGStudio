@@ -18,7 +18,6 @@ void TestScene::PlayerDeath()
 //TODO in player class ----------
 void TestScene::PlayerRespawn()
 {
-
 	if (playerIsDead) // Si le joueur est mort
 	{
 		mPlayer->SetSpeed(0); // On reset la vitesse du joueur
@@ -119,7 +118,12 @@ void TestScene::OnInitialize()
 
 void TestScene::OnEvent(const sf::Event& event)
 {	
-	//TODO Refaire la pause coter moteur
+	if (event.joystickButton.button == sf::Joystick::R) {
+		GetPlayer()->SetState(Player::PlayerStateList::JUMP);
+	}
+	if (event.key.code == sf::Keyboard::Space) {
+		GetPlayer()->SetState(Player::PlayerStateList::JUMP);
+	}
 }
 
 void TestScene::OnUpdate()
@@ -160,11 +164,6 @@ void TestScene::OnUpdate()
 		Debug::DrawText(cooEntity.x, cooEntity.y + 20, textCoy, sf::Color::White);
 		Debug::DrawText(cooEntity.x, cooEntity.y + 40, textgrav, sf::Color::White);
 		Debug::DrawCircle(cooEntity.x, cooEntity.y, 5, sf::Color::White);
-
-		if (entity == mPlayer) {
-			std::string textJump = std::to_string(mPlayer->GetSecondJump()) + " jumps";
-			Debug::DrawText(cooEntity.x, cooEntity.y + 60, textJump, sf::Color::White);
-		}
 	}
 
 	std::string entitynb = std::to_string(i) + "nb entity";

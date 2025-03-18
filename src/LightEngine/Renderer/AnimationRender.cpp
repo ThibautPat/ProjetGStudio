@@ -1,6 +1,5 @@
 #include "../Renderer/AnimationRender.h"
 #include "../Manager/TextureManager.h"
-
 #include <iostream>
 #include <fstream>
 #include "../Library/json.hpp"
