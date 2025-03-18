@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Scene.h"
-#include "GameManager.h"
-#include "Entity.h"
+#include "../Manager/GameManager.h"
+#include "../Entity/Entity.h"
 
 template<typename T>
 T* Scene::CreateCircleEntity(float radius, const sf::Color& color)

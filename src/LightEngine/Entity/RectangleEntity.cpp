@@ -1,9 +1,8 @@
 ﻿#include "RectangleEntity.h"
-#include "AABBCollider.h"
-#include "Debug.h"
+#include "../Collider/AABBCollider.h"
+#include "../Other/Debug.h"
 #include <iostream>
-#include "../Game/TestScene.h"
-#include "../Game/Player.h"
+#include "../GameScene/TestScene.h"
 
 Collider* RectangleEntity::GetCollider()
 {
@@ -54,7 +53,6 @@ void RectangleEntity::Repulse(Entity* other)
     float sqrLength = (distance.x * distance.x) + (distance.y * distance.y);
     float length = std::sqrt(sqrLength);
 
-    // Récupération des dimensions avec des noms plus parlants
     int entityWidth = mShape.getGlobalBounds().width;
     int otherWidth = other->GetShape()->getGlobalBounds().width;
     int entityHeight = mShape.getGlobalBounds().height;
@@ -76,32 +74,6 @@ void RectangleEntity::Repulse(Entity* other)
     }
 
     Block(other);
-
-  // Il s'agit du code pour le repulse si on veut repusle vers le haut où le bas (aucune utilité pour le moment)
-  // 
-  //  else
-  //  {
-  //      // Collision verticale
-  //   
-  //      if (mCollider->GetCollideFace()->y == 1)
-  //      {
-  //          mGravitySpeed = 0.f;
-		//	mBoolGravity = false;
-  //          secondjump = 2;
-  //      }
-		//else if (mCollider->GetCollideFace()->y == -1)
-		//{
-  //          mBoolGravity = true;
-  //          mGravitySpeed = 0.f;
-		//}
-
-  //      other->SetPosition(other->GetPosition(0.f, 0.f).x, position2.y);
-  //      SetPosition(GetPosition(0.f, 0.f).x, position1.y);
-  //      hasCollidedLastFrame = true;
-  //  }
-
-  //  SetSpeed(0.f);
-  //  other->SetSpeed(0.f);
 }
 
 void RectangleEntity::Block(Entity* other)
@@ -185,7 +157,6 @@ void RectangleEntity::Update()
 {
     mCollider->Update(GetPosition(0.f, 0.f).x - mCollider->mWidth / 2.f, GetPosition(0.f, 0.f).y - mCollider->mHeight / 2.f);
     Debug::DrawRectangle(GetPosition(-1.f, -1.f).x, GetPosition(-1.f, -1.f).y, mShape.getGlobalBounds().width, mShape.getGlobalBounds().height, sf::Color::Cyan);
-	//#TODO : � revoir pour �viter de perdre les comportement des classes h�rit�es ?
     Entity::Update();
 }
 

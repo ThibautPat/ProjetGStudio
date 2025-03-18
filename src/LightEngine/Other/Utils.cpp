@@ -1,6 +1,9 @@
 #include <SFML/System/Vector2.hpp>
 
 #include <cmath>
+#include "Utils.h"
+#include <iostream>
+#include <fstream>
 
 namespace Utils 
 {
@@ -33,5 +36,23 @@ namespace Utils
 		float det = v1.x * v2.y - v1.y * v2.x;
 
 		return std::atan2(det, dot) * 180 / 3.14159265;
+	}
+
+	json* Parse(const char* path)
+	{
+		std::ifstream file(path);
+
+		if (!file.is_open())
+		{
+			std::cerr << "Json can't be parse" << std::endl;
+			return nullptr;
+		}
+		json* nJson = new json();
+
+		file >> *nJson;
+
+		std::cout << "Json parsed form : " << path << std::endl;
+
+		return nJson;
 	}
 }

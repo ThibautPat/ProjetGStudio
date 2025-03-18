@@ -1,9 +1,8 @@
 #include "GameManager.h"
 
-#include "Entity.h"
-#include "TextureRender.h"
-#include "Debug.h"
-#include "InputManager.h"
+#include "../Entity/Entity.h"
+#include "../Renderer/TextureRender.h"
+#include "../Other/Debug.h"
 #include "TextureManager.h"
 #include "SceneManager.h"
 
@@ -17,7 +16,6 @@ GameManager::GameManager()
 {
 	mpWindow = nullptr;
 	mDeltaTime = 0.0f;
-	//mpScene = nullptr;
 	mWindowWidth = -1;
 	mWindowHeight = -1;
 	mAs = new TextureManager();
@@ -27,7 +25,6 @@ GameManager::GameManager()
 GameManager* GameManager::Get()
 {
 	static GameManager mInstance;
-
 	return &mInstance;
 }
 
@@ -36,7 +33,11 @@ void GameManager::FixedUpdate()
 	for (Entity* entity : mEntities) {
 		entity->FixedUpdate(FIXED_DT);
 	}
-	
+	PhysiqueUpdate();
+}
+
+void GameManager::PhysiqueUpdate()
+{
 	//Collision
 	for (auto it1 = mEntities.begin(); it1 != mEntities.end(); ++it1)
 	{
@@ -74,7 +75,6 @@ void GameManager::FixedUpdate()
 GameManager::~GameManager()
 {
 	delete mpWindow;
-	//delete mpScene;
 	delete mScM;
 
 	for (Entity* entity : mEntities)
@@ -88,10 +88,8 @@ void GameManager::DrawRender(Entity* entity)
 	if (entity->GetRender() == nullptr) {
 		return;
 	}
-		
-	render_nb++;
-	entity->GetRender()->Draw(entity, mpWindow);
 
+	entity->GetRender()->Draw(entity, mpWindow);
 }
 
 void GameManager::CreateWindow(unsigned int width, unsigned int height, const char* title, int fpsLimit, sf::Color clearColor)
@@ -107,26 +105,15 @@ void GameManager::CreateWindow(unsigned int width, unsigned int height, const ch
 	mClearColor = clearColor;
 }
 
-/*
-Scene* GameManager::GetScene() const
-{
-	return mScM->GetScene();
-}
-*/
-
 void GameManager::Run()
 {
 	if (mpWindow == nullptr) 
 	{
-		std::cout << "Window not created, creating default window" << std::endl;
 		CreateWindow(1280, 720, "Default window");
 	}
 
-	//#TODO : Load somewhere else
 	bool fontLoaded = mFont.loadFromFile("../../../res/Hack-Regular.ttf");
 	_ASSERT(fontLoaded);
-
-	//_ASSERT(mpScene != nullptr);
 	_ASSERT(mScM->GetScene() != nullptr);
 
 	sf::Clock clock;
@@ -141,13 +128,10 @@ void GameManager::Run()
 		Draw();
 
 		if (IsSceneChanged()) {
-
 			mEntities.clear();
-
 			mScM->LaunchScene();
 			return;
 		}
-
 	}
 }
 
@@ -160,7 +144,6 @@ void GameManager::HandleInput()
 		{
 			mpWindow->close();
 		}
-
 		mScM->GetScene()->OnEvent(event);
 	}
 }
@@ -180,7 +163,6 @@ void GameManager::Update()
             ++it;
             continue;
         }
-
         mEntitiesToDestroy.push_back(entity);
         it = mEntities.erase(it);
     }
@@ -217,18 +199,10 @@ void GameManager::Draw()
 	
 	for (Entity* entity : mEntities)
 	{
-		//#TODO peut être remove à la fin
 		mpWindow->draw(*entity->GetShape());
-
 		DrawRender(entity);
 	}
 	
-	//TODO remove if u want (for debug)
-	std::string render = std::to_string(render_nb);
-	Debug::DrawText(10, 60, render, sf::Color::White);
-	render_nb = 0;
-	//----------
-
 	Debug::Get()->Draw(mpWindow);
 
 	mpWindow->display();

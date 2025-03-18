@@ -1,39 +1,48 @@
-#include "TextureManager.h"
-#include "TextureRender.h"
-#include <iostream>
+#include "../Manager/TextureManager.h"
+#include "../Renderer/TextureRender.h"
+#include "../Other/Utils.h"
 
-sf::Texture* TextureManager::LoadTexture(const char* path, std::string name)
+sf::Texture* TextureManager::LoadSpriteSheet(const char* jsonpath, const char* sourcepath, std::string spritesheetname)
 {
 	sf::Texture* text = new sf::Texture();
-	if (!text->loadFromFile(path))
+	if (!text->loadFromFile(sourcepath))
 		return nullptr;
-	mAssets.insert({ name , text });
+	mSpriteSheet.insert({ spritesheetname , text });
+
+	json* njson = Utils::Parse(jsonpath);
+
+	mJson.insert({ spritesheetname , njson });
 
 	return text;
 }
 
-void TextureManager::FindTexture(std::string name, sf::Texture* text)
+json* TextureManager::GetJson(std::string name)
 {
-	*text = *mAssets.at(name);
+	return mJson.at(name);
 }
 
-void TextureManager::FindTexture(std::string name, sf::IntRect rect, sf::Texture* text)
+sf::Texture* TextureManager::GetTexture(std::string name)
 {
-	if (mAssets.at(name) == nullptr)
-		std::cout << "Asset on assetmanager null" << std::endl;
-	sf::Texture texture = *mAssets.at(name);
+	return mSpriteSheet.at(name);
+}
+
+void TextureManager::SetTetxureWithRect(std::string spritesheetname, sf::IntRect texturerender, sf::Texture* text)
+{
+	if (!GetTexture(spritesheetname))
+		std::cout << "Pas de texture avec ce nom dans la map" << std::endl;
+
+	sf::Texture texture = *GetTexture(spritesheetname);
 
 	sf::RenderTexture renderTexture;
-	renderTexture.create(rect.width, rect.height); // Taille du recadrage
+	renderTexture.create(texturerender.width, texturerender.height); // Taille du recadrage
 
 	sf::Sprite sprite(texture);
-	sprite.setTextureRect(sf::IntRect(rect.left, rect.top, rect.width, rect.height)); // On recadre la texture
-	sprite.setPosition(0, 0); // On le dessine en (0,0) pour que ça remplisse bien
+	sprite.setTextureRect(sf::IntRect(texturerender.left, texturerender.top, texturerender.width, texturerender.height)); // On recadre la texture
+	sprite.setPosition(0, 0); // On le dessine en (0,0) pour que ï¿½a remplisse bien
 
-	renderTexture.clear();
+	renderTexture.clear(sf::Color(0,0,0,0)); //Color(0,0,0,0) pour supporter la transparence
 	renderTexture.draw(sprite);
 	renderTexture.display();
 
 	*text = renderTexture.getTexture();
-
 }

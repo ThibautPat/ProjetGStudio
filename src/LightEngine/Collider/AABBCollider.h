@@ -14,6 +14,7 @@ public:
 
 	// Hérité via Collider
 	bool IsColliding(Collider* pOther) override;
+
 	/// <summary>
 	/// Update de la position du collider avant l'update de l'entity. Reset la face de collision de la frame d'avant.
 	/// </summary>

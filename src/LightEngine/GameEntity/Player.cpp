@@ -1,12 +1,10 @@
 #include "Player.h"
-#include "../Core/InputManager.h"
-#include "../Core/Debug.h"
-#include "../Core/TextureManager.h"
-#include "../Game/PlayerAction.h"
-#include "../Game/PlayerCondition.h"
-#include "../Game/TestScene.h"
-#include "../Core/AnimationRender.h"
-
+#include "../Other/Debug.h"
+#include "../Manager/TextureManager.h"
+#include "../PlayerStateMachine/PlayerAction.h"
+#include "../PlayerStateMachine/PlayerCondition.h"
+#include "../GameScene/TestScene.h"
+#include "../Renderer/AnimationRender.h"
 
 void Player::Move(sf::Vector2f movement, float dt)
 {
@@ -31,16 +29,14 @@ void Player::FixedUpdate(float dt)
 
 void Player::OnUpdate()
 {
-	const char* stateName = GetStateName((PlayerStateList)mStateMachine.GetCurrentState());
+	mStateMachine.Update();
+	mTextured->UpdateAnimation();
+
 	// Debug de valeur
-
-	Debug::DrawText(mShape.getPosition().x,mShape.getPosition().y - 30, stateName ,sf::Color::White);
-
+	const char* stateName = GetStateName((PlayerStateList)mStateMachine.GetCurrentState());
+	Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 30, stateName, sf::Color::White);
 	std::string text2 = std::to_string((int)mSpeed);
 	Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 50, text2, sf::Color::White);
-	mStateMachine.Update(); 
-
-	mTextured->UpdateAnimation();
 }
 
 void Player::OnInitialize()
@@ -51,9 +47,9 @@ void Player::OnInitialize()
 	mAs = GameManager::Get()->GetTextureManager();
 
 	//Setup de la gestion de textures
-	mAs->LoadTexture("../../../res/Assets/Tilemap/tilemap_packed.png", "tilemap");
-	mTextured = new AnimationRender(8, "tilemap", sf::IntRect(0, 0, 18, 18));
-	//mTextured->SelectTexture();
+	mAs->LoadSpriteSheet("../../../res/Assets/SpriteSheet/JSON Sola.json", "../../../res/Assets/SpriteSheet/spitesheet_animation_personnage.png", "player");
+
+	mTextured = new AnimationRender("player", "walk");
 }
 
 sf::Vector2f Player::InputDirection()
@@ -63,10 +59,16 @@ sf::Vector2f Player::InputDirection()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) < -10)
 	{
 		dir_x = -1;
+		//TODO maybe somewhere better ?
+		sf::Vector2f nratio = sf::Vector2f(dir_x, 1);
+		mTextured->SetRation(nratio);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) > 10)
 	{
 		dir_x = 1;
+		//TODO maybe somewhere better ?
+		sf::Vector2f nratio = sf::Vector2f(dir_x, 1);
+		mTextured->SetRation(nratio);
 	}
 
 	return sf::Vector2f(dir_x, 0);

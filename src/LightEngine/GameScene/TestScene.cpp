@@ -1,9 +1,11 @@
 #include "TestScene.h"
 
-#include "../Core/Entity.h"
+#include "../Entity/Entity.h"
+#include "../Other/Debug.h"
 #include <iostream>
-#include "../Core/Debug.h"
-#include "../Game/Player.h"
+#include "../GameEntity/Player.h"
+#include "../GameEntity/Checkpoint.h"
+#include "../GameEntity/DeadlyObstacle.h"
 
 //TODO in player class ----------
 void TestScene::PlayerDeath()
@@ -123,9 +125,6 @@ void TestScene::OnEvent(const sf::Event& event)
 
 void TestScene::OnUpdate()
 {
-	//TODO remove if u want (for debug)
-	std::cout << "Scene" << std::endl;
-
 	int i = 0;
 	PlayerRespawn();
 

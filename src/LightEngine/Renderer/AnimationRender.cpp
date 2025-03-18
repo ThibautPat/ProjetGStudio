@@ -1,13 +1,21 @@
-#include "AnimationRender.h"
-#include "TextureManager.h"
+#include "../Renderer/AnimationRender.h"
+#include "../Manager/TextureManager.h"
 
 #include <iostream>
+#include <fstream>
+#include "../Library/json.hpp"
+#include "../Other/Utils.h"
 
-AnimationRender::AnimationRender(int frameNb, const char* textName, sf::IntRect rect)
+using json = nlohmann::json;
+
+AnimationRender::AnimationRender(const char* spritesheetname, const char* spritename) : TextureRender(spritesheetname, spritename)
 {
-    mFrameNb = frameNb;
-    SelectTexture(textName, rect);
-    mTimePerFrame = 1.f / frameNb;
+    TextureManager* tm = GameManager::Get()->GetTextureManager();
+    json* njson = tm->GetJson(mSpriteSheetName);
+
+    mFrameNb = Utils::GetInfoFromArray<int>(njson, spritename, "frames");
+    mTimePerFrame = 1.f / (mFrameNb);
+
 }
 
 void AnimationRender::UpdateAnimation()
@@ -21,25 +29,28 @@ void AnimationRender::UpdateAnimation()
         mFrameCounter++;
         mTimer = 0.f;
 
+        {
+            sf::IntRect nrect =
+                sf::IntRect(
+                    mTextRect.left + mTextRect.width, mTextRect.top,
+                    mTextRect.width, mTextRect.height
+                );
 
-        if (mTextRect.left + mTextRect.width > mTextRect.width * mFrameNb)
+            SetTextureRect(nrect);
+
+            //std::cout << mTextRect.left << " " << mFrameCounter << std::endl;
+        }
+
+        if ( mTextRect.left + mTextRect.width > mTextRect.width * mFrameNb )
         {
             if (IsLoop()) {
                 mFrameCounter = 0;
-                mTextRect.left -= mTextRect.width * mFrameNb;
+                mTextRect.left -= mTextRect.width * (mFrameNb);
             }
             else {
                 mFrameCounter = mFrameNb;
             }
                
         }
-
-        sf::IntRect nrect =
-        sf::IntRect(
-            mTextRect.left + mTextRect.width, mTextRect.top, 
-            mTextRect.width, mTextRect.height
-        );
-        SetTextureRect(nrect);
-
     }
 }

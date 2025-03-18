@@ -17,12 +17,11 @@ protected:
 public:
 
 	/// <summary>
-	/// Cree une Animation avec un nombre de frame, le nom de la texture (deja chargee dans le TextureManager), et un masque (zone selectionnee de la texture)
+	/// Defini les proprietees de l'animation grace a la SpriteSheet et au nom de l'animation
 	/// </summary>
-	/// <param name="frameNb">Nombre de frames (qui seront jouees en une seconde)</param>
-	/// <param name="textName">Nom de la texture dans la bibliotheque du TextureManager</param>
-	/// <param name="rect">Zone de la texture selectionnee pour le rendu</param>
-	AnimationRender(int frameNb, const char* textName, sf::IntRect rect);
+	/// <param name="spritesheetname">: Nom de la SpriteSheet</param>
+	/// <param name="spritename">: Nom de l'animation</param>
+	AnimationRender(const char* spritesheetname, const char* spritename);
 
 	/// <summary>
 	/// Gere le changement du masque (et donc de la frame)

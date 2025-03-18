@@ -1,18 +1,37 @@
-#include "TextureRender.h"
+#include "../Renderer/TextureRender.h"
+#include "../Other/Utils.h"
+
+TextureRender::TextureRender(const char* spritesheetname, const char* spritename)
+{
+	mRenderRatio = sf::Vector2f(1.f, 1.f);
+
+	mSpriteSheetName = spritesheetname;
+	mSpriteName = spritename;
+
+	TextureManager* tm = GameManager::Get()->GetTextureManager();
+	json* njson = tm->GetJson(mSpriteSheetName);
+
+	mTextRect.width = Utils::GetInfoFromArray<int>(njson, "frame_size", "width");
+	mTextRect.height = Utils::GetInfoFromArray<int>(njson, "frame_size", "height");
+
+	const char* charArray = mSpriteName.c_str();
+
+	mTextRect.left = Utils::GetInfoFromArray<int>(njson, charArray, "x");
+	mTextRect.top = Utils::GetInfoFromArray<int>(njson, charArray, "y");
+}
 
 void TextureRender::Draw(Entity* entity, sf::RenderWindow* window)
 {
 	TextureManager* tm = GameManager::Get()->GetTextureManager();
 	sf::Texture text = sf::Texture();
 
-	tm->FindTexture(mTextName, mTextRect, &text);
+	json* njson = tm->GetJson(mSpriteSheetName);
+
+	tm->SetTetxureWithRect(mSpriteSheetName, mTextRect, &text);
 
 	sf::Sprite spr;
 	spr.setTexture(text);
 
-	//TODO Remove this
-	mRenderRatio = sf::Vector2f(5, 5);
-	//-----
 	spr.setScale(mRenderRatio);
 
 	float offset = 0.5f;
@@ -24,15 +43,7 @@ void TextureRender::Draw(Entity* entity, sf::RenderWindow* window)
 	window->draw(spr);
 }
 
-void TextureRender::AddAndSelectTexture(const char* path, const char* textName, sf::IntRect rect)
+void TextureRender::SelectTexture(const char* spritesheetname, const char* spritename)
 {
-	TextureManager* assetsManager = GameManager::Get()->GetTextureManager();
-	assetsManager->LoadTexture(path, mTextName);
-	SelectTexture(textName, rect);
-}
-
-void TextureRender::SelectTexture(const char* textName, sf::IntRect rect)
-{
-	mTextName = textName;
-	mTextRect = rect;
+	TextureRender(spritesheetname, spritename);
 }

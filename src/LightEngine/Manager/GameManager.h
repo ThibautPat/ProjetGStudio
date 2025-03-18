@@ -1,5 +1,4 @@
 #pragma once
-
 #include <list>
 #include <SFML/Graphics.hpp>
 
@@ -14,14 +13,9 @@ class InputManager;
 class TextureManager;
 class SceneManager;
 
-namespace sf 
-{
-	class RenderWindow;
-	class Event;
-}
-
 class GameManager
 {
+
 protected:
 	std::list<Entity*> mEntities;
 	std::list<Entity*> mEntitiesToDestroy;
@@ -55,10 +49,9 @@ protected:
 
 	void FixedUpdate();
 
-public:
+	void PhysiqueUpdate();
 
-	//TODO remove if u want (for debug)
-	int render_nb = 0;
+public:
 
 	~GameManager();
 
@@ -71,15 +64,10 @@ public:
 	bool IsSceneChanged() { return mIsSceneChanged; }
 	void SetIsSceneChanged(bool isccenechanged) { mIsSceneChanged = isccenechanged; }
 
-	void UpdateCollision(Entity* mEntities);
-
 	void CreateWindow(unsigned int width, unsigned int height, const char* title, int fpsLimit = 60, sf::Color clearColor = sf::Color::Black);
 	sf::RenderWindow* GetWindow() const { return mpWindow; }
-	//template<typename T>
-	//void LaunchScene();
 
 	float GetDeltaTime() const { return mDeltaTime; }
-	//Scene* GetScene() const;
 	sf::Font& GetFont() { return mFont; };
 	
 	template<typename T>
