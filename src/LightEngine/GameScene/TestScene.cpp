@@ -98,14 +98,7 @@ void TestScene::OnInitialize()
 	pEntity4->SetRigidBody(true);
 	pEntity4->SetIsKinematic(true);
 	pEntity4->SetGravity(false);
-	pEntity4->SetTag(Tag::METALIC_OBSTACLE);
-
-	RectangleEntity* pEntity5 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Black);
-	pEntity5->SetPosition(-400, 670);
-	pEntity5->SetRigidBody(false);
-	pEntity5->SetIsKinematic(true);
-	pEntity5->SetGravity(false);
-	pEntity5->SetTag(Tag::END_LEVEL);
+	pEntity4->SetTag(Tag::OBSTACLE);
 
 	RectangleEntity* pEntity6 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::White);
 	pEntity6->SetPosition(-400, 0);
@@ -113,6 +106,13 @@ void TestScene::OnInitialize()
 	pEntity6->SetIsKinematic(true);
 	pEntity6->SetGravity(false); 
 	pEntity6->SetTag(Tag::BOUCING_OBSTACLE);
+
+	RectangleEntity* pEntity2 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Green);
+	pEntity2->SetPosition(100, 0);
+	pEntity2->SetRigidBody(true);
+	pEntity2->SetIsKinematic(true);
+	pEntity2->SetGravity(false);
+	pEntity2->SetTag(Tag::METALIC_OBSTACLE);
 
 }
 
@@ -123,15 +123,8 @@ void TestScene::OnEvent(const sf::Event& event)
 
 void TestScene::OnUpdate()
 {
-	//if (sf::Joystick::isButtonPressed(0, 0))
-	//{
-	//	RectangleEntity* pEntity2 = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Green);
-	//	pEntity2->SetPosition(100, 0);
-	//	pEntity2->SetRigidBody(true);
-	//	pEntity2->SetIsKinematic(true);
-	//	pEntity2->SetGravity(false);
-	//	pEntity2->SetTag(Tag::METALIC_OBSTACLE); 
-	//}
+	
+
 	int i = 0;
 	PlayerRespawn();
 	bool screenTouched = false;

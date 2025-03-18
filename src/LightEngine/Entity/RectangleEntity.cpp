@@ -138,7 +138,6 @@ void RectangleEntity::Repulse(Entity* other)
 
             else
             {
-                secondjump = 2;
                 SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f));
             }
             hasCollidingLastFrame = true;
