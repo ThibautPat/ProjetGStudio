@@ -78,6 +78,7 @@ public:
 	//Ne pas override de Entity::Update(), car ne serait pas pris en compte par les colliders
 	///---------------------------------------------------------------------------------------
 	void OnUpdate() override; 
+	void OnCollision(Entity* collidedWith) override;
 	void FixedUpdate(float dt) override;
 	bool Jump();
 	

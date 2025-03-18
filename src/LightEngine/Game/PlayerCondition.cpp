@@ -53,7 +53,6 @@ bool PlayerCondition_IsGrounded::OnTest(Player* owner)
 				return true;
 			}
 			else if (entity->IsTag(TestScene::Tag::OBSTACLE) && static_cast<AABBCollider*>(owner->GetCollider())->GetCollideFace()->y == 1)
-
 			{
 				return true;
 			}

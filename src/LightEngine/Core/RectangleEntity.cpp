@@ -151,6 +151,20 @@ void RectangleEntity::Update()
     Debug::DrawRectangle(GetPosition(-1.f, -1.f).x, GetPosition(-1.f, -1.f).y, mShape.getGlobalBounds().width, mShape.getGlobalBounds().height, sf::Color::Cyan);
 	//#TODO : � revoir pour �viter de perdre les comportement des classes h�rit�es ?
     Entity::Update();
+    std::string text3 = std::to_string((int)isGrounded);
+    Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 70, text3, sf::Color::Red);
+}
+
+void RectangleEntity::OnCollision(Entity* collidedWith) 
+{
+    if (static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->y == -1)
+    {
+        isGrounded = true;
+    }
+    else 
+    {
+        isGrounded = false;
+    }
 }
 
 void RectangleEntity::OnInitialize()

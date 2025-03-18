@@ -6,7 +6,8 @@
 #include "../Game/PlayerCondition.h"
 #include "../Game/TestScene.h"
 #include "../Core/AnimationRender.h"
-
+#include <iostream>
+#include "../Core/RectangleEntity.h"
 
 void Player::Move(sf::Vector2f movement, float dt)
 {
@@ -24,10 +25,39 @@ void Player::Move(sf::Vector2f movement, float dt)
 
 void Player::FixedUpdate(float dt)
 {
-	Fall(dt); 
-	mPData->pJumpDuration += dt;
-	Move(InputDirection(), dt); 
+	Fall(dt); // Appliquer la gravité
+
+	// Si le joueur est en train de sauter
+	if (mPData->pJumpDuration > 0.f && !isGrounded)
+	{
+		// Si le joueur est en l'air, il faut entrer en état de chute
+		if (mState != FALL_WALK && mState != FALL_IDLE && mState != FALL_CROUCH)
+		{
+			if (mSpeed != 0.f)
+				SetState(FALL_WALK);  // Transition vers la chute en marchant
+			else
+				SetState(FALL_IDLE);  // Transition vers la chute en étant immobile
+		}
+	}
+	else
+	{
+		// Le joueur n'est plus en l'air, on peut peut-être marcher ou rester immobile
+		if (isGrounded)
+		{
+			if (mState == FALL_WALK || mState == FALL_IDLE)
+			{
+				if (mSpeed != 0.f)
+					SetState(WALK);  // Transition vers la marche
+				else
+					SetState(IDLE);  // Transition vers l'état inactif
+			}
+		}
+	}
+
+	mPData->pJumpDuration += dt; // Mise à jour du temps de saut
+	Move(InputDirection(), dt); // Déplacer le joueur selon les entrées
 }
+
 
 bool Player::Jump() {
 	if (SetState(JUMP)) {
@@ -39,17 +69,32 @@ bool Player::Jump() {
 
 void Player::OnUpdate()
 {
-	mActions[(int)mState]->OnUpdate(this);
+	IsCrouched();  // Vérifier si le joueur s'accroupit (mettre à jour l'état si nécessaire)
 
-	mTextured->UpdateAnimation();
+	mActions[(int)mState]->OnUpdate(this); // Exécuter l'action correspondant à l'état actuel
 
-	// Debug de valeur
+	mTextured->UpdateAnimation(); // Mettre à jour l'animation du joueur
+
+	// Débogage : afficher l'état actuel et la vitesse du joueur
 	const char* stateName = GetStateName(mState);
-	Debug::DrawText(mShape.getPosition().x,mShape.getPosition().y - 30, stateName ,sf::Color::White);
+	Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 30, stateName, sf::Color::White);
 
 	std::string text2 = std::to_string((int)mSpeed);
 	Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 50, text2, sf::Color::White);
 
+
+}
+
+void Player::OnCollision(Entity* collidedWith)
+{
+	if (static_cast<AABBCollider*>(this->GetCollider())->GetCollideFace()->y == -1)
+	{
+		isGrounded = true;
+	}
+	else
+	{
+		isGrounded = false;
+	}
 }
 
 void Player::OnInitialize()
@@ -78,6 +123,13 @@ sf::Vector2f Player::InputDirection()
 		dir_x = 1.f;
 	}
 
+	if (dir_x != 0.f) {
+		SetState(WALK);
+	}
+	else {
+		SetState(IDLE);
+	}
+
 	return sf::Vector2f(dir_x, 0.f);
 }
 
@@ -97,6 +149,7 @@ bool Player::SetState(PlayerStateList newState)
 bool Player::IsCrouched() {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Joystick::isButtonPressed(0, 1))
 	{
+		SetState(CROUCH);
 		return true;
 	}
 	return false;
@@ -108,16 +161,18 @@ Player::~Player()
 
 Player::Player()
 {
-	SetTag(TestScene::Tag::PLAYER); 
+	SetTag(TestScene::Tag::PLAYER); // Tag du joueur
 
+	// Initialisation des transitions
 	for (int i = 0; i < STATE_COUNT; i++)
 	{
 		for (int j = 0; j < STATE_COUNT; j++)
 		{
-			mTransitions[i][j] = false;
+			mTransitions[i][j] = false;  // Aucune transition par défaut
 		}
 	}
 
+	// Actions associées aux états
 	mActions[(int)PlayerStateList::IDLE] = new PlayerAction_Idle();
 	mActions[(int)PlayerStateList::CROUCH] = new PlayerAction_Crouch();
 	mActions[(int)PlayerStateList::WALK] = new PlayerAction_Walk();
@@ -130,6 +185,7 @@ Player::Player()
 	mActions[(int)PlayerStateList::ON_JUMP_WALK] = new PlayerAction_OnJumpWalk();
 	mActions[(int)PlayerStateList::ON_JUMP_IDLE] = new PlayerAction_OnJumpIdle();
 
+	// Définition des transitions entre états
 	SetTransition(PlayerStateList::IDLE, PlayerStateList::WALK, true);
 	SetTransition(PlayerStateList::IDLE, PlayerStateList::JUMP, true);
 	SetTransition(PlayerStateList::IDLE, PlayerStateList::CROUCH, true);
@@ -138,77 +194,24 @@ Player::Player()
 	SetTransition(PlayerStateList::IDLE, PlayerStateList::FALL_IDLE, true);
 	SetTransition(PlayerStateList::IDLE, PlayerStateList::FALL_WALK, true);
 
+	// Transition des autres états...
+	// Ajout des transitions de chute après un saut
+	SetTransition(PlayerStateList::JUMP, PlayerStateList::FALL_WALK, true);
+	SetTransition(PlayerStateList::JUMP, PlayerStateList::FALL_IDLE, true);
+	SetTransition(PlayerStateList::JUMP, PlayerStateList::FALL_CROUCH, true);
+
+	// Transition vers le crouch
+	SetTransition(PlayerStateList::WALK, PlayerStateList::CROUCH, true);
 	SetTransition(PlayerStateList::CROUCH, PlayerStateList::WALK, true);
-	SetTransition(PlayerStateList::CROUCH, PlayerStateList::IDLE, true);
 	SetTransition(PlayerStateList::CROUCH, PlayerStateList::JUMP_ON_CROUCH, true);
-
-	SetTransition(PlayerStateList::JUMP, PlayerStateList::ON_JUMP_WALK, true);
-	SetTransition(PlayerStateList::JUMP, PlayerStateList::ON_JUMP_CROUCH, true);
-	SetTransition(PlayerStateList::JUMP, PlayerStateList::ON_JUMP_IDLE, true);
-
-	SetTransition(PlayerStateList::WALK, PlayerStateList::JUMP, true);
-	SetTransition(PlayerStateList::WALK, PlayerStateList::IDLE, true);
-	SetTransition(PlayerStateList::WALK, PlayerStateList::CROUCH, true);	
-	SetTransition(PlayerStateList::WALK, PlayerStateList::FALL_CROUCH, true);
-	SetTransition(PlayerStateList::WALK, PlayerStateList::FALL_IDLE, true);
-	SetTransition(PlayerStateList::WALK, PlayerStateList::FALL_WALK, true);
-
-	SetTransition(PlayerStateList::JUMP_ON_CROUCH, PlayerStateList::ON_JUMP_CROUCH, true);
-	SetTransition(PlayerStateList::JUMP_ON_CROUCH, PlayerStateList::ON_JUMP_IDLE, true);
-	SetTransition(PlayerStateList::JUMP_ON_CROUCH, PlayerStateList::ON_JUMP_WALK, true);
-
-	SetTransition(PlayerStateList::ON_JUMP_WALK, PlayerStateList::WALK, true);
-	SetTransition(PlayerStateList::ON_JUMP_WALK, PlayerStateList::JUMP, true);
-	SetTransition(PlayerStateList::ON_JUMP_WALK, PlayerStateList::IDLE, true);
-	SetTransition(PlayerStateList::ON_JUMP_WALK, PlayerStateList::CROUCH, true);
-	SetTransition(PlayerStateList::ON_JUMP_WALK, PlayerStateList::FALL_CROUCH, true);
-	SetTransition(PlayerStateList::ON_JUMP_WALK, PlayerStateList::FALL_IDLE, true);
-	SetTransition(PlayerStateList::ON_JUMP_WALK, PlayerStateList::FALL_WALK, true);
-	SetTransition(PlayerStateList::ON_JUMP_WALK, PlayerStateList::ON_JUMP_CROUCH, true);
-	SetTransition(PlayerStateList::ON_JUMP_WALK, PlayerStateList::ON_JUMP_IDLE, true);
-
-	SetTransition(PlayerStateList::ON_JUMP_IDLE, PlayerStateList::WALK, true);
-	SetTransition(PlayerStateList::ON_JUMP_IDLE, PlayerStateList::JUMP, true);
-	SetTransition(PlayerStateList::ON_JUMP_IDLE, PlayerStateList::IDLE, true);
-	SetTransition(PlayerStateList::ON_JUMP_IDLE, PlayerStateList::CROUCH, true);
-	SetTransition(PlayerStateList::ON_JUMP_IDLE, PlayerStateList::FALL_CROUCH, true);
-	SetTransition(PlayerStateList::ON_JUMP_IDLE, PlayerStateList::FALL_IDLE, true);
-	SetTransition(PlayerStateList::ON_JUMP_IDLE, PlayerStateList::FALL_WALK, true);
-	SetTransition(PlayerStateList::ON_JUMP_IDLE, PlayerStateList::ON_JUMP_CROUCH, true);
-	SetTransition(PlayerStateList::ON_JUMP_IDLE, PlayerStateList::ON_JUMP_WALK, true);
-
-	SetTransition(PlayerStateList::ON_JUMP_CROUCH, PlayerStateList::WALK, true);
-	SetTransition(PlayerStateList::ON_JUMP_CROUCH, PlayerStateList::JUMP, true);
-	SetTransition(PlayerStateList::ON_JUMP_CROUCH, PlayerStateList::IDLE, true);
-	SetTransition(PlayerStateList::ON_JUMP_CROUCH, PlayerStateList::CROUCH, true);
-	SetTransition(PlayerStateList::ON_JUMP_CROUCH, PlayerStateList::FALL_CROUCH, true);
-	SetTransition(PlayerStateList::ON_JUMP_CROUCH, PlayerStateList::FALL_IDLE, true);
-	SetTransition(PlayerStateList::ON_JUMP_CROUCH, PlayerStateList::FALL_WALK, true);
-	SetTransition(PlayerStateList::ON_JUMP_CROUCH, PlayerStateList::ON_JUMP_WALK, true);
-	SetTransition(PlayerStateList::ON_JUMP_CROUCH, PlayerStateList::ON_JUMP_IDLE, true);
-	SetTransition(PlayerStateList::ON_JUMP_CROUCH, PlayerStateList::JUMP_ON_CROUCH, true);
-
-	SetTransition(PlayerStateList::FALL_CROUCH, PlayerStateList::WALK, true);
-	SetTransition(PlayerStateList::FALL_CROUCH, PlayerStateList::JUMP, true);
-	SetTransition(PlayerStateList::FALL_CROUCH, PlayerStateList::IDLE, true);
-	SetTransition(PlayerStateList::FALL_CROUCH, PlayerStateList::CROUCH, true);
-	SetTransition(PlayerStateList::FALL_CROUCH, PlayerStateList::FALL_IDLE, true);
-	SetTransition(PlayerStateList::FALL_CROUCH, PlayerStateList::FALL_WALK, true);
-
-	SetTransition(PlayerStateList::FALL_IDLE, PlayerStateList::WALK, true);
-	SetTransition(PlayerStateList::FALL_IDLE, PlayerStateList::JUMP, true);
-	SetTransition(PlayerStateList::FALL_IDLE, PlayerStateList::IDLE, true);
 	SetTransition(PlayerStateList::FALL_IDLE, PlayerStateList::CROUCH, true);
-	SetTransition(PlayerStateList::FALL_IDLE, PlayerStateList::FALL_CROUCH, true);
-	SetTransition(PlayerStateList::FALL_IDLE, PlayerStateList::FALL_WALK, true);
-
-	SetTransition(PlayerStateList::FALL_WALK, PlayerStateList::WALK, true);
-	SetTransition(PlayerStateList::FALL_WALK, PlayerStateList::JUMP, true);
-	SetTransition(PlayerStateList::FALL_WALK, PlayerStateList::IDLE, true);
 	SetTransition(PlayerStateList::FALL_WALK, PlayerStateList::CROUCH, true);
-	SetTransition(PlayerStateList::FALL_WALK, PlayerStateList::FALL_IDLE, true);
-	SetTransition(PlayerStateList::FALL_WALK, PlayerStateList::FALL_CROUCH, true);
+
+	// Les transitions liées aux changements d'état de saut
+	SetTransition(PlayerStateList::JUMP, PlayerStateList::ON_JUMP_WALK, true);
+	SetTransition(PlayerStateList::JUMP, PlayerStateList::ON_JUMP_IDLE, true);
 }
+
 
 const char* Player::GetStateName(PlayerStateList state) const
 {

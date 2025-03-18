@@ -7,7 +7,6 @@
 void PlayerAction_Jump::OnStart(Player* pOwner)
 {
 	pOwner->mPData->pJumpDuration = 0;
-
 }
 void PlayerAction_Jump::OnUpdate(Player* pOwner)
 {

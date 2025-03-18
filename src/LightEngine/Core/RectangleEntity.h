@@ -16,11 +16,13 @@ class RectangleEntity : public Entity
 {
 protected: 
 
-	
 	sf::RectangleShape mShape;
 	sf::Clock Clockjump;
 public:
+	//TODO à enlever de RectangleEntity
 	bool mReverse = false;
+	bool isGrounded = false;
+
 	AABBCollider* mCollider; 
 	// Hérité via Entity
 	Collider* GetCollider() override;
@@ -36,7 +38,7 @@ public:
 	void Update() override;
 
 	virtual void OnUpdate() {};
-	virtual void OnCollision(Entity* collidedWith) {};
+	virtual void OnCollision(Entity* collidedWith);
 	virtual void OnInitialize();
 	virtual void OnDestroy() {};
 };
