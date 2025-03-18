@@ -143,7 +143,6 @@ void GameManager::HandleInput()
 
 void GameManager::Update()
 {
-	mScM->GetScene()->OnUpdate();
     //Update
     for (auto it = mEntities.begin(); it != mEntities.end(); )
     {
@@ -184,6 +183,8 @@ void GameManager::Update()
 	}
 
 	mEntitiesToAdd.clear();
+
+	mScM->GetScene()->OnUpdate();
 }
 
 void GameManager::Draw()

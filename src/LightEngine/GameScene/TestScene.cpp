@@ -7,6 +7,10 @@
 #include "../GameEntity/Checkpoint.h"
 #include "../GameEntity/DeadlyObstacle.h"
 
+#include "../Puzzle/Puzzle.h"
+#include "../Puzzle/PuzzleAction.h"
+#include "../Puzzle/PuzzleCondition.h"
+
 //TODO in player class ----------
 void TestScene::PlayerDeath()
 {
@@ -68,7 +72,8 @@ void TestScene::OnInitialize()
 	pEntity->SetGravity(true);
 	pEntity->SetRigidBody(true);
 	pEntity->SetIsKinematic(false);
-	pEntity->SetPosition(100, 100);
+	pEntity->SetPosition(100, -100);
+	pEntity->SetTag(Scene::Tag::PLAYER);
 
 	RectangleEntity* pEntity1 = CreateRectEntity<RectangleEntity>(50, 300, sf::Color::Cyan);
 	pEntity1->SetPosition(500, 500);
@@ -111,6 +116,12 @@ void TestScene::OnInitialize()
 	pEntity5->SetIsKinematic(true);
 	pEntity5->SetGravity(false);
 	pEntity5->SetTag(Tag::END_LEVEL);
+
+	//Test du puzzle
+	mPuzzle1 = new Puzzle(Checkpoint1, DeadlyObstacle1);
+	mPuzzle1->AddCondition(mPuzzle1->GetKey(), new PuzzleCondition_PlayerIsTouched(), true);
+	mPuzzle1->AddCondition(mPuzzle1->GetKey(), new PuzzleCondition_PlayerUpTo500y(), false);
+	mPuzzle1->AddAction(mPuzzle1->GetActivable(), new PuzzleAction_RectDestroy);
 }
 
 void TestScene::OnEvent(const sf::Event& event)
@@ -120,6 +131,12 @@ void TestScene::OnEvent(const sf::Event& event)
 
 void TestScene::OnUpdate()
 {
+	//Don't Remove "if (UpdateStartTimer()) {}"
+	if (UpdateStartTimer()) {
+		//Update Puzzle
+		mPuzzle1->TestConditions();
+	}
+
 	int i = 0;
 	PlayerRespawn();
 	for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager

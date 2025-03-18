@@ -21,8 +21,29 @@ protected:
 	virtual void OnEvent(const sf::Event& event) = 0;
 	virtual void OnUpdate() = 0;
 
+	float mStartTimer = 1.f;
+	float mStartTimerProgress = 0.f;
+
 public:
+
+	enum Tag
+	{
+		PLAYER,
+		CHECKPOINT,
+		DEADLYOBSTACLE,
+		METALIC_OBSTACLE,
+		OBSTACLE,
+		END_LEVEL,
+
+		COUNT
+	};
 	
+	/// <summary>
+	/// Empeche de vérifier d'es'utiliser positions incorrectes (car toutes def à 0,0 au lancement du programme)
+	/// </summary>
+	/// <returns></returns>
+	bool UpdateStartTimer();
+
 	template<typename T>
 	T* CreateCircleEntity(float radius, const sf::Color& color);
 

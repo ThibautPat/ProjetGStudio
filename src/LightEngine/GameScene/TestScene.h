@@ -7,6 +7,7 @@
 #define ENTITY_NB 0
 
 class Entity;
+class Puzzle;
 
 class TestScene : public Scene
 {
@@ -20,19 +21,11 @@ protected:
 	sf::Vector2f mLastCheckPoint;
 	bool playerIsDead = false;
 
+	//Test Puzzle
+	Puzzle* mPuzzle1;
+
 public:
 	void PlayerDeath();
-	enum Tag
-	{
-		PLAYER,
-		CHECKPOINT,
-		DEADLYOBSTACLE,
-		METALIC_OBSTACLE,
-		OBSTACLE,
-		END_LEVEL,
-
-		COUNT
-	};
 	
 	void PlayerRespawn();
 	void OnInitialize() override;
