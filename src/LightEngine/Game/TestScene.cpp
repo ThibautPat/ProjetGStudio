@@ -49,7 +49,7 @@ void TestScene::OnInitialize()
 	mView = new sf::View(sf::FloatRect(0, 0, GetWindowWidth(), GetWindowHeight())); // Ajout de la cam�ra
 	m_InstanceGameManager = GameManager::Get();
 
-	std::ifstream fichier("..//..//..//src//LightEngine//nlohmann//map2.json");
+	std::ifstream fichier("..//..//..//src//LightEngine//nlohmann//map.json");
 	if (!fichier.is_open()) {
 		std::cerr << "Erreur : impossible d'ouvrir le fichier JSON." << std::endl;
 		return;

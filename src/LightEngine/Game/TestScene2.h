@@ -22,6 +22,24 @@ protected:
 
 public:
 
+	enum Tag
+	{
+		PLAYER,
+		CHECKPOINT,
+		DEADLYOBSTACLE,
+		METALIC_OBSTACLE,
+		OBSTACLE,
+		END_LEVEL,
+		BLUE_KEY,
+		RED_KEY,
+		GREEN_KEY,
+		BLUE_DOOR,
+		RED_DOOR,
+		GREEN_DOOR,
+
+		COUNT
+	};
+
 	void PlayerDeath();
 	void PlayerRespawn();
 	void OnInitialize() override;
