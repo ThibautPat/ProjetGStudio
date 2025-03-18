@@ -146,6 +146,13 @@ void TestScene::OnInitialize()
 	pEntity5->SetStartPosition(pEntity5->GetPosition(0,0));
 	pEntity5->SetTag(Tag::BOUCING_OBSTACLE);
 
+	DeadlyObstacle* pEntity10 = CreateRectEntity<DeadlyObstacle>(100, 100, sf::Color::Red); // Ajout du DeadlyObstacle et setup
+	pEntity10->SetPosition(1000, 0);
+	pEntity10->SetRigidBody(true);
+	pEntity10->SetIsKinematic(true);
+	pEntity10->SetGravity(false);
+	pEntity10->SetTag(Tag::DEADLYOBSTACLE);
+
 
 }
 
@@ -222,7 +229,7 @@ void TestScene::OnUpdate()
 					{
 						for (Entity* entity3 : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
 						{
-							if (entity3->IsTag(Tag::TELEPORTER) && entity3 != entity2 && TeleportClock.getElapsedTime().asSeconds() > 0.7f) // Si l'entit� est un autre teleporter
+							if (entity3->IsTag(Tag::TELEPORTER) && entity3 != entity2 && TeleportClock.getElapsedTime().asSeconds() > 1.f) // Si l'entit� est un autre teleporter
 							{
 								entity->SetPosition(entity3->GetPosition(0.f, 0.f).x, entity3->GetPosition(0.f, 0.f).y); // On t�l�porte le joueur
 								TeleportClock.restart(); // On restart le timer de t�l�portation
