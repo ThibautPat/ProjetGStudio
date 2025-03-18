@@ -49,6 +49,9 @@ void GameManager::PhysiqueUpdate()
 
 			if (entity->IsColliding(otherEntity))
 			{
+				entity->OnCollision(otherEntity);
+				otherEntity->OnCollision(entity);
+
 				if (entity->IsRigidBody() && otherEntity->IsRigidBody())
 				{
 					if (otherEntity->IsKinematic()) {
@@ -58,9 +61,6 @@ void GameManager::PhysiqueUpdate()
 						entity->Repulse(otherEntity);
 					}
 				}
-
-				entity->OnCollision(otherEntity);
-				otherEntity->OnCollision(entity);
 			}
 			else if (entity->hasCollidedLastFrame)
 			{

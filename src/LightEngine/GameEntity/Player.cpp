@@ -23,7 +23,7 @@ void Player::OnUpdate()
 {
     //mTextured->UpdateAnimation();
 
-    if (isGrounded && mDirection.x == 0) {
+    if (mPData->isGrounded && mDirection.x == 0) {
         SetState(IDLE);
     }
 
@@ -31,20 +31,31 @@ void Player::OnUpdate()
 
     std::string text2 = std::to_string((int)mSpeed);
     Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 50, text2, sf::Color::White);
+    std::string text3 = std::to_string((int)mPData->isGrounded);
+    Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 70, text3, sf::Color::Red);
 }
 
 void Player::OnCollision(Entity* other)
 {
-    if (other->IsTag(TestScene::Tag::METALIC_OBSTACLE))
+    if (other->IsTag(TestScene::Tag::METALIC_OBSTACLE) && static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->y != 0)
     {
-        isGrounded = true;
+        if (static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->y == -1) 
+        {
+            mReverse = true;
+            mBoolGravity = false;
+        }            
+        mPData->isGrounded = true;  // Le joueur est au sol lorsqu'il touche un obstacle métallique
+
     }
-    else if (other->IsTag(TestScene::Tag::PLATFORM) && static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->y == 1)
+    else if (static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->y == 1)
     {
-        isGrounded = true;
+        if(other->IsTag(TestScene::Tag::PLATFORM) || other->IsTag(TestScene::Tag::OBSTACLE))
+        {
+            mPData->isGrounded = true;  // Le joueur est au sol lorsqu'il touche une plateforme
+        }
     }
     else {
-        isGrounded = false;
+        mPData->isGrounded = false; // Sinon, il n'est pas au sol
     }
 }
 
@@ -101,7 +112,7 @@ Player::Player()
     SetTransition(PlayerStateList::IDLE, PlayerStateList::JUMP, true);
     SetTransition(PlayerStateList::IDLE, PlayerStateList::CROUCH, true);
 
-    SetTransition(PlayerStateList::CROUCH, PlayerStateList::WALK, true);
+    //SetTransition(PlayerStateList::CROUCH, PlayerStateList::WALK, true);
     SetTransition(PlayerStateList::CROUCH, PlayerStateList::IDLE, true);
     SetTransition(PlayerStateList::CROUCH, PlayerStateList::JUMP, true);
 

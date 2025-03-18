@@ -25,20 +25,38 @@ void PlayerAction_Idle::OnUpdate(Player* pOwner)
 void PlayerAction_Jump::OnStart(Player* pOwner)
 {
 	std::cout << "JUMP" << std::endl;
-}
-void PlayerAction_Jump::OnUpdate(Player* pOwner)
-{
-	pOwner->mPData->pJumpDuration = 0;
-	if (pOwner->mReverse)
-	{
+
+	if (pOwner->mReverse) {
 		pOwner->mReverse = false;
-		pOwner->SetGravitySpeed(pOwner->mPData->mJumpHeight / 2);
+		pOwner->SetPosition(pOwner->GetPosition(0.f, 0.f).x, pOwner->GetPosition(0.f, 0.f).y + 1);
 	}
 	else
 	{
-		pOwner->SetGravitySpeed(-pOwner->mPData->mJumpHeight);
+		pOwner->SetPosition(pOwner->GetPosition(0.f, 0.f).x, pOwner->GetPosition(0.f, 0.f).y - 1);
 	}
-	pOwner->SetGravity(true);
+
+	// Initialisation du saut si le joueur est au sol
+	if (pOwner->mPData->isGrounded) {
+		pOwner->mPData->pJumpDuration = 0;
+		pOwner->SetGravitySpeed(-pOwner->mPData->mJumpHeight);
+		pOwner->mPData->isGrounded = false;
+	}
+}
+
+void PlayerAction_Jump::OnUpdate(Player* pOwner)
+{
+	// Si le joueur a terminé le saut, la gravité doit prendre le relais
+	if (pOwner->mPData->pJumpDuration > pOwner->mPData->mJumpTime) {
+		if (pOwner->mReverse) 
+		{
+			pOwner->SetGravitySpeed(-pOwner->mPData->mJumpHeight / 2);
+		}
+		else
+		{
+			pOwner->SetGravitySpeed(pOwner->mPData->mJumpHeight / 2);
+		}
+		pOwner->SetGravity(true);
+	}
 }
 
 void PlayerAction_Crouch::OnStart(Player* pOwner)

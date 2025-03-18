@@ -4,14 +4,14 @@
 //
 //bool PlayerCondition_IsJumping::OnTest(Player* owner)
 //{
-//	owner->SetIsGrounded(false);
+//	owner->SetmPData->isGrounded(false);
 //	if (owner->GetGravity())
 //		return false;
 //	if (owner->mPData->pJumpDuration < owner->mPData->mJumpTime) 
 //		return false;
 //	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0))
 //	{
-//		owner->SetIsGrounded(true);
+//		owner->SetmPData->isGrounded(true);
 //		return true;
 //	}
 //	return false;
@@ -44,7 +44,7 @@
 //	return false;
 //}
 //
-//bool PlayerCondition_IsGrounded::OnTest(Player* owner)
+//bool PlayerCondition_mPData->isGrounded::OnTest(Player* owner)
 //{
 //	for (Entity* entity : GameManager::Get()->GetEntities<Entity>())
 //	{

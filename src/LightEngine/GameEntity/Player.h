@@ -25,6 +25,8 @@ struct PlayerData
     float mDeceleration = 500.f;  // Décélération du joueur
 
     sf::Vector2f mDirection = sf::Vector2f(0.f, 0.f);
+
+    bool isGrounded = false;
 };
 
 // Classe représentant un joueur, héritant de RectangleEntity
@@ -62,9 +64,6 @@ private:
 
     // Méthode pour définir une transition d'état
     void SetTransition(PlayerStateList from, PlayerStateList to, bool value) { mTransitions[(int)from][(int)to] = value; }
-
-    // Indicateur pour vérifier si le joueur est au sol
-    bool isGrounded = false;
 
 public:
     // Méthodes pour déplacer le joueur

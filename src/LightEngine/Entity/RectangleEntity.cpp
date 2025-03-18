@@ -99,19 +99,20 @@ void RectangleEntity::Block(Entity* other)
 	else
 	{
 		// Collision verticale : on utilise les hauteurs
+        place = (mCollider->GetCollideFace()->y > 0) ? 1 : -1;
+
 		if (mCollider->GetCollideFace()->y == 1)
 		{
-			place = 1;
-			mGravitySpeed = 0.f;
+            SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) - 0.5f);
+            mGravitySpeed = 0.f;
 			mBoolGravity = false;
 		}
 		else {
 			mBoolGravity = true;
 			mGravitySpeed = 0.f;
-			place = -1;
-		}
+            SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) + 1 - int(mReverse));
+        }
 
-		SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f));
 		hasCollidedLastFrame = true;
 	}
 }

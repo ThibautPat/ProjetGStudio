@@ -59,7 +59,7 @@ void TestScene::OnInitialize()
 	DeadlyObstacle1->SetGravity(false);
 	DeadlyObstacle1->SetTag(Tag::DEADLYOBSTACLE);
 
-	mPlayer = CreateRectEntity<Player>(256, 128, sf::Color::Blue); // Ajout du Player et setup
+	mPlayer = CreateRectEntity<Player>(100, 128, sf::Color::Blue); // Ajout du Player et setup
 	mPlayer->SetGravity(true);
 	mPlayer->SetRigidBody(true);
 	mPlayer->SetIsKinematic(false);
@@ -165,37 +165,69 @@ void TestScene::OnEvent(const sf::Event& event)
 
 void TestScene::HandleEvent()
 {
-	//Joystick
-	//if (sf::Joystick::isButtonPressed(0, 0)) {
-	//	GetPlayer()->SetState(Player::PlayerStateList::JUMP);
-	//}
-	//if (sf::Joystick::isButtonPressed(0, 1)) {
-	//	GetPlayer()->SetState(Player::PlayerStateList::CROUCH);
-	//}
+	//Joystick 
+	/*
+	if (sf::Joystick::isButtonPressed(0, 0)) {
+		if (mPlayer->mReverse)
+		{
+			mPlayer->SetState(Player::PlayerStateList::IDLE);
+			mPlayer->SetPosition(mPlayer->GetPosition(0.f, 0.f).x, mPlayer->GetPosition(0.f, 0.f).y + 5);
+			mPlayer->mReverse = false;
+			mPlayer->GetPlayerData()->isGrounded = false;
+		}
+		else
+		{
+			GetPlayer()->SetState(Player::PlayerStateList::JUMP);
+		}	
+	}
+	if (sf::Joystick::isButtonPressed(0, 1)) {
+		GetPlayer()->SetState(Player::PlayerStateList::CROUCH);
+	}
 
-	//if (sf::Joystick::getAxisPosition(0, sf::Joystick::X) < -10) {
-	//	mPlayer->GetPlayerData()->mDirection.x = 1;
-	//	GetPlayer()->SetState(Player::PlayerStateList::WALK);
-	//}
+	if (sf::Joystick::getAxisPosition(0, sf::Joystick::X) < -10) {
+		mPlayer->GetPlayerData()->mDirection.x = 1;
+		GetPlayer()->SetState(Player::PlayerStateList::WALK);
+	}
 
-	//else if (sf::Joystick::getAxisPosition(0, sf::Joystick::X) < 10) {
-	//	mPlayer->GetPlayerData()->mDirection.x = -1;
-	//	GetPlayer()->SetState(Player::PlayerStateList::WALK);
-	//}
-	//else {
-	//	mPlayer->GetPlayerData()->mDirection.x = 0;
-	//	GetPlayer()->SetState(Player::PlayerStateList::IDLE);
-	//}
+	else if (sf::Joystick::getAxisPosition(0, sf::Joystick::X) < 10) {
+		mPlayer->GetPlayerData()->mDirection.x = -1;
+		GetPlayer()->SetState(Player::PlayerStateList::WALK);
+	}
+	else {
+		mPlayer->GetPlayerData()->mDirection.x = 0;
+		GetPlayer()->SetState(Player::PlayerStateList::IDLE);
+	}
+
+	*/
 
 	//Clavier
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-		GetPlayer()->SetState(Player::PlayerStateList::JUMP);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) 
+	{
+		if (mPlayer->mReverse) 
+		{
+			mPlayer->SetState(Player::PlayerStateList::IDLE);
+			mPlayer->SetPosition(mPlayer->GetPosition(0.f, 0.f).x, mPlayer->GetPosition(0.f, 0.f).y + 5);
+			mPlayer->mReverse = false;
+			mPlayer->GetPlayerData()->isGrounded = false;
+		}
+		else 
+		{
+			GetPlayer()->SetState(Player::PlayerStateList::JUMP);
+		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
 		GetPlayer()->SetState(Player::PlayerStateList::CROUCH);
 	}
+	else
+	{
+		GetPlayer()->SetState(Player::PlayerStateList::IDLE);
+	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		GetPlayer()->SetState(Player::PlayerStateList::IDLE);
+		mPlayer->GetPlayerData()->mDirection.x = 0;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
 		GetPlayer()->SetState(Player::PlayerStateList::WALK);
 		mPlayer->GetPlayerData()->mDirection.x = -1;
 	}
