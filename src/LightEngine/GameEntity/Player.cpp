@@ -5,6 +5,7 @@
 #include "../PlayerStateMachine/PlayerCondition.h"
 #include "../GameScene/TestScene.h"
 #include "../Renderer/AnimationRender.h"
+#include "../Renderer/Animator.h"
 
 void Player::Move(sf::Vector2f movement, float dt)
 {
@@ -30,13 +31,18 @@ void Player::FixedUpdate(float dt)
 void Player::OnUpdate()
 {
 	mStateMachine.Update();
-	mTextured->UpdateAnimation();
+	mAnim->UpdateCurrentAnimation();
 
 	// Debug de valeur
 	const char* stateName = GetStateName((PlayerStateList)mStateMachine.GetCurrentState());
 	Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 30, stateName, sf::Color::White);
 	std::string text2 = std::to_string((int)mSpeed);
 	Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 50, text2, sf::Color::White);
+}
+
+TextureRender* Player::GetRender()
+{
+	return mAnim->GetCurrentAnimation();
 }
 
 void Player::OnInitialize()
@@ -48,8 +54,8 @@ void Player::OnInitialize()
 
 	//Setup de la gestion de textures
 	mAs->LoadSpriteSheet("../../../res/Assets/SpriteSheet/Character.json", "../../../res/Assets/SpriteSheet/spritesheet_character_FXpresent.png", "player");
-
-	mTextured = new AnimationRender("player", "respawn");
+	mAnim = new Animator();
+	mAnim->AddAnimation("player", "respawn");
 }
 
 sf::Vector2f Player::InputDirection()
@@ -61,14 +67,14 @@ sf::Vector2f Player::InputDirection()
 		dir_x = -1;
 		//TODO maybe somewhere better ?
 		sf::Vector2f nratio = sf::Vector2f(dir_x, 1);
-		mTextured->SetRation(nratio);
+		mAnim->SetRatio(nratio);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) > 10)
 	{
 		dir_x = 1;
 		//TODO maybe somewhere better ?
 		sf::Vector2f nratio = sf::Vector2f(dir_x, 1);
-		mTextured->SetRation(nratio);
+		mAnim->SetRatio(nratio);
 	}
 
 	return sf::Vector2f(dir_x, 0);

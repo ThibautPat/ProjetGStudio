@@ -1,10 +1,13 @@
 #pragma once
-#include "SFML/Graphics.hpp"
+
+#include <SFML/Graphics.hpp>
 #include <iostream>
+
 #include "../Manager/GameManager.h"
 #include "../Entity/RectangleEntity.h"
 #include "../StateMachine/StateMachine.h"
 
+class Animator;
 class AnimationRender;
 
 struct PlayerData
@@ -25,8 +28,8 @@ class Player : public RectangleEntity
 {
 	StateMachine<Player> mStateMachine;
 
-	//Gestionnaire de texture de l'entity
-	AnimationRender* mTextured;
+	//Gestionnaire d'animationde l'entity
+	Animator* mAnim;
 
 	//Gestionnaire de texture de la scene
 	TextureManager* mAs;
@@ -54,7 +57,7 @@ public:
 	PlayerData* mPData;
 	sf::Vector2f mLastMovement;
 
-	TextureRender* GetRender() { return (TextureRender*)mTextured; };
+	TextureRender* GetRender() override;
 
 	void OnInitialize() override;
 	sf::Vector2f InputDirection();
