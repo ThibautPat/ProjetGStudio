@@ -49,8 +49,6 @@ void TestScene::OnInitialize()
 	mView = new sf::View(sf::FloatRect(0, -340, GetWindowWidth()+56.25f, GetWindowHeight()+100)); // Ajout de la cam�ra
 	m_InstanceGameManager = GameManager::Get();
 
-	
-
 	BackGround* pEntity7 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
 	pEntity7->SetPosition(0, 205); 
 	pEntity7->SetRigidBody(false);
@@ -86,8 +84,7 @@ void TestScene::OnInitialize()
 	Ground->SetRigidBody(true);
 	Ground->SetIsKinematic(true);
 	Ground->SetGravity(false);
-
-
+	Ground->SetTag(Tag::OBSTACLE);
 
 	RectangleEntity* pEntity3 = CreateRectEntity<RectangleEntity>(2000, 100, sf::Color::Transparent);
 	pEntity3->SetPosition(-3300, 0);
