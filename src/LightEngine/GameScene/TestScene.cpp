@@ -245,8 +245,8 @@ void TestScene::HandleKeyboardEvent()
 
 void TestScene::OnUpdate()
 {
-	//HandleConsoleEvent();
-	HandleKeyboardEvent();
+	HandleConsoleEvent();
+	//HandleKeyboardEvent();
 
 	int i = 0;
 	PlayerRespawn();
