@@ -35,5 +35,11 @@ class PlayerAction_Walk : public ActionPlayer
 public:
     void OnStart(Player* pOwner) override;
     void OnUpdate(Player* pOwner) override;
+};
 
+class PlayerAction_Fall : public ActionPlayer
+{
+public:
+    void OnStart(Player* pOwner) override;
+    void OnUpdate(Player* pOwner) override;
 };

@@ -27,6 +27,7 @@ struct PlayerData
     sf::Vector2f mDirection = sf::Vector2f(0.f, 0.f);
 
     bool isGrounded = false;
+    bool isCrouching = false;
 };
 
 // Classe représentant un joueur, héritant de RectangleEntity
@@ -40,6 +41,7 @@ public:
         CROUCH,
         WALK,
         JUMP,
+        FALL,
 
         COUNT // Nombre total d'états
     };
@@ -95,4 +97,5 @@ public:
     friend class PlayerAction_Crouch;
     friend class PlayerAction_Walk;
     friend class PlayerAction_Idle;
+    friend class PlayerAction_Fall;
 };

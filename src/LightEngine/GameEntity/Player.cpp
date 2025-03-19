@@ -21,11 +21,17 @@ void Player::OnInitialize()
 
 void Player::OnUpdate() 
 {
-    //mTextured->UpdateAnimation();
+    mTextured->UpdateAnimation();
 
-    if (mPData->isGrounded && mDirection.x == 0) {
-        SetState(IDLE);
+    if (mDirection.x == 0 && !mPData->isCrouching) {
+        if (!mPData->isGrounded) {
+            SetState(FALL);
+        }
+        else {
+            SetState(IDLE);
+        }
     }
+
 
     mActions[(int)mState]->OnUpdate(this);
 
@@ -107,22 +113,28 @@ Player::Player()
     mActions[(int)PlayerStateList::CROUCH] = new PlayerAction_Crouch();
     mActions[(int)PlayerStateList::WALK] = new PlayerAction_Walk();
     mActions[(int)PlayerStateList::JUMP] = new PlayerAction_Jump();
+    mActions[(int)PlayerStateList::FALL] = new PlayerAction_Fall();
 
     SetTransition(PlayerStateList::IDLE, PlayerStateList::WALK, true);
     SetTransition(PlayerStateList::IDLE, PlayerStateList::JUMP, true);
     SetTransition(PlayerStateList::IDLE, PlayerStateList::CROUCH, true);
+    SetTransition(PlayerStateList::IDLE, PlayerStateList::FALL, true);
 
-    //SetTransition(PlayerStateList::CROUCH, PlayerStateList::WALK, true);
     SetTransition(PlayerStateList::CROUCH, PlayerStateList::IDLE, true);
     SetTransition(PlayerStateList::CROUCH, PlayerStateList::JUMP, true);
+    SetTransition(PlayerStateList::CROUCH, PlayerStateList::WALK, true);
 
     SetTransition(PlayerStateList::WALK, PlayerStateList::JUMP, true);
     SetTransition(PlayerStateList::WALK, PlayerStateList::IDLE, true);
     SetTransition(PlayerStateList::WALK, PlayerStateList::CROUCH, true);
+    SetTransition(PlayerStateList::WALK, PlayerStateList::FALL, true);
 
     SetTransition(PlayerStateList::JUMP, PlayerStateList::WALK, true);
-    SetTransition(PlayerStateList::JUMP, PlayerStateList::IDLE, true);
+    SetTransition(PlayerStateList::JUMP, PlayerStateList::FALL, true);
+    SetTransition(PlayerStateList::JUMP, PlayerStateList::CROUCH, true);
 
+    SetTransition(PlayerStateList::FALL, PlayerStateList::WALK, true);
+    SetTransition(PlayerStateList::FALL, PlayerStateList::IDLE, true);
 }
 
 Player::~Player()

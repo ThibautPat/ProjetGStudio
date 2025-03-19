@@ -40,6 +40,7 @@ public:
 	void PlayerRespawn();
 	void OnInitialize() override;
 	void OnEvent(const sf::Event& event) override;
-	void HandleEvent();
+	void HandleConsoleEvent();
+	void HandleKeyboardEvent();
 	void OnUpdate() override;
 };

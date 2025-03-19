@@ -118,132 +118,135 @@ void TestScene::OnInitialize()
 
 void TestScene::OnEvent(const sf::Event& event)
 {	
-	////Joystick
-	//if (event.joystickButton.button == sf::Joystick::R) {
-	//	GetPlayer()->SetState(Player::PlayerStateList::JUMP);
-	//}
-	//if (event.joystickButton.button == sf::Joystick::Z) {
-	//	GetPlayer()->SetState(Player::PlayerStateList::CROUCH);
-	//}
-
-	////TODO : essayer de faire les joystick avec l'event.
-	//if (sf::Joystick::getAxisPosition(0, sf::Joystick::X) < -10) {
-	//	mPlayer->GetPlayerData()->mDirection.x = 1;
-	//	GetPlayer()->SetState(Player::PlayerStateList::WALK);
-	//}
-
-	//else if (sf::Joystick::getAxisPosition(0, sf::Joystick::X) < 10) {
-	//	mPlayer->GetPlayerData()->mDirection.x = -1;
-	//	GetPlayer()->SetState(Player::PlayerStateList::WALK);
-	//}
-	//else {
-	//	mPlayer->GetPlayerData()->mDirection.x = 0;
-	//	GetPlayer()->SetState(Player::PlayerStateList::IDLE);
-	//}
-
-	////Clavier
-	//if (event.key.code == sf::Keyboard::Space) {
-	//	GetPlayer()->SetState(Player::PlayerStateList::JUMP);
-	//}
-	//if (event.key.code == sf::Keyboard::LShift) {
-	//	GetPlayer()->SetState(Player::PlayerStateList::CROUCH);
-	//}
-
-	//if (event.key.code == sf::Keyboard::Q) {
-	//	GetPlayer()->SetState(Player::PlayerStateList::WALK);
-	//	mPlayer->GetPlayerData()->mDirection.x = -1;
-	//}
-	//else if (event.key.code == sf::Keyboard::D) {
-	//	GetPlayer()->SetState(Player::PlayerStateList::WALK);
-	//	mPlayer->GetPlayerData()->mDirection.x = 1;
-	//}
-	//else {
-	//	mPlayer->GetPlayerData()->mDirection.x = 0;
-	//	GetPlayer()->SetState(Player::PlayerStateList::IDLE);
-	//}
 }
 
-void TestScene::HandleEvent()
+void TestScene::HandleConsoleEvent()
 {
-	//Joystick 
-	/*
-	if (sf::Joystick::isButtonPressed(0, 0)) {
+	// Manette
+	if (sf::Joystick::isButtonPressed(0, 0)) // Bouton de saut sur la manette (par exemple, A)
+	{
 		if (mPlayer->mReverse)
 		{
-			mPlayer->SetState(Player::PlayerStateList::IDLE);
+			mPlayer->SetState(Player::PlayerStateList::FALL);
 			mPlayer->SetPosition(mPlayer->GetPosition(0.f, 0.f).x, mPlayer->GetPosition(0.f, 0.f).y + 5);
 			mPlayer->mReverse = false;
 			mPlayer->GetPlayerData()->isGrounded = false;
 		}
-		else
-		{
-			GetPlayer()->SetState(Player::PlayerStateList::JUMP);
-		}	
-	}
-	if (sf::Joystick::isButtonPressed(0, 1)) {
-		GetPlayer()->SetState(Player::PlayerStateList::CROUCH);
+		else if (mPlayer->GetPlayerData()->isGrounded) {
+			mPlayer->SetState(Player::PlayerStateList::JUMP);
+		}
 	}
 
-	if (sf::Joystick::getAxisPosition(0, sf::Joystick::X) < -10) {
-		mPlayer->GetPlayerData()->mDirection.x = 1;
-		GetPlayer()->SetState(Player::PlayerStateList::WALK);
-	}
-
-	else if (sf::Joystick::getAxisPosition(0, sf::Joystick::X) < 10) {
-		mPlayer->GetPlayerData()->mDirection.x = -1;
-		GetPlayer()->SetState(Player::PlayerStateList::WALK);
+	if (sf::Joystick::isButtonPressed(0, 1)) { // Bouton de crouch sur la manette (par exemple, B)
+		mPlayer->SetState(Player::PlayerStateList::CROUCH);
+		mPlayer->GetPlayerData()->isCrouching = true;
+		mPlayer->GetPlayerData()->mDirection.x = 0;
 	}
 	else {
-		mPlayer->GetPlayerData()->mDirection.x = 0;
-		GetPlayer()->SetState(Player::PlayerStateList::IDLE);
+		mPlayer->GetPlayerData()->isCrouching = false;
 	}
 
-	*/
+	// Gestion des axes X pour le mouvement gauche/droite (axe horizontal sur la manette)
+	float joystickX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
 
+	// Si le joystick se penche à gauche (axe < -10)
+	if (joystickX < -10) {
+		mPlayer->GetPlayerData()->mDirection.x = -1; // Déplacement vers la gauche
+		if (!mPlayer->GetPlayerData()->isCrouching) {
+			mPlayer->SetState(Player::PlayerStateList::WALK);
+		}
+		else {
+			mPlayer->SetState(Player::PlayerStateList::CROUCH);
+		}
+	}
+	// Si le joystick se penche à droite (axe > 10)
+	else if (joystickX > 10) {
+		mPlayer->GetPlayerData()->mDirection.x = 1; // Déplacement vers la droite
+		if (!mPlayer->GetPlayerData()->isCrouching) {
+			mPlayer->SetState(Player::PlayerStateList::WALK);
+		}
+		else {
+			mPlayer->SetState(Player::PlayerStateList::CROUCH);
+		}
+	}
+	else {
+		mPlayer->GetPlayerData()->mDirection.x = 0; // Aucun mouvement horizontal
+		if (mPlayer->GetPlayerData()->isGrounded && !mPlayer->GetPlayerData()->isCrouching) {
+			mPlayer->SetState(Player::PlayerStateList::IDLE); // Si au sol, état "IDLE"
+		}
+		else if (!mPlayer->GetPlayerData()->isCrouching) {
+			mPlayer->SetState(Player::PlayerStateList::FALL); // Sinon, état "FALL"
+		}
+	}
+}
+
+void TestScene::HandleKeyboardEvent()
+{
 	//Clavier
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) 
 	{
 		if (mPlayer->mReverse) 
 		{
-			mPlayer->SetState(Player::PlayerStateList::IDLE);
+			mPlayer->SetState(Player::PlayerStateList::FALL);
 			mPlayer->SetPosition(mPlayer->GetPosition(0.f, 0.f).x, mPlayer->GetPosition(0.f, 0.f).y + 5);
 			mPlayer->mReverse = false;
 			mPlayer->GetPlayerData()->isGrounded = false;
 		}
-		else 
-		{
-			GetPlayer()->SetState(Player::PlayerStateList::JUMP);
+		else if (mPlayer->GetPlayerData()->isGrounded) {
+			mPlayer->SetState(Player::PlayerStateList::JUMP);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
-		GetPlayer()->SetState(Player::PlayerStateList::CROUCH);
+		mPlayer->SetState(Player::PlayerStateList::CROUCH);
+		mPlayer->GetPlayerData()->isCrouching = true;
+		mPlayer->GetPlayerData()->mDirection.x = 0;
 	}
-	else
-	{
-		GetPlayer()->SetState(Player::PlayerStateList::IDLE);
+	else {
+		mPlayer->GetPlayerData()->isCrouching = false;
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		GetPlayer()->SetState(Player::PlayerStateList::IDLE);
 		mPlayer->GetPlayerData()->mDirection.x = 0;
+		if (mPlayer->GetPlayerData()->isGrounded) {
+			mPlayer->SetState(Player::PlayerStateList::IDLE);
+		}
+		else {
+			mPlayer->SetState(Player::PlayerStateList::FALL);
+		}
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-		GetPlayer()->SetState(Player::PlayerStateList::WALK);
+		if (mPlayer->GetPlayerData()->isCrouching) {
+			mPlayer->SetState(Player::PlayerStateList::CROUCH);
+		}
+		else {
+			mPlayer->SetState(Player::PlayerStateList::WALK);
+		}
 		mPlayer->GetPlayerData()->mDirection.x = -1;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		GetPlayer()->SetState(Player::PlayerStateList::WALK);
+		if (mPlayer->GetPlayerData()->isCrouching) {
+			mPlayer->SetState(Player::PlayerStateList::CROUCH);
+		}
+		else {
+			mPlayer->SetState(Player::PlayerStateList::WALK);
+		}
 		mPlayer->GetPlayerData()->mDirection.x = 1;
 	}
-	else {
+	else if (!mPlayer->GetPlayerData()->isCrouching) {
 		mPlayer->GetPlayerData()->mDirection.x = 0;
-		GetPlayer()->SetState(Player::PlayerStateList::IDLE);
+		if (mPlayer->GetPlayerData()->isGrounded) {
+			mPlayer->SetState(Player::PlayerStateList::IDLE);
+		}
+		else {
+			mPlayer->SetState(Player::PlayerStateList::FALL);
+		}
 	}
 }
 
 void TestScene::OnUpdate()
 {
-	HandleEvent();
+	//HandleConsoleEvent();
+	HandleKeyboardEvent();
 
 	int i = 0;
 	PlayerRespawn();

@@ -104,7 +104,20 @@ void PlayerAction_Crouch::OnUpdate(Player* pOwner)
 			pOwner->SetSpeed(spd);
 		}
 	}
-	pOwner->SetSpeed(spd);
+	else {
+		float decelerationAmount = pOwner->mPData->mDeceleration * 50 * FIXED_DT;
+
+		if (std::abs(pOwner->GetSpeed()) > 100)	// Decelerer ou accelerer vers z�ro en fonction de la vitesse
+		{
+			float spd = pOwner->GetSpeed();
+			spd += (pOwner->GetSpeed() > 0 ? -1 : 1) * decelerationAmount;
+			pOwner->SetSpeed(spd);
+		}
+		if (std::abs(pOwner->GetSpeed()) < 500)	// Si la vitesse est proche de 0, on la reinitialise
+		{
+			pOwner->SetSpeed(0);
+		}
+	}
 }
 
 void PlayerAction_Walk::OnStart(Player* pOwner)
@@ -127,5 +140,26 @@ void PlayerAction_Walk::OnUpdate(Player* pOwner)
 		float spd = pOwner->GetSpeed();
 		spd += (pOwner->mLastMovement.x == -1 ? -1 : 1) * pOwner->mPData->mDeceleration * 50 * FIXED_DT;
 		pOwner->SetSpeed(spd);
+	}
+}
+
+void PlayerAction_Fall::OnStart(Player* pOwner)
+{
+	std::cout << "FALL" << std::endl;
+}
+
+void PlayerAction_Fall::OnUpdate(Player* pOwner)
+{
+	float decelerationAmount = pOwner->mPData->mDeceleration * 50 * FIXED_DT;
+
+	if (std::abs(pOwner->GetSpeed()) > 100)	// Decelerer ou accelerer vers z�ro en fonction de la vitesse
+	{
+		float spd = pOwner->GetSpeed();
+		spd += (pOwner->GetSpeed() > 0 ? -1 : 1) * decelerationAmount;
+		pOwner->SetSpeed(spd);
+	}
+	if (std::abs(pOwner->GetSpeed()) < 500)	// Si la vitesse est proche de 0, on la reinitialise
+	{
+		pOwner->SetSpeed(0);
 	}
 }
