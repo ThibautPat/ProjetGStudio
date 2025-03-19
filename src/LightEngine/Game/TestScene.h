@@ -7,6 +7,7 @@
 #define ENTITY_NB 0
 
 class Entity;
+class Level;
 
 class TestScene : public Scene
 {
@@ -23,6 +24,8 @@ protected:
 	bool RedKey = false;
 	bool BlueKey = false;
 
+	Level* mLevel;
+
 public:
 	void PlayerDeath();
 	enum Tag
@@ -33,12 +36,14 @@ public:
 		METALIC_OBSTACLE,
 		OBSTACLE,
 		END_LEVEL,
-		BLUE_KEY,
-		RED_KEY,
-		GREEN_KEY,
-		BLUE_DOOR,
-		RED_DOOR,
-		GREEN_DOOR,
+		PLATFORM,
+		BACK_GROUND1,
+		BACK_GROUND2,
+		BACK_GROUND1BIS,
+		BACK_GROUND2BIS,
+		BOUCING_OBSTACLE,
+		TELEPORTER,
+		TELEPORTER_2,
 
 		COUNT
 	};

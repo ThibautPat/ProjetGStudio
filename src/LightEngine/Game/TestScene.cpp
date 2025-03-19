@@ -9,7 +9,7 @@
 #include "../Game/Checkpoint.h"
 #include "../Game/DeadlyObstacle.h"
 #include "../nlohmann/json_fwd.hpp"
-
+#include "../Game/Level.h"
 
 using json = nlohmann::json;
 //TODO in player class ----------
@@ -51,86 +51,9 @@ void TestScene::OnInitialize()
 	mView = new sf::View(sf::FloatRect(0, 0, GetWindowWidth(), GetWindowHeight())); // Ajout de la cam�ra
 	m_InstanceGameManager = GameManager::Get();
 
-	std::ifstream fichier("..//..//..//src//LightEngine//nlohmann//map.json");
-	if (!fichier.is_open()) {
-		std::cerr << "Erreur : impossible d'ouvrir le fichier JSON." << std::endl;
-		return;
-	}
-
-	json donnees;
-	fichier >> donnees;
-
-	// Accéder aux données JSON
-	for (int i = 0; i < donnees["Rows"]; i++) {
-		for (int j = 0; j < donnees["Columns"]; j++) {
-
-			std::string tmp = donnees["Cases"][i][j];
-
-			Player* pEntity1 = CreateRectEntity<Player>(128, 256, sf::Color::Blue);
-			pEntity1->SetGravity((bool)donnees[tmp]["Gravity"]);
-			pEntity1->SetRigidBody((bool)donnees[tmp]["RigidBody"]);
-			pEntity1->SetIsKinematic((bool)donnees[tmp]["IsKinematic"]);
-			pEntity1->SetPosition(100 * j, 100 * i);
-		}
-	}
-
-
-
-	for (int i = 0; i < donnees["Rows"]; i++) {
-		for (int j = 0; j < donnees["Columns"]; j++) {
-
-			if (donnees["Cases"][i][j] == "P") { 
-				RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Cyan); // Ajout du DeadlyObstacle et setup
-				pEntity->SetGravity(false);
-				pEntity->SetRigidBody(true);
-				pEntity->SetIsKinematic(true);
-				pEntity->SetPosition(j * 100, i * 100);
-				pEntity->SetTag(Tag::OBSTACLE);
-			}
-
-			else if (donnees["Cases"][i][j] == "C") { // Si la case est un Checkpoint
-				Checkpoint* pEntity = CreateRectEntity<Checkpoint>(i * 100, j * 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
-				pEntity->SetGravity(false);
-				pEntity->SetRigidBody(false);
-				pEntity->SetIsKinematic(false);
-				pEntity->SetPosition(i * 100, j * 100);
-				pEntity->SetTag(Tag::CHECKPOINT);
-			}
-
-			else if (donnees["Cases"][i][j] == "D") { // Si la case est un DeadlyObstacle
-				DeadlyObstacle* pEntity = CreateRectEntity<DeadlyObstacle>(i * 100, j * 100, sf::Color::Red); // Ajout du DeadlyObstacle et setup
-				pEntity->SetGravity(false);
-				pEntity->SetRigidBody(true);
-				pEntity->SetIsKinematic(true);
-				pEntity->SetPosition(i * 100, j * 100);
-				pEntity->SetTag(Tag::DEADLYOBSTACLE);
-			}
-
-			else if (donnees["Cases"][i][j] == "E") { // Si la case est la fin du niveau
-				RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Magenta); // Ajout de la fin du niveau et setup
-				pEntity->SetGravity(false);
-				pEntity->SetRigidBody(false);
-				pEntity->SetIsKinematic(false);
-				pEntity->SetPosition(i * 100, j * 100);
-				pEntity->SetTag(Tag::END_LEVEL);
-			}
-
-			else if (donnees["Cases"][i][j] == "M") { // Si la case est un MetalicObstacle
-				RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::White); // Ajout du MetalicObstacle et setup
-				pEntity->SetGravity(false);
-				pEntity->SetRigidBody(true);
-				pEntity->SetIsKinematic(true);
-				pEntity->SetPosition(j * 100, i * 100);
-				pEntity->SetTag(Tag::METALIC_OBSTACLE);
-			}
-		}
-	}
-	RectangleEntity* Ground = CreateRectEntity<RectangleEntity>(5000, 10000, sf::Color::Green);
-	Ground->SetPosition(0, 3850);
-	Ground->SetRigidBody(true);
-	Ground->SetIsKinematic(true);
-	Ground->SetGravity(false);
-	Ground->SetTag(Tag::OBSTACLE);
+	mLevel = new Level();
+	mLevel->ChooseJson("..//..//..//src//LightEngine//nlohmann//map.json");
+	mLevel->LoadLevel();
 }
 
 void TestScene::OnEvent(const sf::Event& event)
