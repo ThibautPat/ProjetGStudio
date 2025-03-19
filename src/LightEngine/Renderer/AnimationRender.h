@@ -12,7 +12,6 @@ protected:
 	float mTimePerFrame;
 	float mAnimSpeed = 1.f;
 
-	int mOgx;
 	bool mIsFinished = false;
 	bool mIsLoop;
 	
@@ -34,7 +33,6 @@ public:
 	void UpdateAnimation();
 
 	void SetFrameCounter(int frame) { mFrameCounter = 0; }
-	void SetIsFinished(bool value) { mIsFinished = value; }
 	void SetAnimationSpeed(int speed) { mAnimSpeed = speed; }
 
 	bool IsLoop() { return mIsLoop; }
