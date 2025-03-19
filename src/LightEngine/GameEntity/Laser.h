@@ -19,7 +19,7 @@ public:
 	virtual void OnUpdate() = 0;
 	virtual void OnCollision(Entity* collidedWith) = 0;
 	virtual void OnDestroy() = 0;
-	virtual void Initialize(float x, float y, const sf::Color& color) = 0;
+	virtual void Initialize(float x, float y, const sf::Color& color);
 
 	void OnInitialize();
 	virtual void Initialize(float radius, const sf::Color& color) {} ;
