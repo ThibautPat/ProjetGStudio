@@ -87,6 +87,8 @@ void RectangleEntity::Repulse(Entity* other)
         int gap = 0;
         if (mCollider->GetCollideFace()->y == 1)
         {
+
+            mReverse = false;
             place = 1;
             mGravitySpeed = 0.f;
             mBoolGravity = false;
@@ -95,21 +97,23 @@ void RectangleEntity::Repulse(Entity* other)
         }
         else if (mCollider->GetCollideFace()->y == -1 && !other->IsTag(TestScene::Tag::METALIC_OBSTACLE))
         {
+
+            mReverse = false;
             mBoolGravity = true;
             mGravitySpeed = 0.f;
             place = -1;
-            gap = -1;
+            gap = -10;
         }
 		else 
 		{
+
+            mReverse = true;
             secondJump = 2; 
             mBoolGravity = false;
             mGravitySpeed = 0.f;
             place = -1;
             gap = -1;
 		}
-        if ((mMove.y <= 0) || (mMove.y >= 0))
-        {
             if (other->IsTag(TestScene::Tag::BOUCING_OBSTACLE))
             {
 				SetGravity(true);
@@ -130,8 +134,6 @@ void RectangleEntity::Repulse(Entity* other)
             }
             else if (mCollider->GetCollideFace()->y == -1 && other->IsTag(TestScene::Tag::METALIC_OBSTACLE) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0)))
             {
-
-				mReverse = true;
 				mClockJump.restart();  
                 SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) - gap);
             }
@@ -141,7 +143,7 @@ void RectangleEntity::Repulse(Entity* other)
                 SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f));
             }
             hasCollidingLastFrame = true;
-        }
+        
     }
 }
 

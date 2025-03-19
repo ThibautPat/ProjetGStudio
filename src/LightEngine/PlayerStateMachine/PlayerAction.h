@@ -36,6 +36,7 @@ public:
 
 class PlayerAction_Idle : public Action<Player>
 {
+	bool isIdle = false;
 public:
 	void OnStart(Player* pOwner) override;
 	void OnUpdate(Player* pOwner) override;

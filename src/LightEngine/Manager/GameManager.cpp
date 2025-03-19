@@ -58,6 +58,7 @@ void GameManager::PhysiqueUpdate()
 			}
 			else if (entity->hasCollidingLastFrame)
 			{
+				
 				entity->mBoolGravity = true;
 				entity->hasCollidingLastFrame = false;
 			}

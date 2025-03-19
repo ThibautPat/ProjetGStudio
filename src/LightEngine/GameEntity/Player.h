@@ -19,6 +19,7 @@ struct PlayerData
 
 	float mAcceleration = 700.f;
 	float mDeceleration = 500.f;
+	sf::Vector2f nratioTexture = sf:: Vector2f(1,1);
 };
 
 class Player : public RectangleEntity

@@ -31,7 +31,6 @@ void Player::OnUpdate()
 {
 	mStateMachine.Update();
 	mTextured->UpdateAnimation();
-
 	// Debug de valeur
 	const char* stateName = GetStateName((PlayerStateList)mStateMachine.GetCurrentState());
 	Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 30, stateName, sf::Color::White);
@@ -49,29 +48,31 @@ void Player::OnInitialize()
 	//Setup de la gestion de textures
 	mAs->LoadSpriteSheet("../../../res/Assets/SpriteSheet/Character.json", "../../../res/Assets/SpriteSheet/spritesheet_character_FXpresent.png", "player");
 
-	mTextured = new AnimationRender("player", "respawn");
+	mTextured = new AnimationRender("player", "idle");
+	mStateMachine.SetState(PlayerStateList::IDLE); 
 }
 
 sf::Vector2f Player::InputDirection()
 {
-	float dir_x = 0;
-
+	if (mReverse)
+	{
+   		mPData->nratioTexture.y = -1;
+	}
+	else
+	{
+		mPData->nratioTexture.y = 1;
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) < -10)
 	{
-		dir_x = -1;
-		//TODO maybe somewhere better ?
-		sf::Vector2f nratio = sf::Vector2f(dir_x, 1);
-		mTextured->SetRation(nratio);
+		mPData->nratioTexture.x = -1;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) > 10)
 	{
-		dir_x = 1;
-		//TODO maybe somewhere better ?
-		sf::Vector2f nratio = sf::Vector2f(dir_x, 1);
-		mTextured->SetRation(nratio);
+		mPData->nratioTexture.x = 1;
 	}
 
-	return sf::Vector2f(dir_x, 0);
+	mTextured->SetRation(mPData->nratioTexture);
+	return mPData->nratioTexture; 
 }
 
 Player::~Player()
@@ -80,6 +81,7 @@ Player::~Player()
 
 Player::Player() : mStateMachine(this, PlayerStateList::COUNT)
 {
+
 	SetTag(TestScene::Tag::PLAYER); 
 
 	{
@@ -678,7 +680,6 @@ Player::Player() : mStateMachine(this, PlayerStateList::COUNT)
 				}
 			}
 		}
-		mStateMachine.SetState(PlayerStateList::IDLE);
 	}
 
 }

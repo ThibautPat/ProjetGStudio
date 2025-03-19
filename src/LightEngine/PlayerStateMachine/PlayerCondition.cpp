@@ -59,12 +59,13 @@ bool PlayerCondition_IsGrounded::OnTest(Player* owner)
 			}
 		}
 	}
+	owner->mReverse = false;
 	return false;
 }
 
 bool PlayerCondition_GravityPlus::OnTest(Player* owner)
 {
-	if (owner->GetGravitySpeed() >= 0)
+	if (owner->GetGravitySpeed() > 30)
 	{
 		return true;
 	}
