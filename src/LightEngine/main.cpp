@@ -14,7 +14,7 @@ int main()
     GameManager* pInstance = GameManager::Get();
 	SceneManager* pScM = pInstance->GetSceneManager();
 
-	pInstance->CreateWindow(1920, 1080, "TestScene", 63, sf::Color(0,100,255));
+	pInstance->CreateWindow(900, 720, "TestScene", 63, sf::Color(0,100,255));
 	
 	pScM->AddScene<TestScene>("testscene");
 	pScM->AddScene<TestScene2>("testscene2");

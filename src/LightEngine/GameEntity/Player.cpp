@@ -19,7 +19,7 @@ void Player::OnInitialize()
     mAnimator->AddAnimation("player", "walk");
     mAnimator->AddAnimation("player", "jump");
     mAnimator->AddAnimation("player", "idle");
-    //mAnimator->AddAnimation("player", "StartCrouch");
+    mAnimator->AddAnimation("player", "StartCrouch");
     mAnimator->AddAnimation("player", "OnCrouch");
     //mAnimator->AddAnimation("player", "EndCrouch");
     mAnimator->AddAnimation("player", "fall");
@@ -30,7 +30,7 @@ void Player::OnUpdate()
     mAnimator->UpdateCurrentAnimation();
 
     if (mDirection.x == 0 && !mPData->isCrouching) {
-        if (!mPData->isGrounded) {
+        if (!mPData->isGrounded && GetGravitySpeed() > 0.f) {
             SetState(FALL);
         }
         else {

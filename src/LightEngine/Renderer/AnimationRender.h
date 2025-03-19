@@ -11,11 +11,10 @@ protected:
 	float mTimer = 0.f;
 	float mTimePerFrame;
 	float mAnimSpeed = 1.f;
-
-	bool mIsFinished = false;
 	bool mIsLoop;
 	
 public:
+	bool mIsFinished = false;
 
 	/// <summary>
 	/// Defini les proprietees de l'animation grace a la SpriteSheet et au nom de l'animation
@@ -23,6 +22,9 @@ public:
 	/// <param name="spritesheetname">: Nom de la SpriteSheet</param>
 	/// <param name="spritename">: Nom de l'animation</param>
 	AnimationRender(const char* spritesheetname, const char* spritename);
+
+	void SetIsFinished(bool value) { mIsFinished = value; }
+	bool GetIsFinished() { return mIsFinished; }
 
 	/// <summary>
 	/// Gere le changement du masque (et donc de la frame)

@@ -17,6 +17,7 @@ void Animator::AddAnimation(const char* spritesheetname, const char* spritename)
 void Animator::SetCurrentAnimation(std::string& spritename)
 {
 	mCurrentAnim = mAnimMap.at(spritename);
+	mCurrentAnim->SetIsFinished(false);
 }
 
 void Animator::SetRatio(sf::Vector2f& nratio)
