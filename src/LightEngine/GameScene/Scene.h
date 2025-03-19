@@ -6,6 +6,8 @@ class SceneManager;
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Color.hpp>
 
+class Player;
+
 class Scene
 {
 private:
@@ -15,6 +17,8 @@ private:
 	void SetGameManager(GameManager* pGameManager) { mpGameManager = pGameManager; }
 	
 protected:
+	Player* mPlayer;
+
 	Scene() = default;
 
 	virtual void OnInitialize() = 0;
@@ -22,6 +26,7 @@ protected:
 	virtual void OnUpdate() = 0;
 
 public:
+	virtual Player* GetPlayer() { return mPlayer; }
 	
 	template<typename T>
 	T* CreateCircleEntity(float radius, const sf::Color& color);

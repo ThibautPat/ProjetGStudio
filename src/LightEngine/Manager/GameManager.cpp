@@ -5,10 +5,11 @@
 #include "../Other/Debug.h"
 #include "TextureManager.h"
 #include "SceneManager.h"
-
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
+#include "../GameScene/TestScene.h"
+#include "../GameEntity/Player.h"
 
 GameManager::GameManager()
 {
@@ -48,19 +49,24 @@ void GameManager::PhysiqueUpdate()
 
 			if (entity->IsColliding(otherEntity))
 			{
-				if (entity->IsRigidBody() && otherEntity->IsRigidBody())
-				{
-					entity->Repulse(otherEntity);
-				}
-
 				entity->OnCollision(otherEntity);
 				otherEntity->OnCollision(entity);
+
+				if (entity->IsRigidBody() && otherEntity->IsRigidBody())
+				{
+					if (otherEntity->IsKinematic()) {
+						entity->Block(otherEntity);
+					}
+					else {
+						entity->Repulse(otherEntity);
+					}
+				}
 			}
-			else if (entity->hasCollidingLastFrame)
+			else if (entity->hasCollidedLastFrame)
 			{
 				
 				entity->mBoolGravity = true;
-				entity->hasCollidingLastFrame = false;
+				entity->hasCollidedLastFrame = false;
 			}
 		}
 	}
@@ -90,7 +96,7 @@ void GameManager::CreateWindow(unsigned int width, unsigned int height, const ch
 {
 	_ASSERT(mpWindow == nullptr);
 
-	mpWindow = new sf::RenderWindow(sf::VideoMode(width, height), title, sf::Style::None);
+	mpWindow = new sf::RenderWindow(sf::VideoMode(width, height), title, sf::Style::Default);
 	mpWindow->setFramerateLimit(fpsLimit);
 
 	mWindowWidth = width;

@@ -9,10 +9,10 @@ AABBCollider::AABBCollider(float xMin, float yMin, float xMax, float yMax) : Col
 
 bool AABBCollider::IsColliding(Collider* pOther) {
 	int gap = 0;
-	if (mCollidedFace.y == 1) {
+	if (mCollidingFace.y == 1) {
 		gap = 1;
 	}
-	if (mCollidedFace.y == -1) {
+	if (mCollidingFace.y == -1) {
 		gap = -1;
 	}
 	sf::Rect bound(mXMin, mYMin+gap, mWidth, mHeight);
@@ -51,22 +51,22 @@ bool AABBCollider::IsColliding(Collider* pOther) {
 	if (penetrationx > penetrationy) {
 		if (mCollideFace.y < 0)
 		{
-			mCollidedFace = sf::Vector2f(0, -1);
+			mCollidingFace = sf::Vector2f(0, -1);
 		}
 		if (mCollideFace.y > 0)
 		{
-			mCollidedFace = sf::Vector2f(0, 1);
+			mCollidingFace = sf::Vector2f(0, 1);
 		}
 	}
 	//Collision on x axe
 	if (penetrationx < penetrationy) {
 		if (mCollideFace.x < 0)
 		{
-			mCollidedFace = sf::Vector2f(-1, 0); 
+			mCollidingFace = sf::Vector2f(-1, 0); 
 		}
 		if (mCollideFace.x > 0)
 		{
-			mCollidedFace = sf::Vector2f(1, 0); 
+			mCollidingFace = sf::Vector2f(1, 0); 
 		}
 	}
 	//--------------------------------------------------------------

@@ -46,23 +46,23 @@ void TestScene2::OnInitialize()
 	mView = new sf::View(sf::FloatRect(0, 0, GetWindowWidth(), GetWindowHeight())); // Ajout de la cam�ra
 	m_InstanceGameManager = GameManager::Get();
 
-	Checkpoint* Checkpoint2 = CreateRectEntity<Checkpoint>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
-	Checkpoint2->SetPosition(300, 670);
-	Checkpoint2->SetRigidBody(false);
-	Checkpoint2->SetIsKinematic(true);
-	Checkpoint2->SetGravity(false);
+	//Checkpoint* Checkpoint2 = CreateRectEntity<Checkpoint>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
+	//Checkpoint2->SetPosition(300, 670);
+	//Checkpoint2->SetRigidBody(false);
+	//Checkpoint2->SetIsKinematic(true);
+	//Checkpoint2->SetGravity(false);
 
-	Checkpoint* Checkpoint1 = CreateRectEntity<Checkpoint>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
-	Checkpoint1->SetPosition(-100, 670);
-	Checkpoint1->SetRigidBody(false);
-	Checkpoint1->SetIsKinematic(true);
-	Checkpoint1->SetGravity(false);
+	//Checkpoint* Checkpoint1 = CreateRectEntity<Checkpoint>(100, 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
+	//Checkpoint1->SetPosition(-100, 670);
+	//Checkpoint1->SetRigidBody(false);
+	//Checkpoint1->SetIsKinematic(true);
+	//Checkpoint1->SetGravity(false);
 
-	DeadlyObstacle* DeadlyObstacle1 = CreateRectEntity<DeadlyObstacle>(100, 100, sf::Color::Green); // Ajout du DeadlyObstacle et setup
-	DeadlyObstacle1->SetPosition(900, 670);
-	DeadlyObstacle1->SetRigidBody(false);
-	DeadlyObstacle1->SetIsKinematic(true);
-	DeadlyObstacle1->SetGravity(false);
+	//DeadlyObstacle* DeadlyObstacle1 = CreateRectEntity<DeadlyObstacle>(100, 100, sf::Color::Green); // Ajout du DeadlyObstacle et setup
+	//DeadlyObstacle1->SetPosition(900, 670);
+	//DeadlyObstacle1->SetRigidBody(false);
+	//DeadlyObstacle1->SetIsKinematic(true);
+	//DeadlyObstacle1->SetGravity(false);
 
 	Player* pEntity = CreateRectEntity<Player>(100, 100, sf::Color::Blue); // Ajout du Player et setup
 	pEntity->SetGravity(true);
@@ -115,7 +115,6 @@ void TestScene2::OnUpdate()
 
 		if (cooEntity.y + entity->GetShape()->getGlobalBounds().height * 0.5f > 720)
 		{
-			entity->secondJump = 2;
 			entity->SetGravity(false);
 			entity->SetPosition(cooEntity.x, 720 - entity->GetShape()->getGlobalBounds().height * 0.5f, 0.f, 0.f);
 		}

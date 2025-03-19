@@ -1,8 +1,6 @@
 #pragma once
-
 #include <vector>
 #include <string>
-
 #include "TextureRender.h"
 
 class AnimationRender : public TextureRender
@@ -31,6 +29,8 @@ public:
 	/// </summary>
 	void UpdateAnimation();
 
+	void Draw(Entity* entity, sf::RenderWindow* window) override {};
+	
 	void SetAnimationSpeed(int speed) { mAnimSpeed = speed; }
 
 	bool IsLoop() { return mIsLoop; }

@@ -29,14 +29,12 @@ protected:
     int mTag = -1;
     bool mRigidBody = false;
     bool mKinematic = false;
-    bool hasCollidingLastFrame = false;
     bool mBoolGravity = true;
     float mGravitySpeed = 0.0f;
     float mSpeed = 0.0f;
 
 public:
-
-    int secondJump = 2;
+    bool hasCollidedLastFrame = false;
 
     Entity() = default;
     virtual ~Entity() = default;
@@ -75,6 +73,7 @@ public:
     virtual Collider* GetCollider() = 0;
     virtual sf::Shape* GetShape() = 0;
     virtual void Repulse(Entity* other) = 0;
+    virtual void Block(Entity* other) = 0;
 
     // Render
     virtual TextureRender* GetRender() { return nullptr; }

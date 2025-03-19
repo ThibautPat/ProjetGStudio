@@ -27,6 +27,7 @@ public:
 
     // Physique
     void Repulse(Entity* other) override;
+    void Block(Entity* other) override {};
     bool IsColliding(Entity* other);
     bool IsInside(float x, float y);
     void Update() override;

@@ -44,16 +44,11 @@ void RectangleEntity::Initialize(float height, float width, const sf::Color& col
 
 void RectangleEntity::Repulse(Entity* other)
 {
-    if (IsKinematic())
-    {
-        SetPosition(GetPosition(0.f, 0.f).x, GetPosition(0.f, 0.f).y);
+    if (*mCollider->GetCollideFace() == sf::Vector2f(0.f, 0.f)) {
         return;
     }
-    if (other->IsKinematic())
-    {
-        other->SetPosition(other->GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y);
-    }
 
+    // Calcul des positions, distances et normalisation
     sf::Vector2f distance = GetPosition(0.f, 0.f) - other->GetPosition(0.f, 0.f);
     float sqrLength = (distance.x * distance.x) + (distance.y * distance.y);
     float length = std::sqrt(sqrLength);
@@ -67,84 +62,59 @@ void RectangleEntity::Repulse(Entity* other)
     sf::Vector2f normal = distance / length;
     sf::Vector2f translation = overlap * normal;
 
-    sf::Vector2f position1 = GetPosition(0.f, 0.f) - translation;
-    sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation;
+    sf::Vector2f position1 = GetPosition(0.f, 0.f) - translation * 0.01f;
+    sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation * 0.12f;
+
+    if (mCollider->GetCollideFace()->x != 0)
+    {
+        // Collision horizontale
+        SetPosition(position1.x, GetPosition(0.f, 0.f).y);
+        other->SetPosition(position2.x, other->GetPosition(0.f, 0.f).y);
+        mSpeed = 0.f;
+    }
+
+    Block(other);
+}
+
+void RectangleEntity::Block(Entity* other)
+{
+    if (*mCollider->GetCollideFace() == sf::Vector2f(0.f, 0.f)) {
+        return;
+    }
+
+    // Récupération des dimensions avec des noms plus parlants
+    int entityWidth = mShape.getGlobalBounds().width;
+    int otherWidth = other->GetShape()->getGlobalBounds().width;
+    int entityHeight = mShape.getGlobalBounds().height;
+    int otherHeight = other->GetShape()->getGlobalBounds().height;
 
     int place = 0;
     if (mCollider->GetCollideFace()->x != 0)
     {
         // Collision horizontale : on utilise les largeurs
         place = (mCollider->GetCollideFace()->x > 0) ? 1 : -1;
-        if ((mMove.x <= 0) || (mMove.x >= 0))
-        {
-            SetPosition(other->GetPosition(0.f, 0.f).x - place * (otherWidth * 0.5f + entityWidth * 0.5f), GetPosition(0.f, 0.f).y);
-            mSpeed = 0.f;
-        }
+        SetPosition(other->GetPosition(0.f, 0.f).x - place * (otherWidth * 0.5f + entityWidth * 0.5f), GetPosition(0.f, 0.f).y);
+        mSpeed = 0.f;
     }
-    else
-    {
-        // Collision verticale : on utilise les hauteurs
-        int gap = 0;
-        if (mCollider->GetCollideFace()->y == 1)
-        {
+	else
+	{
+		// Collision verticale : on utilise les hauteurs
+        place = (mCollider->GetCollideFace()->y > 0) ? 1 : -1;
 
-            mReverse = false;
-            place = 1;
-            mGravitySpeed = 0.f;
-            mBoolGravity = false;
-            secondJump = 2;
-            gap = 1;
-        }
-        else if (mCollider->GetCollideFace()->y == -1 && !other->IsTag(TestScene::Tag::METALIC_OBSTACLE))
-        {
-
-            mReverse = false;
-            mBoolGravity = true;
-            mGravitySpeed = 0.f;
-            place = -1;
-            gap = -10;
-        }
-		else 
+		if (mCollider->GetCollideFace()->y == 1)
 		{
-
-            mReverse = true;
-            secondJump = 2; 
-            mBoolGravity = false;
+            SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) - 0.5f);
             mGravitySpeed = 0.f;
-            place = -1;
-            gap = -1;
+			mBoolGravity = false;
 		}
-            if (other->IsTag(TestScene::Tag::BOUCING_OBSTACLE))
-            {
-				SetGravity(true);
-                SetGravitySpeed(-600.f * static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->y);
-                SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) -gap );
-            }
-            else if (mCollider->GetCollideFace()->y == -1 && !other->IsTag(TestScene::Tag::METALIC_OBSTACLE))
-            {
+		else {
+			mBoolGravity = true;
+			mGravitySpeed = 0.f;
+            SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) + 1 - int(mReverse));
+        }
 
-                SetGravity(true);
-                SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f)+1);
-			}
-            else if (mCollider->GetCollideFace()->y == 1 && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0)))
-            {
-				mClockJump.restart(); 
-                mGravitySpeed = -600.f;
-                SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) - gap);
-            }
-            else if (mCollider->GetCollideFace()->y == -1 && other->IsTag(TestScene::Tag::METALIC_OBSTACLE) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0)))
-            {
-				mClockJump.restart();  
-                SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) - gap);
-            }
-
-            else
-            {
-                SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f));
-            }
-            hasCollidingLastFrame = true;
-        
-    }
+		hasCollidedLastFrame = true;
+	}
 }
 
 void RectangleEntity::Update()
