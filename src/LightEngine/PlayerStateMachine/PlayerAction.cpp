@@ -145,7 +145,7 @@ void PlayerAction_Walk::OnUpdate(Player* pOwner)
 
 void PlayerAction_Fall::OnStart(Player* pOwner)
 {
-	std::cout << "FALL" << std::endl;
+	std::cout << "FALL" << std::endl; 
 }
 
 void PlayerAction_Fall::OnUpdate(Player* pOwner)

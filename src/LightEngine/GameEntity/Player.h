@@ -5,7 +5,6 @@
 #include "../Entity/RectangleEntity.h"
 
 class AnimationRender;
-class Render;
 class TextureRender;
 class ActionPlayer;
 class TextureManager;
@@ -30,6 +29,10 @@ struct PlayerData
     bool isCrouching = false;
     
 	sf::Vector2f nratioTexture = sf:: Vector2f(1,1);
+
+    sf::Clock RespawnClock;
+    sf::Vector2f mLastCheckPoint;
+    bool playerIsDead = false;
 };
 
 // Classe repr�sentant un joueur, h�ritant de RectangleEntity
@@ -65,7 +68,7 @@ private:
 
     // Actions associ�es aux �tats
     ActionPlayer* mActions[STATE_COUNT];
-	TextureRender* GetRender() { return (TextureRender*)mTextured; };
+	TextureRender* GetRender() { return (TextureRender*)mTextured; }
 
     // M�thode pour d�finir une transition d'�tat
     void SetTransition(PlayerStateList from, PlayerStateList to, bool value) { mTransitions[(int)from][(int)to] = value; }
@@ -79,8 +82,9 @@ public:
     //Au moment d'une collision
     void OnCollision(Entity* other) override;
 
-    // Gestion du rendu du joueur
-    Render* GetRender() { return (Render*)mTextured; };
+    void PlayerRespawn();
+
+    void PlayerDeath();
 
     // M�thode pour initialiser le joueur
     void OnInitialize() override;

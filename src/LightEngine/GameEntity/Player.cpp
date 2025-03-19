@@ -2,7 +2,6 @@
 #include "../Other/Debug.h"
 #include "../Manager/TextureManager.h"
 #include "../PlayerStateMachine/PlayerAction.h"
-#include "../PlayerStateMachine/PlayerCondition.h"
 #include "../GameScene/TestScene.h"
 #include "../Renderer/AnimationRender.h"
 #include "../Collider/AABBCollider.h"
@@ -63,6 +62,39 @@ void Player::OnCollision(Entity* other)
     else {
         mPData->isGrounded = false; // Sinon, il n'est pas au sol
     }
+    if (other->IsTag(TestScene::Tag::CHECKPOINT))
+    {
+        mPData->mLastCheckPoint = other->GetPosition(0.f, 0.f); // On set le dernier checkpoint  
+    }
+    if (other->IsTag(TestScene::Tag::DEADLYOBSTACLE))
+    {
+        PlayerDeath(); 
+    }
+    if (other->IsTag(TestScene::Tag::END_LEVEL))
+    {
+
+    }
+}
+
+void  Player::PlayerRespawn()
+{
+    if (mPData->playerIsDead) // Si le joueur est mort
+    {
+        SetSpeed(0); // On reset la vitesse du joueur
+        SetGravitySpeed(0); // On reset la vitesse de gravit� du joueur
+        SetPosition(mPData->mLastCheckPoint.x, mPData->mLastCheckPoint.y); // On respawn le joueur au dernier checkpoint
+        if (mPData->RespawnClock.getElapsedTime().asSeconds() > 5) // Si le joueur est mort depuis plus de 5 seconde
+        {
+            SetGravity(true); // On r�active la gravit� 
+            mPData->playerIsDead = false;
+        }
+    }
+}
+
+void Player::PlayerDeath()
+{
+    mPData->RespawnClock.restart(); // On restart le timer de respawn 
+    mPData->playerIsDead = true;
 }
 
 void Player::Move(sf::Vector2f movement, float dt)

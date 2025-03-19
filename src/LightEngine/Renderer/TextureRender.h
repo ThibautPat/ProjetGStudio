@@ -21,7 +21,7 @@ public:
 	/// </summary>
 	/// <param name="entity"></param>
 	/// <param name="window"></param>
-	void Draw(Entity* entity, sf::RenderWindow* window);
+	virtual void Draw(Entity* entity, sf::RenderWindow* window);
 
 	/// <summary>
 	/// Selectionne une texture depuis un fichier et l'associe � un nom (l'ajoute dans le TextureManager). Defini la zone de la texture (du disctionnaire) a conserver au rendu.
