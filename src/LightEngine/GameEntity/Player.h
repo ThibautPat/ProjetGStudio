@@ -3,6 +3,7 @@
 #include <iostream>
 #include "../Manager/GameManager.h"
 #include "../Entity/RectangleEntity.h"
+#include "../Renderer/Animator.h"
 
 class AnimationRender;
 class TextureRender;
@@ -55,7 +56,7 @@ public:
 
 private:
     // Gestionnaires de textures
-    AnimationRender* mTextured;
+    Animator* mAnimator;
     TextureManager* mAs;
 
     // �tat actuel du joueur
@@ -68,12 +69,12 @@ private:
 
     // Actions associ�es aux �tats
     ActionPlayer* mActions[STATE_COUNT];
-	TextureRender* GetRender() { return (TextureRender*)mTextured; }
-
+   
     // M�thode pour d�finir une transition d'�tat
     void SetTransition(PlayerStateList from, PlayerStateList to, bool value) { mTransitions[(int)from][(int)to] = value; }
 
-public:
+public: 
+
     // M�thodes pour d�placer le joueur
     void Move(sf::Vector2f movement, float dt);
     void OnUpdate() override;
@@ -98,6 +99,7 @@ public:
 
     // Accesseurs pour les donn�es du joueur (PData)
     PlayerData* GetPlayerData() const { return mPData; }
+    TextureRender* GetRender() override;
 
     // Amis de la classe (acc�s � des m�thodes priv�es)
     friend class PlayerAction_Jump;

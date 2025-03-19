@@ -15,31 +15,31 @@ void TestScene::OnInitialize()
 	mView = new sf::View(sf::FloatRect(0, -340, GetWindowWidth() + 56.25f, GetWindowHeight() + 100)); // Ajout de la cam�ra
 	m_InstanceGameManager = GameManager::Get();
 
-	BackGround* pEntity7 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
-	pEntity7->SetPosition(0, 205);
-	pEntity7->SetRigidBody(false);
-	pEntity7->SetIsKinematic(true);
-	pEntity7->SetGravity(false);
-	pEntity7->SetBackGroundTexture("..//..//..//res//Assets//Background//sky_mercure.png");
-	pEntity7->SetTag(Tag::BACK_GROUND1);
+	//BackGround* pEntity7 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
+	//pEntity7->SetPosition(0, 205);
+	//pEntity7->SetRigidBody(false);
+	//pEntity7->SetIsKinematic(true);
+	//pEntity7->SetGravity(false);
+	//pEntity7->SetBackGroundTexture("..//..//..//res//Assets//Background//sky_mercure.png");
+	//pEntity7->SetTag(Tag::BACK_GROUND1);
 
-	BackGround* pEntity8 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
-	pEntity8->SetPosition(mView->getCenter().x, 205);
-	pEntity8->SetRigidBody(false);
-	pEntity8->SetIsKinematic(true);
-	pEntity8->SetGravity(false);
-	pEntity8->SetBackGroundTexture("..//..//..//res//Assets//Background//upsky_background_mercure.png");
-	pEntity8->SetTag(Tag::BACK_GROUND2BIS);
+	//BackGround* pEntity8 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
+	//pEntity8->SetPosition(mView->getCenter().x, 205);
+	//pEntity8->SetRigidBody(false);
+	//pEntity8->SetIsKinematic(true);
+	//pEntity8->SetGravity(false);
+	//pEntity8->SetBackGroundTexture("..//..//..//res//Assets//Background//upsky_background_mercure.png");
+	//pEntity8->SetTag(Tag::BACK_GROUND2BIS);
 
-	BackGround* pEntity9 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
-	pEntity9->SetPosition(mView->getCenter().x - 30, 205);
-	pEntity9->SetRigidBody(false);
-	pEntity9->SetIsKinematic(true);
-	pEntity9->SetGravity(false);
-	pEntity9->SetBackGroundTexture("..//..//..//res//Assets//Background//upsky_background_mercure.png");
-	pEntity9->SetTag(Tag::BACK_GROUND2);
+	//BackGround* pEntity9 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
+	//pEntity9->SetPosition(mView->getCenter().x - 30, 205);
+	//pEntity9->SetRigidBody(false);
+	//pEntity9->SetIsKinematic(true);
+	//pEntity9->SetGravity(false);
+	//pEntity9->SetBackGroundTexture("..//..//..//res//Assets//Background//upsky_background_mercure.png");
+	//pEntity9->SetTag(Tag::BACK_GROUND2);
 
-	mPlayer = CreateRectEntity<Player>(256, 128, sf::Color::Red); // Ajout du Player et setup
+	mPlayer = CreateRectEntity<Player>(256, 128, sf::Color::Transparent); // Ajout du Player et setup
 	mPlayer->SetGravity(true);
 	mPlayer->SetRigidBody(true);
 	mPlayer->SetIsKinematic(false);

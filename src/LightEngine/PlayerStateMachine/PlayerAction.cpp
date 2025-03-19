@@ -5,6 +5,8 @@
 void PlayerAction_Idle::OnStart(Player* pOwner)
 {
 	std::cout << "IDLE" << std::endl;
+	std::string AnimName = "idle";
+	pOwner->mAnimator->SetCurrentAnimation(AnimName);
 }
 void PlayerAction_Idle::OnUpdate(Player* pOwner)
 {
@@ -25,8 +27,11 @@ void PlayerAction_Idle::OnUpdate(Player* pOwner)
 void PlayerAction_Jump::OnStart(Player* pOwner)
 {
 	std::cout << "JUMP" << std::endl;
+	std::string AnimName = "jump";
+	pOwner->mAnimator->SetCurrentAnimation(AnimName);
 
-	if (pOwner->mReverse) {
+	if (pOwner->mReverse) 
+	{
 		pOwner->mReverse = false;
 		pOwner->SetPosition(pOwner->GetPosition(0.f, 0.f).x, pOwner->GetPosition(0.f, 0.f).y + 1);
 	}
@@ -62,6 +67,8 @@ void PlayerAction_Jump::OnUpdate(Player* pOwner)
 void PlayerAction_Crouch::OnStart(Player* pOwner)
 {
 	std::cout << "CROUCH" << std::endl;
+	std::string AnimName = "OnCrouch";
+	pOwner->mAnimator->SetCurrentAnimation(AnimName);
 }
 void PlayerAction_Crouch::OnUpdate(Player* pOwner)
 {
@@ -123,6 +130,8 @@ void PlayerAction_Crouch::OnUpdate(Player* pOwner)
 void PlayerAction_Walk::OnStart(Player* pOwner)
 {
 	std::cout << "WALK" << std::endl;
+	std::string AnimName = "walk";
+	pOwner->mAnimator->SetCurrentAnimation(AnimName);
 }
 void PlayerAction_Walk::OnUpdate(Player* pOwner)
 {
@@ -146,6 +155,8 @@ void PlayerAction_Walk::OnUpdate(Player* pOwner)
 void PlayerAction_Fall::OnStart(Player* pOwner)
 {
 	std::cout << "FALL" << std::endl; 
+	std::string AnimName = "fall";
+	pOwner->mAnimator->SetCurrentAnimation(AnimName);
 }
 
 void PlayerAction_Fall::OnUpdate(Player* pOwner)

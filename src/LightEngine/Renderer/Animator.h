@@ -6,7 +6,7 @@
 
 class AnimationRender;
 
-class Animator
+class Animator 
 {
 protected:
 	std::map<std::string, AnimationRender*> mAnimMap;
@@ -17,7 +17,7 @@ protected:
 	sf::Vector2f mRatio;
 
 public:
-	Animator() { mRatio = sf::Vector2f(0, 0); }
+	Animator() { mRatio = sf::Vector2f(1, 1); }
 
 	void AddAnimation(const char* spritesheetname, const char* spritename);
 

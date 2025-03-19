@@ -14,13 +14,20 @@ void Player::OnInitialize()
     mAs = GameManager::Get()->GetTextureManager();
 
     //Setup de la gestion de textures
-    mAs->LoadSpriteSheet("../../../res/Assets/SpriteSheet/JSON Sola.json", "../../../res/Assets/SpriteSheet/spitesheet_animation_personnage.png", "player");
-    mTextured = new AnimationRender("player", "walk");
+    mAs->LoadSpriteSheet("../../../res/Assets/SpriteSheet/Character.json", "../../../res/Assets/SpriteSheet/spritesheet_character.png", "player");
+    mAnimator = new Animator();
+    mAnimator->AddAnimation("player", "walk");
+    mAnimator->AddAnimation("player", "jump");
+    mAnimator->AddAnimation("player", "idle");
+    //mAnimator->AddAnimation("player", "StartCrouch");
+    mAnimator->AddAnimation("player", "OnCrouch");
+    //mAnimator->AddAnimation("player", "EndCrouch");
+    mAnimator->AddAnimation("player", "fall");
 }
 
 void Player::OnUpdate() 
 {
-    mTextured->UpdateAnimation();
+    mAnimator->UpdateCurrentAnimation();
 
     if (mDirection.x == 0 && !mPData->isCrouching) {
         if (!mPData->isGrounded) {
@@ -31,13 +38,17 @@ void Player::OnUpdate()
         }
     }
 
-
     mActions[(int)mState]->OnUpdate(this);
 
     std::string text2 = std::to_string((int)mSpeed);
     Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 50, text2, sf::Color::White);
     std::string text3 = std::to_string((int)mPData->isGrounded);
     Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 70, text3, sf::Color::Red);
+}
+
+TextureRender* Player::GetRender()
+{
+    return mAnimator->GetCurrentAnimation();
 }
 
 void Player::OnCollision(Entity* other)

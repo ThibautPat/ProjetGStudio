@@ -7,6 +7,9 @@ sf::Texture* TextureManager::LoadSpriteSheet(const char* jsonpath, const char* s
 	sf::Texture* text = new sf::Texture();
 	if (!text->loadFromFile(sourcepath))
 		return nullptr;
+	if (text == nullptr)
+		return nullptr;
+
 	mSpriteSheet.insert({ spritesheetname , text });
 
 	json* njson = Utils::Parse(jsonpath);
