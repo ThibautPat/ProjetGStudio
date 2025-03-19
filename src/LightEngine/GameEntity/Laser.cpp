@@ -2,11 +2,16 @@
 #include "../Manager/GameManager.h"
 #include "../GameEntity/Player.h"
 
+void Laser::Initialize(float x, float y, const sf::Color& color)
+{
+	mStart.x = x;
+	mStart.y = y;
+}
+
 void Laser::OnInitialize()
 {
 	mSizeY = 10;
 	mSizeY = 0;
-	mStart;
 
 	mRigidBody = false;
 	mKinematic = true;
