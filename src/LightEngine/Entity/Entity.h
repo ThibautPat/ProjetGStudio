@@ -8,7 +8,7 @@ constexpr float AIR_RESISTANCE = GRAVITY_ACCEL / 4.0f;
 
 class Scene;
 class Collider;
-class Render;
+class TextureRender;
 class TextureManager;
 
 class Entity {
@@ -76,7 +76,7 @@ public:
     virtual void Block(Entity* other) = 0;
 
     // Render
-    virtual Render* GetRender() { return nullptr; }
+    virtual TextureRender* GetRender() { return nullptr; }
 
     // Lifecycle
     void Destroy();

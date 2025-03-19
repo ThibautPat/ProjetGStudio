@@ -10,31 +10,33 @@ class TextureRender;
 class ActionPlayer;
 class TextureManager;
 
-// Structure contenant les données liées au joueur, comme la hauteur du saut, les vitesses, etc.
+// Structure contenant les donnï¿½es liï¿½es au joueur, comme la hauteur du saut, les vitesses, etc.
 struct PlayerData
 {
     float mJumpHeight = 600.f;  // Hauteur du saut
-    float mJumpTime = 0.3f;     // Durée du saut
-    float pJumpDuration = 0;    // Durée actuelle du saut
+    float mJumpTime = 0.3f;     // Durï¿½e du saut
+    float pJumpDuration = 0;    // Durï¿½e actuelle du saut
 
     float mMinSpeed = 0.f;      // Vitesse minimale
     float mMaxSpeedWalk = 20000.f; // Vitesse maximale en marchant
     float mMaxSpeedCrouch = 10000.f; // Vitesse maximale en accroupi
 
-    float mAcceleration = 700.f;  // Accélération du joueur
-    float mDeceleration = 500.f;  // Décélération du joueur
+    float mAcceleration = 700.f;  // Accï¿½lï¿½ration du joueur
+    float mDeceleration = 500.f;  // Dï¿½cï¿½lï¿½ration du joueur
 
     sf::Vector2f mDirection = sf::Vector2f(0.f, 0.f);
 
     bool isGrounded = false;
     bool isCrouching = false;
+    
+	sf::Vector2f nratioTexture = sf:: Vector2f(1,1);
 };
 
-// Classe représentant un joueur, héritant de RectangleEntity
+// Classe reprï¿½sentant un joueur, hï¿½ritant de RectangleEntity
 class Player : public RectangleEntity
 {
 public:
-    // Énumération des états possibles du joueur
+    // ï¿½numï¿½ration des ï¿½tats possibles du joueur
     enum PlayerStateList
     {
         IDLE,
@@ -43,7 +45,7 @@ public:
         JUMP,
         FALL,
 
-        COUNT // Nombre total d'états
+        COUNT // Nombre total d'ï¿½tats
     };
 
     static constexpr int STATE_COUNT = static_cast<int>(PlayerStateList::COUNT);
@@ -53,22 +55,23 @@ private:
     AnimationRender* mTextured;
     TextureManager* mAs;
 
-    // État actuel du joueur
+    // ï¿½tat actuel du joueur
     PlayerStateList mState = PlayerStateList::IDLE;
     PlayerData* mPData;
     sf::Vector2f mLastMovement;
 
-    // Tableau des transitions d'état
+    // Tableau des transitions d'ï¿½tat
     bool mTransitions[STATE_COUNT][STATE_COUNT];
 
-    // Actions associées aux états
+    // Actions associï¿½es aux ï¿½tats
     ActionPlayer* mActions[STATE_COUNT];
+	TextureRender* GetRender() { return (TextureRender*)mTextured; };
 
-    // Méthode pour définir une transition d'état
+    // Mï¿½thode pour dï¿½finir une transition d'ï¿½tat
     void SetTransition(PlayerStateList from, PlayerStateList to, bool value) { mTransitions[(int)from][(int)to] = value; }
 
 public:
-    // Méthodes pour déplacer le joueur
+    // Mï¿½thodes pour dï¿½placer le joueur
     void Move(sf::Vector2f movement, float dt);
     void OnUpdate() override;
     void FixedUpdate(float dt) override;
@@ -79,20 +82,20 @@ public:
     // Gestion du rendu du joueur
     Render* GetRender() { return (Render*)mTextured; };
 
-    // Méthode pour initialiser le joueur
+    // Mï¿½thode pour initialiser le joueur
     void OnInitialize() override;
 
-    // Gestion de l'état du joueur
+    // Gestion de l'ï¿½tat du joueur
     bool SetState(PlayerStateList newState);
 
     // Destructeur
     ~Player();
     Player();
 
-    // Accesseurs pour les données du joueur (PData)
+    // Accesseurs pour les donnï¿½es du joueur (PData)
     PlayerData* GetPlayerData() const { return mPData; }
 
-    // Amis de la classe (accès à des méthodes privées)
+    // Amis de la classe (accï¿½s ï¿½ des mï¿½thodes privï¿½es)
     friend class PlayerAction_Jump;
     friend class PlayerAction_Crouch;
     friend class PlayerAction_Walk;

@@ -35,7 +35,7 @@ inline T* GameManager::GetEntity(int tag)
 	for (Entity* entity : mEntities)
 	{
 		if (entity->IsTag(tag))
-			return entity;
+			return (T*)entity;
 	}
 
 	return nullptr;

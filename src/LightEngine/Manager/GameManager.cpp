@@ -64,6 +64,7 @@ void GameManager::PhysiqueUpdate()
 			}
 			else if (entity->hasCollidedLastFrame)
 			{
+				
 				entity->mBoolGravity = true;
 				entity->hasCollidedLastFrame = false;
 			}
@@ -95,7 +96,7 @@ void GameManager::CreateWindow(unsigned int width, unsigned int height, const ch
 {
 	_ASSERT(mpWindow == nullptr);
 
-	mpWindow = new sf::RenderWindow(sf::VideoMode(width, height), title);
+	mpWindow = new sf::RenderWindow(sf::VideoMode(width, height), title, sf::Style::Fullscreen);
 	mpWindow->setFramerateLimit(fpsLimit);
 
 	mWindowWidth = width;

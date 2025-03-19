@@ -49,8 +49,8 @@ void Entity::Fall(float dt)
 	if (mBoolGravity == false)
 		return;
 
-	if (mGravitySpeed >= 2000.f)
-		mGravitySpeed = 2000.f;
+	if (mGravitySpeed >= 1000.f)
+		mGravitySpeed = 1000.f;
 
 	if (sf::Joystick::isButtonPressed(0, 4))
 	{

@@ -32,6 +32,7 @@ public:
 
 class PlayerAction_Walk : public ActionPlayer
 {
+	bool isIdle = false;
 public:
     void OnStart(Player* pOwner) override;
     void OnUpdate(Player* pOwner) override;

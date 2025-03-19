@@ -18,6 +18,7 @@ protected:
 	sf::Clock menuClock;
 	sf::Clock escapeClockGap;
 	sf::Clock RespawnClock;
+	sf::Clock TeleportClock;
 	sf::Vector2f mLastCheckPoint;
 	bool playerIsDead = false;
 

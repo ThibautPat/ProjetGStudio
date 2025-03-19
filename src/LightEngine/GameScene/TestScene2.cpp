@@ -104,11 +104,14 @@ void TestScene2::OnUpdate()
 						PlayerDeath(); // Le joueur meurt
 					}
 				}
+
 			}
+
 			//--------------------------------
 		}
 
 		sf::Vector2f cooEntity = entity->GetPosition(0.f, 0.f);
+
 
 		if (cooEntity.y + entity->GetShape()->getGlobalBounds().height * 0.5f > 720)
 		{
