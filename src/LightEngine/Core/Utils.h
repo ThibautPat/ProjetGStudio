@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/System/Vector2.hpp>
-#include "../Library/json.hpp"
+#include "../nlohmann/json.hpp"
 #include <iostream>
 
 using json = nlohmann::json;
@@ -36,4 +36,4 @@ namespace Utils
 	T GetInfoFromArray(json* jsontoexploit, const char* arrayName, const char* infoname);
 };
 
-#include "Utils.inl"
+//#include "Utils.inl"

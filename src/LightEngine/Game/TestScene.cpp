@@ -59,78 +59,70 @@ void TestScene::OnInitialize()
 
 	json donnees;
 	fichier >> donnees;
+	for (int i = 0; i < donnees["Rows"]; i++) {
+		for (int j = 0; j < donnees["Columns"]; j++) {
 
+			std::string tmp = donnees["MapPhysics"][i][j];
+			int colorR = (int)donnees["Physics"][tmp]["Color"][0];
+			int colorG = (int)donnees["Physics"][tmp]["Color"][1];
+			int colorB = (int)donnees["Physics"][tmp]["Color"][2];
+			int colorA = (int)donnees["Physics"][tmp]["Color"][3];
+			if (tmp == "1")
+			{
+				Player* pEntity1 = CreateRectEntity<Player>(230, 110, sf::Color(colorR, colorG, colorB, colorA));
+				pEntity1->SetGravity((bool)donnees["Physics"][tmp]["Gravity"]);
+				pEntity1->SetRigidBody((bool)donnees["Physics"][tmp]["RigidBody"]);
+				pEntity1->SetIsKinematic((bool)donnees["Physics"][tmp]["IsKinematic"]);
+				pEntity1->SetPosition(128 * j, 128 * i);
+				pEntity1->SetTag((int)donnees["Physics"][tmp]["Tag"]);
+			}
+		}
+	}
 	// Accéder aux données JSON
 	for (int i = 0; i < donnees["Rows"]; i++) {
 		for (int j = 0; j < donnees["Columns"]; j++) {
 
-			std::string tmp = donnees["Cases"][i][j];
+			std::string tmp = donnees["MapPhysics"][i][j];
+			int colorR = (int)donnees["Physics"][tmp]["Color"][0];
+			int colorG = (int)donnees["Physics"][tmp]["Color"][1];
+			int colorB = (int)donnees["Physics"][tmp]["Color"][2];
+			int colorA = (int)donnees["Physics"][tmp]["Color"][3];
+			
+			
+			if (tmp == "2" || tmp == "7" || tmp == "10" || tmp == "6" || tmp == "8" || tmp == "9" || tmp == "11") // "7" "10" "6" "8" "9" "11
+			{
+				RectangleEntity* pEntity2 = CreateRectEntity<RectangleEntity>(128, 128, sf::Color(colorR,colorG,colorB,colorA)); 
+				pEntity2->SetGravity((bool)donnees["Physics"][tmp]["Gravity"]);
+				pEntity2->SetRigidBody((bool)donnees["Physics"][tmp]["RigidBody"]);
+				pEntity2->SetIsKinematic((bool)donnees["Physics"][tmp]["IsKinematic"]);
+				pEntity2->SetPosition(128 * j, 128 * i);
+				pEntity2->SetTag((int)donnees["Physics"][tmp]["Tag"]);
+			}
+			if (tmp == "0")
+			{
+				
+			}
+			if (tmp == "3")
+			{
+				Checkpoint* pEntity4 = CreateRectEntity<Checkpoint>(128, 128, sf::Color(colorR, colorG, colorB, colorA));
+				pEntity4->SetGravity((bool)donnees["Physics"][tmp]["Gravity"]);
+				pEntity4->SetRigidBody((bool)donnees["Physics"][tmp]["RigidBody"]);
+				pEntity4->SetIsKinematic((bool)donnees["Physics"][tmp]["IsKinematic"]);
+				pEntity4->SetPosition(128 * j, 128 * i);
+				pEntity4->SetTag((int)donnees["Physics"][tmp]["Tag"]);
+			}
+			if (tmp == "5")
+			{
+				DeadlyObstacle* pEntity5 = CreateRectEntity<DeadlyObstacle>(128, 128, sf::Color(colorR, colorG, colorB, colorA));
+				pEntity5->SetGravity((bool)donnees["Physics"][tmp]["Gravity"]);
+				pEntity5->SetRigidBody((bool)donnees["Physics"][tmp]["RigidBody"]);
+				pEntity5->SetIsKinematic((bool)donnees["Physics"][tmp]["IsKinematic"]);
+				pEntity5->SetPosition(128 * j, 128 * i);
+				pEntity5->SetTag((int)donnees["Physics"][tmp]["Tag"]);
+			}
 
-			Player* pEntity1 = CreateRectEntity<Player>(128, 256, sf::Color::Blue);
-			pEntity1->SetGravity((bool)donnees[tmp]["Gravity"]);
-			pEntity1->SetRigidBody((bool)donnees[tmp]["RigidBody"]);
-			pEntity1->SetIsKinematic((bool)donnees[tmp]["IsKinematic"]);
-			pEntity1->SetPosition(100 * j, 100 * i);
 		}
-	}
-
-
-
-	for (int i = 0; i < donnees["Rows"]; i++) {
-		for (int j = 0; j < donnees["Columns"]; j++) {
-
-			if (donnees["Cases"][i][j] == "P") { 
-				RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Cyan); // Ajout du DeadlyObstacle et setup
-				pEntity->SetGravity(false);
-				pEntity->SetRigidBody(true);
-				pEntity->SetIsKinematic(true);
-				pEntity->SetPosition(j * 100, i * 100);
-				pEntity->SetTag(Tag::OBSTACLE);
-			}
-
-			else if (donnees["Cases"][i][j] == "C") { // Si la case est un Checkpoint
-				Checkpoint* pEntity = CreateRectEntity<Checkpoint>(i * 100, j * 100, sf::Color::Yellow); // Ajout du Checkpoint et setup
-				pEntity->SetGravity(false);
-				pEntity->SetRigidBody(false);
-				pEntity->SetIsKinematic(false);
-				pEntity->SetPosition(i * 100, j * 100);
-				pEntity->SetTag(Tag::CHECKPOINT);
-			}
-
-			else if (donnees["Cases"][i][j] == "D") { // Si la case est un DeadlyObstacle
-				DeadlyObstacle* pEntity = CreateRectEntity<DeadlyObstacle>(i * 100, j * 100, sf::Color::Red); // Ajout du DeadlyObstacle et setup
-				pEntity->SetGravity(false);
-				pEntity->SetRigidBody(true);
-				pEntity->SetIsKinematic(true);
-				pEntity->SetPosition(i * 100, j * 100);
-				pEntity->SetTag(Tag::DEADLYOBSTACLE);
-			}
-
-			else if (donnees["Cases"][i][j] == "E") { // Si la case est la fin du niveau
-				RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Magenta); // Ajout de la fin du niveau et setup
-				pEntity->SetGravity(false);
-				pEntity->SetRigidBody(false);
-				pEntity->SetIsKinematic(false);
-				pEntity->SetPosition(i * 100, j * 100);
-				pEntity->SetTag(Tag::END_LEVEL);
-			}
-
-			else if (donnees["Cases"][i][j] == "M") { // Si la case est un MetalicObstacle
-				RectangleEntity* pEntity = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::White); // Ajout du MetalicObstacle et setup
-				pEntity->SetGravity(false);
-				pEntity->SetRigidBody(true);
-				pEntity->SetIsKinematic(true);
-				pEntity->SetPosition(j * 100, i * 100);
-				pEntity->SetTag(Tag::METALIC_OBSTACLE);
-			}
-		}
-	}
-	RectangleEntity* Ground = CreateRectEntity<RectangleEntity>(5000, 10000, sf::Color::Green);
-	Ground->SetPosition(0, 3850);
-	Ground->SetRigidBody(true);
-	Ground->SetIsKinematic(true);
-	Ground->SetGravity(false);
-	Ground->SetTag(Tag::OBSTACLE);
+	}	
 }
 
 void TestScene::OnEvent(const sf::Event& event)

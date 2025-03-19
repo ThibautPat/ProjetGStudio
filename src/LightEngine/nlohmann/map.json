@@ -1,22 +1,124 @@
 {
-  "Rows": 15,
-  "Columns": 12,
-  "Cases": [
-    [ "P",  "M", "M", "M", "M", "P", "P", "P", "P", "P", "P", "P" ],
-    [ "P",  "E", "A", "A", "A", "A", "A", "A", "A", "A", "A", "P" ],
-    [ "P",  "P", "A", "A", "A", "A", "A", "A", "A", "A", "P", "P" ],
-    [ "P",  "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "P" ],
-    [ "P",  "A", "A", "A", "A", "A", "A", "A", "P", "A", "A", "P" ],
-    [ "P", "PL", "A", "A", "A", "A", "A", "A", "A", "A", "A", "P" ],
-    [ "P",  "M", "A", "A", "A", "A", "A", "A", "A", "A", "A", "P" ],
-    [ "P",  "A", "A", "A", "A", "A", "P", "A", "A", "A", "A", "P" ],
-    [ "P",  "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "P" ],
-    [ "P",  "P", "A", "A", "A", "A", "A", "A", "A", "A", "A", "P" ],
-    [ "P",  "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "P" ],
-    [ "P",  "A", "A", "A", "P", "A", "A", "A", "A", "A", "A", "P" ],
-    [ "P",  "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "P" ],
-    [ "P",  "P", "A", "A", "A", "A", "A", "A", "A", "A", "A", "P" ]
-  ],
-  "Acronym": "PL = player, P = platform, A = empty, C = Checkpoint, D = Death, E = Exit, M = Metalic platform",
-  "Acronym_of_Dir" :  "U = Up, D = Down, L = Left, R = Right"
+  
+    "Rows": 15,
+    "Columns": 12,
+    "MapPhysics": [
+      [ "2", "7", "7", "7", "7", "2", "2", "2", "2", "2", "2", "2" ],
+      [ "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+      [ "2", "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+      [ "2", "0", "0", "0", "0", "0", "0", "0", "2", "0", "0", "2" ],
+      [ "2", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+      [ "2", "7", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+      [ "2", "0", "0", "0", "0", "0", "2", "0", "0", "0", "0", "2" ],
+      [ "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+      [ "2", "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+      [ "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+      [ "2", "0", "0", "0", "2", "0", "0", "0", "0", "0", "0", "2" ],
+      [ "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+      [ "2", "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+      [ "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2" ],
+      [ "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2" ]
+    ],
+
+
+
+  "Acronym": "1 = player, 2 = platform, 0 = empty, 3 = Checkpoint, 5 = Death, 6 = Exit, 7 = Metalic platform, 8 = Teleporter, 9 = Moving Platform, 10 = Bouncing, 11 = Obstacle",
+    "Physics":
+  {
+    "0": {
+      "RigidBody": false,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 99,
+      "Color": [ 0, 0, 0, 0 ]
+    },
+
+    "1": {
+      "RigidBody": true,
+      "Gravity": true,
+      "IsKinematic": false,
+      "Tag": 0,
+      "Color": [ 0, 0, 0, 0 ],
+      "Sprite": "player"
+    },
+
+    "2": {
+      "RigidBody": true,
+      "Gravity": false,
+      "IsKinematic": true,
+      "Tag": 4,
+      "Color": [ 0, 50, 255, 255 ]
+
+    },
+
+    "7": {
+      "RigidBody": true,
+      "Gravity": false,
+      "IsKinematic": true,
+      "Tag": 3,
+      "Color": [ 255, 255, 255, 255 ]
+    },
+
+
+    "3": {
+      "RigidBody": false,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 1,
+      "Color": [ 0, 255, 255, 255 ]
+    },
+
+    "5": {
+      "RigidBody": false,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 2,
+      "Color": [ 255, 0, 0, 255 ]
+    },
+
+    "6": {
+      "RigidBody": false,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 5,
+      "Color": [ 255, 0, 0, 255 ]
+    },
+
+    "8": {
+      "RigidBody": false,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 6,
+      "Color": [ 255, 0, 0, 255 ]
+    },
+
+    "9": {
+      "RigidBody": true,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 7,
+      "Color": [ 255, 0, 0, 255 ]
+    },
+
+    "10": {
+      "RigidBody": true,
+      "Gravity": false,
+      "IsKinematic": true,
+      "Tag": 8,
+      "Color": [ 255, 0, 0, 255 ]
+    },
+
+    "11": {
+      "RigidBody": true,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 4,
+      "Color": [ 255, 0, 0, 255 ]
+    }
+  },
+  "Acronym_of_Dir": "U = Up, D = Down, L = Left, R = Right",
+
+  "MapSprites": [
+    []
+  ]
 }
