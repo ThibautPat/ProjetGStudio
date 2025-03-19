@@ -1,11 +1,12 @@
 ﻿#include "PlayerAction.h"
 #include "../GameScene/TestScene.h"
-
 #include "../Collider/AABBCollider.h"
+#include "../Renderer/AnimationRender.h"
 
 void PlayerAction_Jump::OnStart(Player* pOwner)
 {
 	pOwner->mPData->pJumpDuration = 0;
+	//pOwner->GetRender() = AnimationRender("player", "jump");
 }
 
 void PlayerAction_Jump::OnUpdate(Player* pOwner)

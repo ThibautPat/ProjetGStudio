@@ -26,9 +26,9 @@ class Player : public RectangleEntity
 	StateMachine<Player> mStateMachine;
 
 	//Gestionnaire de texture de l'entity
-	AnimationRender* mTextured;
+	AnimationRender* mTextureRender;
 
-	//Gestionnaire de texture de la scene
+	//Raccourci vers le gestionnaire de texture du game manager
 	TextureManager* mAs;
 
 protected:
@@ -54,7 +54,7 @@ public:
 	PlayerData* mPData;
 	sf::Vector2f mLastMovement;
 
-	Render* GetRender() { return (Render*)mTextured; };
+	TextureRender* GetRender() { return (TextureRender*)mTextureRender; };
 
 	void OnInitialize() override;
 	sf::Vector2f InputDirection();

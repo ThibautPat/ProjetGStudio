@@ -8,11 +8,14 @@
 class AnimationRender : public TextureRender
 {
 protected:
-	int mFrameNb = 0;
+	int mFrameNb;
 	int mFrameCounter = 0;
 	float mTimer = 0.f;
-	float mTimePerFrame = 0.f;
-	bool mIsLoop = true;
+	float mTimePerFrame ;
+	float mAnimSpeed = 1.f;
+
+	bool mIsFinished = false;
+	bool mIsLoop;
 	
 public:
 
@@ -29,6 +32,7 @@ public:
 	void UpdateAnimation();
 
 	bool IsLoop() { return mIsLoop; }
+	void SetAnimationSpeed(int speed) { mAnimSpeed = speed; }
 
 };
 

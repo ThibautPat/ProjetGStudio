@@ -15,12 +15,16 @@ AnimationRender::AnimationRender(const char* spritesheetname, const char* sprite
 
     mFrameNb = Utils::GetInfoFromArray<int>(njson, spritename, "frames");
     mIsLoop = Utils::GetInfoFromArray<bool>(njson, spritename, "loop");
-    mTimePerFrame = 1.f / (mFrameNb);
+    mTimePerFrame = 1.f / (mFrameNb * mAnimSpeed);
 
 }
 
 void AnimationRender::UpdateAnimation()
 {
+    //ADD
+    if (mIsFinished)
+        return;
+
     float dt = GameManager::Get()->GetDeltaTime();
     mTimer += dt;
 
@@ -49,7 +53,15 @@ void AnimationRender::UpdateAnimation()
                 mTextRect.left -= mTextRect.width * (mFrameNb);
             }
             else {
-                mFrameCounter = mFrameNb;
+                //ADD
+                sf::IntRect nrect =
+                    sf::IntRect(
+                        mTextRect.left - mTextRect.width, mTextRect.top,
+                        mTextRect.width, mTextRect.height
+                    );
+                SetTextureRect(nrect);
+                //mFrameCounter = mFrameNb-1;
+                mIsFinished = true;
             }
                
         }

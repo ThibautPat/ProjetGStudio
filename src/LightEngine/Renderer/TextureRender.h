@@ -1,24 +1,36 @@
 #pragma once
 
-#include "../Entity/Entity.h"
+#include "SFML/Graphics.hpp"
 #include "../Manager/TextureManager.h"
 
-#include "Render.h"
-
-class TextureRender : public Render
+class TextureRender //: public Render
 {
 protected:
+
+	sf::IntRect mTextRect;
+
+	std::string mSpriteSheetName;
+	std::string mSpriteName;
+
+	sf::Vector2f mRenderRatio;
 
 public:
 
 	TextureRender(const char* spritesheetname, const char* spritename);
 
+	void SetNames(std::string spritesheetname, std::string spritename);
+	void SetTextureRect(sf::IntRect& rect) { mTextRect = rect; }
+	void SetRation(sf::Vector2f& nratio) { mRenderRatio = nratio; }
+
+	sf::IntRect* GetTextureRect() { return &mTextRect; }
+	const std::string& GetSpriteSheetName() { return mSpriteSheetName; }
+
 	/// <summary>
-	/// Draw de la texture de l'entity (herite de Render)
+	/// Draw de la texture de l'entity
 	/// </summary>
 	/// <param name="entity"></param>
 	/// <param name="window"></param>
-	void Draw(Entity* entity, sf::RenderWindow* window) override;
+	void Draw(Entity* entity, sf::RenderWindow* window);
 
 	/// <summary>
 	/// Selectionne une texture depuis un fichier et l'associe � un nom (l'ajoute dans le TextureManager). Defini la zone de la texture (du disctionnaire) a conserver au rendu.

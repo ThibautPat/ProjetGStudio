@@ -4,7 +4,7 @@
 
 	"structure": "single",
 
-	"walk": { "x" : 0, "y" : 0, "frames": 6, "loop": false },
+	"walk": { "x" : 0, "y" : 0, "frames": 6, "loop": true },
 
 	"jump": { "x" : 0, "y" : 1, "frames": 4, "loop": false },
 

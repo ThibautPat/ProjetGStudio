@@ -30,7 +30,7 @@ void Player::FixedUpdate(float dt)
 void Player::OnUpdate()
 {
 	mStateMachine.Update();
-	mTextured->UpdateAnimation();
+	mTextureRender->UpdateAnimation();
 
 	// Debug de valeur
 	const char* stateName = GetStateName((PlayerStateList)mStateMachine.GetCurrentState());
@@ -49,7 +49,7 @@ void Player::OnInitialize()
 	//Setup de la gestion de textures
 	mAs->LoadSpriteSheet("../../../res/Assets/SpriteSheet/JSON Sola.json", "../../../res/Assets/SpriteSheet/spitesheet_animation_personnage.png", "player");
 
-	mTextured = new AnimationRender("player", "walk");
+	mTextureRender = new AnimationRender("player", "idle");
 }
 
 sf::Vector2f Player::InputDirection()
@@ -61,14 +61,14 @@ sf::Vector2f Player::InputDirection()
 		dir_x = -1;
 		//TODO maybe somewhere better ?
 		sf::Vector2f nratio = sf::Vector2f(dir_x, 1);
-		mTextured->SetRation(nratio);
+		mTextureRender->SetRation(nratio);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) > 10)
 	{
 		dir_x = 1;
 		//TODO maybe somewhere better ?
 		sf::Vector2f nratio = sf::Vector2f(dir_x, 1);
-		mTextured->SetRation(nratio);
+		mTextureRender->SetRation(nratio);
 	}
 
 	return sf::Vector2f(dir_x, 0);

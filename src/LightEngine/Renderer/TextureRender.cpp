@@ -20,6 +20,13 @@ TextureRender::TextureRender(const char* spritesheetname, const char* spritename
 	mTextRect.top = mTextRect.height * Utils::GetInfoFromArray<int>(njson, charArray, "y");
 }
 
+void TextureRender::SetNames(std::string spritesheetname, std::string spritename)
+{
+	mSpriteSheetName = spritesheetname;
+	mSpriteName = spritename;
+
+}
+
 void TextureRender::Draw(Entity* entity, sf::RenderWindow* window)
 {
 	TextureManager* tm = GameManager::Get()->GetTextureManager();
