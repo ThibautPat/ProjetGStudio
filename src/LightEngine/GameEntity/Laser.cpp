@@ -2,6 +2,21 @@
 #include "../Manager/GameManager.h"
 #include "../GameEntity/Player.h"
 
+void Laser::OnInitialize()
+{
+	mSizeY = 10;
+	mSizeY = 0;
+	mStart;
+
+	mRigidBody = false;
+	mKinematic = true;
+	mBoolGravity = false;
+	SetTag(Scene::Tag::LASER);
+}
+
+
+//------------------------------
+
 Laser::Laser(int nb, sf::Vector2f& dir, sf::IntRect& laser, const sf::Color& color)
 {
 	mNb = nb;
