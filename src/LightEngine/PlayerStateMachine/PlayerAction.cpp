@@ -1,11 +1,16 @@
 ﻿#include "PlayerAction.h"
 #include "../GameScene/TestScene.h"
+#include "../Renderer/AnimationRender.h"
+
 
 #include "../Collider/AABBCollider.h"
 
 void PlayerAction_Jump::OnStart(Player* pOwner)
 {
 	pOwner->mPData->pJumpDuration = 0;
+
+	TextureRender* r = pOwner->GetRender();
+	*r = AnimationRender("player", "jump");
 }
 
 void PlayerAction_Jump::OnUpdate(Player* pOwner)
@@ -30,6 +35,8 @@ void PlayerAction_Jump::OnEnd(Player* pOwner)
 
 void PlayerAction_Crouch::OnStart(Player* pOwner)
 {
+	TextureRender* r = pOwner->GetRender();
+	*r = AnimationRender("player", "OnCrouch");
 }
 
 void PlayerAction_Crouch::OnUpdate(Player* pOwner)
@@ -82,6 +89,8 @@ void PlayerAction_Crouch::OnEnd(Player* pOwner)
 
 void PlayerAction_JumpOnCrouch::OnStart(Player* pOwner)
 {
+	TextureRender* r = pOwner->GetRender();
+	*r = AnimationRender("player", "fall");
 }
 
 void PlayerAction_JumpOnCrouch::OnUpdate(Player* pOwner)
@@ -103,6 +112,8 @@ void PlayerAction_JumpOnCrouch::OnEnd(Player* pOwner)
 
 void PlayerAction_Walk::OnStart(Player* pOwner)
 {
+	TextureRender* r = pOwner->GetRender();
+	*r = AnimationRender("player", "walk");
 }
 
 void PlayerAction_Walk::OnUpdate(Player* pOwner)
@@ -125,10 +136,12 @@ void PlayerAction_Walk::OnUpdate(Player* pOwner)
 
 void PlayerAction_Walk::OnEnd(Player* pOwner)
 {
+
 }
 
 void PlayerAction_Idle::OnStart(Player* pOwner)
 {
+	isIdle = false;
 }
 
 void PlayerAction_Idle::OnUpdate(Player* pOwner)
@@ -145,6 +158,12 @@ void PlayerAction_Idle::OnUpdate(Player* pOwner)
 	{
 		pOwner->SetSpeed(0);
 	}
+	if (pOwner->GetSpeed() == 0 && isIdle == false)
+	{
+		isIdle = true;
+		TextureRender* r = pOwner->GetRender();
+		*r = AnimationRender("player", "idle");
+	}
 }
 
 void PlayerAction_Idle::OnEnd(Player* pOwner)
@@ -153,6 +172,8 @@ void PlayerAction_Idle::OnEnd(Player* pOwner)
 
 void PlayerAction_OnJumpWalk::OnStart(Player* pOwner)
 {
+	TextureRender* r = pOwner->GetRender();
+	*r = AnimationRender("player", "fall");
 }
 
 void PlayerAction_OnJumpWalk::OnUpdate(Player* pOwner)
@@ -179,6 +200,8 @@ void PlayerAction_OnJumpWalk::OnEnd(Player* pOwner)
 
 void PlayerAction_OnJumpIdle::OnStart(Player* pOwner)
 {
+	TextureRender* r = pOwner->GetRender();
+	*r = AnimationRender("player", "fall");
 }
 
 void PlayerAction_OnJumpIdle::OnUpdate(Player* pOwner)
@@ -203,6 +226,8 @@ void PlayerAction_OnJumpIdle::OnEnd(Player* pOwner)
 
 void PlayerAction_OnJumpCrouch::OnStart(Player* pOwner)
 {
+	TextureRender* r = pOwner->GetRender();
+	*r = AnimationRender("player", "fall");
 }
 
 void PlayerAction_OnJumpCrouch::OnUpdate(Player* pOwner)
@@ -255,6 +280,8 @@ void PlayerAction_OnJumpCrouch::OnEnd(Player* pOwner)
 
 void PlayerAction_FallWalk::OnStart(Player* pOwner)
 {
+	TextureRender* r = pOwner->GetRender();
+	*r = AnimationRender("player", "fall");
 }
 
 void PlayerAction_FallWalk::OnUpdate(Player* pOwner)
@@ -282,6 +309,8 @@ void PlayerAction_FallWalk::OnEnd(Player* pOwner)
 
 void PlayerAction_FallIdle::OnStart(Player* pOwner)
 {
+	TextureRender* r = pOwner->GetRender();
+	*r = AnimationRender("player", "fall");
 }
 
 void PlayerAction_FallIdle::OnUpdate(Player* pOwner)
@@ -306,6 +335,8 @@ void PlayerAction_FallIdle::OnEnd(Player* pOwner)
 
 void PlayerAction_FallCrouch::OnStart(Player* pOwner)
 {
+	TextureRender* r = pOwner->GetRender();
+	*r = AnimationRender("player", "fall");
 }
 
 void PlayerAction_FallCrouch::OnUpdate(Player* pOwner)

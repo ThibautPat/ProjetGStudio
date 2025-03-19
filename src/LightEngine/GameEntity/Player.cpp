@@ -60,8 +60,14 @@ void Player::OnInitialize()
 
 sf::Vector2f Player::InputDirection()
 {
-	float dir_x = 0;
-
+	if (mReverse)
+	{
+   		mPData->nratioTexture.y = -1;
+	}
+	else
+	{
+		mPData->nratioTexture.y = 1;
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) < -10)
 	{
 		dir_x = -1;
@@ -77,7 +83,8 @@ sf::Vector2f Player::InputDirection()
 		mAnim->SetRatio(nratio);
 	}
 
-	return sf::Vector2f(dir_x, 0);
+	mTextured->SetRation(mPData->nratioTexture);
+	return mPData->nratioTexture; 
 }
 
 Player::~Player()
@@ -86,6 +93,7 @@ Player::~Player()
 
 Player::Player() : mStateMachine(this, PlayerStateList::COUNT)
 {
+
 	SetTag(TestScene::Tag::PLAYER); 
 
 	{
@@ -684,7 +692,6 @@ Player::Player() : mStateMachine(this, PlayerStateList::COUNT)
 				}
 			}
 		}
-		mStateMachine.SetState(PlayerStateList::IDLE);
 	}
 
 }
