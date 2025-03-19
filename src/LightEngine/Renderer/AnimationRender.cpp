@@ -16,6 +16,7 @@ AnimationRender::AnimationRender(const char* spritesheetname, const char* sprite
     mIsLoop = Utils::GetInfoFromArray<bool>(njson, spritename, "loop");
 
     mTimePerFrame = 1.f / (mFrameNb * mAnimSpeed);
+    mOgx = mTextRect.left;
 
 }
 
@@ -33,6 +34,7 @@ void AnimationRender::UpdateAnimation()
         mFrameCounter++;
         mTimer = 0.f;
 
+        //if (mTextRect.left + mTextRect.width <= mOgx + mTextRect.width * mFrameNb)
         {
             sf::IntRect nrect =
                 sf::IntRect(
