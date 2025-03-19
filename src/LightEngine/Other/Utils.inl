@@ -10,7 +10,7 @@ namespace Utils
 			std::cerr << "Erreur : " << infoname << " n'existe pas dans ce json" << std::endl;
 			return T();
 		}
-			
+
 		T val = jsontoexploit->at(infoname);
 		return val;
 	}

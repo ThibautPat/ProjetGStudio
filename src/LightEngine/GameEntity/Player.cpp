@@ -49,7 +49,7 @@ void Player::OnInitialize()
 	//Setup de la gestion de textures
 	mAs->LoadSpriteSheet("../../../res/Assets/SpriteSheet/JSON Sola.json", "../../../res/Assets/SpriteSheet/spitesheet_animation_personnage.png", "player");
 
-	mTextured = new AnimationRender("player", "walk");
+	mTextured = new AnimationRender("player", "idle");
 }
 
 sf::Vector2f Player::InputDirection()

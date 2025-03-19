@@ -26,7 +26,7 @@
 	
 	"EndCrouch": { "x" : 3, "y" : 5, "frames": 3, "loop": false },
 
-	"idle": { "x" : 0, "y" : 5, "frames": 5, "loop": true },
+	"idle": { "x" : 0, "y" : 6, "frames": 5, "loop": true },
 	
 	"StartPush": { "x" : 0, "y" : 6, "frames": 3, "loop": false },
 	
