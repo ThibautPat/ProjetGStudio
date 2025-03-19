@@ -9,7 +9,7 @@
 #include "../Game/Checkpoint.h"
 #include "../Game/DeadlyObstacle.h"
 #include "../nlohmann/json_fwd.hpp"
-
+#include "../Game/Level.h"
 
 using json = nlohmann::json;
 //TODO in player class ----------
@@ -51,78 +51,9 @@ void TestScene::OnInitialize()
 	mView = new sf::View(sf::FloatRect(0, 0, GetWindowWidth(), GetWindowHeight())); // Ajout de la cam�ra
 	m_InstanceGameManager = GameManager::Get();
 
-	std::ifstream fichier("..//..//..//src//LightEngine//nlohmann//map.json");
-	if (!fichier.is_open()) {
-		std::cerr << "Erreur : impossible d'ouvrir le fichier JSON." << std::endl;
-		return;
-	}
-
-	json donnees;
-	fichier >> donnees;
-	for (int i = 0; i < donnees["Rows"]; i++) {
-		for (int j = 0; j < donnees["Columns"]; j++) {
-
-			std::string tmp = donnees["MapPhysics"][i][j];
-			int colorR = (int)donnees["Physics"][tmp]["Color"][0];
-			int colorG = (int)donnees["Physics"][tmp]["Color"][1];
-			int colorB = (int)donnees["Physics"][tmp]["Color"][2];
-			int colorA = (int)donnees["Physics"][tmp]["Color"][3];
-			if (tmp == "1")
-			{
-				Player* pEntity1 = CreateRectEntity<Player>(230, 110, sf::Color(colorR, colorG, colorB, colorA));
-				pEntity1->SetGravity((bool)donnees["Physics"][tmp]["Gravity"]);
-				pEntity1->SetRigidBody((bool)donnees["Physics"][tmp]["RigidBody"]);
-				pEntity1->SetIsKinematic((bool)donnees["Physics"][tmp]["IsKinematic"]);
-				pEntity1->SetPosition(128 * j, 128 * i);
-				pEntity1->SetTag((int)donnees["Physics"][tmp]["Tag"]);
-			}
-		}
-	}
-	// Accéder aux données JSON
-	for (int i = 0; i < donnees["Rows"]; i++) {
-		for (int j = 0; j < donnees["Columns"]; j++) {
-
-			std::string tmp = donnees["MapPhysics"][i][j];
-			int colorR = (int)donnees["Physics"][tmp]["Color"][0];
-			int colorG = (int)donnees["Physics"][tmp]["Color"][1];
-			int colorB = (int)donnees["Physics"][tmp]["Color"][2];
-			int colorA = (int)donnees["Physics"][tmp]["Color"][3];
-			
-			
-			if (tmp == "2" || tmp == "7" || tmp == "10" || tmp == "6" || tmp == "8" || tmp == "9" || tmp == "11") // "7" "10" "6" "8" "9" "11
-			{
-				RectangleEntity* pEntity2 = CreateRectEntity<RectangleEntity>(128, 128, sf::Color(colorR,colorG,colorB,colorA)); 
-				pEntity2->SetGravity((bool)donnees["Physics"][tmp]["Gravity"]);
-				pEntity2->SetRigidBody((bool)donnees["Physics"][tmp]["RigidBody"]);
-				pEntity2->SetIsKinematic((bool)donnees["Physics"][tmp]["IsKinematic"]);
-				pEntity2->SetPosition(128 * j, 128 * i);
-				pEntity2->SetTag((int)donnees["Physics"][tmp]["Tag"]);
-			}
-			if (tmp == "0")
-			{
-				
-			}
-			if (tmp == "3")
-			{
-				Checkpoint* pEntity4 = CreateRectEntity<Checkpoint>(128, 128, sf::Color(colorR, colorG, colorB, colorA));
-				pEntity4->SetGravity((bool)donnees["Physics"][tmp]["Gravity"]);
-				pEntity4->SetRigidBody((bool)donnees["Physics"][tmp]["RigidBody"]);
-				pEntity4->SetIsKinematic((bool)donnees["Physics"][tmp]["IsKinematic"]);
-				pEntity4->SetPosition(128 * j, 128 * i);
-				pEntity4->SetTag((int)donnees["Physics"][tmp]["Tag"]);
-			}
-			if (tmp == "5")
-			{
-				DeadlyObstacle* pEntity5 = CreateRectEntity<DeadlyObstacle>(128, 128, sf::Color(colorR, colorG, colorB, colorA));
-				pEntity5->SetGravity((bool)donnees["Physics"][tmp]["Gravity"]);
-				pEntity5->SetRigidBody((bool)donnees["Physics"][tmp]["RigidBody"]);
-				pEntity5->SetIsKinematic((bool)donnees["Physics"][tmp]["IsKinematic"]);
-				pEntity5->SetPosition(128 * j, 128 * i);
-				pEntity5->SetTag((int)donnees["Physics"][tmp]["Tag"]);
-			}
-
-		}
-	}	
+	mLevel = new Level();
+	mLevel->ChooseJson("..//..//..//src//LightEngine//nlohmann//map.json");
+	mLevel->LoadLevel();
 }
 
 void TestScene::OnEvent(const sf::Event& event)
