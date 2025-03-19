@@ -16,7 +16,6 @@ AnimationRender::AnimationRender(const char* spritesheetname, const char* sprite
     mIsLoop = Utils::GetInfoFromArray<bool>(njson, spritename, "loop");
 
     mTimePerFrame = 1.f / (mFrameNb * mAnimSpeed);
-
 }
 
 void AnimationRender::UpdateAnimation()

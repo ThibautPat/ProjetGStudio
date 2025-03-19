@@ -16,6 +16,8 @@ public:
 
 	TextureRender(const char* spritesheetname, const char* spritename);
 
+	void ResetRect();
+
 	/// <summary>
 	/// Draw de la texture de l'entity (herite de Render)
 	/// </summary>

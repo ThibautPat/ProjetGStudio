@@ -11,10 +11,11 @@ protected:
 	float mTimer = 0.f;
 	float mTimePerFrame;
 	float mAnimSpeed = 1.f;
+
+	bool mIsFinished = false;
 	bool mIsLoop;
 	
 public:
-	bool mIsFinished = false;
 
 	/// <summary>
 	/// Defini les proprietees de l'animation grace a la SpriteSheet et au nom de l'animation
@@ -31,6 +32,7 @@ public:
 	/// </summary>
 	void UpdateAnimation();
 
+	void SetFrameCounter(int frame) { mFrameCounter = 0; }
 	void SetAnimationSpeed(int speed) { mAnimSpeed = speed; }
 
 	bool IsLoop() { return mIsLoop; }

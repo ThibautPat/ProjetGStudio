@@ -20,6 +20,20 @@ TextureRender::TextureRender(const char* spritesheetname, const char* spritename
 	mTextRect.top = mTextRect.height * Utils::GetInfoFromArray<int>(njson, charArray, "y");
 }
 
+void TextureRender::ResetRect()
+{
+	TextureManager* tm = GameManager::Get()->GetTextureManager();
+	json* njson = tm->GetJson(mSpriteSheetName);
+
+	mTextRect.width = Utils::GetInfoFromArray<int>(njson, "frame_size", "width");
+	mTextRect.height = Utils::GetInfoFromArray<int>(njson, "frame_size", "height");
+
+	const char* charArray = mSpriteName.c_str();
+
+	mTextRect.left = mTextRect.width * Utils::GetInfoFromArray<int>(njson, charArray, "x");
+	mTextRect.top = mTextRect.height * Utils::GetInfoFromArray<int>(njson, charArray, "y");
+}
+
 void TextureRender::Draw(Entity* entity, sf::RenderWindow* window)
 {
 	TextureManager* tm = GameManager::Get()->GetTextureManager();
