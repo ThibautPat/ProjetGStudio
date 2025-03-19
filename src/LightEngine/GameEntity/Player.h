@@ -54,7 +54,7 @@ public:
 	PlayerData* mPData;
 	sf::Vector2f mLastMovement;
 
-	Render* GetRender() { return (Render*)mTextured; };
+	TextureRender* GetRender() { return (TextureRender*)mTextured; };
 
 	void OnInitialize() override;
 	sf::Vector2f InputDirection();

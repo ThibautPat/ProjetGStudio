@@ -47,9 +47,9 @@ void Player::OnInitialize()
 	mAs = GameManager::Get()->GetTextureManager();
 
 	//Setup de la gestion de textures
-	mAs->LoadSpriteSheet("../../../res/Assets/SpriteSheet/JSON Sola.json", "../../../res/Assets/SpriteSheet/spitesheet_animation_personnage.png", "player");
+	mAs->LoadSpriteSheet("../../../res/Assets/SpriteSheet/Character.json", "../../../res/Assets/SpriteSheet/spritesheet_character_FXpresent.png", "player");
 
-	mTextured = new AnimationRender("player", "walk");
+	mTextured = new AnimationRender("player", "respawn");
 }
 
 sf::Vector2f Player::InputDirection()

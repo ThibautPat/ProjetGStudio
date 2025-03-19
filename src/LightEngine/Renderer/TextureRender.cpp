@@ -16,8 +16,8 @@ TextureRender::TextureRender(const char* spritesheetname, const char* spritename
 
 	const char* charArray = mSpriteName.c_str();
 
-	mTextRect.left = Utils::GetInfoFromArray<int>(njson, charArray, "x");
-	mTextRect.top = Utils::GetInfoFromArray<int>(njson, charArray, "y");
+	mTextRect.left = mTextRect.width * Utils::GetInfoFromArray<int>(njson, charArray, "x");
+	mTextRect.top = mTextRect.height * Utils::GetInfoFromArray<int>(njson, charArray, "y");
 }
 
 void TextureRender::Draw(Entity* entity, sf::RenderWindow* window)
@@ -43,7 +43,9 @@ void TextureRender::Draw(Entity* entity, sf::RenderWindow* window)
 	window->draw(spr);
 }
 
-void TextureRender::SelectTexture(const char* spritesheetname, const char* spritename)
+void TextureRender::SetNames(std::string spritesheetname, std::string spritename)
 {
-	TextureRender(spritesheetname, spritename);
+	mSpriteSheetName = spritesheetname;
+	mSpriteName = spritename;
+
 }

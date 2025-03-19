@@ -14,12 +14,17 @@ AnimationRender::AnimationRender(const char* spritesheetname, const char* sprite
     json* njson = tm->GetJson(mSpriteSheetName);
 
     mFrameNb = Utils::GetInfoFromArray<int>(njson, spritename, "frames");
-    mTimePerFrame = 1.f / (mFrameNb);
+    mIsLoop = Utils::GetInfoFromArray<bool>(njson, spritename, "loop");
+
+    mTimePerFrame = 1.f / (mFrameNb * mAnimSpeed);
 
 }
 
 void AnimationRender::UpdateAnimation()
 {
+    if (mIsFinished)
+        return;
+
     float dt = GameManager::Get()->GetDeltaTime();
     mTimer += dt;
 
@@ -37,18 +42,25 @@ void AnimationRender::UpdateAnimation()
                 );
 
             SetTextureRect(nrect);
-
-            //std::cout << mTextRect.left << " " << mFrameCounter << std::endl;
         }
 
-        if ( mTextRect.left + mTextRect.width > mTextRect.width * mFrameNb )
+        if (mFrameCounter >= mFrameNb)
         {
+
             if (IsLoop()) {
                 mFrameCounter = 0;
                 mTextRect.left -= mTextRect.width * (mFrameNb);
+
             }
             else {
-                mFrameCounter = mFrameNb;
+                sf::IntRect nrect =
+                    sf::IntRect(
+                        mTextRect.left - mTextRect.width, mTextRect.top,
+                        mTextRect.width, mTextRect.height
+                    );
+
+                SetTextureRect(nrect);
+                mIsFinished = true;
             }
                
         }

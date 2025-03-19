@@ -1,0 +1,39 @@
+{
+
+	"frame_size": { "width": 256, "height": 256 },
+
+	"structure": "single",
+
+	"walk": { "x" : 0, "y" : 0, "frames": 5, "loop": true },
+
+	"jump": { "x" : 0, "y" : 1, "frames": 4, "loop": false },
+
+	"fall": { "x" : 3, "y" : 1, "frames": 1, "loop": true },
+
+	"landing": { "x" : 4, "y" : 1, "frames": 3, "loop": false },
+
+	"Startclimb": { "x" : 0, "y" : 2, "frames": 3, "loop": false },
+
+	"Onclimb": { "x" : 2, "y" : 2, "frames": 3, "loop": true },
+	
+	"Endclimb": { "x" : 4, "y" : 2, "frames": 4, "loop": false },
+
+	"death": { "x" : 0, "y" : 4, "frames": 5, "loop": false },
+	
+	"StartCrouch": { "x" : 0, "y" : 5, "frames": 3, "loop": false },
+	
+	"OnCrouch": { "x" : 2, "y" : 5, "frames": 2, "loop": true },
+	
+	"EndCrouch": { "x" : 3, "y" : 5, "frames": 3, "loop": false },
+
+	"idle": { "x" : 0, "y" : 6, "frames": 4, "loop": true },
+	
+	"StartPush": { "x" : 0, "y" : 7, "frames": 3, "loop": false },
+	
+	"OnPush": { "x" : 1, "y" : 7, "frames": 2, "loop": true },
+	
+	"EndPush": { "x" : 2, "y" : 7, "frames": 2, "loop": false },
+	
+	"respawn": { "x" : 0, "y" : 8, "frames": 2, "loop": true}
+
+}       
