@@ -9,6 +9,8 @@
 #include "../Game/Checkpoint.h"
 #include "../Game/DeadlyObstacle.h"
 #include "../nlohmann/json_fwd.hpp"
+
+
 using json = nlohmann::json;
 //TODO in player class ----------
 void TestScene::PlayerDeath()
@@ -60,14 +62,16 @@ void TestScene::OnInitialize()
 
 	// Accéder aux données JSON
 	for (int i = 0; i < donnees["Rows"]; i++) {
-		for (int j = 0; j < donnees["Columns"]; j++)
-			if (donnees["Cases"][i][j] == "PL") { // Si la case est un Player
-				Player* pEntity1 = CreateRectEntity<Player>(95, 95, sf::Color::Blue); // Ajout du Player et setup
-				pEntity1->SetGravity(true);
-				pEntity1->SetRigidBody(true);
-				pEntity1->SetIsKinematic(false);
-				pEntity1->SetPosition(100*j, 100*i);
-			}
+		for (int j = 0; j < donnees["Columns"]; j++) {
+
+			std::string tmp = donnees["Cases"][i][j];
+
+			Player* pEntity1 = CreateRectEntity<Player>(128, 256, sf::Color::Blue);
+			pEntity1->SetGravity((bool)donnees[tmp]["Gravity"]);
+			pEntity1->SetRigidBody((bool)donnees[tmp]["RigidBody"]);
+			pEntity1->SetIsKinematic((bool)donnees[tmp]["IsKinematic"]);
+			pEntity1->SetPosition(100 * j, 100 * i);
+		}
 	}
 
 
