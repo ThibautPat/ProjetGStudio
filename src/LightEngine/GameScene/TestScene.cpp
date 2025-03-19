@@ -144,8 +144,8 @@ void TestScene::OnInitialize()
 	pEntity5->SetGravity(false);
 	pEntity5->setMaxTravelDistance(200);
 	pEntity5->SetStartPosition(pEntity5->GetPosition(0,0));
-	pEntity5->SetLinearDirection(false);
-	pEntity5->SetTag(Tag::BOUCING_OBSTACLE);
+	pEntity5->SetLinearDirection(true);
+	pEntity5->SetTag(Tag::BOUCING_OBSTACLE); 
 
 	DeadlyObstacle* pEntity10 = CreateRectEntity<DeadlyObstacle>(100, 100, sf::Color::Red); // Ajout du DeadlyObstacle et setup
 	pEntity10->SetPosition(1000, 0);
@@ -242,19 +242,7 @@ void TestScene::OnUpdate()
 			//--------------------------------
 		}
 		sf::Vector2f cooEntity = entity->GetPosition(0.f, 0.f);
-
-		// Affichage de quelque informations
-		std::string textCox = std::to_string((int)cooEntity.x) + " x ";
-		std::string textCoy = std::to_string((int)cooEntity.y) + " y";
-		std::string textgrav = std::to_string((int)entity->GetGravitySpeed()) + " grav";
-		Debug::DrawText(cooEntity.x, cooEntity.y, textCox, sf::Color::White);
-		Debug::DrawText(cooEntity.x, cooEntity.y + 20, textCoy, sf::Color::White);
-		Debug::DrawText(cooEntity.x, cooEntity.y + 40, textgrav, sf::Color::White);
-		Debug::DrawCircle(cooEntity.x, cooEntity.y, 5, sf::Color::White);
-
 	}
-	std::string entitynb = std::to_string(i) + "nb entity";
-	Debug::DrawText(mView->getCenter().x - mView->getSize().x / 2 + 10, mView->getCenter().y - mView->getSize().y / 2 + 40, entitynb, sf::Color::White);
 	Debug::ShowFPS(mView->getCenter().x - mView->getSize().x / 2 + 10, mView->getCenter().y - mView->getSize().y / 2 + 10);
 
 	m_InstanceGameManager->GetWindow()->setView(*mView); // Voir si possibilit� de ne pas call la view chaque frame
