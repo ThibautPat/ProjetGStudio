@@ -29,11 +29,20 @@ void Player::OnUpdate()
 {
     mAnimator->UpdateCurrentAnimation();
 
-    if (mDirection.x == 0 && !mPData->isCrouching) {
+    if (mPData->mDirection.x == -1 && !mPData->isBackward) {
+        mAnimator->SetRatio(sf::Vector2f(-1.f, 1.f));
+        mPData->isBackward = true;
+    }
+    else if (mPData->mDirection.x == 1 && mPData->isBackward) {
+        mAnimator->SetRatio(sf::Vector2f(1.f, 1.f));
+        mPData->isBackward = false;
+    }
+
+    if (mPData->mDirection.x == 0 && !mPData->isCrouching) {
         if (!mPData->isGrounded && GetGravitySpeed() > 0.f) {
             SetState(FALL);
         }
-        else {
+        else if (mPData->isGrounded) {
             SetState(IDLE);
         }
     }

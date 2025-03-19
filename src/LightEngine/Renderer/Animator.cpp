@@ -20,7 +20,7 @@ void Animator::SetCurrentAnimation(std::string& spritename)
 	mCurrentAnim->SetIsFinished(false);
 }
 
-void Animator::SetRatio(sf::Vector2f& nratio)
+void Animator::SetRatio(sf::Vector2f nratio)
 {
 	mRatio = nratio;
 }

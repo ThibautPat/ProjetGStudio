@@ -40,7 +40,7 @@ public:
 
 	void SetNames(std::string spritesheetname, std::string spritename);
 	void SetTextureRect(sf::IntRect& rect) { mTextRect = rect; }
-	void SetRatio(sf::Vector2f& nratio) { mRenderRatio = nratio; }
+	void SetRatio(sf::Vector2f nratio) { mRenderRatio = nratio; }
 
 	sf::IntRect* GetTextureRect() { return &mTextRect; }
 	const std::string& GetSpriteSheetName() { return mSpriteSheetName; }

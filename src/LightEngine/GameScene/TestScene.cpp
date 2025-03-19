@@ -9,6 +9,7 @@
 #include "../GameEntity/BackGround.h"
 #include "../GameEntity/Teleporter.h"
 #include "../GameEntity/Moving_Platform.h"
+#include "../Renderer/TextureRender.h"
 
 void TestScene::OnInitialize()
 {
@@ -54,7 +55,7 @@ void TestScene::OnInitialize()
 }
 
 void TestScene::OnEvent(const sf::Event& event)
-{	
+{
 }
 
 void TestScene::HandleConsoleEvent()
@@ -151,9 +152,9 @@ void TestScene::HandleKeyboardEvent()
 			mPlayer->SetState(Player::PlayerStateList::FALL);
 		}
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {	
 		if (mPlayer->GetPlayerData()->isCrouching) {
-			mPlayer->GetShape()->setScale(sf::Vector2f(-1.f, -1.f));
+
 			mPlayer->SetState(Player::PlayerStateList::CROUCH);
 		}
 		else {

@@ -28,6 +28,7 @@ struct PlayerData
 
     bool isGrounded = false;
     bool isCrouching = false;
+    bool isBackward = false;
     
 	sf::Vector2f nratioTexture = sf:: Vector2f(1,1);
 

@@ -22,7 +22,7 @@ public:
 	void AddAnimation(const char* spritesheetname, const char* spritename);
 
 	void SetCurrentAnimation(std::string& spritename);
-	void SetRatio(sf::Vector2f& nratio);
+	void SetRatio(sf::Vector2f nratio);
 	AnimationRender* GetCurrentAnimation() { return mCurrentAnim; }
 
 	void UpdateCurrentAnimation();
