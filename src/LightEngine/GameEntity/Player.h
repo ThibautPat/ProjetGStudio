@@ -14,7 +14,7 @@ class TextureManager;
 struct PlayerData
 {
     float mJumpHeight = 600.f;  // Hauteur du saut
-    float mJumpTime = 0.3f;     // Dur�e du saut
+    float mJumpTime = 0.8f;     // Dur�e du saut
     float pJumpDuration = 0;    // Dur�e actuelle du saut
 
     float mMinSpeed = 0.f;      // Vitesse minimale

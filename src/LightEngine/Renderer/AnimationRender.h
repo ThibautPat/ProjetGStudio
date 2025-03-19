@@ -25,6 +25,9 @@ public:
 	/// <param name="spritename">: Nom de l'animation</param>
 	AnimationRender(const char* spritesheetname, const char* spritename);
 
+	void SetIsFinished(bool value) { mIsFinished = value; }
+	bool GetIsFinished() { return mIsFinished; }
+
 	/// <summary>
 	/// Gere le changement du masque (et donc de la frame)
 	/// </summary>

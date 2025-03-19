@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "PlayerAction.h"
 #include "../GameEntity/Player.h"
+#include "../Renderer/AnimationRender.h"
 
 void PlayerAction_Idle::OnStart(Player* pOwner)
 {
@@ -67,11 +68,16 @@ void PlayerAction_Jump::OnUpdate(Player* pOwner)
 void PlayerAction_Crouch::OnStart(Player* pOwner)
 {
 	std::cout << "CROUCH" << std::endl;
-	std::string AnimName = "OnCrouch";
+	std::string AnimName = "StartCrouch";
 	pOwner->mAnimator->SetCurrentAnimation(AnimName);
 }
 void PlayerAction_Crouch::OnUpdate(Player* pOwner)
 {
+	if (pOwner->mAnimator->GetCurrentAnimation()->GetIsFinished()) {
+		std::string AnimName = "OnCrouch";
+		pOwner->mAnimator->SetCurrentAnimation(AnimName);
+	}
+
 	float dt = FIXED_DT;
 	float spd = pOwner->GetSpeed();
 	sf::Vector2f movement = pOwner->GetPlayerData()->mDirection;
