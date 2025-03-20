@@ -1,5 +1,6 @@
 #include "Checkpoint.h"
 #include "../GameScene/TestScene.h"
+#include "../GameEntity/Player.h"
 
 void Checkpoint::OnInitialize()
 {
@@ -13,4 +14,23 @@ void Checkpoint::OnInitialize()
 
 void Checkpoint::OnUpdate()
 {
+	//Attendre la spritesheet et json
+	/*
+	if (mIsActivated)
+		return;
+
+	Player* p = GameManager::Get()->GetEntity<Player>(TestScene::Tag::PLAYER);
+	if (IsColliding((Entity*)p) == false)
+		return;
+
+	sf::IntRect checkpointon = sf::IntRect(
+		mTextureRender->GetTextureRect().left + mTextureRender->GetTextureRect().width, 
+		mTextureRender->GetTextureRect().top, 
+		mTextureRender->GetTextureRect().width, 
+		mTextureRender->GetTextureRect().height
+	);
+	mTextureRender->SetSpriteRect(checkpointon);
+	p->GetPlayerData()->mLastCheckPoint = GetPosition(0.f, 0.f);
+	mIsActivated = true;
+	*/
 }

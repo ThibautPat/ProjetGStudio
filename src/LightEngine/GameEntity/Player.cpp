@@ -106,12 +106,10 @@ void Player::OnCollision(Entity* other)
             SetState(IDLE);
         }
     }
-    if (other->IsTag(TestScene::Tag::CHECKPOINT))
-    {
-        mPData->isGrounded = false; // Sinon, il n'est pas au sol 
-    }
     if (other->IsTag(TestScene::Tag::CHECKPOINT)) 
     { 
+
+        mPData->isGrounded = false; // Utile ??? Sinon, il n'est pas au sol 
         mPData->mLastCheckPoint = other->GetPosition(0.f, 0.f); // On set le dernier checkpoint  
 
     }
