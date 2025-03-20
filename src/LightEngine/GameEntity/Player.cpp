@@ -64,25 +64,27 @@ void Player::OnCollision(Entity* other)
     }
     else if (static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->y == 1)
     {
-        if(other->IsTag(TestScene::Tag::PLATFORM) || other->IsTag(TestScene::Tag::OBSTACLE))
+		if (other->IsTag(TestScene::Tag::PLATFORM) || other->IsTag(TestScene::Tag::OBSTACLE) || other->IsTag(TestScene::Tag::METALIC_OBSTACLE))
         {
             mPData->isGrounded = true;  // Le joueur est au sol lorsqu'il touche une plateforme
         }
     }
-    else {
-        mPData->isGrounded = false; // Sinon, il n'est pas au sol
-    }
-    if (other->IsTag(TestScene::Tag::CHECKPOINT))
+    else if (!hasCollidedLastFrame)
     {
+        mPData->isGrounded = false; // Sinon, il n'est pas au sol 
+    }
+    if (other->IsTag(TestScene::Tag::CHECKPOINT)) 
+    { 
         mPData->mLastCheckPoint = other->GetPosition(0.f, 0.f); // On set le dernier checkpoint  
+
     }
-    if (other->IsTag(TestScene::Tag::DEADLYOBSTACLE))
+    if (other->IsTag(TestScene::Tag::DEADLYOBSTACLE)) 
     {
-        PlayerDeath(); 
+        PlayerDeath();  
     }
     if (other->IsTag(TestScene::Tag::END_LEVEL))
     {
-
+		GameManager::Get()->GetSceneManager()->GetScene()->SetIsEnd(true); // On set la fin du niveau
     }
 }
 
@@ -92,7 +94,7 @@ void  Player::PlayerRespawn()
     {
         SetSpeed(0); // On reset la vitesse du joueur
         SetGravitySpeed(0); // On reset la vitesse de gravit� du joueur
-        SetPosition(mPData->mLastCheckPoint.x, mPData->mLastCheckPoint.y); // On respawn le joueur au dernier checkpoint
+        SetPosition(mPData->mLastCheckPoint.x, mPData->mLastCheckPoint.y+128); // On respawn le joueur au dernier checkpoint
         if (mPData->RespawnClock.getElapsedTime().asSeconds() > 5) // Si le joueur est mort depuis plus de 5 seconde
         {
             SetGravity(true); // On r�active la gravit� 

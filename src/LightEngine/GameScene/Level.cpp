@@ -31,7 +31,7 @@ void Level::LoadLevel()
 			pEntity->SetRigidBody((bool)mMap["Physics"][tmp]["RigidBody"]);
 			pEntity->SetIsKinematic((bool)mMap["Physics"][tmp]["IsKinematic"]);
 			pEntity->SetTag((int)mMap["Physics"][tmp]["Tag"]);
-			pEntity->SetPosition(128 * j, 128 * i);
+			pEntity->SetPosition(128 * j, 128 * i -128* mMap["Rows"]);
 		}
 	}
 
@@ -50,7 +50,7 @@ void Level::LoadLevel()
 			pEntity->SetRigidBody((bool)mMap["Physics"][tmp]["RigidBody"]);
 			pEntity->SetIsKinematic((bool)mMap["Physics"][tmp]["IsKinematic"]);
 			pEntity->SetTag((int)mMap["Physics"][tmp]["Tag"]);
-			pEntity->SetPosition(128 * j, 128 * i);
+			pEntity->SetPosition(128 * j, 128 * i - 128 * mMap["Rows"]);
 
 			//if (tmp2 == "X")
 			//	continue;

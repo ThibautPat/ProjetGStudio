@@ -13,11 +13,12 @@ class Moving_Platform : public RectangleEntity
 	sf::Clock mClockMove;
 	sf::Vector2f mStartPosition;
 	int mMaxTravelDistance = 100;
+	bool isMoving = true;
 public :
 	void OnUpdate() override;
 	void OnInitialize() override;
-	void setMaxTravelDistance(int distance) { mMaxTravelDistance = distance; }
+	void setMaxTravelDistance(int distance = 100) { mMaxTravelDistance = distance; }
 	void SetStartPosition(sf::Vector2f position) { mStartPosition = position; }
-	void SetLinearDirection(bool dir) { mData->mDirectionx = dir; }
+	void SetLinearDirection(bool dir = true) { mData->mDirectionx = dir; }
 };
 

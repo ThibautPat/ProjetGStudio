@@ -9,8 +9,13 @@
 
 void TestScene::OnInitialize()
 {
-	mView = new sf::View(sf::FloatRect(0, -340, GetWindowWidth() + 56.25f, GetWindowHeight() + 100)); // Ajout de la cam�ra
+
 	m_InstanceGameManager = GameManager::Get();
+
+	
+
+	mView = new sf::View(sf::FloatRect(0, -340, GetWindowWidth() + 56.25f, GetWindowHeight() + 100)); // Ajout de la cam�ra
+	
 
 	BackGround* pEntity1 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
 	pEntity1->SetPosition(0, 205);
@@ -21,7 +26,7 @@ void TestScene::OnInitialize()
 	pEntity1->SetTag(Tag::BACK_GROUND1);
 
 	BackGround* pEntity2 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
-	pEntity2->SetPosition(mView->getCenter().x, 205);
+	pEntity2->SetPosition(mView->getCenter().x, mView->getCenter().y);
 	pEntity2->SetRigidBody(false);
 	pEntity2->SetIsKinematic(true);
 	pEntity2->SetGravity(false);
@@ -29,7 +34,7 @@ void TestScene::OnInitialize()
 	pEntity2->SetTag(Tag::BACK_GROUND2BIS);
 
 	BackGround* pEntity3 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
-	pEntity3->SetPosition(mView->getCenter().x - 30, 205);
+	pEntity3->SetPosition(mView->getCenter().x - 30, mView->getCenter().y);
 	pEntity3->SetRigidBody(false);
 	pEntity3->SetIsKinematic(true);
 	pEntity3->SetGravity(false);
@@ -43,6 +48,7 @@ void TestScene::OnInitialize()
 
 void TestScene::OnEvent(const sf::Event& event)
 {	
+
 }
 
 void TestScene::HandleConsoleEvent()
@@ -99,7 +105,7 @@ void TestScene::HandleConsoleEvent()
 		if (mPlayer->GetPlayerData()->isGrounded && !mPlayer->GetPlayerData()->isCrouching) {
 			mPlayer->SetState(Player::PlayerStateList::IDLE); // Si au sol, état "IDLE"
 		}
-		else if (!mPlayer->GetPlayerData()->isCrouching) {
+		else if (!mPlayer->GetPlayerData()->isGrounded) {
 			mPlayer->SetState(Player::PlayerStateList::FALL); // Sinon, état "FALL"
 		}
 	}
@@ -176,19 +182,6 @@ void TestScene::OnUpdate()
 	mPlayer->PlayerRespawn();
 
 	mView->setCenter(mPlayer->GetPosition(0.f, 0.f).x + 200, mPlayer->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame 
-
-	//for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
-	//{
-	//	sf::Vector2f cooEntity = entity->GetPosition(0.f, 0.f);
-
-	//	std::string textCox = std::to_string((int)cooEntity.x) + " x ";
-	//	std::string textCoy = std::to_string((int)cooEntity.y) + " y";
-	//	std::string textgrav = std::to_string((int)entity->GetGravitySpeed()) + " grav";
-	//	Debug::DrawText(cooEntity.x, cooEntity.y, textCox, sf::Color::White);
-	//	Debug::DrawText(cooEntity.x, cooEntity.y + 20, textCoy, sf::Color::White);
-	//	Debug::DrawText(cooEntity.x, cooEntity.y + 40, textgrav, sf::Color::White);
-	//	Debug::DrawCircle(cooEntity.x, cooEntity.y, 5, sf::Color::White);
-	//}
 
 	Debug::ShowFPS(mView->getCenter().x - mView->getSize().x / 2 + 10, mView->getCenter().y - mView->getSize().y / 2 + 10);
 
