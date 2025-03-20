@@ -46,11 +46,25 @@ void TestScene::OnInitialize()
 	DeadlyObstacle* DeadlyObstacle1 = CreateRectEntity<DeadlyObstacle>(100, 100, sf::Color::Red); // Ajout du DeadlyObstacle et setup
 	DeadlyObstacle1->SetPosition(900, 670);
 
-	mPlayer = CreateRectEntity<Player>(256, 128, sf::Color::Transparent); // Ajout du Player et setup
+	mPlayer = CreateRectEntity<Player>(230, 100, sf::Color::Transparent); // Ajout du Player et setup
 	mPlayer->SetGravity(true);
 	mPlayer->SetRigidBody(true);
 	mPlayer->SetIsKinematic(false);
 	mPlayer->SetPosition(0, 0);
+
+	RectangleEntity* obstacle = CreateRectEntity<RectangleEntity>(100, 100, sf::Color::Magenta);
+	obstacle->SetPosition(200, 0);
+	obstacle->SetRigidBody(true);
+	obstacle->SetIsKinematic(false);
+	obstacle->SetGravity(true);
+	obstacle->SetTag(Tag::OBSTACLE);
+
+	RectangleEntity* pEntity4 = CreateRectEntity<RectangleEntity>(50, 500, sf::Color::White);
+	pEntity4->SetPosition(100, 260);
+	pEntity4->SetRigidBody(true);
+	pEntity4->SetIsKinematic(true);
+	pEntity4->SetGravity(false);
+	pEntity4->SetTag(Tag::METALIC_OBSTACLE);
 
 	RectangleEntity* Ground = CreateRectEntity<RectangleEntity>(5000, 10000, sf::Color::Green);
 	Ground->SetPosition(0, 3250);
@@ -178,8 +192,8 @@ void TestScene::HandleKeyboardEvent()
 
 void TestScene::OnUpdate()
 {
-	HandleConsoleEvent();
-	//HandleKeyboardEvent();
+	//HandleConsoleEvent();
+	HandleKeyboardEvent();
 
 	mView->setCenter(mPlayer->GetPosition(0.f, 0.f).x + 200, mPlayer->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame 
 	for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager

@@ -20,6 +20,7 @@ struct PlayerData
     float mMinSpeed = 0.f;      // Vitesse minimale
     float mMaxSpeedWalk = 20000.f; // Vitesse maximale en marchant
     float mMaxSpeedCrouch = 10000.f; // Vitesse maximale en accroupi
+    float mMaxSpeedPush = 15000.f; // Vitesse maximale en accroupi
 
     float mAcceleration = 700.f;  // Acc�l�ration du joueur
     float mDeceleration = 500.f;  // D�c�l�ration du joueur
@@ -51,6 +52,7 @@ public:
         FALL,
         DEAD,
         RESPAWN,
+        PUSH,
 
         COUNT // Nombre total d'�tats
     };
@@ -113,4 +115,5 @@ public:
     friend class PlayerAction_Fall;
     friend class PlayerAction_Death;
     friend class PlayerAction_Respawn;
+    friend class PlayerAction_Push;
 };

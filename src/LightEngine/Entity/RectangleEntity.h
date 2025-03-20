@@ -31,7 +31,7 @@ public:
     void Initialize(float height, float width, const sf::Color& color) override;
 
     // Physique
-    void Repulse(Entity* other) override;
+    virtual void Repulse(Entity* other) override;
 	virtual void Block(Entity* other) override;
     void Update() override;
 

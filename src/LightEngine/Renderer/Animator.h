@@ -11,7 +11,6 @@ class Animator
 protected:
 	std::map<std::string, AnimationRender*> mAnimMap;
 
-	
 	AnimationRender* mCurrentAnim = nullptr;
 
 	sf::Vector2f mRatio;
@@ -23,6 +22,7 @@ public:
 
 	void SetCurrentAnimation(std::string& spritename);
 	void SetRatio(sf::Vector2f nratio);
+	sf::Vector2f GetRatio() { return mRatio; };
 	AnimationRender* GetCurrentAnimation() { return mCurrentAnim; }
 
 	void UpdateCurrentAnimation();

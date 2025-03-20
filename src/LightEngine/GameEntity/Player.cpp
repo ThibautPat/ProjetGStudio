@@ -25,6 +25,8 @@ void Player::OnInitialize()
     mAnimator->AddAnimation("player", "fall");
     mAnimator->AddAnimation("player", "death");
     mAnimator->AddAnimation("player", "respawn");
+    mAnimator->AddAnimation("player", "OnPush");
+    mAnimator->AddAnimation("player", "StartPush");
 }
 
 void Player::OnUpdate()
@@ -35,12 +37,19 @@ void Player::OnUpdate()
         SetState(WALK);
     }
 
+    if (mReverse && mAnimator->GetRatio().y == 1) {
+        mAnimator->SetRatio(sf::Vector2f(mAnimator->GetRatio().x, -1.f));
+    }
+    else if (!mReverse && mAnimator->GetRatio().y == -1) {
+        mAnimator->SetRatio(sf::Vector2f(mAnimator->GetRatio().x, 1.f));
+    }
+
     if (mPData->mDirection.x == -1 && !mPData->isBackward) {
-        mAnimator->SetRatio(sf::Vector2f(-1.f, 1.f));
+        mAnimator->SetRatio(sf::Vector2f(-1.f, mAnimator->GetRatio().y));
         mPData->isBackward = true;
     }
     else if (mPData->mDirection.x == 1 && mPData->isBackward) {
-        mAnimator->SetRatio(sf::Vector2f(1.f, 1.f));
+        mAnimator->SetRatio(sf::Vector2f(1.f, mAnimator->GetRatio().y));
         mPData->isBackward = false;
     }
 
@@ -69,6 +78,8 @@ TextureRender* Player::GetRender()
 
 void Player::OnCollision(Entity* other)
 {
+    mReverse = false;
+
     if (other->IsTag(TestScene::Tag::METALIC_OBSTACLE) && static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->y != 0)
     {
         if (static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->y == -1)
@@ -88,6 +99,14 @@ void Player::OnCollision(Entity* other)
     }
     else {
         mPData->isGrounded = false; // Sinon, il n'est pas au sol
+    }
+    if (other->IsTag(TestScene::Tag::OBSTACLE) && std::abs(static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->x) == 1) {
+        if (other->GetGravitySpeed() <= 10) {
+            SetState(PUSH);
+        }
+        else {
+            SetState(IDLE);
+        }
     }
     if (other->IsTag(TestScene::Tag::CHECKPOINT))
     {
@@ -194,6 +213,7 @@ Player::Player()
     mActions[(int)PlayerStateList::FALL] = new PlayerAction_Fall();
     mActions[(int)PlayerStateList::DEAD] = new PlayerAction_Death();
     mActions[(int)PlayerStateList::RESPAWN] = new PlayerAction_Respawn();
+    mActions[(int)PlayerStateList::PUSH] = new PlayerAction_Push();
 
     SetTransition(PlayerStateList::IDLE, PlayerStateList::WALK, true);
     SetTransition(PlayerStateList::IDLE, PlayerStateList::JUMP, true);
@@ -205,17 +225,20 @@ Player::Player()
     SetTransition(PlayerStateList::CROUCH, PlayerStateList::JUMP, true);
     SetTransition(PlayerStateList::CROUCH, PlayerStateList::WALK, true);
     SetTransition(PlayerStateList::CROUCH, PlayerStateList::DEAD, true);
+    SetTransition(PlayerStateList::CROUCH, PlayerStateList::PUSH, true);
 
     SetTransition(PlayerStateList::WALK, PlayerStateList::JUMP, true);
     SetTransition(PlayerStateList::WALK, PlayerStateList::IDLE, true);
     SetTransition(PlayerStateList::WALK, PlayerStateList::CROUCH, true);
     SetTransition(PlayerStateList::WALK, PlayerStateList::FALL, true);
     SetTransition(PlayerStateList::WALK, PlayerStateList::DEAD, true);
+    SetTransition(PlayerStateList::WALK, PlayerStateList::PUSH, true);
 
     SetTransition(PlayerStateList::JUMP, PlayerStateList::FALL, true);
     SetTransition(PlayerStateList::JUMP, PlayerStateList::CROUCH, true);
     SetTransition(PlayerStateList::JUMP, PlayerStateList::DEAD, true);
     SetTransition(PlayerStateList::JUMP, PlayerStateList::WALK, true);
+    SetTransition(PlayerStateList::JUMP, PlayerStateList::IDLE, true);
 
     SetTransition(PlayerStateList::FALL, PlayerStateList::IDLE, true);
     SetTransition(PlayerStateList::FALL, PlayerStateList::DEAD, true);
@@ -224,6 +247,9 @@ Player::Player()
     SetTransition(PlayerStateList::DEAD, PlayerStateList::RESPAWN, true);
 
     SetTransition(PlayerStateList::RESPAWN, PlayerStateList::IDLE, true);
+
+    SetTransition(PlayerStateList::PUSH, PlayerStateList::IDLE, true);
+    SetTransition(PlayerStateList::PUSH, PlayerStateList::DEAD, true);
 }
 
 Player::~Player()

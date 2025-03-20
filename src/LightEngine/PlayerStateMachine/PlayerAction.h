@@ -60,3 +60,11 @@ public:
     void OnStart(Player* pOwner) override;
     void OnUpdate(Player* pOwner) override;
 };
+
+class PlayerAction_Push : public ActionPlayer
+{
+    bool onPush;
+public:
+    void OnStart(Player* pOwner) override;
+    void OnUpdate(Player* pOwner) override;
+};

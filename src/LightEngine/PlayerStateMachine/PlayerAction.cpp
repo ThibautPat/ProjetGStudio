@@ -218,3 +218,68 @@ void PlayerAction_Respawn::OnUpdate(Player* pOwner)
 		pOwner->SetState(Player::PlayerStateList::IDLE);
 	}
 }
+
+void PlayerAction_Push::OnStart(Player* pOwner)
+{
+	std::cout << "PUSH" << std::endl;
+	std::string AnimName = "StartPush";
+	pOwner->mAnimator->SetCurrentAnimation(AnimName);
+}
+
+void PlayerAction_Push::OnUpdate(Player* pOwner)
+{
+	pOwner->GetPlayerData()->isGrounded = true;
+	pOwner->SetGravitySpeed(0);
+
+	float dt = FIXED_DT;
+	float spd = pOwner->GetSpeed();
+	sf::Vector2f movement = pOwner->GetPlayerData()->mDirection;
+
+	// Gestion de l'animation
+	if (pOwner->mAnimator->GetCurrentAnimation()->GetIsFinished()) {
+		std::string AnimName = "OnPush";
+		pOwner->mAnimator->SetCurrentAnimation(AnimName);
+		onPush = true;
+	}
+
+	// Pause ou reprise de l'animation selon la direction du mouvement
+	if (onPush) {
+		pOwner->GetRender()->PauseAnimation(movement.x == 0.f);
+	}
+
+	// Gestion de la vitesse
+	if (movement.x == 1) { // Direction droite
+		if (spd < pOwner->mPData->mMaxSpeedPush) {
+			spd += pOwner->mPData->mMaxSpeedWalk * dt;
+		}
+		if (spd > pOwner->mPData->mMaxSpeedPush) {
+			spd -= pOwner->mPData->mMaxSpeedWalk * dt * 2;
+		}
+		if (spd > 300.f && spd < 400.f) {
+			spd = pOwner->mPData->mMaxSpeedPush;
+		}
+	}
+	else if (movement.x == -1) { // Direction gauche
+		if (spd > -pOwner->mPData->mMaxSpeedPush) {
+			spd -= pOwner->mPData->mMaxSpeedWalk * dt;
+		}
+		if (spd < -pOwner->mPData->mMaxSpeedPush) {
+			spd += pOwner->mPData->mMaxSpeedWalk * dt * 2;
+		}
+		if (spd < -300.f && spd > -400.f) {
+			spd = -pOwner->mPData->mMaxSpeedPush;
+		}
+	}
+	else { // Aucune direction
+		float decelerationAmount = pOwner->mPData->mDeceleration * 50 * FIXED_DT;
+		if (std::abs(spd) > 100) { // Décélération ou accélération vers zéro
+			spd += (spd > 0 ? -1 : 1) * decelerationAmount;
+		}
+		if (std::abs(spd) < 10) { // Si la vitesse est proche de zéro, on la réinitialise
+			spd = 0;
+		}
+	}
+
+	// Appliquer la nouvelle vitesse
+	pOwner->SetSpeed(spd);
+}
