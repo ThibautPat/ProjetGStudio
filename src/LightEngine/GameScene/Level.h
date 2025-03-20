@@ -10,12 +10,25 @@ class Entity;
 class Level
 {
 protected:
-	json mMap;
+	json mTileMap;
+	json mEnv;
+
 public:
 	void ChooseJson(const char* path);
 
 	void LoadLevel();
 
+	void AddPlayer();
+	void AddEnvironment();
+	void AddTiles();
+
+
+
 	Entity* CreateNewEnity(const char* id);
+
+	//template <typename T>
+	//T* CreateNewEnity(const char* id);
 };
+
+#include "Level.inl"
 

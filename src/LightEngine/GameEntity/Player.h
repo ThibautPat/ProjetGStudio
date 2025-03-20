@@ -25,6 +25,9 @@ struct PlayerData
     float mAcceleration = 700.f;  // Acc�l�ration du joueur
     float mDeceleration = 500.f;  // D�c�l�ration du joueur
 
+    float mMaxBatteryDuration = 5.f;
+    float mCurrentBatteryDuration = 0.f;
+
     sf::Vector2f mDirection = sf::Vector2f(0.f, 0.f);
 
     bool isGrounded = false;
@@ -67,8 +70,6 @@ private:
     Animator* mAnimator;
     TextureManager* mAs;
 
-    AABBCollider* mCrouchCollider;
-
     // �tat actuel du joueur
     PlayerStateList mState = PlayerStateList::IDLE;
     PlayerData* mPData;
@@ -91,6 +92,8 @@ public:
     void OnUpdate() override;
     void FixedUpdate(float dt) override;
 
+    void HandleBattery();
+
     Collider* GetCollider() override;
 
     //Au moment d'une collision
@@ -112,7 +115,8 @@ public:
 
     // Accesseurs pour les donn�es du joueur (PData)
     PlayerData* GetPlayerData() const { return mPData; }
-    TextureRender* GetRender() override;
+    TextureRender* GetTextureRender() override;
+    void InitRender(const char* spritesheetname, const char* spritename) override { mAnimator = new Animator(); }
 
     // Amis de la classe (acc�s � des m�thodes priv�es)
     friend class PlayerAction_Jump;

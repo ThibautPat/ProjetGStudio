@@ -1,0 +1,11 @@
+{
+    "arbre" : {
+        "frame_size": { "width": 11255151, "height": 7897764 },
+        "coord" : { "x" : 1, "y" : 1 }
+    },
+
+    "arbredeouf" : {
+        "frame_size": { "width": 11255151, "height": 7897764 },
+        "coord" : { "x" : 1, "y" : 1 }
+    }
+}

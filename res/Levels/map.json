@@ -1,4 +1,7 @@
 {
+  "SpriteSheetName" : "tilemap",
+  "SourcePath" : "../../../res/Assets/TileMap/TileMap.png",
+  "JsonPath" : "../../../res/Assets/TileMap/tilemap.json",
 
   "Rows": 15,
   "Columns": 40,

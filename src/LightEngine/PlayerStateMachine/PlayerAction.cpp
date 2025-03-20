@@ -90,10 +90,10 @@ void PlayerAction_Crouch::OnUpdate(Player* pOwner)
 
 	if (onCrouch) {
 		if (movement.x == 0.f) {
-			pOwner->GetRender()->PauseAnimation(true);
+			pOwner->GetTextureRender()->PauseAnimation(true);
 		}
 		else {
-			pOwner->GetRender()->PauseAnimation(false);
+			pOwner->GetTextureRender()->PauseAnimation(false);
 		}
 	}
 
@@ -244,7 +244,7 @@ void PlayerAction_Push::OnUpdate(Player* pOwner)
 
 	// Pause ou reprise de l'animation selon la direction du mouvement
 	if (onPush) {
-		pOwner->GetRender()->PauseAnimation(movement.x == 0.f);
+		pOwner->GetTextureRender()->PauseAnimation(movement.x == 0.f);
 	}
 
 	// Gestion de la vitesse

@@ -15,9 +15,9 @@ void Player::OnInitialize()
     //Setup de la gestion de textures
     mAs->LoadSpriteSheet("../../../res/Assets/SpriteSheet/Character.json", "../../../res/Assets/SpriteSheet/spritesheet_character.png", "player");
     mAnimator = new Animator();
+    mAnimator->AddAnimation("player", "idle");
     mAnimator->AddAnimation("player", "walk");
     mAnimator->AddAnimation("player", "jump");
-    mAnimator->AddAnimation("player", "idle");
     mAnimator->AddAnimation("player", "StartCrouch");
     mAnimator->AddAnimation("player", "OnCrouch");
     mAnimator->AddAnimation("player", "fall");
@@ -69,7 +69,7 @@ void Player::OnUpdate()
     Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 70, text3, sf::Color::Red);
 }
 
-TextureRender* Player::GetRender()
+TextureRender* Player::GetTextureRender()
 {
     return mAnimator->GetCurrentAnimation();
 }
@@ -106,12 +106,9 @@ void Player::OnCollision(Entity* other)
             SetState(IDLE);
         }
     }
-    if (other->IsTag(TestScene::Tag::CHECKPOINT))
-    {
-        mPData->isGrounded = false; // Sinon, il n'est pas au sol 
-    }
     if (other->IsTag(TestScene::Tag::CHECKPOINT)) 
-    { 
+    {
+        mPData->isGrounded = false; // Utile ??? Sinon, il n'est pas au sol 
         mPData->mLastCheckPoint = other->GetPosition(0.f, 0.f); // On set le dernier checkpoint  
 
     }
@@ -122,6 +119,8 @@ void Player::OnCollision(Entity* other)
     if (other->IsTag(TestScene::Tag::END_LEVEL))
     {
     }
+
+    HandleBattery();
 }
 
 void Player::PlayerRespawn()
@@ -187,11 +186,29 @@ void Player::FixedUpdate(float dt)
     Move(mPData->mDirection, dt);
 }
 
+void Player::HandleBattery()
+{
+    Debug::DrawText(GetPosition(0.f, 0.f).x - 750, GetPosition(0.f, 0.f).y - 650, std::to_string(int(mPData->mCurrentBatteryDuration)), sf::Color::White);
+
+    if (mAnimator->GetRatio().y == -1) {
+        mPData->mCurrentBatteryDuration += GetDeltaTime() * 0.5f;
+
+        if (mPData->mCurrentBatteryDuration > mPData->mMaxBatteryDuration) {
+            mReverse = false;
+        }
+    }
+
+    else if (mPData->mCurrentBatteryDuration > 0.f) {
+        mPData->mCurrentBatteryDuration -= GetDeltaTime() * 0.5f;
+
+        if (mPData->mCurrentBatteryDuration < 0.f) {
+            mPData->mCurrentBatteryDuration = 0.f;
+        }
+    }
+}
+
 Collider* Player::GetCollider()
 {
-    if (mPData->isCrouching) {
-        return (Collider*)mCrouchCollider;
-    }
     return mCollider;
 }
 

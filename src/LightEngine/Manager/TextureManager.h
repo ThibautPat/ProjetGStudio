@@ -39,12 +39,4 @@ public:
 	/// <param name="spritesheetname">: Nom de la SpriteSheet</param>
 	/// <returns></returns>
 	sf::Texture* GetTexture(std::string spritesheetname);
-
-	/// <summary>
-	/// Retourne un Sprite de la SpriteSheet
-	/// </summary>
-	/// <param name="spritesheetname">: Nom de la SpriteSheet</param>
-	/// <param name="texturerender">: Zone du Sprite</param>
-	/// <param name="text">: Texture a definir</param>
-	void SetTetxureWithRect(std::string spritesheetname, sf::IntRect texturerender, sf::Texture* text);
 };
