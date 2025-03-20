@@ -18,7 +18,7 @@ public:
 
 	AudioManager();
 
-	void PlaySound();
+	void PlaySound(int index);
 	void StopSound();
 	void ChangeSound(std::string sound);
 	void ClearCurrentSound();

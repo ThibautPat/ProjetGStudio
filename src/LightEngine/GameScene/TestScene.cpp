@@ -43,8 +43,14 @@ void TestScene::OnInitialize()
 
 	mpAudioManager = new AudioManager();
 
-	std::string musicName = "Test.wav";
-	m_MusicList.push_back(&musicName);  // Pushing a pointer to musicName
+	std::string musicName = "TestWav.wav";
+	m_MusicList.push_back(&musicName); 
+
+	std::string SoundName = "SoundTest.wav";
+	m_soundList.push_back(&SoundName);  
+
+	std::string SoundName2 = "SoundTest2.wav";
+	m_soundList.push_back(&SoundName2);
 
 	mpAudioManager->AddLevelSound(m_soundList);
 	mpAudioManager->AddLevelMusic(m_MusicList);
@@ -61,6 +67,7 @@ void TestScene::HandleConsoleEvent()
 	// Manette
 	if (sf::Joystick::isButtonPressed(0, 0)) // Bouton de saut sur la manette (par exemple, A)
 	{
+		mpAudioManager->PlaySound(0);
 		if (mPlayer->mReverse)
 		{
 			mPlayer->SetState(Player::PlayerStateList::FALL);
@@ -74,6 +81,7 @@ void TestScene::HandleConsoleEvent()
 	}
 
 	if (sf::Joystick::isButtonPressed(0, 1)) { // Bouton de crouch sur la manette (par exemple, B)
+		mpAudioManager->PlaySound(1);
 		mPlayer->SetState(Player::PlayerStateList::CROUCH);
 		mPlayer->GetPlayerData()->isCrouching = true;
 		mPlayer->GetPlayerData()->mDirection.x = 0;

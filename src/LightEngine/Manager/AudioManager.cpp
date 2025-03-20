@@ -6,8 +6,7 @@
 
 AudioManager::AudioManager()
 {
-    LoadMusic("Test.wav", true);
-    LoadMusic("Test2.mp3", true);
+    LoadMusic("TestWav.wav", true);
     //LoadMusic("Level(2).mp3", true);
     //LoadMusic("Level(3).mp3", true);
     //LoadMusic("Level(4).mp3", true);
@@ -24,21 +23,18 @@ AudioManager::AudioManager()
     //LoadMusic("Map.mp3", true);
     //LoadMusic("Map(1).mp3", true);
 
-    //LoadSound("Select.ogg", false);
+    LoadSound("SoundTest.wav", false);
+    LoadSound("SoundTest2.wav", false);
     //LoadSound("Bullet.mp3", false);
     //LoadSound("hitmarker.mp3", false);
     //LoadSound("Ough.mp3", false);
     //LoadSound("InstallModule.mp3", false);
 }
 
-void AudioManager::PlaySound()
+void AudioManager::PlaySound(int index)
 {
-    for (int i = 0; i < m_CurrentSounds.size(); i++)
-    {
-
-        m_CurrentSounds[i]->play();
-        m_CurrentSounds[i]->setVolume(100.f);
-    }
+    m_CurrentSounds[index]->play();
+    m_CurrentSounds[index]->setVolume(100.f);
 }
 
 void AudioManager::StopSound()
@@ -100,6 +96,7 @@ void AudioManager::LoadMusic(std::string Name, bool Loop) {
 
     sf::Music* music = new sf::Music();
     if (!music->openFromFile("../../../res/SOUND/" + Name)) {
+        std::cout << "File not open: " << "../../../res/SOUND/" + Name << std::endl;
         delete music;
         return;
     }
@@ -122,7 +119,7 @@ void AudioManager::PlayCurrentMusic() {
         if (m_CurrentMusic[i] != nullptr) 
         {
             m_CurrentMusic[i]->play();
-            m_CurrentMusic[i]->setVolume(20.f);
+            m_CurrentMusic[i]->setVolume(100.f);
         }
     }
 }
