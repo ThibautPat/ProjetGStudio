@@ -6,6 +6,7 @@
 #include "../GameEntity/Player.h"
 #include "../GameEntity/BackGround.h"
 #include "../GameScene/Level.h"
+#include "../Manager/AudioManager.h"
 
 void TestScene::OnInitialize()
 {
@@ -39,6 +40,16 @@ void TestScene::OnInitialize()
 	mLevel = new Level();
 	mLevel->ChooseJson("../../../res/map.json");
 	mLevel->LoadLevel();
+
+	mpAudioManager = new AudioManager();
+
+	std::string musicName = "Test.wav";
+	m_MusicList.push_back(&musicName);  // Pushing a pointer to musicName
+
+	mpAudioManager->AddLevelSound(m_soundList);
+	mpAudioManager->AddLevelMusic(m_MusicList);
+
+	mpAudioManager->PlayCurrentMusic();
 }
 
 void TestScene::OnEvent(const sf::Event& event)
@@ -176,19 +187,6 @@ void TestScene::OnUpdate()
 	mPlayer->PlayerRespawn();
 
 	mView->setCenter(mPlayer->GetPosition(0.f, 0.f).x + 200, mPlayer->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame 
-
-	//for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
-	//{
-	//	sf::Vector2f cooEntity = entity->GetPosition(0.f, 0.f);
-
-	//	std::string textCox = std::to_string((int)cooEntity.x) + " x ";
-	//	std::string textCoy = std::to_string((int)cooEntity.y) + " y";
-	//	std::string textgrav = std::to_string((int)entity->GetGravitySpeed()) + " grav";
-	//	Debug::DrawText(cooEntity.x, cooEntity.y, textCox, sf::Color::White);
-	//	Debug::DrawText(cooEntity.x, cooEntity.y + 20, textCoy, sf::Color::White);
-	//	Debug::DrawText(cooEntity.x, cooEntity.y + 40, textgrav, sf::Color::White);
-	//	Debug::DrawCircle(cooEntity.x, cooEntity.y, 5, sf::Color::White);
-	//}
 
 	Debug::ShowFPS(mView->getCenter().x - mView->getSize().x / 2 + 10, mView->getCenter().y - mView->getSize().y / 2 + 10);
 

@@ -1,6 +1,4 @@
 #include "Scene.h"
-
-
 #include "../Manager/GameManager.h"
 
 int Scene::GetWindowWidth() const
@@ -16,4 +14,16 @@ int Scene::GetWindowHeight() const
 float Scene::GetDeltaTime() const
 {
 	return mpGameManager->mDeltaTime;
+}
+
+Scene::~Scene()
+{
+    for (auto it = m_soundList.begin(); it != m_soundList.end();) {
+        delete* it;
+        it = m_soundList.erase(it);
+    }
+    for (auto it = m_MusicList.begin(); it != m_MusicList.end();) {
+        delete* it;
+        it = m_MusicList.erase(it);
+    }
 }
