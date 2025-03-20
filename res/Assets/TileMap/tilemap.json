@@ -23,9 +23,9 @@
 
     "grass_b_left_corner" : { "x" : 3, "y" : 4 },
 
-    "ballon_right" : { "x" : 8 , "y" : 0 },
+    "ballon_right" : { "x" : 11 , "y" : 0 },
 
-    "ballon_left" : { "x" : 11 , "y" : 0 },
+    "ballon_left" : { "x" : 8 , "y" : 0 },
 
     "X" : { "x" : 15, "y" : 15 }
 }

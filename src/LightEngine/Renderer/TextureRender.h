@@ -12,6 +12,9 @@ protected:
 	std::string mSpriteName;
 
 	sf::Vector2f mRenderRatio;
+	sf::Texture* mRenderTexture;
+	sf::Sprite* mRenderSprite;
+
 public:
 
 	TextureRender(const char* spritesheetname, const char* spritename);

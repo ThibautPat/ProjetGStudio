@@ -4,7 +4,8 @@
 TextureRender::TextureRender(const char* spritesheetname, const char* spritename)
 {
 	mRenderRatio = sf::Vector2f(1.f, 1.f);
-
+	mRenderTexture = new sf::Texture();
+	mRenderSprite = new sf::Sprite();
 	mSpriteSheetName = spritesheetname;
 	mSpriteName = spritename;
 
@@ -18,34 +19,29 @@ TextureRender::TextureRender(const char* spritesheetname, const char* spritename
 
 	mTextRect.left = mTextRect.width * Utils::GetInfoFromArray<int>(njson, charArray, "x");
 	mTextRect.top = mTextRect.height * Utils::GetInfoFromArray<int>(njson, charArray, "y");
+
+	//std::cout << mSpriteName << " : " << Utils::GetInfoFromArray<int>(njson, charArray, "x") << "x " << Utils::GetInfoFromArray<int>(njson, charArray, "y") << "y" << std::endl;
 }
 
 void TextureRender::Draw(Entity* entity, sf::RenderWindow* window)
 {
 	//A OPTI
 
-	//faire en var membre
 	TextureManager* tm = GameManager::Get()->GetTextureManager();
 
-	//faire en var membre
-	sf::Texture text = sf::Texture();
+	tm->SetTetxureWithRect(mSpriteSheetName, mTextRect, mRenderTexture);
 
-	tm->SetTetxureWithRect(mSpriteSheetName, mTextRect, &text);
+	mRenderSprite->setTexture(*mRenderTexture);
 
-	//faire en var membre
-	sf::Sprite spr;
-
-	spr.setTexture(text);
-
-	spr.setScale(mRenderRatio);
+	mRenderSprite->setScale(mRenderRatio);
 
 	float offset = 0.5f;
 	sf::Vector2f renderPos = sf::Vector2f(
-		entity->GetPosition(0, 0).x - text.getSize().x * offset * mRenderRatio.x,
-		entity->GetPosition(0, 0).y - text.getSize().y * offset * mRenderRatio.y);
-	spr.setPosition(renderPos);
+		entity->GetPosition(0, 0).x - mRenderTexture->getSize().x * offset * mRenderRatio.x,
+		entity->GetPosition(0, 0).y - mRenderTexture->getSize().y * offset * mRenderRatio.y);
+	mRenderSprite->setPosition(renderPos);
 
-	window->draw(spr);
+	window->draw(*mRenderSprite);
 }
 
 void TextureRender::SetNames(std::string spritesheetname, std::string spritename)

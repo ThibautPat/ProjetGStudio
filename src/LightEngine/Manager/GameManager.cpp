@@ -96,7 +96,7 @@ void GameManager::DrawRender(Entity* entity)
 
 	//mpWindow->draw(spr);
 
-	//entity->GetRender()->Draw(entity, mpWindow);
+	entity->GetRender()->Draw(entity, mpWindow);
 }
 
 void GameManager::CreateWindow(unsigned int width, unsigned int height, const char* title, int fpsLimit, sf::Color clearColor)
