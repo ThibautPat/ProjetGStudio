@@ -76,7 +76,8 @@ public:
     virtual void Block(Entity* other) = 0;
 
     // Render
-    virtual TextureRender* GetRender() { return nullptr; }
+    virtual TextureRender* GetTextureRender() { return nullptr; }
+    virtual void InitRender(const char* spritesheetname, const char* spritename) = 0;
 
     // Lifecycle
     void Destroy();
