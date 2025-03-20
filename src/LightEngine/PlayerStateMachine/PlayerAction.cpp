@@ -180,3 +180,29 @@ void PlayerAction_Fall::OnUpdate(Player* pOwner)
 		pOwner->SetSpeed(0);
 	}
 }
+
+void PlayerAction_Death::OnStart(Player* pOwner)
+{
+	std::cout << "DEAD" << std::endl;
+	std::string AnimName = "death";
+	pOwner->mAnimator->SetCurrentAnimation(AnimName);
+}
+
+void PlayerAction_Death::OnUpdate(Player* pOwner)
+{
+	if (pOwner->mAnimator->GetCurrentAnimation()->GetIsFinished()) {
+		pOwner->SetState(Player::PlayerStateList::RESPAWN);
+	}
+}
+
+void PlayerAction_Respawn::OnStart(Player* pOwner)
+{
+	std::cout << "RESPAWN" << std::endl;
+	std::string AnimName = "respawn";
+	pOwner->mAnimator->SetCurrentAnimation(AnimName);
+}
+
+void PlayerAction_Respawn::OnUpdate(Player* pOwner)
+{
+	pOwner->PlayerRespawn();
+}

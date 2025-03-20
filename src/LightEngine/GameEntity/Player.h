@@ -15,7 +15,7 @@ struct PlayerData
 {
     float mJumpHeight = 600.f;  // Hauteur du saut
     float mJumpTime = 0.8f;     // Dur�e du saut
-    float pJumpDuration = 0;    // Dur�e actuelle du saut
+    float pJumpDuration = 0.f;    // Dur�e actuelle du saut
 
     float mMinSpeed = 0.f;      // Vitesse minimale
     float mMaxSpeedWalk = 20000.f; // Vitesse maximale en marchant
@@ -49,6 +49,8 @@ public:
         WALK,
         JUMP,
         FALL,
+        DEAD,
+        RESPAWN,
 
         COUNT // Nombre total d'�tats
     };
@@ -108,4 +110,6 @@ public:
     friend class PlayerAction_Walk;
     friend class PlayerAction_Idle;
     friend class PlayerAction_Fall;
+    friend class PlayerAction_Death;
+    friend class PlayerAction_Respawn;
 };

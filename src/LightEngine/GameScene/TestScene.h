@@ -20,8 +20,6 @@ protected:
 	sf::Clock TeleportClock;
 
 public:
-
-	void PlayerDeath();
 	enum Tag
 	{
 		PLAYER,

@@ -40,6 +40,12 @@ void TestScene::OnInitialize()
 	pEntity9->SetBackGroundTexture("..//..//..//res//Assets//Background//upsky_background_mercure.png");
 	pEntity9->SetTag(Tag::BACK_GROUND2);
 
+	Checkpoint* Checkpoint1 = CreateRectEntity<Checkpoint>(256, 128, sf::Color::Yellow); // Ajout du Checkpoint et setup
+	Checkpoint1->SetPosition(-100, 620);
+
+	DeadlyObstacle* DeadlyObstacle1 = CreateRectEntity<DeadlyObstacle>(100, 100, sf::Color::Red); // Ajout du DeadlyObstacle et setup
+	DeadlyObstacle1->SetPosition(900, 670);
+
 	mPlayer = CreateRectEntity<Player>(256, 128, sf::Color::Transparent); // Ajout du Player et setup
 	mPlayer->SetGravity(true);
 	mPlayer->SetRigidBody(true);
@@ -186,8 +192,6 @@ void TestScene::OnUpdate()
 {
 	//HandleConsoleEvent();
 	HandleKeyboardEvent();
-
-	mPlayer->PlayerRespawn();
 
 	mView->setCenter(mPlayer->GetPosition(0.f, 0.f).x + 200, mPlayer->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame 
 	for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
