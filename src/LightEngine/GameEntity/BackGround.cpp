@@ -25,7 +25,7 @@ void BackGround::OnUpdate()
 		}
 	}
 	if (dynamic_cast<TestScene*>(sc))
-	SetPosition(GetPosition(0, 0).x, sc->GetView()->getCenter().y - 64);
+	SetPosition(GetPosition(0, 0).x, sc->GetView()->getCenter().y);
 }
 
 void BackGround::SetBackGroundTexture(std::string path)
