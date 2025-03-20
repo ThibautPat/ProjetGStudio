@@ -15,9 +15,9 @@ void Player::OnInitialize()
     //Setup de la gestion de textures
     mAs->LoadSpriteSheet("../../../res/Assets/SpriteSheet/Character.json", "../../../res/Assets/SpriteSheet/spritesheet_character.png", "player");
     mAnimator = new Animator();
+    mAnimator->AddAnimation("player", "idle");
     mAnimator->AddAnimation("player", "walk");
     mAnimator->AddAnimation("player", "jump");
-    mAnimator->AddAnimation("player", "idle");
     mAnimator->AddAnimation("player", "StartCrouch");
     mAnimator->AddAnimation("player", "OnCrouch");
     mAnimator->AddAnimation("player", "fall");
@@ -107,8 +107,7 @@ void Player::OnCollision(Entity* other)
         }
     }
     if (other->IsTag(TestScene::Tag::CHECKPOINT)) 
-    { 
-
+    {
         mPData->isGrounded = false; // Utile ??? Sinon, il n'est pas au sol 
         mPData->mLastCheckPoint = other->GetPosition(0.f, 0.f); // On set le dernier checkpoint  
 
@@ -210,9 +209,6 @@ void Player::HandleBattery()
 
 Collider* Player::GetCollider()
 {
-    if (mPData->isCrouching) {
-        return (Collider*)mCrouchCollider;
-    }
     return mCollider;
 }
 
