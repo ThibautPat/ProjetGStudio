@@ -13,16 +13,14 @@ class RectangleEntity : public Entity
 protected:
     sf::RectangleShape mShape;
     AABBCollider* mCollider = nullptr;
-
-
-    TextureRender* mTexture;
+    TextureRender* mTextureRender;
 
 public:    
 
     bool mReverse = false;
 
-    virtual TextureRender* GetRender() { return mTexture; }
-    void InitRender(const char* spritesheetname, const char* spritename) override { mTexture = new TextureRender(spritesheetname, spritename); }
+    virtual TextureRender* GetTextureRender() { return mTextureRender; }
+    void InitRender(const char* spritesheetname, const char* spritename) override { mTextureRender = new TextureRender(spritesheetname, spritename); }
     // Getters
     Collider* GetCollider() override;
     sf::Shape* GetShape() override;

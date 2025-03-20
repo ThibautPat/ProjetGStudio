@@ -67,7 +67,6 @@ void Entity::Fall(float dt)
 	GetShape()->setPosition(co);
 }
 
-
 bool Entity::GoToDirection(int x, int y, float speed)
 {
 	sf::Vector2f position = GetPosition(0.f, 0.f);
