@@ -6,6 +6,9 @@
 #include "../GameEntity/Player.h"
 #include "../GameEntity/BackGround.h"
 #include "../GameScene/Level.h"
+#include "../GameEntity/Teleporter.h"
+#include "../GameEntity/Moving_Platform.h"
+#include "../Renderer/TextureRender.h"
 
 void TestScene::OnInitialize()
 {
@@ -54,7 +57,7 @@ void TestScene::OnEvent(const sf::Event& event)
 void TestScene::HandleConsoleEvent()
 {
 	// Manette
-	if (sf::Joystick::isButtonPressed(0, 0)) // Bouton de saut sur la manette (par exemple, A)
+	if (sf::Joystick::isButtonPressed(0, 0)) // Bouton "A" sur la manette (équivalent de la barre d'espace pour le saut)
 	{
 		if (mPlayer->mReverse)
 		{
@@ -68,7 +71,7 @@ void TestScene::HandleConsoleEvent()
 		}
 	}
 
-	if (sf::Joystick::isButtonPressed(0, 1)) { // Bouton de crouch sur la manette (par exemple, B)
+	if (sf::Joystick::isButtonPressed(0, 1)) { // Bouton "B" sur la manette (équivalent de "Shift" pour crouch)
 		mPlayer->SetState(Player::PlayerStateList::CROUCH);
 		mPlayer->GetPlayerData()->isCrouching = true;
 		mPlayer->GetPlayerData()->mDirection.x = 0;
@@ -77,39 +80,34 @@ void TestScene::HandleConsoleEvent()
 		mPlayer->GetPlayerData()->isCrouching = false;
 	}
 
-	// Gestion des axes X pour le mouvement gauche/droite (axe horizontal sur la manette)
+	// Gestion des axes X pour le mouvement gauche/droite sur la manette (équivalent des touches "Q" et "D" sur le clavier)
 	float joystickX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
 
 	// Si le joystick se penche à gauche (axe < -10)
 	if (joystickX < -10) {
 		mPlayer->GetPlayerData()->mDirection.x = -1; // Déplacement vers la gauche
-		if (!mPlayer->GetPlayerData()->isCrouching) {
-			mPlayer->SetState(Player::PlayerStateList::WALK);
-		}
-		else {
+		if (mPlayer->GetPlayerData()->isCrouching) {
 			mPlayer->SetState(Player::PlayerStateList::CROUCH);
 		}
 	}
 	// Si le joystick se penche à droite (axe > 10)
 	else if (joystickX > 10) {
 		mPlayer->GetPlayerData()->mDirection.x = 1; // Déplacement vers la droite
-		if (!mPlayer->GetPlayerData()->isCrouching) {
-			mPlayer->SetState(Player::PlayerStateList::WALK);
-		}
-		else {
+		if (mPlayer->GetPlayerData()->isCrouching) {
 			mPlayer->SetState(Player::PlayerStateList::CROUCH);
 		}
 	}
 	else {
 		mPlayer->GetPlayerData()->mDirection.x = 0; // Aucun mouvement horizontal
-		if (mPlayer->GetPlayerData()->isGrounded && !mPlayer->GetPlayerData()->isCrouching) {
+		if (mPlayer->GetPlayerData()->isGrounded && !mPlayer->GetPlayerData()->isCrouching && !mPlayer->GetPlayerData()->playerIsDead) {
 			mPlayer->SetState(Player::PlayerStateList::IDLE); // Si au sol, état "IDLE"
 		}
-		else if (!mPlayer->GetPlayerData()->isGrounded) {
+		else if (!mPlayer->GetPlayerData()->isCrouching && mPlayer->GetGravitySpeed() > 0) {
 			mPlayer->SetState(Player::PlayerStateList::FALL); // Sinon, état "FALL"
 		}
 	}
 }
+
 
 void TestScene::HandleKeyboardEvent()
 {
@@ -138,19 +136,16 @@ void TestScene::HandleKeyboardEvent()
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		mPlayer->GetPlayerData()->mDirection.x = 0;
-		if (mPlayer->GetPlayerData()->isGrounded) {
+		if (mPlayer->GetPlayerData()->isGrounded && !mPlayer->GetPlayerData()->playerIsDead) {
 			mPlayer->SetState(Player::PlayerStateList::IDLE);
 		}
-		else {
+		else if (mPlayer->GetGravitySpeed() > 0) {
 			mPlayer->SetState(Player::PlayerStateList::FALL);
 		}
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {	
 		if (mPlayer->GetPlayerData()->isCrouching) {
 			mPlayer->SetState(Player::PlayerStateList::CROUCH);
-		}
-		else {
-			mPlayer->SetState(Player::PlayerStateList::WALK);
 		}
 		mPlayer->GetPlayerData()->mDirection.x = -1;
 	}
@@ -158,17 +153,14 @@ void TestScene::HandleKeyboardEvent()
 		if (mPlayer->GetPlayerData()->isCrouching) {
 			mPlayer->SetState(Player::PlayerStateList::CROUCH);
 		}
-		else {
-			mPlayer->SetState(Player::PlayerStateList::WALK);
-		}
 		mPlayer->GetPlayerData()->mDirection.x = 1;
 	}
 	else if (!mPlayer->GetPlayerData()->isCrouching) {
 		mPlayer->GetPlayerData()->mDirection.x = 0;
-		if (mPlayer->GetPlayerData()->isGrounded) {
+		if (mPlayer->GetPlayerData()->isGrounded && !mPlayer->GetPlayerData()->playerIsDead) {
 			mPlayer->SetState(Player::PlayerStateList::IDLE);
 		}
-		else {
+		else if (mPlayer->GetGravitySpeed() > 0) {
 			mPlayer->SetState(Player::PlayerStateList::FALL);
 		}
 	}
@@ -176,10 +168,8 @@ void TestScene::HandleKeyboardEvent()
 
 void TestScene::OnUpdate()
 {
-	HandleConsoleEvent();
-	//HandleKeyboardEvent();
-
-	mPlayer->PlayerRespawn();
+	//HandleConsoleEvent();
+	HandleKeyboardEvent();
 
 	mView->setCenter(mPlayer->GetPosition(0.f, 0.f).x + 200, mPlayer->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame 
 

@@ -21,7 +21,6 @@ protected:
 	Level* mLevel;
 
 public:
-
 	enum Tag
 	{
 		PLAYER,

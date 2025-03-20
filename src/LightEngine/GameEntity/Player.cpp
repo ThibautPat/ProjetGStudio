@@ -6,7 +6,7 @@
 #include "../Renderer/AnimationRender.h"
 #include "../Collider/AABBCollider.h"
 
-void Player::OnInitialize() 
+void Player::OnInitialize()
 {
     mPData = new PlayerData;
     mShape.setOrigin(mShape.getGlobalBounds().width / 2, mShape.getGlobalBounds().height / 2); //WTF pourquoi l'h�ritage n'est pas fait ?!
@@ -18,21 +18,46 @@ void Player::OnInitialize()
     mAnimator->AddAnimation("player", "walk");
     mAnimator->AddAnimation("player", "jump");
     mAnimator->AddAnimation("player", "idle");
-    //mAnimator->AddAnimation("player", "StartCrouch");
+    mAnimator->AddAnimation("player", "StartCrouch");
     mAnimator->AddAnimation("player", "OnCrouch");
     //mAnimator->AddAnimation("player", "EndCrouch");
     mAnimator->AddAnimation("player", "fall");
+    mAnimator->AddAnimation("player", "death");
+    mAnimator->AddAnimation("player", "respawn");
+    mAnimator->AddAnimation("player", "OnPush");
+    mAnimator->AddAnimation("player", "StartPush");
 }
 
-void Player::OnUpdate() 
+void Player::OnUpdate()
 {
     mAnimator->UpdateCurrentAnimation();
 
-    if (mDirection.x == 0 && !mPData->isCrouching) {
-        if (!mPData->isGrounded) {
-            SetState(FALL);
-        }
-        else {
+    if (mPData->isGrounded && std::abs(mPData->mDirection.x) == 1 && !mPData->isCrouching) {
+        SetState(WALK);
+    }
+
+    if (mReverse && mAnimator->GetRatio().y == 1) {
+        mAnimator->SetRatio(sf::Vector2f(mAnimator->GetRatio().x, -1.f));
+    }
+    else if (!mReverse && mAnimator->GetRatio().y == -1) {
+        mAnimator->SetRatio(sf::Vector2f(mAnimator->GetRatio().x, 1.f));
+    }
+
+    if (mPData->mDirection.x == -1 && !mPData->isBackward) {
+        mAnimator->SetRatio(sf::Vector2f(-1.f, mAnimator->GetRatio().y));
+        mPData->isBackward = true;
+    }
+    else if (mPData->mDirection.x == 1 && mPData->isBackward) {
+        mAnimator->SetRatio(sf::Vector2f(1.f, mAnimator->GetRatio().y));
+        mPData->isBackward = false;
+    }
+
+    if (!mPData->isGrounded && GetGravitySpeed() > 0.f) {
+        SetState(FALL);
+    }
+
+    if (mPData->mDirection.x == 0 && !mPData->isCrouching) {
+        if (mPData->isGrounded && !mPData->playerIsDead) {
             SetState(IDLE);
         }
     }
@@ -52,13 +77,15 @@ TextureRender* Player::GetRender()
 
 void Player::OnCollision(Entity* other)
 {
+    mReverse = false;
+
     if (other->IsTag(TestScene::Tag::METALIC_OBSTACLE) && static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->y != 0)
     {
-        if (static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->y == -1) 
+        if (static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->y == -1)
         {
             mReverse = true;
             mBoolGravity = false;
-        }            
+        }
         mPData->isGrounded = true;  // Le joueur est au sol lorsqu'il touche un obstacle métallique
 
     }
@@ -69,7 +96,18 @@ void Player::OnCollision(Entity* other)
             mPData->isGrounded = true;  // Le joueur est au sol lorsqu'il touche une plateforme
         }
     }
-    else if (!hasCollidedLastFrame)
+    else {
+        mPData->isGrounded = false; // Sinon, il n'est pas au sol
+    }
+    if (other->IsTag(TestScene::Tag::OBSTACLE) && std::abs(static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->x) == 1) {
+        if (other->GetGravitySpeed() <= 10) {
+            SetState(PUSH);
+        }
+        else {
+            SetState(IDLE);
+        }
+    }
+    if (other->IsTag(TestScene::Tag::CHECKPOINT))
     {
         mPData->isGrounded = false; // Sinon, il n'est pas au sol 
     }
@@ -80,26 +118,22 @@ void Player::OnCollision(Entity* other)
     }
     if (other->IsTag(TestScene::Tag::DEADLYOBSTACLE)) 
     {
-        PlayerDeath();  
+        SetState(DEAD);
     }
     if (other->IsTag(TestScene::Tag::END_LEVEL))
     {
-		GameManager::Get()->GetSceneManager()->GetScene()->SetIsEnd(true); // On set la fin du niveau
     }
 }
 
-void  Player::PlayerRespawn()
+void Player::PlayerRespawn()
 {
-    if (mPData->playerIsDead) // Si le joueur est mort
+    SetSpeed(0); // On reset la vitesse du joueur
+    SetGravitySpeed(0); // On reset la vitesse de gravit� du joueur
+    SetPosition(mPData->mLastCheckPoint.x, mPData->mLastCheckPoint.y); // On respawn le joueur au dernier checkpoint
+    if (mPData->RespawnClock.getElapsedTime().asSeconds() > 5) // Si le joueur est mort depuis plus de 5 seconde
     {
-        SetSpeed(0); // On reset la vitesse du joueur
-        SetGravitySpeed(0); // On reset la vitesse de gravit� du joueur
-        SetPosition(mPData->mLastCheckPoint.x, mPData->mLastCheckPoint.y+128); // On respawn le joueur au dernier checkpoint
-        if (mPData->RespawnClock.getElapsedTime().asSeconds() > 5) // Si le joueur est mort depuis plus de 5 seconde
-        {
-            SetGravity(true); // On r�active la gravit� 
-            mPData->playerIsDead = false;
-        }
+        SetGravity(true); // On r�active la gravit� 
+        mPData->playerIsDead = false;
     }
 }
 
@@ -123,6 +157,29 @@ void Player::Move(sf::Vector2f movement, float dt)
     SetDirection(dt, 0, mSpeed);
 }
 
+bool Player::Movement() {
+    sf::Vector2f movement = mPData->mDirection;
+
+    if (movement == sf::Vector2f(0.f, 0.f)) {
+        return false;
+    }
+
+    float speed = GetSpeed();
+    speed += movement.x * 50 * FIXED_DT * mPData->mAcceleration;
+    SetSpeed(speed);
+    if (movement.x != 0) // Mise � jour de mLastMovement si movement.x n'est pas nul
+    {
+        mLastMovement = movement;
+    }
+    if ((mLastMovement.x == -1 && GetSpeed() > 0) || (mLastMovement.x == 1 && GetSpeed() < 0)) // Gestion de la d�c�l�ration si la direction du mouvement change
+    {
+        float spd = GetSpeed();
+        spd += (mLastMovement.x == -1 ? -1 : 1) * mPData->mDeceleration * 50 * FIXED_DT;
+        SetSpeed(spd);
+    }
+    return true;
+}
+
 void Player::FixedUpdate(float dt)
 {
     Fall(dt);
@@ -133,12 +190,12 @@ void Player::FixedUpdate(float dt)
 
 bool Player::SetState(PlayerStateList newState)
 {
-	if (mTransitions[(int)mState][(int)newState]) {
-		mState = newState;
+    if (mTransitions[(int)mState][(int)newState]) {
+        mState = newState;
         mActions[(int)mState]->OnStart(this);
-		return true;
-	}
-	return false;
+        return true;
+    }
+    return false;
 }
 
 Player::Player()
@@ -159,27 +216,45 @@ Player::Player()
     mActions[(int)PlayerStateList::WALK] = new PlayerAction_Walk();
     mActions[(int)PlayerStateList::JUMP] = new PlayerAction_Jump();
     mActions[(int)PlayerStateList::FALL] = new PlayerAction_Fall();
+    mActions[(int)PlayerStateList::DEAD] = new PlayerAction_Death();
+    mActions[(int)PlayerStateList::RESPAWN] = new PlayerAction_Respawn();
+    mActions[(int)PlayerStateList::PUSH] = new PlayerAction_Push();
 
     SetTransition(PlayerStateList::IDLE, PlayerStateList::WALK, true);
     SetTransition(PlayerStateList::IDLE, PlayerStateList::JUMP, true);
     SetTransition(PlayerStateList::IDLE, PlayerStateList::CROUCH, true);
     SetTransition(PlayerStateList::IDLE, PlayerStateList::FALL, true);
+    SetTransition(PlayerStateList::IDLE, PlayerStateList::DEAD, true);
 
     SetTransition(PlayerStateList::CROUCH, PlayerStateList::IDLE, true);
     SetTransition(PlayerStateList::CROUCH, PlayerStateList::JUMP, true);
     SetTransition(PlayerStateList::CROUCH, PlayerStateList::WALK, true);
+    SetTransition(PlayerStateList::CROUCH, PlayerStateList::DEAD, true);
+    SetTransition(PlayerStateList::CROUCH, PlayerStateList::PUSH, true);
 
     SetTransition(PlayerStateList::WALK, PlayerStateList::JUMP, true);
     SetTransition(PlayerStateList::WALK, PlayerStateList::IDLE, true);
     SetTransition(PlayerStateList::WALK, PlayerStateList::CROUCH, true);
     SetTransition(PlayerStateList::WALK, PlayerStateList::FALL, true);
+    SetTransition(PlayerStateList::WALK, PlayerStateList::DEAD, true);
+    SetTransition(PlayerStateList::WALK, PlayerStateList::PUSH, true);
 
-    SetTransition(PlayerStateList::JUMP, PlayerStateList::WALK, true);
     SetTransition(PlayerStateList::JUMP, PlayerStateList::FALL, true);
     SetTransition(PlayerStateList::JUMP, PlayerStateList::CROUCH, true);
+    SetTransition(PlayerStateList::JUMP, PlayerStateList::DEAD, true);
+    SetTransition(PlayerStateList::JUMP, PlayerStateList::WALK, true);
+    SetTransition(PlayerStateList::JUMP, PlayerStateList::IDLE, true);
 
-    SetTransition(PlayerStateList::FALL, PlayerStateList::WALK, true);
     SetTransition(PlayerStateList::FALL, PlayerStateList::IDLE, true);
+    SetTransition(PlayerStateList::FALL, PlayerStateList::DEAD, true);
+    SetTransition(PlayerStateList::FALL, PlayerStateList::WALK, true);
+
+    SetTransition(PlayerStateList::DEAD, PlayerStateList::RESPAWN, true);
+
+    SetTransition(PlayerStateList::RESPAWN, PlayerStateList::IDLE, true);
+
+    SetTransition(PlayerStateList::PUSH, PlayerStateList::IDLE, true);
+    SetTransition(PlayerStateList::PUSH, PlayerStateList::DEAD, true);
 }
 
 Player::~Player()

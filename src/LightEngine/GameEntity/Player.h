@@ -14,12 +14,13 @@ class TextureManager;
 struct PlayerData
 {
     float mJumpHeight = 600.f;  // Hauteur du saut
-    float mJumpTime = 0.3f;     // Dur�e du saut
-    float pJumpDuration = 0;    // Dur�e actuelle du saut
+    float mJumpTime = 0.8f;     // Dur�e du saut
+    float pJumpDuration = 0.f;    // Dur�e actuelle du saut
 
     float mMinSpeed = 0.f;      // Vitesse minimale
     float mMaxSpeedWalk = 20000.f; // Vitesse maximale en marchant
     float mMaxSpeedCrouch = 10000.f; // Vitesse maximale en accroupi
+    float mMaxSpeedPush = 15000.f; // Vitesse maximale en accroupi
 
     float mAcceleration = 700.f;  // Acc�l�ration du joueur
     float mDeceleration = 500.f;  // D�c�l�ration du joueur
@@ -28,6 +29,7 @@ struct PlayerData
 
     bool isGrounded = false;
     bool isCrouching = false;
+    bool isBackward = false;
     
 	sf::Vector2f nratioTexture = sf:: Vector2f(1,1);
 
@@ -48,6 +50,9 @@ public:
         WALK,
         JUMP,
         FALL,
+        DEAD,
+        RESPAWN,
+        PUSH,
 
         COUNT // Nombre total d'�tats
     };
@@ -77,6 +82,7 @@ public:
 
     // M�thodes pour d�placer le joueur
     void Move(sf::Vector2f movement, float dt);
+    bool Movement();
     void OnUpdate() override;
     void FixedUpdate(float dt) override;
 
@@ -107,4 +113,7 @@ public:
     friend class PlayerAction_Walk;
     friend class PlayerAction_Idle;
     friend class PlayerAction_Fall;
+    friend class PlayerAction_Death;
+    friend class PlayerAction_Respawn;
+    friend class PlayerAction_Push;
 };

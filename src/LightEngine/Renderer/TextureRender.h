@@ -16,6 +16,8 @@ public:
 
 	TextureRender(const char* spritesheetname, const char* spritename);
 
+	void ResetRect();
+
 	/// <summary>
 	/// Draw de la texture de l'entity (herite de Render)
 	/// </summary>
@@ -40,7 +42,8 @@ public:
 
 	void SetNames(std::string spritesheetname, std::string spritename);
 	void SetTextureRect(sf::IntRect& rect) { mTextRect = rect; }
-	void SetRatio(sf::Vector2f& nratio) { mRenderRatio = nratio; }
+	void SetRatio(sf::Vector2f nratio) { mRenderRatio = nratio; }
+	virtual void PauseAnimation(bool value) = 0;
 
 	sf::IntRect* GetTextureRect() { return &mTextRect; }
 	const std::string& GetSpriteSheetName() { return mSpriteSheetName; }
