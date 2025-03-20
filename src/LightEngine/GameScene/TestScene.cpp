@@ -67,7 +67,7 @@ void TestScene::OnEvent(const sf::Event& event)
 void TestScene::HandleConsoleEvent()
 {
 	// Manette
-	if (sf::Joystick::isButtonPressed(0, 0)) // Bouton de saut sur la manette (par exemple, A)
+	if (sf::Joystick::isButtonPressed(0, 0)) // Bouton "A" sur la manette (équivalent de la barre d'espace pour le saut)
 	{
 		if (mPlayer->mReverse)
 		{
@@ -81,7 +81,7 @@ void TestScene::HandleConsoleEvent()
 		}
 	}
 
-	if (sf::Joystick::isButtonPressed(0, 1)) { // Bouton de crouch sur la manette (par exemple, B)
+	if (sf::Joystick::isButtonPressed(0, 1)) { // Bouton "B" sur la manette (équivalent de "Shift" pour crouch)
 		mPlayer->SetState(Player::PlayerStateList::CROUCH);
 		mPlayer->GetPlayerData()->isCrouching = true;
 		mPlayer->GetPlayerData()->mDirection.x = 0;
@@ -90,26 +90,20 @@ void TestScene::HandleConsoleEvent()
 		mPlayer->GetPlayerData()->isCrouching = false;
 	}
 
-	// Gestion des axes X pour le mouvement gauche/droite (axe horizontal sur la manette)
+	// Gestion des axes X pour le mouvement gauche/droite sur la manette (équivalent des touches "Q" et "D" sur le clavier)
 	float joystickX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
 
 	// Si le joystick se penche à gauche (axe < -10)
 	if (joystickX < -10) {
 		mPlayer->GetPlayerData()->mDirection.x = -1; // Déplacement vers la gauche
-		if (!mPlayer->GetPlayerData()->isCrouching) {
-			mPlayer->SetState(Player::PlayerStateList::WALK);
-		}
-		else {
+		if (mPlayer->GetPlayerData()->isCrouching) {
 			mPlayer->SetState(Player::PlayerStateList::CROUCH);
 		}
 	}
 	// Si le joystick se penche à droite (axe > 10)
 	else if (joystickX > 10) {
 		mPlayer->GetPlayerData()->mDirection.x = 1; // Déplacement vers la droite
-		if (!mPlayer->GetPlayerData()->isCrouching) {
-			mPlayer->SetState(Player::PlayerStateList::WALK);
-		}
-		else {
+		if (mPlayer->GetPlayerData()->isCrouching) {
 			mPlayer->SetState(Player::PlayerStateList::CROUCH);
 		}
 	}
@@ -123,6 +117,7 @@ void TestScene::HandleConsoleEvent()
 		}
 	}
 }
+
 
 void TestScene::HandleKeyboardEvent()
 {
@@ -183,8 +178,8 @@ void TestScene::HandleKeyboardEvent()
 
 void TestScene::OnUpdate()
 {
-	//HandleConsoleEvent();
-	HandleKeyboardEvent();
+	HandleConsoleEvent();
+	//HandleKeyboardEvent();
 
 	mView->setCenter(mPlayer->GetPosition(0.f, 0.f).x + 200, mPlayer->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame 
 	for (Entity* entity : m_InstanceGameManager->GetEntities<Entity>()) // Parcours des entit�s du gameManager
