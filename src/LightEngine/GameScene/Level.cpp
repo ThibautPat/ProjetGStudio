@@ -12,10 +12,16 @@
 void Level::ChooseJson(const char* path)
 {
 	mTileMap = *Utils::Parse(path);
-	std::string jsonpath = mTileMap["JsonPath"];
-	std::string sourcepath = mTileMap["SourcePath"];
-	std::string spritesheetname = mTileMap["SpriteSheetName"];
-	GameManager::Get()->GetTextureManager()->LoadSpriteSheet(jsonpath.c_str(), sourcepath.c_str(), spritesheetname);
+	std::string jsonpath1 = mTileMap["JsonPath"];
+	std::string sourcepath1 = mTileMap["SourcePath"];
+	std::string spritesheetname1 = mTileMap["SpriteSheetName"];
+	GameManager::Get()->GetTextureManager()->LoadSpriteSheet(jsonpath1.c_str(), sourcepath1.c_str(), spritesheetname1);
+
+	//mEnv = *Utils::Parse(envipath);
+	//std::string jsonpath2 = mEnv["JsonPath"];
+	//std::string sourcepath2 = mEnv["SourcePath"];
+	//std::string spritesheetname2 = mEnv["SpriteSheetName"];
+	//GameManager::Get()->GetTextureManager()->LoadSpriteSheet(jsonpath2.c_str(), sourcepath2.c_str(), spritesheetname2);
 }
 
 void Level::LoadLevel()
