@@ -20,7 +20,7 @@ AnimationRender::AnimationRender(const char* spritesheetname, const char* sprite
 
 void AnimationRender::UpdateAnimation()
 {
-    if (mIsFinished)
+    if (mIsFinished || mPaused)
         return;
 
     float dt = GameManager::Get()->GetDeltaTime();

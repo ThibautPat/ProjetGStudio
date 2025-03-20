@@ -25,6 +25,8 @@ public:
 
 class PlayerAction_Crouch : public ActionPlayer
 {
+    bool onCrouch;
+
 public:
     void OnStart(Player* pOwner) override;
     void OnUpdate(Player* pOwner) override;

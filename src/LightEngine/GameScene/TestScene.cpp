@@ -115,7 +115,7 @@ void TestScene::HandleConsoleEvent()
 	}
 	else {
 		mPlayer->GetPlayerData()->mDirection.x = 0; // Aucun mouvement horizontal
-		if (mPlayer->GetPlayerData()->isGrounded && !mPlayer->GetPlayerData()->isCrouching) {
+		if (mPlayer->GetPlayerData()->isGrounded && !mPlayer->GetPlayerData()->isCrouching && !mPlayer->GetPlayerData()->playerIsDead) {
 			mPlayer->SetState(Player::PlayerStateList::IDLE); // Si au sol, état "IDLE"
 		}
 		else if (!mPlayer->GetPlayerData()->isCrouching && mPlayer->GetGravitySpeed() > 0) {
@@ -151,7 +151,7 @@ void TestScene::HandleKeyboardEvent()
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		mPlayer->GetPlayerData()->mDirection.x = 0;
-		if (mPlayer->GetPlayerData()->isGrounded) {
+		if (mPlayer->GetPlayerData()->isGrounded && !mPlayer->GetPlayerData()->playerIsDead) {
 			mPlayer->SetState(Player::PlayerStateList::IDLE);
 		}
 		else if (mPlayer->GetGravitySpeed() > 0) {
@@ -172,7 +172,7 @@ void TestScene::HandleKeyboardEvent()
 	}
 	else if (!mPlayer->GetPlayerData()->isCrouching) {
 		mPlayer->GetPlayerData()->mDirection.x = 0;
-		if (mPlayer->GetPlayerData()->isGrounded) {
+		if (mPlayer->GetPlayerData()->isGrounded && !mPlayer->GetPlayerData()->playerIsDead) {
 			mPlayer->SetState(Player::PlayerStateList::IDLE);
 		}
 		else if (mPlayer->GetGravitySpeed() > 0) {

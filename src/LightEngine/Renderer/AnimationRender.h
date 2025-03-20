@@ -14,6 +14,7 @@ protected:
 
 	bool mIsFinished = false;
 	bool mIsLoop;
+	bool mPaused = false;
 	
 public:
 
@@ -26,6 +27,8 @@ public:
 
 	void SetIsFinished(bool value) { mIsFinished = value; }
 	bool GetIsFinished() { return mIsFinished; }
+
+	void PauseAnimation(bool value) override { mPaused = value; }
 
 	/// <summary>
 	/// Gere le changement du masque (et donc de la frame)

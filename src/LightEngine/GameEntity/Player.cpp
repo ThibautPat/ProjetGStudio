@@ -31,7 +31,7 @@ void Player::OnUpdate()
 {
     mAnimator->UpdateCurrentAnimation();
 
-    if (mPData->isGrounded && std::abs(mPData->mDirection.x) == 1) {
+    if (mPData->isGrounded && std::abs(mPData->mDirection.x) == 1 && !mPData->isCrouching) {
         SetState(WALK);
     }
 
@@ -44,11 +44,12 @@ void Player::OnUpdate()
         mPData->isBackward = false;
     }
 
+    if (!mPData->isGrounded && GetGravitySpeed() > 0.f) {
+        SetState(FALL);
+    }
+
     if (mPData->mDirection.x == 0 && !mPData->isCrouching) {
-        if (!mPData->isGrounded && GetGravitySpeed() > 0.f) {
-            SetState(FALL);
-        }
-        else if (mPData->isGrounded) {
+        if (mPData->isGrounded && !mPData->playerIsDead) {
             SetState(IDLE);
         }
     }
@@ -94,11 +95,10 @@ void Player::OnCollision(Entity* other)
     }
     if (other->IsTag(TestScene::Tag::DEADLYOBSTACLE))
     {
-        PlayerDeath();
+        SetState(DEAD);
     }
     if (other->IsTag(TestScene::Tag::END_LEVEL))
     {
-
     }
 }
 
@@ -118,7 +118,6 @@ void Player::PlayerDeath()
 {
     mPData->RespawnClock.restart(); // On restart le timer de respawn 
     mPData->playerIsDead = true;
-    SetState(DEAD);
 }
 
 void Player::Move(sf::Vector2f movement, float dt)
@@ -224,9 +223,7 @@ Player::Player()
 
     SetTransition(PlayerStateList::DEAD, PlayerStateList::RESPAWN, true);
 
-    SetTransition(PlayerStateList::RESPAWN, PlayerStateList::WALK, true);
-    SetTransition(PlayerStateList::RESPAWN, PlayerStateList::JUMP, true);
-    SetTransition(PlayerStateList::RESPAWN, PlayerStateList::CROUCH, true);
+    SetTransition(PlayerStateList::RESPAWN, PlayerStateList::IDLE, true);
 }
 
 Player::~Player()

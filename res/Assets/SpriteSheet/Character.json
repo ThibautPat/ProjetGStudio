@@ -8,7 +8,7 @@
 
 	"jump": { "x" : 0, "y" : 1, "frames": 4, "loop": false },
 
-	"fall": { "x" : 3, "y" : 1, "frames": 1, "loop": true },
+	"fall": { "x" : 2, "y" : 2, "frames": 2, "loop": true },
 
 	"landing": { "x" : 4, "y" : 1, "frames": 3, "loop": false },
 
@@ -18,7 +18,7 @@
 	
 	"Endclimb": { "x" : 4, "y" : 2, "frames": 4, "loop": false },
 
-	"death": { "x" : 0, "y" : 4, "frames": 5, "loop": false },
+	"death": { "x" : 0, "y" : 4, "frames": 4, "loop": false },
 	
 	"StartCrouch": { "x" : 0, "y" : 5, "frames": 3, "loop": false },
 	

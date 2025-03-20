@@ -74,17 +74,29 @@ void PlayerAction_Crouch::OnStart(Player* pOwner)
 	std::cout << "CROUCH" << std::endl;
 	std::string AnimName = "StartCrouch";
 	pOwner->mAnimator->SetCurrentAnimation(AnimName);
+	onCrouch = false;
 }
 void PlayerAction_Crouch::OnUpdate(Player* pOwner)
 {
-	if (pOwner->mAnimator->GetCurrentAnimation()->GetIsFinished()) {
-		std::string AnimName = "OnCrouch";
-		pOwner->mAnimator->SetCurrentAnimation(AnimName);
-	}
-
 	float dt = FIXED_DT;
 	float spd = pOwner->GetSpeed();
 	sf::Vector2f movement = pOwner->GetPlayerData()->mDirection;
+
+	if (pOwner->mAnimator->GetCurrentAnimation()->GetIsFinished()) {
+		std::string AnimName = "OnCrouch";
+		pOwner->mAnimator->SetCurrentAnimation(AnimName);
+		onCrouch = true;
+	}
+
+	if (onCrouch) {
+		if (movement.x == 0.f) {
+			pOwner->GetRender()->PauseAnimation(true);
+		}
+		else {
+			pOwner->GetRender()->PauseAnimation(false);
+		}
+	}
+
 	if (movement.x == 1)
 	{
 		if (pOwner->GetSpeed() > -pOwner->mPData->mMaxSpeedWalk)
@@ -192,12 +204,17 @@ void PlayerAction_Death::OnUpdate(Player* pOwner)
 
 void PlayerAction_Respawn::OnStart(Player* pOwner)
 {
+	pOwner->PlayerDeath();
 	std::cout << "RESPAWN" << std::endl;
 	std::string AnimName = "respawn";
 	pOwner->mAnimator->SetCurrentAnimation(AnimName);
+	pOwner->PlayerRespawn();
 }
 
 void PlayerAction_Respawn::OnUpdate(Player* pOwner)
 {
 	pOwner->PlayerRespawn();
+	if (!pOwner->GetPlayerData()->playerIsDead) {
+		pOwner->SetState(Player::PlayerStateList::IDLE);
+	}
 }
