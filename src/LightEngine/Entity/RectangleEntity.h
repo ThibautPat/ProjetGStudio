@@ -13,7 +13,7 @@ class RectangleEntity : public Entity
 protected:
     sf::RectangleShape mShape;
     AABBCollider* mCollider = nullptr;
-    sf::Clock mClockJump; //TODO A bouger de l� !
+
 
     TextureRender* mTexture;
 
