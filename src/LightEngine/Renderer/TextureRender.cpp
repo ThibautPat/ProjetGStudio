@@ -44,9 +44,9 @@ TextureRender::TextureRender(const char* spritesheetname, const char* spritename
         croppedImage.create(mTextRect.width, mTextRect.height);
         croppedImage.copy(fullImage, 0, 0, mTextRect);
 
-        sf::Texture* mTexture = new sf::Texture();
-        if (mTexture->loadFromImage(croppedImage)) {
-            mRenderSprite->setTexture(*mTexture, true);
+        mLoadTexture = new sf::Texture();
+        if (mLoadTexture->loadFromImage(croppedImage)) {
+            mRenderSprite->setTexture(*mLoadTexture, true);
         }
         mRenderSprite->setOrigin(mTextRect.width / 2, mTextRect.height / 2);
         mRenderSprite->setScale(mRenderRatio);
@@ -71,4 +71,40 @@ void TextureRender::SetNames(const std::string& spritesheetname, const std::stri
 {
     mSpriteSheetName = spritesheetname;
     mSpriteName = spritename;
+}
+
+void TextureRender::SetSpriteRect(const sf::IntRect& rect)
+{
+    SetTextureRect(rect);
+
+    TextureManager* tm = GameManager::Get()->GetTextureManager();
+
+    sf::Texture* fullTexture = tm->GetTexture(mSpriteSheetName);
+    if (fullTexture)
+    {
+        sf::Vector2u textureSize = fullTexture->getSize();
+        if (textureSize.x == 0 || textureSize.y == 0)
+        {
+            std::cerr << "Erreur: La texture '" << mSpriteSheetName << "' est vide ou non chargée !" << std::endl;
+            return;
+        }
+
+        sf::Image fullImage = fullTexture->copyToImage();
+
+        if (fullImage.getSize().x == 0 || fullImage.getSize().y == 0)
+        {
+            std::cerr << "Erreur: L'image copiée est vide !" << std::endl;
+            return;
+        }
+
+        sf::Image croppedImage;
+        croppedImage.create(mTextRect.width, mTextRect.height);
+        croppedImage.copy(fullImage, 0, 0, mTextRect);
+
+        if (mLoadTexture->loadFromImage(croppedImage)) {
+            mRenderSprite->setTexture(*mLoadTexture, true);
+        }
+        mRenderSprite->setOrigin(mTextRect.width / 2, mTextRect.height / 2);
+        mRenderSprite->setScale(mRenderRatio);
+    }
 }

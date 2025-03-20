@@ -12,6 +12,7 @@ protected:
 	sf::Vector2f mRenderRatio;
 	sf::IntRect mTextRect;
 	sf::Sprite* mRenderSprite;
+	sf::Texture* mLoadTexture;
 
 public:
 	TextureRender(const char* spritesheetname, const char* spritename);
@@ -23,6 +24,7 @@ public:
 	void Draw(Entity* entity, sf::RenderWindow* window);
 
 	void SetNames(const std::string& spritesheetname, const std::string& spritename);
+	void SetSpriteRect(const sf::IntRect& rect);
 	void SetTextureRect(const sf::IntRect& rect) { mTextRect = rect; }
 	void SetRatio(const sf::Vector2f& nratio) { mRenderRatio = nratio; }
 

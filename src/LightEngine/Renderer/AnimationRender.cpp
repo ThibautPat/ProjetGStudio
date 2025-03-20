@@ -40,7 +40,7 @@ void AnimationRender::UpdateAnimation()
                     mTextRect.width, mTextRect.height
                 );
 
-            SetTextureRect(nrect);
+            SetSpriteRect(nrect);
         }
 
         if (mFrameCounter >= mFrameNb)
@@ -49,6 +49,7 @@ void AnimationRender::UpdateAnimation()
             if (IsLoop()) {
                 mFrameCounter = 0;
                 mTextRect.left -= mTextRect.width * (mFrameNb);
+                SetSpriteRect(mTextRect);
 
             }
             else {
@@ -58,7 +59,7 @@ void AnimationRender::UpdateAnimation()
                         mTextRect.width, mTextRect.height
                     );
 
-                SetTextureRect(nrect);
+                SetSpriteRect(nrect);
                 mIsFinished = true;
             }
                
