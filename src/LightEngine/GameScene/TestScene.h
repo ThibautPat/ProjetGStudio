@@ -8,6 +8,7 @@
 
 class Entity;
 class Player;
+class Level;
 
 class TestScene : public Scene
 {
@@ -18,10 +19,10 @@ protected:
 	sf::Clock menuClock;
 	sf::Clock escapeClockGap;
 	sf::Clock TeleportClock;
+	Level* mLevel;
 
 public:
 
-	void PlayerDeath();
 	enum Tag
 	{
 		PLAYER,

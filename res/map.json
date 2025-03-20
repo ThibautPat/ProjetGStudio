@@ -1,0 +1,123 @@
+{
+
+  "Rows": 15,
+  "Columns": 12,
+  "MapPhysics": [
+    [ "2", "7", "7", "7", "7", "2", "2", "2", "2", "2", "2", "2" ],
+    [ "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "2", "2", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "0", "0", "0", "0", "0", "0", "0", "2", "2", "0", "2" ],
+    [ "2", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "7", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "0", "0", "0", "0", "2", "2", "0", "0", "0", "0", "2" ],
+    [ "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "2", "2", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "0", "0", "0", "2", "2", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2" ],
+    [ "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2" ]
+  ],
+
+  "AcronymPhysics": "1 = player, 2 = platform, 0 = empty, 3 = Checkpoint, 5 = Death, 6 = Exit, 7 = Metalic platform, 8 = Teleporter, 9 = Moving Platform, 10 = Bouncing, 11 = Obstacle",
+  "Physics": {
+    "0": {
+      "RigidBody": false,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 99
+    },
+
+    "1": {
+      "RigidBody": true,
+      "Gravity": true,
+      "IsKinematic": false,
+      "Tag": 0
+    },
+
+    "2": {
+      "RigidBody": true,
+      "Gravity": false,
+      "IsKinematic": true,
+      "Tag": 4
+    },
+
+    "7": {
+      "RigidBody": true,
+      "Gravity": false,
+      "IsKinematic": true,
+      "Tag": 3
+    },
+
+
+    "3": {
+      "RigidBody": false,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 1
+    },
+
+    "5": {
+      "RigidBody": false,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 2
+    },
+
+    "6": {
+      "RigidBody": false,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 5
+    },
+
+    "8": {
+      "RigidBody": false,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 6
+    },
+
+    "9": {
+      "RigidBody": true,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 7
+    },
+
+    "10": {
+      "RigidBody": true,
+      "Gravity": false,
+      "IsKinematic": true,
+      "Tag": 8
+    },
+
+    "11": {
+      "RigidBody": true,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 4
+    }
+  },
+
+  "Acronym_of_Dir": "U = Up, D = Down, L = Left, R = Right",
+
+  "MapGrid": [
+    [ 83, 161, 161, 161, 161, 33, 34, 33, 34, 33, 34, 67 ],
+    [ 19, "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", 16 ],
+    [ 19, 8, 11, "X", "X", "X", "X", "X", "X", "X", "X", 16 ],
+    [ 35, "X", "X", "X", "X", "X", "X", "X", 8, 11, "X", 32 ],
+    [ 19, "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", 16 ],
+    [ 35, 161, "X", "X", "X", "X", "X", "X", "X", "X", "X", 32 ],
+    [ 19, "X", "X", "X", "X", "X", 8, 11, "X", "X", "X", 16 ],
+    [ 35, "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", 32 ],
+    [ 35, 8, 11, "X", "X", "X", "X", "X", "X", "X", "X", 16 ],
+    [ 35, "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", 32 ],
+    [ 19, "X", "X", "X", 8, 11, "X", "X", "X", "X", "X", 16 ],
+    [ 35, "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", 32 ],
+    [ 82, 3, "X", "X", "X", "X", "X", "X", "X", "X", "X", 16 ],
+    [ 17, 82, 1, 1, 1, 1, 1, 1, 1, 1, 1, 66 ],
+    [ 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17 ]
+  ]
+}

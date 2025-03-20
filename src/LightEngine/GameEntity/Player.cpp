@@ -8,9 +8,8 @@
 
 void Player::OnInitialize() 
 {
-    mShape.setOrigin(mShape.getGlobalBounds().width / 2, mShape.getGlobalBounds().height / 2); //WTF pourquoi l'h�ritage n'est pas fait ?!
     mPData = new PlayerData;
-
+    mShape.setOrigin(mShape.getGlobalBounds().width / 2, mShape.getGlobalBounds().height / 2); //WTF pourquoi l'h�ritage n'est pas fait ?!
     mAs = GameManager::Get()->GetTextureManager();
 
     //Setup de la gestion de textures
@@ -142,6 +141,7 @@ bool Player::SetState(PlayerStateList newState)
 
 Player::Player()
 {
+
     SetTag(TestScene::Tag::PLAYER);
 
     for (int i = 0; i < STATE_COUNT; i++)

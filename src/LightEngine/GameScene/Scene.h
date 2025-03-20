@@ -27,7 +27,8 @@ protected:
 
 public:
 	virtual Player* GetPlayer() { return mPlayer; }
-	
+	virtual void SetPlayer(Player* _player) { mPlayer = _player; }
+
 	template<typename T>
 	T* CreateCircleEntity(float radius, const sf::Color& color);
 

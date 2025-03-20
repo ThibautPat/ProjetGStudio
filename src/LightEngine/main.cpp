@@ -4,7 +4,6 @@
 
 #include "Manager/GameManager.h"
 #include "GameScene/TestScene.h"
-#include "GameScene/TestScene2.h"
 
 #include <cstdlib>
 #include <crtdbg.h>
@@ -17,7 +16,6 @@ int main()
 	pInstance->CreateWindow(1920, 1080, "TestScene", 63, sf::Color(0,100,255));
 	
 	pScM->AddScene<TestScene>("testscene");
-	pScM->AddScene<TestScene2>("testscene2");
 
 	pScM->SelectScene("testscene");
 	pScM->LaunchScene();
