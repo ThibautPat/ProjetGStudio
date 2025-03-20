@@ -1,0 +1,24 @@
+
+#include <SFML/Graphics.hpp>
+#include <iostream>
+
+#include "Manager/GameManager.h"
+#include "GameScene/TestScene.h"
+
+#include <cstdlib>
+#include <crtdbg.h>
+
+int main() 
+{
+    GameManager* pInstance = GameManager::Get();
+	SceneManager* pScM = pInstance->GetSceneManager();
+
+	pInstance->CreateWindow(1920, 1080, "TestScene", 63, sf::Color(0,100,255));
+	
+	pScM->AddScene<TestScene>("testscene");
+
+	pScM->SelectScene("testscene");
+	pScM->LaunchScene();
+
+	return 0;
+}
