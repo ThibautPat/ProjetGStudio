@@ -1,4 +1,7 @@
 {
+  "SpriteSheetName" : "tilemap",
+  "SourcePath" : "../../../res/Assets/TileMap/TileMap.png",
+  "JsonPath" : "../../../res/Assets/TileMap/tilemap.json",
 
   "Rows": 15,
   "Columns": 12,
@@ -7,15 +10,15 @@
     [ "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
     [ "2", "2", "2", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
     [ "2", "0", "0", "0", "0", "0", "0", "0", "2", "2", "0", "2" ],
-    [ "2", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
-    [ "2", "7", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
     [ "2", "0", "0", "0", "0", "2", "2", "0", "0", "0", "0", "2" ],
     [ "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
     [ "2", "2", "2", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
     [ "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
     [ "2", "0", "0", "0", "2", "2", "0", "0", "0", "0", "0", "2" ],
     [ "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
-    [ "2", "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "2", "1", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
     [ "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2" ],
     [ "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2" ]
   ],
@@ -104,20 +107,21 @@
   "Acronym_of_Dir": "U = Up, D = Down, L = Left, R = Right",
 
   "MapGrid": [
-    [ 83, 161, 161, 161, 161, 33, 34, 33, 34, 33, 34, 67 ],
-    [ 19, "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", 16 ],
-    [ 19, 8, 11, "X", "X", "X", "X", "X", "X", "X", "X", 16 ],
-    [ 35, "X", "X", "X", "X", "X", "X", "X", 8, 11, "X", 32 ],
-    [ 19, "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", 16 ],
-    [ 35, 161, "X", "X", "X", "X", "X", "X", "X", "X", "X", 32 ],
-    [ 19, "X", "X", "X", "X", "X", 8, 11, "X", "X", "X", 16 ],
-    [ 35, "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", 32 ],
-    [ 35, 8, 11, "X", "X", "X", "X", "X", "X", "X", "X", 16 ],
-    [ 35, "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", 32 ],
-    [ 19, "X", "X", "X", 8, 11, "X", "X", "X", "X", "X", 16 ],
-    [ 35, "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", 32 ],
-    [ 82, 3, "X", "X", "X", "X", "X", "X", "X", "X", "X", 16 ],
-    [ 17, 82, 1, 1, 1, 1, 1, 1, 1, 1, 1, 66 ],
-    [ 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17 ]
+    [ "grass_b_right_corner", "metalic_b", "metalic_b", "metalic_b", "metalic_b", "metalic_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b_left_corner" ],
+    [ "grass_right", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "grass_right", "ballon_left", "ballon_right", "X", "X", "X", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "grass_right", "X", "X", "X", "X", "X", "X", "X", "ballon_left", "ballon_right", "X", "grass_left" ],
+    [ "grass_right", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "grass_right", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "grass_right", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "grass_right", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "grass_right", "X", "X", "X", "X", "X", "ballon_left", "ballon_right", "X", "X", "X", "grass_left" ],
+    [ "grass_right", "ballon_left", "ballon_right", "X", "X", "X", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "grass_right", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "grass_right", "X", "X", "X", "ballon_left", "ballon_right", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "grass_right", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "grass_t_right_corner", "grass_t_right_angle", "X", "X", "X", "X", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "dirt", "grass_t_right_corner", "grass_t", "grass_t", "grass_t", "grass_t", "grass_t", "grass_t", "grass_t", "grass_t", "grass_t", "grass_t_left_corner" ],
+    [ "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt" ]
   ]
 }

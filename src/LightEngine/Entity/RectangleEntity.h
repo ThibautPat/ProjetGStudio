@@ -2,6 +2,7 @@
 
 #include "Entity.h"
 #include <SFML/Graphics/RectangleShape.hpp>
+#include "../Renderer/TextureRender.h"
 
 class Scene;
 class AABBCollider;
@@ -14,10 +15,14 @@ protected:
     AABBCollider* mCollider = nullptr;
     sf::Clock mClockJump; //TODO A bouger de l� !
 
+    TextureRender* mTexture;
+
 public:    
 
     bool mReverse = false;
 
+    virtual TextureRender* GetRender() { return mTexture; }
+    void InitRender(const char* spritesheetname, const char* spritename) override { mTexture = new TextureRender(spritesheetname, spritename); }
     // Getters
     Collider* GetCollider() override;
     sf::Shape* GetShape() override;

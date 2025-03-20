@@ -22,14 +22,19 @@ TextureRender::TextureRender(const char* spritesheetname, const char* spritename
 
 void TextureRender::Draw(Entity* entity, sf::RenderWindow* window)
 {
-	TextureManager* tm = GameManager::Get()->GetTextureManager();
-	sf::Texture text = sf::Texture();
+	//A OPTI
 
-	json* njson = tm->GetJson(mSpriteSheetName);
+	//faire en var membre
+	TextureManager* tm = GameManager::Get()->GetTextureManager();
+
+	//faire en var membre
+	sf::Texture text = sf::Texture();
 
 	tm->SetTetxureWithRect(mSpriteSheetName, mTextRect, &text);
 
+	//faire en var membre
 	sf::Sprite spr;
+
 	spr.setTexture(text);
 
 	spr.setScale(mRenderRatio);

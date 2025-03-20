@@ -89,7 +89,14 @@ void GameManager::DrawRender(Entity* entity)
 		return;
 	}
 
-	entity->GetRender()->Draw(entity, mpWindow);
+	//sf::Sprite spr;
+	//sf::Texture text;
+	//text.loadFromFile("../../../res/Assets/TileMap/TileMap.png");
+	//spr.setTexture(text);
+
+	//mpWindow->draw(spr);
+
+	//entity->GetRender()->Draw(entity, mpWindow);
 }
 
 void GameManager::CreateWindow(unsigned int width, unsigned int height, const char* title, int fpsLimit, sf::Color clearColor)

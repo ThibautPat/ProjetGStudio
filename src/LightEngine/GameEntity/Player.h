@@ -100,6 +100,7 @@ public:
     // Accesseurs pour les donn�es du joueur (PData)
     PlayerData* GetPlayerData() const { return mPData; }
     TextureRender* GetRender() override;
+    void InitRender(const char* spritesheetname, const char* spritename) override { mAnimator = new Animator(); }
 
     // Amis de la classe (acc�s � des m�thodes priv�es)
     friend class PlayerAction_Jump;

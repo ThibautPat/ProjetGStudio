@@ -77,6 +77,7 @@ public:
 
     // Render
     virtual TextureRender* GetRender() { return nullptr; }
+    virtual void InitRender(const char* spritesheetname, const char* spritename) = 0;
 
     // Lifecycle
     void Destroy();

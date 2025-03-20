@@ -37,7 +37,7 @@ void TestScene::OnInitialize()
 	pEntity3->SetTag(Tag::BACK_GROUND2);
 
 	mLevel = new Level();
-	mLevel->ChooseJson("../../../res/map.json");
+	mLevel->ChooseJson("../../../res/Levels/map.json");
 	mLevel->LoadLevel();
 }
 
@@ -170,8 +170,8 @@ void TestScene::HandleKeyboardEvent()
 
 void TestScene::OnUpdate()
 {
-	HandleConsoleEvent();
-	//HandleKeyboardEvent();
+	//HandleConsoleEvent();
+	HandleKeyboardEvent();
 
 	mPlayer->PlayerRespawn();
 
