@@ -31,14 +31,14 @@ void Level::LoadLevel()
 			if (tmp != "1")
 				continue;
 
-			sc->SetPlayer(sc->CreateRectEntity<Player>(230, 110, sf::Color(0, 255, 0, 150)));
+			sc->SetPlayer(sc->CreateRectEntity<Player>(230, 75, sf::Color(0, 255, 0, 150)));
 
 			Player* pEntity = sc->GetPlayer();
 			pEntity->SetGravity((bool)mMap["Physics"][tmp]["Gravity"]);
 			pEntity->SetRigidBody((bool)mMap["Physics"][tmp]["RigidBody"]);
 			pEntity->SetIsKinematic((bool)mMap["Physics"][tmp]["IsKinematic"]);
 			pEntity->SetTag((int)mMap["Physics"][tmp]["Tag"]);
-			pEntity->SetPosition(128 * j, 128 * i -128* mMap["Rows"]);
+			pEntity->SetPosition(128 * j, 128 * i);
 		}
 	}
 
@@ -60,8 +60,6 @@ void Level::LoadLevel()
 			pEntity->SetPosition(128 * j, 128 * i);
 			std::string spritesheetname = mMap["SpriteSheetName"];
 			pEntity->InitRender(spritesheetname.c_str(), ((std::string)mMap["MapGrid"][i][j]).c_str());
-
-			std::cout << ((std::string)mMap["MapGrid"][i][j]).c_str() << std::endl;
 		}
 	}
 }

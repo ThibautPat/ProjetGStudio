@@ -29,7 +29,7 @@ public:
 	void SetSpriteRect(const sf::IntRect& rect);
 	void SetTextureRect(const sf::IntRect& rect) { mTextRect = rect; }
 	void SetRatio(const sf::Vector2f& nratio) { mRenderRatio = nratio; }
-	virtual void PauseAnimation(bool value) = 0;
+	virtual void PauseAnimation(bool value) {};
 
 	sf::IntRect GetTextureRect() const { return mTextRect; }
 	const std::string& GetSpriteSheetName() const { return mSpriteSheetName; }
