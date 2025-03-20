@@ -19,14 +19,10 @@ TextureRender::TextureRender(const char* spritesheetname, const char* spritename
 
 	mTextRect.left = mTextRect.width * Utils::GetInfoFromArray<int>(njson, charArray, "x");
 	mTextRect.top = mTextRect.height * Utils::GetInfoFromArray<int>(njson, charArray, "y");
-
-	//std::cout << mSpriteName << " : " << Utils::GetInfoFromArray<int>(njson, charArray, "x") << "x " << Utils::GetInfoFromArray<int>(njson, charArray, "y") << "y" << std::endl;
 }
 
 void TextureRender::Draw(Entity* entity, sf::RenderWindow* window)
 {
-	//A OPTI
-
 	TextureManager* tm = GameManager::Get()->GetTextureManager();
 
 	tm->SetTetxureWithRect(mSpriteSheetName, mTextRect, mRenderTexture);
