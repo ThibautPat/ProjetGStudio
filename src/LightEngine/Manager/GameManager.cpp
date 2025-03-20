@@ -85,11 +85,11 @@ GameManager::~GameManager()
 
 void GameManager::DrawRender(Entity* entity)
 {
-	if (entity->GetRender() == nullptr) {
+	if (entity->GetTextureRender() == nullptr) {
 		return;
 	}
 
-	entity->GetRender()->Draw(entity, mpWindow);
+	entity->GetTextureRender()->Draw(entity, mpWindow);
 }
 
 void GameManager::CreateWindow(unsigned int width, unsigned int height, const char* title, int fpsLimit, sf::Color clearColor)

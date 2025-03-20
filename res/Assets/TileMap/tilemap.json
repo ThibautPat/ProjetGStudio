@@ -1,0 +1,31 @@
+{
+    "frame_size": { "width": 128, "height": 128 },
+
+    "dirt" : { "x" : 1, "y" : 1 },
+
+    "metalic_b" : { "x" : 1, "y" : 10 },
+
+    "grass_t" : { "x" : 1, "y" : 0 },
+
+    "grass_b" : { "x" : 1, "y" : 2 },
+
+    "grass_right" : { "x" : 3 , "y" : 1 },
+
+    "grass_left" : { "x" : 0 , "y" : 1 },
+
+    "grass_t_right_angle" : { "x" : 3 , "y" : 0 },
+
+    "grass_t_left_corner" : { "x" : 2, "y" : 4 },
+
+    "grass_t_right_corner" : { "x" : 2, "y" : 5 },
+
+    "grass_b_right_corner" : { "x" : 3, "y" : 5 },
+
+    "grass_b_left_corner" : { "x" : 3, "y" : 4 },
+
+    "ballon_right" : { "x" : 11 , "y" : 0 },
+
+    "ballon_left" : { "x" : 8 , "y" : 0 },
+
+    "X" : { "x" : 15, "y" : 15 }
+}

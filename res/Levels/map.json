@@ -1,0 +1,125 @@
+{
+  "SpriteSheetName" : "tilemap",
+  "SourcePath" : "../../../res/Assets/TileMap/TileMap.png",
+  "JsonPath" : "../../../res/Assets/TileMap/tilemap.json",
+
+  "Rows": 15,
+  "Columns": 12,
+  "MapPhysics": [
+    [ "2", "7", "7", "7", "7", "2", "2", "2", "2", "2", "2", "2" ],
+    [ "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "0", "0", "0", "2", "2", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "0", "0", "0", "0", "0", "0", "0", "2", "2", "0", "2" ],
+    [ "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "0", "0", "0", "0", "2", "2", "0", "0", "0", "0", "2" ],
+    [ "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "2", "2", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "0", "0", "0", "0", "0", "0", "0", "5", "0", "0", "2" ],
+    [ "2", "0", "0", "0", "2", "2", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "0", "0", "0", "0", "0", "0", "0", "0", "2", "2", "2" ],
+    [ "2", "2", "1", "0", "0", "0", "0", "0", "0", "0", "0", "2" ],
+    [ "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2" ],
+    [ "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2" ]
+  ],
+
+  "AcronymPhysics": "1 = player, 2 = platform, 0 = empty, 3 = Checkpoint, 5 = Death, 6 = Exit, 7 = Metalic platform, 8 = Teleporter, 9 = Moving Platform, 10 = Bouncing, 11 = Obstacle",
+  "Physics": {
+    "0": {
+      "RigidBody": false,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 99
+    },
+
+    "1": {
+      "RigidBody": true,
+      "Gravity": true,
+      "IsKinematic": false,
+      "Tag": 0
+    },
+
+    "2": {
+      "RigidBody": true,
+      "Gravity": false,
+      "IsKinematic": true,
+      "Tag": 4
+    },
+
+    "7": {
+      "RigidBody": true,
+      "Gravity": false,
+      "IsKinematic": true,
+      "Tag": 3
+    },
+
+
+    "3": {
+      "RigidBody": false,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 1
+    },
+
+    "5": {
+      "RigidBody": false,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 2
+    },
+
+    "6": {
+      "RigidBody": false,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 5
+    },
+
+    "8": {
+      "RigidBody": false,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 6
+    },
+
+    "9": {
+      "RigidBody": true,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 7
+    },
+
+    "10": {
+      "RigidBody": true,
+      "Gravity": false,
+      "IsKinematic": true,
+      "Tag": 8
+    },
+
+    "11": {
+      "RigidBody": true,
+      "Gravity": false,
+      "IsKinematic": false,
+      "Tag": 4
+    }
+  },
+
+
+  "MapGrid": [
+    [ "grass_b_right_corner", "metalic_b", "metalic_b", "metalic_b", "metalic_b", "metalic_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b_left_corner" ],
+    [ "grass_right", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "grass_right", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "grass_right", "X", "X", "X","ballon_left", "ballon_right", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "grass_right", "X", "X", "X", "X", "X", "X", "X", "ballon_left", "ballon_right", "X", "grass_left" ],
+    [ "grass_right", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "grass_right", "X", "X", "X", "X", "ballon_left", "ballon_right", "X", "X", "X", "X", "grass_left" ],
+    [ "grass_right", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "grass_right", "ballon_left", "ballon_right", "X", "X", "X", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "grass_right", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "grass_right", "X", "X", "X", "ballon_left", "ballon_right", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "grass_right", "X", "X", "X", "X", "X", "X", "X", "X", "ballon_left", "ballon_right", "grass_left" ],
+    [ "grass_t_right_corner", "grass_t_right_angle", "X", "X", "X", "X", "X", "X", "X", "X", "X", "grass_left" ],
+    [ "dirt", "grass_t_right_corner", "grass_t", "grass_t", "grass_t", "grass_t", "grass_t", "grass_t", "grass_t", "grass_t", "grass_t", "grass_t_left_corner" ],
+    [ "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt" ]
+  ]
+}

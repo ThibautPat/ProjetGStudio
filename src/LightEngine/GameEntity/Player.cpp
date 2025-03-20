@@ -69,7 +69,7 @@ void Player::OnUpdate()
     Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 70, text3, sf::Color::Red);
 }
 
-TextureRender* Player::GetRender()
+TextureRender* Player::GetTextureRender()
 {
     return mAnimator->GetCurrentAnimation();
 }
