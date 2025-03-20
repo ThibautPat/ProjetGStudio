@@ -1,0 +1,10 @@
+{
+    "SpriteSheetName" : "env_elements",
+    "SourcePath" : "../../../res/Assets/Environment/environment_elements.png",
+    "JsonPath" : "../../../res/Assets/TileMap/env_elements.json",
+
+    "MapGrid": [
+        [ "arbre" , "X", "X"],
+        [ "X" , "X", "arbredeouf"]
+    ]
+}
