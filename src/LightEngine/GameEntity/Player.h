@@ -25,6 +25,9 @@ struct PlayerData
     float mAcceleration = 700.f;  // Acc�l�ration du joueur
     float mDeceleration = 500.f;  // D�c�l�ration du joueur
 
+    float mMaxBatteryDuration = 5.f;
+    float mCurrentBatteryDuration = 0.f;
+
     sf::Vector2f mDirection = sf::Vector2f(0.f, 0.f);
 
     bool isGrounded = false;
@@ -90,6 +93,8 @@ public:
     bool Movement();
     void OnUpdate() override;
     void FixedUpdate(float dt) override;
+
+    void HandleBattery();
 
     Collider* GetCollider() override;
 

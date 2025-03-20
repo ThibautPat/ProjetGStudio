@@ -122,6 +122,8 @@ void Player::OnCollision(Entity* other)
     if (other->IsTag(TestScene::Tag::END_LEVEL))
     {
     }
+
+    HandleBattery();
 }
 
 void Player::PlayerRespawn()
@@ -185,6 +187,27 @@ void Player::FixedUpdate(float dt)
     mPData->pJumpDuration += dt;
 
     Move(mPData->mDirection, dt);
+}
+
+void Player::HandleBattery()
+{
+    Debug::DrawText(GetPosition(0.f, 0.f).x - 750, GetPosition(0.f, 0.f).y - 650, std::to_string(int(mPData->mCurrentBatteryDuration)), sf::Color::White);
+
+    if (mAnimator->GetRatio().y == -1) {
+        mPData->mCurrentBatteryDuration += GetDeltaTime() * 0.5f;
+
+        if (mPData->mCurrentBatteryDuration > mPData->mMaxBatteryDuration) {
+            mReverse = false;
+        }
+    }
+
+    else if (mPData->mCurrentBatteryDuration > 0.f) {
+        mPData->mCurrentBatteryDuration -= GetDeltaTime() * 0.5f;
+
+        if (mPData->mCurrentBatteryDuration < 0.f) {
+            mPData->mCurrentBatteryDuration = 0.f;
+        }
+    }
 }
 
 Collider* Player::GetCollider()
