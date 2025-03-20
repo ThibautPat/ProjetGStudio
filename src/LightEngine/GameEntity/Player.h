@@ -30,12 +30,15 @@ struct PlayerData
     bool isGrounded = false;
     bool isCrouching = false;
     bool isBackward = false;
+    bool playerIsDead = false;
     
 	sf::Vector2f nratioTexture = sf:: Vector2f(1,1);
 
     sf::Clock RespawnClock;
     sf::Vector2f mLastCheckPoint;
-    bool playerIsDead = false;
+
+    sf::FloatRect mHitboxCrouch = {0.f, 0.f, 115.f, 180.f} ;
+    sf::FloatRect mHitboxNotCrouch = { 0.f, 0.f, 110.f, 230.f };
 };
 
 // Classe repr�sentant un joueur, h�ritant de RectangleEntity
@@ -64,6 +67,8 @@ private:
     Animator* mAnimator;
     TextureManager* mAs;
 
+    AABBCollider* mCrouchCollider;
+
     // �tat actuel du joueur
     PlayerStateList mState = PlayerStateList::IDLE;
     PlayerData* mPData;
@@ -85,6 +90,8 @@ public:
     bool Movement();
     void OnUpdate() override;
     void FixedUpdate(float dt) override;
+
+    Collider* GetCollider() override;
 
     //Au moment d'une collision
     void OnCollision(Entity* other) override;

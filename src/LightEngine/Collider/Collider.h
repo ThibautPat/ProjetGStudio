@@ -21,5 +21,7 @@ public:
 	/// <param name="newX">Nouvelle coordonnee x au centre du collider</param>
 	/// <param name="newY">Nouvelle coordonnee y au centre du collider</param>
 	virtual void Update(float newX, float newY) = 0;
+
+	void SetRect(float xMin, float yMin, float width, float height);
 };
 

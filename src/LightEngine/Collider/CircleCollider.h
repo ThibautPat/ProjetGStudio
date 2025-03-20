@@ -9,4 +9,3 @@ public:
 	bool IsColliding(Collider* pOther) override;
 	void Update(float newX, float newY) override;
 };
-

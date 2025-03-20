@@ -19,7 +19,7 @@ public:
     bool mReverse = false;
 
     // Getters
-    Collider* GetCollider() override;
+    virtual Collider* GetCollider() override;
     sf::Shape* GetShape() override;
 
     // Collision & Position

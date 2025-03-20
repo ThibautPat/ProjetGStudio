@@ -20,7 +20,6 @@ void Player::OnInitialize()
     mAnimator->AddAnimation("player", "idle");
     mAnimator->AddAnimation("player", "StartCrouch");
     mAnimator->AddAnimation("player", "OnCrouch");
-    //mAnimator->AddAnimation("player", "EndCrouch");
     mAnimator->AddAnimation("player", "fall");
     mAnimator->AddAnimation("player", "death");
     mAnimator->AddAnimation("player", "respawn");
@@ -186,6 +185,14 @@ void Player::FixedUpdate(float dt)
     mPData->pJumpDuration += dt;
 
     Move(mPData->mDirection, dt);
+}
+
+Collider* Player::GetCollider()
+{
+    if (mPData->isCrouching) {
+        return (Collider*)mCrouchCollider;
+    }
+    return mCollider;
 }
 
 bool Player::SetState(PlayerStateList newState)
