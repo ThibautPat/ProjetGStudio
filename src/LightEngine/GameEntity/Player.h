@@ -70,8 +70,6 @@ private:
     Animator* mAnimator;
     TextureManager* mAs;
 
-    AABBCollider* mCrouchCollider;
-
     // �tat actuel du joueur
     PlayerStateList mState = PlayerStateList::IDLE;
     PlayerData* mPData;
