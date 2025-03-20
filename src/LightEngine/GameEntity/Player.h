@@ -32,6 +32,8 @@ struct PlayerData
 	sf::Vector2f nratioTexture = sf:: Vector2f(1,1);
 
     sf::Clock RespawnClock;
+    sf::Clock TeleportClock;
+    sf::Clock BoucingClock;
     sf::Vector2f mLastCheckPoint;
     bool playerIsDead = false;
 };

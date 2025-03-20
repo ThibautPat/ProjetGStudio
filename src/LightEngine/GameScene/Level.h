@@ -9,6 +9,7 @@ class Entity;
 
 class Level
 {
+	bool IsTeleport = false;
 protected:
 	json mMap;
 public:

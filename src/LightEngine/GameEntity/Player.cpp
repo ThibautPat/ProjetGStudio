@@ -5,6 +5,7 @@
 #include "../GameScene/TestScene.h"
 #include "../Renderer/AnimationRender.h"
 #include "../Collider/AABBCollider.h"
+#include "../GameEntity/Teleporter.h"
 
 void Player::OnInitialize() 
 {
@@ -67,12 +68,15 @@ void Player::OnCollision(Entity* other)
 		if (other->IsTag(TestScene::Tag::PLATFORM) || other->IsTag(TestScene::Tag::OBSTACLE) || other->IsTag(TestScene::Tag::METALIC_OBSTACLE))
         {
             mPData->isGrounded = true;  // Le joueur est au sol lorsqu'il touche une plateforme
+            mBoolGravity = false;
+        }
+        if (other->IsTag(TestScene::Tag::BOUCING_OBSTACLE))
+        {
+            mPData->isGrounded = true;  // Le joueur est au sol lorsqu'il touche une plateforme
+            mBoolGravity = false;
         }
     }
-    else if (!hasCollidedLastFrame)
-    {
-        mPData->isGrounded = false; // Sinon, il n'est pas au sol 
-    }
+    
     if (other->IsTag(TestScene::Tag::CHECKPOINT)) 
     { 
         mPData->mLastCheckPoint = other->GetPosition(0.f, 0.f); // On set le dernier checkpoint  
@@ -86,6 +90,19 @@ void Player::OnCollision(Entity* other)
     {
 		GameManager::Get()->GetSceneManager()->GetScene()->SetIsEnd(true); // On set la fin du niveau
     }
+	if (dynamic_cast<Teleporter*>(other))
+	{
+        
+        
+        for (Entity* entity3 : GameManager::Get()->GetEntities<Entity>()) // Parcours des entit�s du gameManager
+        {
+            if (entity3->IsTag(other->GetTag()) && entity3 != other && mPData->TeleportClock.getElapsedTime().asSeconds() > 2) // Si l'entit� est un autre teleporter
+            {
+                SetPosition(entity3->GetPosition(0.f, 0.f).x, entity3->GetPosition(0.f, 0.f).y); // On t�l�porte le joueur
+                mPData->TeleportClock.restart(); // On restart le timer de t�l�portation 
+            }
+        }
+	}
 }
 
 void  Player::PlayerRespawn()

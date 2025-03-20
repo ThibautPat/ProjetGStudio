@@ -54,8 +54,10 @@ void TestScene::OnEvent(const sf::Event& event)
 void TestScene::HandleConsoleEvent()
 {
 	// Manette
+
 	if (sf::Joystick::isButtonPressed(0, 0)) // Bouton de saut sur la manette (par exemple, A)
 	{
+
 		if (mPlayer->mReverse)
 		{
 			mPlayer->SetState(Player::PlayerStateList::FALL);
@@ -63,11 +65,11 @@ void TestScene::HandleConsoleEvent()
 			mPlayer->mReverse = false;
 			mPlayer->GetPlayerData()->isGrounded = false;
 		}
-		else if (mPlayer->GetPlayerData()->isGrounded) {
+		else if (mPlayer->GetPlayerData()->isGrounded)
+		{
 			mPlayer->SetState(Player::PlayerStateList::JUMP);
 		}
 	}
-
 	if (sf::Joystick::isButtonPressed(0, 1)) { // Bouton de crouch sur la manette (par exemple, B)
 		mPlayer->SetState(Player::PlayerStateList::CROUCH);
 		mPlayer->GetPlayerData()->isCrouching = true;

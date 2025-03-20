@@ -30,7 +30,8 @@ void Level::LoadLevel()
 			pEntity->SetGravity((bool)mMap["Physics"][tmp]["Gravity"]);
 			pEntity->SetRigidBody((bool)mMap["Physics"][tmp]["RigidBody"]);
 			pEntity->SetIsKinematic((bool)mMap["Physics"][tmp]["IsKinematic"]);
-			pEntity->SetTag((int)mMap["Physics"][tmp]["Tag"]);
+			int tag = (int)mMap["Physics"][tmp]["Tag"];
+			pEntity->SetTag(tag);
 			pEntity->SetPosition(128 * j, 128 * i -128* mMap["Rows"]);
 		}
 	}
@@ -49,7 +50,10 @@ void Level::LoadLevel()
 			pEntity->SetGravity((bool)mMap["Physics"][tmp]["Gravity"]);
 			pEntity->SetRigidBody((bool)mMap["Physics"][tmp]["RigidBody"]);
 			pEntity->SetIsKinematic((bool)mMap["Physics"][tmp]["IsKinematic"]);
-			pEntity->SetTag((int)mMap["Physics"][tmp]["Tag"]);
+			int tag = (int)mMap["Physics"][tmp]["Tag"];
+			if (!IsTeleport && tag > 19)
+				tag += 1;
+			pEntity->SetTag(tag);
 			pEntity->SetPosition(128 * j, 128 * i - 128 * mMap["Rows"]);
 
 			//if (tmp2 == "X")
@@ -73,9 +77,11 @@ Entity* Level::CreateNewEnity(const char* id)
 	case 10:
 	case 11: return sc->CreateRectEntity<RectangleEntity>(128, 128, sf::Color::Red);
 	case 7: return sc->CreateRectEntity<RectangleEntity>(128, 128, sf::Color::Green);
-	case 3: return sc->CreateRectEntity<Checkpoint>(128, 128, sf::Color::Red);
-	case 5: return sc->CreateRectEntity<DeadlyObstacle>(128, 128, sf::Color::Red);
-	case 8: return sc->CreateRectEntity<Teleporter>(128, 128, sf::Color::Red);
+	case 3: return sc->CreateRectEntity<Checkpoint>(128, 2, sf::Color::Transparent);
+	case 5: return sc->CreateRectEntity<DeadlyObstacle>(128, 128, sf::Color::Magenta);
+	case 8: 
+		IsTeleport = !IsTeleport;
+		return sc->CreateRectEntity<Teleporter>(128, 128, sf::Color::Red);
 	case 9: return sc->CreateRectEntity<Moving_Platform>(128, 128, sf::Color::Red);
 	default:
 		return nullptr; // Retourne nullptr si aucun cas ne correspond
