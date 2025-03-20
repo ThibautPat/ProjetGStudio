@@ -31,6 +31,10 @@ void Player::OnUpdate()
 {
     mAnimator->UpdateCurrentAnimation();
 
+    if (mPData->isGrounded && std::abs(mPData->mDirection.x) == 1) {
+        SetState(WALK);
+    }
+
     if (mPData->mDirection.x == -1 && !mPData->isBackward) {
         mAnimator->SetRatio(sf::Vector2f(-1.f, 1.f));
         mPData->isBackward = true;
@@ -131,6 +135,29 @@ void Player::Move(sf::Vector2f movement, float dt)
     SetDirection(dt, 0, mSpeed);
 }
 
+bool Player::Movement() {
+    sf::Vector2f movement = mPData->mDirection;
+
+    if (movement == sf::Vector2f(0.f, 0.f)) {
+        return false;
+    }
+
+    float speed = GetSpeed();
+    speed += movement.x * 50 * FIXED_DT * mPData->mAcceleration;
+    SetSpeed(speed);
+    if (movement.x != 0) // Mise � jour de mLastMovement si movement.x n'est pas nul
+    {
+        mLastMovement = movement;
+    }
+    if ((mLastMovement.x == -1 && GetSpeed() > 0) || (mLastMovement.x == 1 && GetSpeed() < 0)) // Gestion de la d�c�l�ration si la direction du mouvement change
+    {
+        float spd = GetSpeed();
+        spd += (mLastMovement.x == -1 ? -1 : 1) * mPData->mDeceleration * 50 * FIXED_DT;
+        SetSpeed(spd);
+    }
+    return true;
+}
+
 void Player::FixedUpdate(float dt)
 {
     Fall(dt);
@@ -186,14 +213,14 @@ Player::Player()
     SetTransition(PlayerStateList::WALK, PlayerStateList::FALL, true);
     SetTransition(PlayerStateList::WALK, PlayerStateList::DEAD, true);
 
-    SetTransition(PlayerStateList::JUMP, PlayerStateList::WALK, true);
     SetTransition(PlayerStateList::JUMP, PlayerStateList::FALL, true);
     SetTransition(PlayerStateList::JUMP, PlayerStateList::CROUCH, true);
     SetTransition(PlayerStateList::JUMP, PlayerStateList::DEAD, true);
+    SetTransition(PlayerStateList::JUMP, PlayerStateList::WALK, true);
 
-    SetTransition(PlayerStateList::FALL, PlayerStateList::WALK, true);
     SetTransition(PlayerStateList::FALL, PlayerStateList::IDLE, true);
     SetTransition(PlayerStateList::FALL, PlayerStateList::DEAD, true);
+    SetTransition(PlayerStateList::FALL, PlayerStateList::WALK, true);
 
     SetTransition(PlayerStateList::DEAD, PlayerStateList::RESPAWN, true);
 

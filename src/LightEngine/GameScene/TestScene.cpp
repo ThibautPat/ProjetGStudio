@@ -160,20 +160,13 @@ void TestScene::HandleKeyboardEvent()
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {	
 		if (mPlayer->GetPlayerData()->isCrouching) {
-
 			mPlayer->SetState(Player::PlayerStateList::CROUCH);
-		}
-		else {
-			mPlayer->SetState(Player::PlayerStateList::WALK);
 		}
 		mPlayer->GetPlayerData()->mDirection.x = -1;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		if (mPlayer->GetPlayerData()->isCrouching) {
 			mPlayer->SetState(Player::PlayerStateList::CROUCH);
-		}
-		else {
-			mPlayer->SetState(Player::PlayerStateList::WALK);
 		}
 		mPlayer->GetPlayerData()->mDirection.x = 1;
 	}

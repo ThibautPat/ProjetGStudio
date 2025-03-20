@@ -51,6 +51,10 @@ void PlayerAction_Jump::OnStart(Player* pOwner)
 
 void PlayerAction_Jump::OnUpdate(Player* pOwner)
 {
+	if (pOwner->Movement()) {
+		return;
+	}
+
 	// Si le joueur a terminé le saut, la gravité doit prendre le relais
 	if (pOwner->mPData->pJumpDuration > pOwner->mPData->mJumpTime) {
 		if (pOwner->mReverse) 
@@ -141,21 +145,7 @@ void PlayerAction_Walk::OnStart(Player* pOwner)
 }
 void PlayerAction_Walk::OnUpdate(Player* pOwner)
 {
-	sf::Vector2f movement = pOwner->GetPlayerData()->mDirection;
-
-	float speed = pOwner->GetSpeed();
-	speed += movement.x * 50 * FIXED_DT * pOwner->mPData->mAcceleration;
-	pOwner->SetSpeed(speed);
-	if (movement.x != 0) // Mise � jour de mLastMovement si movement.x n'est pas nul
-	{
-		pOwner->mLastMovement = movement;
-	}
-	if ((pOwner->mLastMovement.x == -1 && pOwner->GetSpeed() > 0) || (pOwner->mLastMovement.x == 1 && pOwner->GetSpeed() < 0)) // Gestion de la d�c�l�ration si la direction du mouvement change
-	{
-		float spd = pOwner->GetSpeed();
-		spd += (pOwner->mLastMovement.x == -1 ? -1 : 1) * pOwner->mPData->mDeceleration * 50 * FIXED_DT;
-		pOwner->SetSpeed(spd);
-	}
+	pOwner->Movement();
 }
 
 void PlayerAction_Fall::OnStart(Player* pOwner)
@@ -167,6 +157,10 @@ void PlayerAction_Fall::OnStart(Player* pOwner)
 
 void PlayerAction_Fall::OnUpdate(Player* pOwner)
 {
+	if (pOwner->Movement()) {
+		return;
+	}
+
 	float decelerationAmount = pOwner->mPData->mDeceleration * 50 * FIXED_DT;
 
 	if (std::abs(pOwner->GetSpeed()) > 100)	// Decelerer ou accelerer vers z�ro en fonction de la vitesse
@@ -186,6 +180,7 @@ void PlayerAction_Death::OnStart(Player* pOwner)
 	std::cout << "DEAD" << std::endl;
 	std::string AnimName = "death";
 	pOwner->mAnimator->SetCurrentAnimation(AnimName);
+	pOwner->SetSpeed(0.f);
 }
 
 void PlayerAction_Death::OnUpdate(Player* pOwner)

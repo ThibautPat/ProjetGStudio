@@ -80,6 +80,7 @@ public:
 
     // M�thodes pour d�placer le joueur
     void Move(sf::Vector2f movement, float dt);
+    bool Movement();
     void OnUpdate() override;
     void FixedUpdate(float dt) override;
 
