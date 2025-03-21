@@ -44,6 +44,7 @@ public:
     bool GetGravity() const { return mBoolGravity; }
     float GetGravitySpeed() const { return mGravitySpeed; }
     float GetSpeed() const { return mSpeed; }
+	int GetTag() const { return mTag; }
     sf::Vector2f GetDirection() const { return mDirection; }
     bool IsRigidBody() const { return mRigidBody; }
     bool IsKinematic() const { return mKinematic; }

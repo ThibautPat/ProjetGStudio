@@ -55,6 +55,7 @@ void TestScene::HandleConsoleEvent()
 	// Manette
 	if (sf::Joystick::isButtonPressed(0, 0)) // Bouton "A" sur la manette (équivalent de la barre d'espace pour le saut)
 	{
+
 		if (mPlayer->mReverse)
 		{
 			mPlayer->SetState(Player::PlayerStateList::FALL);
@@ -62,7 +63,8 @@ void TestScene::HandleConsoleEvent()
 			mPlayer->mReverse = false;
 			mPlayer->GetPlayerData()->isGrounded = false;
 		}
-		else if (mPlayer->GetPlayerData()->isGrounded) {
+		else if (mPlayer->GetPlayerData()->isGrounded)
+		{
 			mPlayer->SetState(Player::PlayerStateList::JUMP);
 		}
 	}
