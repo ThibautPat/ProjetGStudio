@@ -91,7 +91,7 @@ void Player::OnCollision(Entity* other)
     }
     else if (static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->y == 1)
     {
-		if (other->IsTag(TestScene::Tag::PLATFORM) || other->IsTag(TestScene::Tag::OBSTACLE) || other->IsTag(TestScene::Tag::METALIC_OBSTACLE))
+		if ( (other->IsTag(TestScene::Tag::PLATFORM)) || (other->IsTag(TestScene::Tag::MOVINGPLATFORM)) || (other->IsTag(TestScene::Tag::OBSTACLE)) || (other->IsTag(TestScene::Tag::METALIC_OBSTACLE)) )
         {
             mPData->isGrounded = true;  // Le joueur est au sol lorsqu'il touche une plateforme
             mBoolGravity = false;

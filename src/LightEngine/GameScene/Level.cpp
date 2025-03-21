@@ -100,7 +100,7 @@ void Level::AddTiles()
 	for (int i = 0; i < mTileMap["Rows"]; i++) {  // Load Tiles
 		for (int j = 0; j < mTileMap["Columns"]; j++) {
 			coX = 128 * j;
-			coY = 128 * i - 128 * mTileMap["Rows"];
+			coY = 128 * i;
 			std::string tmp = mTileMap["MapPhysics"][i][j];
 
 			if (tmp == "0" || tmp == "1")
@@ -148,7 +148,7 @@ Entity* Level::CreateNewEnity(const char* id)
 	{
 		Moving_Platform* pEntity = sc->CreateRectEntity<Moving_Platform>(128, 128, sf::Color::Transparent);
 		pEntity->setMaxTravelDistance(128);
-		pEntity->SetLinearDirection(sf::Vector2f(1,1));
+		pEntity->SetLinearDirection(sf::Vector2f(1,0));
 		pEntity->SetStartPosition(sf::Vector2f(coX,coY));
 		return pEntity;
 	}

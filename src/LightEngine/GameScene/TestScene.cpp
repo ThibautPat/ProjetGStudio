@@ -165,8 +165,8 @@ void TestScene::HandleKeyboardEvent()
 
 void TestScene::OnUpdate()
 {
-	//HandleConsoleEvent();
-	HandleKeyboardEvent();
+	HandleConsoleEvent();
+	//HandleKeyboardEvent();
 
 	mView->setCenter(mPlayer->GetPosition(0.f, 0.f).x + 200, mPlayer->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame 
 
