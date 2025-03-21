@@ -22,7 +22,7 @@ void TestScene::OnInitialize()
 	pEntity1->SetRigidBody(false);
 	pEntity1->SetIsKinematic(true);
 	pEntity1->SetGravity(false);
-	pEntity1->SetBackGroundTexture("..//..//..//res//Assets//Background//sky_mercure.png");
+	pEntity1->SetBackGroundTexture("..//..//..//..//..//res//Assets//Background//sky_mercure.png");
 	pEntity1->SetTag(Tag::BACK_GROUND1);
 
 	BackGround* pEntity2 = CreateRectEntity<BackGround>(1290, 3450, sf::Color::White);
@@ -30,7 +30,7 @@ void TestScene::OnInitialize()
 	pEntity2->SetRigidBody(false);
 	pEntity2->SetIsKinematic(true);
 	pEntity2->SetGravity(false);
-	pEntity2->SetBackGroundTexture("..//..//..//..//res//Assets//Background//upsky_background_mercure.png");
+	pEntity2->SetBackGroundTexture("..//..//..//..//..//res//Assets//Background//upsky_background_mercure.png");
 	pEntity2->SetTag(Tag::BACK_GROUND2BIS);
 
 	BackGround* pEntity3 = CreateRectEntity<BackGround>(1290, 3450, sf::Color::White);
@@ -38,7 +38,7 @@ void TestScene::OnInitialize()
 	pEntity3->SetRigidBody(false);
 	pEntity3->SetIsKinematic(true);
 	pEntity3->SetGravity(false);
-	pEntity3->SetBackGroundTexture("..//..//..//res//Assets//Background//city_background_mercure.png");
+	pEntity3->SetBackGroundTexture("..//..//..//..//..//res//Assets//Background//city_background_mercure.png");
 	pEntity3->SetTag(Tag::BACK_GROUND2);
 
 	mLevel = new Level();
