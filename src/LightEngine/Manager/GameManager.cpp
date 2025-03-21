@@ -76,13 +76,31 @@ void GameManager::PhysiqueUpdate()
 
 GameManager::~GameManager()
 {
-	delete mpWindow;
-	delete mScM;
-
+	// Libérer les entités existantes
 	for (Entity* entity : mEntities)
-	{
 		delete entity;
+	mEntities.clear();
+
+	// Libérer les entités en attente de destruction
+	for (Entity* entity : mEntitiesToDestroy)
+		delete entity;
+	mEntitiesToDestroy.clear();
+
+	// Libérer les entités en attente d'ajout
+	for (Entity* entity : mEntitiesToAdd)
+		delete entity;
+	mEntitiesToAdd.clear();
+
+	// Supprimer la fenêtre SFML si elle existe
+	if (mpWindow)
+	{
+		delete mpWindow;
+		mpWindow = nullptr;
 	}
+
+	// Supprimer les gestionnaires si nécessaire
+	delete mAs;
+	delete mScM;
 }
 
 void GameManager::DrawRender(Entity* entity)

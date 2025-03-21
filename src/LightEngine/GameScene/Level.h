@@ -24,8 +24,6 @@ public:
 	void AddEnvironment();
 	void AddTiles();
 
-
-
 	Entity* CreateNewEnity(const char* id);
 
 	//template <typename T>

@@ -18,6 +18,7 @@ float Scene::GetDeltaTime() const
 
 Scene::~Scene()
 {
+    delete mpGameManager;
     for (auto it = m_soundList.begin(); it != m_soundList.end();) {
         delete* it;
         it = m_soundList.erase(it);

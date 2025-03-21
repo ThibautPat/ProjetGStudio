@@ -77,11 +77,12 @@ void TestScene::OnEvent(const sf::Event& event)
 	{
 		for (Entity* entity : m_InstanceGameManager->Get()->GetEntities<Entity>()) 
 		{
-			entity->Destroy(); 
-			
+			entity->Destroy(); 	
 		}
 		mpAudioManager->~AudioManager();
 		m_soundList.clear();
+		m_MusicList.clear();
+
 		m_InstanceGameManager->GetSceneManager()->SelectScene("beginscene"); 
 		m_InstanceGameManager->GetSceneManager()->LaunchScene(); 
 	}
@@ -203,6 +204,7 @@ void TestScene::OnUpdate()
 {
 	HandleConsoleEvent();
 	//HandleKeyboardEvent();
+
 	if (GetPlayer()->GetPosition(0, 0).x < 1000) {
 		mView->setCenter(1000, 128*7);
 	}
