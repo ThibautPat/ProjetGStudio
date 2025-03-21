@@ -72,11 +72,6 @@ void Player::OnUpdate()
     sf::View* view = GetScene()->GetView();
     mBattery->Update(mPData->mCurrentBatteryDuration, mPData->mMaxBatteryDuration,
         sf::Vector2f(view->getCenter().x - view->getSize().x / 2 + 10, view->getCenter().y + view->getSize().y / 2 - 60));
-
-    std::string text2 = std::to_string((int)mSpeed);
-    Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 50, text2, sf::Color::White);
-    std::string text3 = std::to_string((int)mPData->isGrounded);
-    Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 70, text3, sf::Color::Red);
 }
 
 TextureRender* Player::GetTextureRender()

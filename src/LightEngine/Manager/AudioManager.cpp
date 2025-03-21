@@ -74,13 +74,13 @@ void AudioManager::LoadSound(std::string Name, bool Loop)
 void AudioManager::LoadMusic(std::string Name, bool Loop) {
 
     if (!std::filesystem::exists("../../../res/SOUND/" + Name)) {
-        std::cout << "File not found: " << "../../../res/SOUND/" + Name << std::endl;
+        //std::cout << "File not found: " << "../../../res/SOUND/" + Name << std::endl;
         return;
     }
 
     sf::Music* music = new sf::Music();
     if (!music->openFromFile("../../../res/SOUND/" + Name)) {
-        std::cout << "File not open: " << "../../../res/SOUND/" + Name << std::endl;
+        //std::cout << "File not open: " << "../../../res/SOUND/" + Name << std::endl;
         delete music;
         return;
     }

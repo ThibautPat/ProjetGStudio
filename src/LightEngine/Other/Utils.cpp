@@ -44,14 +44,12 @@ namespace Utils
 
 		if (!file.is_open())
 		{
-			std::cerr << "Json can't be parse" << std::endl;
+			//std::cerr << "Json can't be parse" << std::endl;
 			return nullptr;
 		}
 		json* nJson = new json();
 
 		file >> *nJson;
-
-		std::cout << "Json parsed form : " << path << std::endl;
 
 		return nJson;
 	}

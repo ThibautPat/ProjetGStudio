@@ -6,7 +6,6 @@
 
 void PlayerAction_Idle::OnStart(Player* pOwner)
 {
-	std::cout << "IDLE" << std::endl;
 	std::string AnimName = "idle";
 	pOwner->mAnimator->SetCurrentAnimation(AnimName);
 }
@@ -29,7 +28,6 @@ void PlayerAction_Idle::OnUpdate(Player* pOwner)
 
 void PlayerAction_Jump::OnStart(Player* pOwner)
 {
-	std::cout << "JUMP" << std::endl;
 	std::string AnimName = "jump";
 	pOwner->mAnimator->SetCurrentAnimation(AnimName);
 
@@ -75,7 +73,6 @@ void PlayerAction_Jump::OnUpdate(Player* pOwner)
 
 void PlayerAction_Crouch::OnStart(Player* pOwner)
 {
-	std::cout << "CROUCH" << std::endl;
 	std::string AnimName = "StartCrouch";
 	pOwner->mAnimator->SetCurrentAnimation(AnimName);
 	onCrouch = false;
@@ -155,7 +152,6 @@ void PlayerAction_Crouch::OnUpdate(Player* pOwner)
 
 void PlayerAction_Walk::OnStart(Player* pOwner)
 {
-	std::cout << "WALK" << std::endl;
 	std::string AnimName = "walk";
 	pOwner->mAnimator->SetCurrentAnimation(AnimName);
 }
@@ -166,7 +162,6 @@ void PlayerAction_Walk::OnUpdate(Player* pOwner)
 
 void PlayerAction_Fall::OnStart(Player* pOwner)
 {
-	std::cout << "FALL" << std::endl; 
 	std::string AnimName = "fall";
 	pOwner->mAnimator->SetCurrentAnimation(AnimName);
 }
@@ -193,7 +188,6 @@ void PlayerAction_Fall::OnUpdate(Player* pOwner)
 
 void PlayerAction_Death::OnStart(Player* pOwner)
 {
-	std::cout << "DEAD" << std::endl;
 	std::string AnimName = "death";
 	pOwner->mAnimator->SetCurrentAnimation(AnimName);
 	pOwner->SetSpeed(0.f);
@@ -211,7 +205,6 @@ void PlayerAction_Respawn::OnStart(Player* pOwner)
 {
 	GameManager::Get()->GetSceneManager()->GetScene()->mpAudioManager->PlaySound(0);
 	pOwner->PlayerDeath();
-	std::cout << "RESPAWN" << std::endl;
 	std::string AnimName = "respawn";
 	pOwner->mAnimator->SetCurrentAnimation(AnimName);
 	pOwner->PlayerRespawn();
@@ -228,7 +221,6 @@ void PlayerAction_Respawn::OnUpdate(Player* pOwner)
 void PlayerAction_Push::OnStart(Player* pOwner)
 {
 	GameManager::Get()->GetSceneManager()->GetScene()->mpAudioManager->PlaySound(4);
-	std::cout << "PUSH" << std::endl;
 	std::string AnimName = "StartPush";
 	pOwner->mAnimator->SetCurrentAnimation(AnimName);
 }

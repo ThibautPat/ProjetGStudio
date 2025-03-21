@@ -22,8 +22,6 @@ void Level::ChooseJson(const char* path, const char* envipath)
 	std::string sourcepath2 = mEnv["SourcePath"];
 	std::string spritesheetname2 = mEnv["SpriteSheetName"];
 	GameManager::Get()->GetTextureManager()->LoadSpriteSheet(jsonpath2.c_str(), sourcepath2.c_str(), spritesheetname2);
-
-	std::cout << jsonpath2 << " " << sourcepath2 << " " << spritesheetname2 << std::endl;
 }
 
 void Level::LoadLevel()
@@ -45,7 +43,7 @@ void Level::AddPlayer()
 			if (tmp != "1")
 				continue;
 
-			sc->SetPlayer(sc->CreateRectEntity<Player>(200, 75, sf::Color(0, 255, 0, 150)));
+			sc->SetPlayer(sc->CreateRectEntity<Player>(200, 75, sf::Color::Transparent));
 
 			Player* pEntity = sc->GetPlayer();
 			pEntity->SetGravity((bool)mTileMap["Physics"][tmp]["Gravity"]);
