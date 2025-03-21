@@ -112,7 +112,6 @@ void Player::OnCollision(Entity* other)
     }
     if (other->IsTag(TestScene::Tag::CHECKPOINT)) 
     {
-        mPData->isGrounded = false; // Utile ??? Sinon, il n'est pas au sol 
         mPData->mLastCheckPoint = other->GetPosition(0.f, 0.f); // On set le dernier checkpoint  
 
     }
@@ -142,7 +141,7 @@ void Player::PlayerRespawn()
 {
     SetSpeed(0); // On reset la vitesse du joueur
     SetGravitySpeed(0); // On reset la vitesse de gravit� du joueur
-    SetPosition(mPData->mLastCheckPoint.x, mPData->mLastCheckPoint.y+128); // On respawn le joueur au dernier checkpoint
+    SetPosition(mPData->mLastCheckPoint.x, mPData->mLastCheckPoint.y + 64); // On respawn le joueur au dernier checkpoint
     if (mPData->RespawnClock.getElapsedTime().asSeconds() > 5) // Si le joueur est mort depuis plus de 5 seconde
     {
         SetGravity(true); // On r�active la gravit� 

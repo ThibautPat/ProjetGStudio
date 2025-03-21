@@ -7,7 +7,7 @@ AABBCollider::AABBCollider(float xMin, float yMin, float xMax, float yMax) : Col
 	mCollideFace = sf::Vector2f(0, 0);
 }
 
-bool AABBCollider::IsColliding(Collider* pOther) {
+bool AABBCollider::IsColliding(Collider* pOther, bool rigidBody) {
 	int gap = 0;
 	if (mCollidingFace.y == 1) {
 		gap = 1;
@@ -21,6 +21,10 @@ bool AABBCollider::IsColliding(Collider* pOther) {
 	if (!bound.intersects(otherBound))
 	{
 		return false;
+	}
+
+	if (!rigidBody) {
+		return true;
 	}
 
 	sf::Vector2f coOther = sf::Vector2f(pOther->mXMin + pOther->mWidth/2, pOther->mYMin + pOther->mHeight/2);

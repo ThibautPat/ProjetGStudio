@@ -16,7 +16,7 @@ sf::Shape* RectangleEntity::GetShape()
 
 bool RectangleEntity::IsColliding(Entity* other)
 {
-    return mCollider->IsColliding(other->GetCollider());
+    return mCollider->IsColliding(other->GetCollider(), IsRigidBody());
 }
 
 bool RectangleEntity::IsInside(float x, float y)
@@ -103,10 +103,10 @@ void RectangleEntity::Block(Entity* other)
 
 		if (mCollider->GetCollideFace()->y == 1 && !other->IsTag(TestScene::Tag::BOUCING_OBSTACLE))
 		{
-           
-                SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) - 0.5f);
-                mGravitySpeed = 0.f;
-                mBoolGravity = false;
+            SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) - 0.1f);
+            mGravitySpeed = 0.f;
+			mBoolGravity = false;
+
 		}
         else if (other->IsTag(TestScene::Tag::BOUCING_OBSTACLE))
         {

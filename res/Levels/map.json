@@ -11,111 +11,47 @@
     [ "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "7", "7", "7", "7", "7", "7", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "12", "0", "0", "0", "2", "2" ],
     [ "5", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "7", "7", "7", "7", "0", "0" ],
     [ "5", "0", "0", "0", "0", "0", "0", "0", "8", "0", "0", "0", "0", "0", "0", "0","11", "0", "0", "0", "0", "0", "2", "2", "2", "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" ],
-    [ "5", "0", "0", "0", "0", "0", "0", "2", "2", "2", "0", "0", "0", "0", "0", "0", "2", "0", "0", "0", "0", "0", "2", "0", "0", "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" ],
+    [ "5", "0", "0", "0", "0", "0", "0", "2", "2", "2", "0", "0", "0", "0", "0", "2", "2", "0", "0", "0", "0", "0", "2", "0", "0", "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" ],
     [ "5", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2", "2", "2", "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" ],
     [ "5", "0", "0", "0", "0", "0", "0", "0", "5", "5", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "5", "5", "0", "0", "0" ],
     [ "5", "0", "0", "0", "0", "0", "0", "0", "5", "5", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "5", "5", "0", "0", "0" ],
-    [ "2", "2", "0", "0", "0", "0", "0", "0", "5", "5", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0","10","10","10", "0", "5", "5", "0", "0", "0" ],
-    [ "12", "2", "1", "3", "0", "8", "0", "0", "5", "5", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "3", "0", "0", "2", "0", "0", "0", "0", "0", "5", "5", "0", "3", "0" ],
+    [ "2", "2", "0", "3", "0", "0", "0", "0", "5", "5", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "3", "0", "0", "0", "0","10","10","10", "0", "5", "5", "0", "3", "0" ],
+    [ "12", "2", "1", "0", "0", "8", "0", "0", "5", "5", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2", "0", "0", "0", "0", "0", "5", "5", "0", "0", "0" ],
     [ "12", "12", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "0", "0", "0", "0", "0", "0", "0", "0", "9", "0", "0", "2", "2", "2", "2", "0", "5", "5", "0", "0", "0", "2", "0", "2", "2", "2" ],
     [ "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "5", "5", "5", "5", "5", "5", "5", "5", "5", "12", "5", "12", "12", "12", "12", "12", "12", "5", "12", "5", "5", "12", "12", "12", "12", "12" ],
-    [ "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "5", "12", "5", "12", "12", "12", "12", "12", "12", "5", "12", "5", "12", "12", "12", "12", "12", "12" ],
+    [ "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "2", "2", "2", "2", "2", "2", "2", "2", "2", "12", "2", "12", "12", "12", "12", "12", "12", "5", "12", "5", "12", "12", "12", "12", "12", "12" ],
     [ "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "2", "12", "12", "12", "12", "12", "12", "12", "12", "2", "12", "12", "12", "12", "12", "12", "12" ]
   ],
 
-  "AcronymPhysics": "1 = player, 2 = platform, 0 = empty, 3 = Checkpoint, 5 = Death, 6 = Exit, 7 = Metalic platform, 8 = Teleporter, 9 = Moving Platform, 10 = Bouncing, 11 = Obstacle, 12 = Decors",
-  "Physics": {
-    "12": {
-      "RigidBody": false,
-      "Gravity": false,
-      "IsKinematic": false,
-      "Background" :  true,
-      "Tag": 12
+    "AcronymPhysics": {
+      "1": "Player",
+      "2": "Platform",
+      "0": "Empty",
+      "3": "Checkpoint",
+      "5": "Death",
+      "6": "Exit",
+      "7": "Metallic Platform",
+      "8": "Teleporter",
+      "9": "Moving Platform",
+      "10": "Bouncing",
+      "11": "Obstacle",
+      "12": "Decors"
     },
-
-    "1": {
-      "RigidBody": true,
-      "Gravity": true,
-      "IsKinematic": false,
-      "Background": false,
-      "Tag": 0
+    
+    "Physics": {
+      "1": { "RigidBody": true, "Gravity": true, "IsKinematic": false, "Background": false, "Tag": 0 },
+      "2": { "RigidBody": true, "Gravity": false, "IsKinematic": true, "Background": false, "Tag": 6 },
+      "3": { "RigidBody": false, "Gravity": false, "IsKinematic": false, "Background": false, "Tag": 1 },
+      "5": { "RigidBody": false, "Gravity": false, "IsKinematic": false, "Background": false, "Tag": 2 },
+      "6": { "RigidBody": false, "Gravity": false, "IsKinematic": false, "Background": false, "Tag": 5 },
+      "7": { "RigidBody": true, "Gravity": false, "IsKinematic": true, "Background": false, "Tag": 3 },
+      "8": { "RigidBody": false, "Gravity": false, "IsKinematic": false, "Background": false, "Tag": 13 },
+      "9": { "RigidBody": true, "Gravity": false, "IsKinematic": false, "Background": false, "Tag": 7 },
+      "10": { "RigidBody": true, "Gravity": false, "IsKinematic": true, "Background": false, "Tag": 8 },
+      "11": { "RigidBody": true, "Gravity": true, "IsKinematic": false, "Background": false, "Tag": 4 },
+      "12": { "RigidBody": false, "Gravity": false, "IsKinematic": false, "Background": true, "Tag": 12 }
     },
-
-    "2": {
-      "RigidBody": true,
-      "Gravity": false,
-      "IsKinematic": true,
-      "Background": false,
-      "Tag": 6
-    },
-
-    "7": {
-      "RigidBody": true,
-      "Gravity": false,
-      "IsKinematic": true,
-      "Background": false,
-      "Tag": 3
-    },
-
-
-    "3": {
-      "RigidBody": false,
-      "Gravity": false,
-      "IsKinematic": false,
-      "Background": false,
-      "Tag": 1
-    },
-
-    "5": {
-      "RigidBody": false,
-      "Gravity": false,
-      "IsKinematic": false,
-      "Background": false,
-      "Tag": 2
-    },
-
-    "6": {
-      "RigidBody": false,
-      "Gravity": false,
-      "IsKinematic": false,
-      "Background": false,
-      "Tag": 5
-    },
-
-    "8": {
-      "RigidBody": false,
-      "Gravity": false,
-      "IsKinematic": false,
-      "Background": false,
-      "Tag": 6
-    },
-
-    "9": {
-      "RigidBody": true,
-      "Gravity": false,
-      "IsKinematic": false,
-      "Background": false,
-      "Tag": 7
-    },
-
-    "10": {
-      "RigidBody": true,
-      "Gravity": false,
-      "IsKinematic": true,
-      "Background": false,
-      "Tag": 8
-    },
-
-    "11": {
-      "RigidBody": true,
-      "Gravity": true,
-      "IsKinematic": false,
-      "Background": false,
-      "Tag": 4
-    }
-  },
-
-
+  
   "MapGrid": [
     [ "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt" ],
     [ "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt" ],
