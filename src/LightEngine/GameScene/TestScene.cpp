@@ -15,9 +15,9 @@ void TestScene::OnInitialize()
 {
 	m_InstanceGameManager = GameManager::Get();
 
-	mView = new sf::View(sf::FloatRect(0, -340, GetWindowWidth(), GetWindowHeight())); // Ajout de la cam�ra
+	mView = new sf::View(sf::FloatRect(0, -340, GetWindowWidth()+100, GetWindowHeight()+180)); // Ajout de la cam�ra
 
-	BackGround* pEntity1 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
+	BackGround* pEntity1 = CreateRectEntity<BackGround>(1290, 3450, sf::Color::White);
 	pEntity1->SetPosition(0, 205);
 	pEntity1->SetRigidBody(false);
 	pEntity1->SetIsKinematic(true);
@@ -25,7 +25,7 @@ void TestScene::OnInitialize()
 	pEntity1->SetBackGroundTexture("..//..//..//res//Assets//Background//sky_mercure.png");
 	pEntity1->SetTag(Tag::BACK_GROUND1);
 
-	BackGround* pEntity2 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
+	BackGround* pEntity2 = CreateRectEntity<BackGround>(1290, 3450, sf::Color::White);
 	pEntity2->SetPosition(mView->getCenter().x, mView->getCenter().y);
 	pEntity2->SetRigidBody(false);
 	pEntity2->SetIsKinematic(true);
@@ -33,12 +33,12 @@ void TestScene::OnInitialize()
 	pEntity2->SetBackGroundTexture("..//..//..//res//Assets//Background//upsky_background_mercure.png");
 	pEntity2->SetTag(Tag::BACK_GROUND2BIS);
 
-	BackGround* pEntity3 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
+	BackGround* pEntity3 = CreateRectEntity<BackGround>(1290, 3450, sf::Color::White);
 	pEntity3->SetPosition(mView->getCenter().x - 30, mView->getCenter().y);
 	pEntity3->SetRigidBody(false);
 	pEntity3->SetIsKinematic(true);
 	pEntity3->SetGravity(false);
-	pEntity3->SetBackGroundTexture("..//..//..//res//Assets//Background//upsky_background_mercure.png");
+	pEntity3->SetBackGroundTexture("..//..//..//res//Assets//Background//city_background_mercure.png");
 	pEntity3->SetTag(Tag::BACK_GROUND2);
 
 	mLevel = new Level();
@@ -64,7 +64,18 @@ void TestScene::OnInitialize()
 
 void TestScene::OnEvent(const sf::Event& event)
 {	
-
+	if (GetPlayer()->endGame)
+	{
+		for (Entity* entity : m_InstanceGameManager->Get()->GetEntities<Entity>()) 
+		{
+			entity->Destroy(); 
+			
+		}
+		mpAudioManager->~AudioManager();
+		m_soundList.clear();
+		m_InstanceGameManager->GetSceneManager()->SelectScene("beginscene"); 
+		m_InstanceGameManager->GetSceneManager()->LaunchScene(); 
+	}
 }
 
 void TestScene::HandleConsoleEvent()
@@ -184,10 +195,19 @@ void TestScene::OnUpdate()
 {
 	HandleConsoleEvent();
 	//HandleKeyboardEvent();
-
-	mView->setCenter(mPlayer->GetPosition(0.f, 0.f).x + 200, mPlayer->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame 
+	if (GetPlayer()->GetPosition(0, 0).x < 1000) {
+		mView->setCenter(1000, 128*7);
+	}
+	else if (GetPlayer()->GetPosition(0, 0).x < 4000) {
+		mView->setCenter(GetPlayer()->GetPosition(0, 0).x, mView->getCenter().y);
+	}
 
 	Debug::ShowFPS(mView->getCenter().x - mView->getSize().x / 2 + 10, mView->getCenter().y - mView->getSize().y / 2 + 10);
+
+	int cox = GetPlayer()->GetPosition(0.f, 0.f).x;
+
+	std::string str = "Position X : " + std::to_string(cox);
+	Debug::DrawText(GetPlayer()->GetPosition(0.f, 0.f).x, GetPlayer()->GetPosition(0.f, 0.f).y,str , sf::Color::White);;
 
 	m_InstanceGameManager->GetWindow()->setView(*mView); // Mise a jour de la view
 }

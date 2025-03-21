@@ -121,6 +121,7 @@ void Player::OnCollision(Entity* other)
     }
     if (other->IsTag(TestScene::Tag::END_LEVEL))
     {
+		endGame = true;
     }
 
     HandleBattery();

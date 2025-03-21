@@ -87,7 +87,7 @@ private:
     void SetTransition(PlayerStateList from, PlayerStateList to, bool value) { mTransitions[(int)from][(int)to] = value; }
 
 public: 
-
+	bool endGame = false;
     // M�thodes pour d�placer le joueur
     void Move(sf::Vector2f movement, float dt);
     bool Movement();

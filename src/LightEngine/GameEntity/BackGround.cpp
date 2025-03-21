@@ -16,12 +16,12 @@ void BackGround::OnUpdate()
 		if (dynamic_cast<Player*>(entity))
 		{
 			if (IsTag(TestScene::Tag::BACK_GROUND1))
-				SetPosition(sc->GetView()->getCenter().x - entity->GetPosition(0, 0).x / 5.5f - 100, sc->GetView()->getCenter().y-64);
+				SetPosition(sc->GetView()->getCenter().x - entity->GetPosition(0, 0).x / 9.5f +200, sc->GetView()->getCenter().y-64);
 
-			if (IsTag(TestScene::Tag::BACK_GROUND2BIS) && entity->GetPosition(0, 0).x > GetPosition(0, 0).x)
-				SetPosition(sc->GetView()->getCenter().x - entity->GetPosition(0, 0).x + GetShape()->getGlobalBounds().width * 1.22f, sc->GetView()->getCenter().y-64);
-			//else if (IsTag(TestScene::Tag::BACK_GROUND2BIS) && entity->GetPosition(0, 0).x < GetPosition(0, 0).x)
-			//	SetPosition(sc->GetView()->getCenter().x - entity->GetPosition(0, 0).x - GetShape()->getGlobalBounds().width / 1.294f, sc->GetView()->getCenter().y-64);
+			if (IsTag(TestScene::Tag::BACK_GROUND2BIS))
+				SetPosition(sc->GetView()->getCenter().x - entity->GetPosition(0, 0).x / 6.5f + 200, sc->GetView()->getCenter().y - 64);
+			if (IsTag(TestScene::Tag::BACK_GROUND2))
+				SetPosition(sc->GetView()->getCenter().x - entity->GetPosition(0, 0).x / 5.5f + 200, sc->GetView()->getCenter().y - 64);
 		}
 	}
 	if (dynamic_cast<TestScene*>(sc))
