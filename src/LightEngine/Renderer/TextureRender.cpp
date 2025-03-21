@@ -21,57 +21,49 @@ TextureRender::TextureRender(const char* spritesheetname, const char* spritename
         mTextRect.top = mTextRect.height * Utils::GetInfoFromArray<int>(njson, charArray, "y");
     }
 
-
-    sf::Texture* fullTexture = tm->GetTexture(spritesheetname);
-    if (fullTexture)
-    {
-        sf::Vector2u textureSize = fullTexture->getSize();
-        if (textureSize.x == 0 || textureSize.y == 0)
+    if (!mLoadTexture) { // Vérifier si la texture est déjà chargée
+        mLoadTexture = tm->GetTexture(spritesheetname); // Charger la texture complète
+        if (mLoadTexture)
         {
-            std::cerr << "Erreur: La texture '" << spritesheetname << "' est vide ou non charg�e !" << std::endl;
-            return;
-        }
-
-        sf::Image fullImage = fullTexture->copyToImage();
-
-        if (fullImage.getSize().x == 0 || fullImage.getSize().y == 0)
-        {
-            std::cerr << "Erreur: L'image copi�e est vide !" << std::endl;
-            return;
-        }
-
-        sf::Image croppedImage;
-        croppedImage.create(mTextRect.width, mTextRect.height);
-        croppedImage.copy(fullImage, 0, 0, mTextRect);
-
-        mLoadTexture = new sf::Texture();
-        if (mLoadTexture->loadFromImage(croppedImage)) {
             mRenderSprite->setTexture(*mLoadTexture, true);
         }
-        mRenderSprite->setOrigin(mTextRect.width / 2, mTextRect.height / 2);
-        mRenderSprite->setScale(mRenderRatio);
     }
+    mRenderSprite->setTextureRect(mTextRect); // Définir la zone initiale
+    mRenderSprite->setOrigin(mTextRect.width / 2, mTextRect.height / 2);
+    mRenderSprite->setScale(mRenderRatio);
 }
 
 TextureRender::~TextureRender()
 {
     delete mRenderSprite;
+    delete mLoadTexture; // Libérer la mémoire
 }
 
 void TextureRender::ResetRect()
 {
-	TextureManager* tm = GameManager::Get()->GetTextureManager();
-	json* njson = tm->GetJson(mSpriteSheetName);
+    TextureManager* tm = GameManager::Get()->GetTextureManager();
+    json* njson = tm->GetJson(mSpriteSheetName);
 
-	mTextRect.width = Utils::GetInfoFromArray<int>(njson, "frame_size", "width");
-	mTextRect.height = Utils::GetInfoFromArray<int>(njson, "frame_size", "height");
+    mTextRect.width = Utils::GetInfoFromArray<int>(njson, "frame_size", "width");
+    mTextRect.height = Utils::GetInfoFromArray<int>(njson, "frame_size", "height");
 
-	const char* charArray = mSpriteName.c_str();
+    const char* charArray = mSpriteName.c_str();
 
-	mTextRect.left = mTextRect.width * Utils::GetInfoFromArray<int>(njson, charArray, "x");
-	mTextRect.top = mTextRect.height * Utils::GetInfoFromArray<int>(njson, charArray, "y");
+    mTextRect.left = mTextRect.width * Utils::GetInfoFromArray<int>(njson, charArray, "x");
+    mTextRect.top = mTextRect.height * Utils::GetInfoFromArray<int>(njson, charArray, "y");
+
+    mRenderSprite->setTextureRect(mTextRect); // Changer la zone affichée
+    mRenderSprite->setOrigin(mTextRect.width / 2, mTextRect.height / 2);
+    mRenderSprite->setScale(mRenderRatio);
 }
 
+void TextureRender::SetSpriteRect(const sf::IntRect& rect)
+{
+    SetTextureRect(rect);
+    mRenderSprite->setTextureRect(mTextRect); // Changer la zone affichée
+    mRenderSprite->setOrigin(mTextRect.width / 2, mTextRect.height / 2);
+    mRenderSprite->setScale(mRenderRatio);
+}
 void TextureRender::Draw(Entity* entity, sf::RenderWindow* window)
 {
     if (!mRenderSprite || !mRenderSprite->getTexture()) return;
@@ -87,38 +79,3 @@ void TextureRender::SetNames(const std::string& spritesheetname, const std::stri
     mSpriteName = spritename;
 }
 
-void TextureRender::SetSpriteRect(const sf::IntRect& rect)
-{
-    SetTextureRect(rect);
-
-    TextureManager* tm = GameManager::Get()->GetTextureManager();
-
-    sf::Texture* fullTexture = tm->GetTexture(mSpriteSheetName);
-    if (fullTexture)
-    {
-        sf::Vector2u textureSize = fullTexture->getSize();
-        if (textureSize.x == 0 || textureSize.y == 0)
-        {
-            std::cerr << "Erreur: La texture '" << mSpriteSheetName << "' est vide ou non charg�e !" << std::endl;
-            return;
-        }
-
-        sf::Image fullImage = fullTexture->copyToImage();
-
-        if (fullImage.getSize().x == 0 || fullImage.getSize().y == 0)
-        {
-            std::cerr << "Erreur: L'image copi�e est vide !" << std::endl;
-            return;
-        }
-
-        sf::Image croppedImage;
-        croppedImage.create(mTextRect.width, mTextRect.height);
-        croppedImage.copy(fullImage, 0, 0, mTextRect);
-
-        if (mLoadTexture->loadFromImage(croppedImage)) {
-            mRenderSprite->setTexture(*mLoadTexture, true);
-        }
-        mRenderSprite->setOrigin(mTextRect.width / 2, mTextRect.height / 2);
-        mRenderSprite->setScale(mRenderRatio);
-    }
-}
