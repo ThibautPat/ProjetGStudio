@@ -2,6 +2,7 @@
 #include "PlayerAction.h"
 #include "../GameEntity/Player.h"
 #include "../Renderer/AnimationRender.h"
+#include "../Manager/AudioManager.h"
 
 void PlayerAction_Idle::OnStart(Player* pOwner)
 {
@@ -9,6 +10,7 @@ void PlayerAction_Idle::OnStart(Player* pOwner)
 	std::string AnimName = "idle";
 	pOwner->mAnimator->SetCurrentAnimation(AnimName);
 }
+
 void PlayerAction_Idle::OnUpdate(Player* pOwner)
 {
 	float decelerationAmount = pOwner->mPData->mDeceleration * 50 * FIXED_DT;
@@ -47,6 +49,8 @@ void PlayerAction_Jump::OnStart(Player* pOwner)
 		pOwner->SetGravitySpeed(-pOwner->mPData->mJumpHeight);
 		pOwner->mPData->isGrounded = false;
 	}
+
+	GameManager::Get()->GetSceneManager()->GetScene()->mpAudioManager->PlaySound(2);
 }
 
 void PlayerAction_Jump::OnUpdate(Player* pOwner)
@@ -193,6 +197,7 @@ void PlayerAction_Death::OnStart(Player* pOwner)
 	std::string AnimName = "death";
 	pOwner->mAnimator->SetCurrentAnimation(AnimName);
 	pOwner->SetSpeed(0.f);
+	GameManager::Get()->GetSceneManager()->GetScene()->mpAudioManager->PlaySound(4);
 }
 
 void PlayerAction_Death::OnUpdate(Player* pOwner)
@@ -204,6 +209,7 @@ void PlayerAction_Death::OnUpdate(Player* pOwner)
 
 void PlayerAction_Respawn::OnStart(Player* pOwner)
 {
+	GameManager::Get()->GetSceneManager()->GetScene()->mpAudioManager->PlaySound(0);
 	pOwner->PlayerDeath();
 	std::cout << "RESPAWN" << std::endl;
 	std::string AnimName = "respawn";
@@ -221,6 +227,7 @@ void PlayerAction_Respawn::OnUpdate(Player* pOwner)
 
 void PlayerAction_Push::OnStart(Player* pOwner)
 {
+	GameManager::Get()->GetSceneManager()->GetScene()->mpAudioManager->PlaySound(4);
 	std::cout << "PUSH" << std::endl;
 	std::string AnimName = "StartPush";
 	pOwner->mAnimator->SetCurrentAnimation(AnimName);

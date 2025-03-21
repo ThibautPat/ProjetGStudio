@@ -6,6 +6,7 @@
 #include "../Renderer/AnimationRender.h"
 #include "../Collider/AABBCollider.h"
 #include "../GameEntity/Teleporter.h"
+#include "../Manager/AudioManager.h"
 
 void Player::OnInitialize()
 {
@@ -13,7 +14,6 @@ void Player::OnInitialize()
     mShape.setOrigin(mShape.getGlobalBounds().width / 2, mShape.getGlobalBounds().height / 2); //WTF pourquoi l'h�ritage n'est pas fait ?!
     mAs = GameManager::Get()->GetTextureManager();
 
-    //Setup de la gestion de textures
     mAs->LoadSpriteSheet("../../../res/Assets/SpriteSheet/Character.json", "../../../res/Assets/SpriteSheet/spritesheet_character.png", "player");
     mAnimator = new Animator();
     mAnimator->AddAnimation("player", "idle");
@@ -113,7 +113,7 @@ void Player::OnCollision(Entity* other)
     if (other->IsTag(TestScene::Tag::CHECKPOINT)) 
     {
         mPData->mLastCheckPoint = other->GetPosition(0.f, 0.f); // On set le dernier checkpoint  
-
+        GameManager::Get()->GetSceneManager()->GetScene()->mpAudioManager->PlaySound(1);
     }
     if (other->IsTag(TestScene::Tag::DEADLYOBSTACLE)) 
     {

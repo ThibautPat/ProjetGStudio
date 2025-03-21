@@ -47,14 +47,23 @@ void TestScene::OnInitialize()
 
 	mpAudioManager = new AudioManager();
 
-	std::string musicName = "TestWav.wav";
+	std::string musicName = "BO.wav";
 	m_MusicList.push_back(&musicName); 
 
-	std::string SoundName = "SoundTest.wav";
+	std::string SoundName = "revive.wav";
 	m_soundList.push_back(&SoundName);  
 
-	std::string SoundName2 = "SoundTest2.wav";
+	std::string SoundName2 = "CheckPoint.wav";
 	m_soundList.push_back(&SoundName2);
+
+	std::string SoundName3 = "Jump.wav";
+	m_soundList.push_back(&SoundName3);
+
+	std::string SoundName4= "Mort.wav";
+	m_soundList.push_back(&SoundName4);
+
+	std::string SoundName5 = "Push.wav";
+	m_soundList.push_back(&SoundName5); 
 
 	mpAudioManager->AddLevelSound(m_soundList);
 	mpAudioManager->AddLevelMusic(m_MusicList);
@@ -72,7 +81,6 @@ void TestScene::HandleConsoleEvent()
 	// Manette
 	if (sf::Joystick::isButtonPressed(0, 0)) // Bouton "A" sur la manette (équivalent de la barre d'espace pour le saut)
 	{
-		mpAudioManager->PlaySound(0);
 		if (mPlayer->mReverse)
 		{
 			mPlayer->SetState(Player::PlayerStateList::FALL);
