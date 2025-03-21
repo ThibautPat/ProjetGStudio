@@ -9,7 +9,8 @@ class Entity;
 
 class Level
 {
-	bool IsTeleport = false;
+	int coX = 0;
+	int coY = 0;
 protected:
 	json mTileMap;
 	json mEnv;

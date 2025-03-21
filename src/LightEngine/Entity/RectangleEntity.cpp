@@ -65,13 +65,13 @@ void RectangleEntity::Repulse(Entity* other)
     sf::Vector2f position1 = GetPosition(0.f, 0.f) - translation * 0.01f;
     sf::Vector2f position2 = other->GetPosition(0.f, 0.f) + translation * 0.12f;
 
-    if (mCollider->GetCollideFace()->x != 0)
-    {
-        // Collision horizontale
-        SetPosition(position1.x, GetPosition(0.f, 0.f).y);
-        other->SetPosition(position2.x, other->GetPosition(0.f, 0.f).y);
-        mSpeed = 0.f;
-    }
+    //if (mCollider->GetCollideFace()->x != 0)
+    //{
+    //    // Collision horizontale
+    //    SetPosition(position1.x, GetPosition(0.f, 0.f).y);
+    //    other->SetPosition(position2.x, other->GetPosition(0.f, 0.f).y);
+    //    mSpeed = 0.f;
+    //}
 
     Block(other);
 }
