@@ -71,7 +71,7 @@ void Player::OnUpdate()
 
     sf::View* view = GetScene()->GetView();
     mBattery->Update(mPData->mCurrentBatteryDuration, mPData->mMaxBatteryDuration,
-        sf::Vector2f(view->getCenter().x - view->getSize().x / 2 + 10, view->getCenter().y + view->getSize().y / 2 - 30));
+        sf::Vector2f(view->getCenter().x - view->getSize().x / 2 + 10, view->getCenter().y + view->getSize().y / 2 - 60));
 
     std::string text2 = std::to_string((int)mSpeed);
     Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 50, text2, sf::Color::White);
@@ -217,7 +217,7 @@ void Player::FixedUpdate(float dt)
 void Player::HandleBattery()
 {
     if (mAnimator->GetRatio().y == -1 && !mPData->mBatteryCooldown) {
-        mPData->mCurrentBatteryDuration -= GetDeltaTime() * 0.5f;
+        mPData->mCurrentBatteryDuration -= 0.5f * GetDeltaTime();
 
         if (mPData->mCurrentBatteryDuration <= 0.f) {
             mPData->mCurrentBatteryDuration = 0.f;
@@ -226,7 +226,7 @@ void Player::HandleBattery()
         }
     }
     else if (mPData->mBatteryCooldown) {
-        mPData->mCurrentCooldownDuration += GetDeltaTime();
+        mPData->mCurrentCooldownDuration += 0.4f * GetDeltaTime();
 
         if (mPData->mCurrentCooldownDuration >= mPData->mCooldownDuration) {
             mPData->mBatteryCooldown = false;
@@ -234,7 +234,7 @@ void Player::HandleBattery()
         }
     }
     else if (mPData->mCurrentBatteryDuration < mPData->mMaxBatteryDuration) {
-        mPData->mCurrentBatteryDuration += GetDeltaTime() * 0.5f;
+        mPData->mCurrentBatteryDuration += 0.4f * GetDeltaTime();
 
         if (mPData->mCurrentBatteryDuration > mPData->mMaxBatteryDuration) {
             mPData->mCurrentBatteryDuration = mPData->mMaxBatteryDuration;

@@ -18,10 +18,9 @@ Battery::Battery()
     mSprite2->setTextureRect(mRect);
     mSprite3->setTexture(*mBatteryTexture3);
 
-    mSprite1->setScale(0.4f, 0.35f);
-    mSprite2->setScale(0.4f, 0.35f);
-    mSprite3->setScale(0.4f, 0.35f);
-
+    mSprite1->setScale(0.6f, 0.42f);
+    mSprite2->setScale(0.6f, 0.42f);
+    mSprite3->setScale(0.6f, 0.42f);
 }
 
 void Battery::Update(float timerValue, float maxTime, sf::Vector2f position)
