@@ -34,7 +34,7 @@ AudioManager::AudioManager()
 void AudioManager::PlaySound(int index)
 {
     m_CurrentSounds[index]->play();
-    m_CurrentSounds[index]->setVolume(100.f);
+    m_CurrentSounds[index]->setVolume(20.f);
 }
 
 void AudioManager::StopSound()
@@ -119,7 +119,7 @@ void AudioManager::PlayCurrentMusic() {
         if (m_CurrentMusic[i] != nullptr) 
         {
             m_CurrentMusic[i]->play();
-            m_CurrentMusic[i]->setVolume(100.f);
+            m_CurrentMusic[i]->setVolume(20.f);
         }
     }
 }
