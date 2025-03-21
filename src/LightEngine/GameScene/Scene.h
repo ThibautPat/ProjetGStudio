@@ -17,12 +17,11 @@ class Scene
 private:
 	GameManager* mpGameManager;
 	
-private:
 	void SetGameManager(GameManager* pGameManager) { mpGameManager = pGameManager; }
 	
 protected:
 	Player* mPlayer;
-	AudioManager* mpAudioManager;
+
 
 	bool mIsEnd = false; 
 	Scene() = default;
@@ -32,7 +31,10 @@ protected:
 	virtual void OnEvent(const sf::Event& event) = 0;
 	virtual void OnUpdate() = 0;
 
-public:
+public:	
+	
+	AudioManager* mpAudioManager; 
+
 	void SetIsEnd(bool isEnd) { mIsEnd = isEnd; }
 	virtual Player* GetPlayer() { return mPlayer; }
 	virtual void SetPlayer(Player* _player) { mPlayer = _player; }

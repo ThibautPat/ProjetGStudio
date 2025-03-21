@@ -6,35 +6,19 @@
 
 AudioManager::AudioManager()
 {
-    LoadMusic("TestWav.wav", true);
-    //LoadMusic("Level(2).mp3", true);
-    //LoadMusic("Level(3).mp3", true);
-    //LoadMusic("Level(4).mp3", true);
-    //LoadMusic("Level(5).mp3", true);
-    //LoadMusic("Level(6).mp3", true);
-    //LoadMusic("Level(7).mp3", true);
-    //LoadMusic("Level.mp3", true);
-    //LoadMusic("Menu.mp3", true);
-    //LoadMusic("Menu(1).mp3", true);
-    //LoadMusic("Kyokumei1.mp3", true);
-    //LoadMusic("Kyokumei(1).mp3", true);
-    //LoadMusic("Kyokumei.mp3", true);
-    //LoadMusic("Garage.mp3", true);
-    //LoadMusic("Map.mp3", true);
-    //LoadMusic("Map(1).mp3", true);
+    LoadMusic("BO.wav", true);
 
-    LoadSound("SoundTest.wav", false);
-    LoadSound("SoundTest2.wav", false);
-    //LoadSound("Bullet.mp3", false);
-    //LoadSound("hitmarker.mp3", false);
-    //LoadSound("Ough.mp3", false);
-    //LoadSound("InstallModule.mp3", false);
+    LoadSound("revive.wav", false);
+    LoadSound("CheckPoint.wav", false);
+    LoadSound("Jump.wav", false);
+    LoadSound("Mort.wav", false);
+    LoadSound("Push.wav", false);
 }
 
 void AudioManager::PlaySound(int index)
 {
     m_CurrentSounds[index]->play();
-    m_CurrentSounds[index]->setVolume(20.f);
+    m_CurrentSounds[index]->setVolume(5.f);
 }
 
 void AudioManager::StopSound()
@@ -119,7 +103,7 @@ void AudioManager::PlayCurrentMusic() {
         if (m_CurrentMusic[i] != nullptr) 
         {
             m_CurrentMusic[i]->play();
-            m_CurrentMusic[i]->setVolume(20.f);
+            m_CurrentMusic[i]->setVolume(5.f);
         }
     }
 }
