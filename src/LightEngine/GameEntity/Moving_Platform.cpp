@@ -42,7 +42,6 @@ void Moving_Platform::OnUpdate()
 			SetDirection(0, linearMove, 1);
 			SetPosition(GetPosition(0, 0).x, GetPosition(0, 0).y + mData->mMovement);
 		}
-
 	}
 }
 
