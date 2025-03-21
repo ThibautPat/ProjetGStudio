@@ -55,6 +55,7 @@ void TestScene::HandleConsoleEvent()
 	// Manette
 	if (sf::Joystick::isButtonPressed(0, 0)) // Bouton "A" sur la manette (équivalent de la barre d'espace pour le saut)
 	{
+
 		if (mPlayer->mReverse)
 		{
 			mPlayer->SetState(Player::PlayerStateList::FALL);
@@ -62,7 +63,8 @@ void TestScene::HandleConsoleEvent()
 			mPlayer->mReverse = false;
 			mPlayer->GetPlayerData()->isGrounded = false;
 		}
-		else if (mPlayer->GetPlayerData()->isGrounded) {
+		else if (mPlayer->GetPlayerData()->isGrounded)
+		{
 			mPlayer->SetState(Player::PlayerStateList::JUMP);
 		}
 	}
@@ -163,8 +165,8 @@ void TestScene::HandleKeyboardEvent()
 
 void TestScene::OnUpdate()
 {
-	//HandleConsoleEvent();
-	HandleKeyboardEvent();
+	HandleConsoleEvent();
+	//HandleKeyboardEvent();
 
 	mView->setCenter(mPlayer->GetPosition(0.f, 0.f).x + 200, mPlayer->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame 
 

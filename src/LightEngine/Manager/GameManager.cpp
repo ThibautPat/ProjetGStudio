@@ -98,7 +98,7 @@ void GameManager::CreateWindow(unsigned int width, unsigned int height, const ch
 {
 	_ASSERT(mpWindow == nullptr);
 
-	mpWindow = new sf::RenderWindow(sf::VideoMode(width, height), title, sf::Style::Default);
+	mpWindow = new sf::RenderWindow(sf::VideoMode(width, height), title, sf::Style::Fullscreen);
 	mpWindow->setFramerateLimit(fpsLimit);
 
 	mWindowWidth = width;
