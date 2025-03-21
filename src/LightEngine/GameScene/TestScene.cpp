@@ -17,29 +17,29 @@ void TestScene::OnInitialize()
 
 	mView = new sf::View(sf::FloatRect(0, -340, GetWindowWidth(), GetWindowHeight())); // Ajout de la cam�ra
 
-	BackGround* pEntity1 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
-	pEntity1->SetPosition(0, 205);
-	pEntity1->SetRigidBody(false);
-	pEntity1->SetIsKinematic(true);
-	pEntity1->SetGravity(false);
-	pEntity1->SetBackGroundTexture("..//..//..//res//Assets//Background//sky_mercure.png");
-	pEntity1->SetTag(Tag::BACK_GROUND1);
+	//BackGround* pEntity1 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
+	//pEntity1->SetPosition(0, 205);
+	//pEntity1->SetRigidBody(false);
+	//pEntity1->SetIsKinematic(true);
+	//pEntity1->SetGravity(false);
+	//pEntity1->SetBackGroundTexture("..//..//..//res//Assets//Background//sky_mercure.png");
+	//pEntity1->SetTag(Tag::BACK_GROUND1);
 
-	BackGround* pEntity2 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
-	pEntity2->SetPosition(mView->getCenter().x, mView->getCenter().y);
-	pEntity2->SetRigidBody(false);
-	pEntity2->SetIsKinematic(true);
-	pEntity2->SetGravity(false);
-	pEntity2->SetBackGroundTexture("..//..//..//res//Assets//Background//upsky_background_mercure.png");
-	pEntity2->SetTag(Tag::BACK_GROUND2BIS);
+	//BackGround* pEntity2 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
+	//pEntity2->SetPosition(mView->getCenter().x, mView->getCenter().y);
+	//pEntity2->SetRigidBody(false);
+	//pEntity2->SetIsKinematic(true);
+	//pEntity2->SetGravity(false);
+	//pEntity2->SetBackGroundTexture("..//..//..//res//Assets//Background//upsky_background_mercure.png");
+	//pEntity2->SetTag(Tag::BACK_GROUND2BIS);
 
-	BackGround* pEntity3 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
-	pEntity3->SetPosition(mView->getCenter().x - 30, mView->getCenter().y);
-	pEntity3->SetRigidBody(false);
-	pEntity3->SetIsKinematic(true);
-	pEntity3->SetGravity(false);
-	pEntity3->SetBackGroundTexture("..//..//..//res//Assets//Background//upsky_background_mercure.png");
-	pEntity3->SetTag(Tag::BACK_GROUND2);
+	//BackGround* pEntity3 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
+	//pEntity3->SetPosition(mView->getCenter().x - 30, mView->getCenter().y);
+	//pEntity3->SetRigidBody(false);
+	//pEntity3->SetIsKinematic(true);
+	//pEntity3->SetGravity(false);
+	//pEntity3->SetBackGroundTexture("..//..//..//res//Assets//Background//upsky_background_mercure.png");
+	//pEntity3->SetTag(Tag::BACK_GROUND2);
 
 	mLevel = new Level();
 	mLevel->ChooseJson("../../../res/Levels/map.json", "../../../res/Levels/environment.json");
@@ -182,8 +182,10 @@ void TestScene::HandleKeyboardEvent()
 
 void TestScene::OnUpdate()
 {
-	HandleConsoleEvent();
-	//HandleKeyboardEvent();
+	//HandleConsoleEvent();
+	HandleKeyboardEvent();
+
+	mPlayer->DrawBattery();
 
 	mView->setCenter(mPlayer->GetPosition(0.f, 0.f).x + 200, mPlayer->GetPosition(0.f, 0.f).y - 115); //Repositionnement de la cam�ra sur le joueur chaque frame 
 

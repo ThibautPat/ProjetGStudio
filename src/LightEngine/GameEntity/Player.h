@@ -9,6 +9,7 @@ class AnimationRender;
 class TextureRender;
 class ActionPlayer;
 class TextureManager;
+class Battery;
 
 // Structure contenant les donn�es li�es au joueur, comme la hauteur du saut, les vitesses, etc.
 struct PlayerData
@@ -26,7 +27,10 @@ struct PlayerData
     float mDeceleration = 500.f;  // D�c�l�ration du joueur
 
     float mMaxBatteryDuration = 5.f;
-    float mCurrentBatteryDuration = 0.f;
+    float mCurrentBatteryDuration = 5.f;
+
+    float mCooldownDuration = 3.f;
+    float mCurrentCooldownDuration = 0.f;
 
     sf::Vector2f mDirection = sf::Vector2f(0.f, 0.f);
 
@@ -34,6 +38,7 @@ struct PlayerData
     bool isCrouching = false;
     bool isBackward = false;
     bool playerIsDead = false;
+    bool mBatteryCooldown = false;
     
 	sf::Vector2f nratioTexture = sf:: Vector2f(1,1);
 
@@ -71,6 +76,8 @@ private:
     // Gestionnaires de textures
     Animator* mAnimator;
     TextureManager* mAs;
+
+    Battery* mBattery;
 
     // �tat actuel du joueur
     PlayerStateList mState = PlayerStateList::IDLE;
@@ -119,6 +126,8 @@ public:
     PlayerData* GetPlayerData() const { return mPData; }
     TextureRender* GetTextureRender() override;
     void InitRender(const char* spritesheetname, const char* spritename) override { mAnimator = new Animator(); }
+    void DrawBattery();
+
 
     // Amis de la classe (acc�s � des m�thodes priv�es)
     friend class PlayerAction_Jump;

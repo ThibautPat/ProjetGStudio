@@ -6,6 +6,7 @@
 #include "../Renderer/AnimationRender.h"
 #include "../Collider/AABBCollider.h"
 #include "../GameEntity/Teleporter.h"
+#include "../GameEntity/Battery.h"
 
 void Player::OnInitialize()
 {
@@ -26,6 +27,8 @@ void Player::OnInitialize()
     mAnimator->AddAnimation("player", "respawn");
     mAnimator->AddAnimation("player", "OnPush");
     mAnimator->AddAnimation("player", "StartPush");
+
+    mBattery = new Battery();
 }
 
 void Player::OnUpdate()
@@ -41,6 +44,8 @@ void Player::OnUpdate()
     }
     else if (!mReverse && mAnimator->GetRatio().y == -1) {
         mAnimator->SetRatio(sf::Vector2f(mAnimator->GetRatio().x, 1.f));
+        SetGravity(true);
+        SetPosition(GetPosition(0.f, 0.f).x, GetPosition(0.f, 0.f).y - 20.f);
     }
 
     if (mPData->mDirection.x == -1 && !mPData->isBackward) {
@@ -64,6 +69,10 @@ void Player::OnUpdate()
 
     mActions[(int)mState]->OnUpdate(this);
 
+    sf::View* view = GetScene()->GetView();
+    mBattery->Update(mPData->mCurrentBatteryDuration, mPData->mMaxBatteryDuration,
+        sf::Vector2f(view->getCenter().x - view->getSize().x / 2 + 10, view->getCenter().y + view->getSize().y / 2 - 30));
+
     std::string text2 = std::to_string((int)mSpeed);
     Debug::DrawText(mShape.getPosition().x, mShape.getPosition().y - 50, text2, sf::Color::White);
     std::string text3 = std::to_string((int)mPData->isGrounded);
@@ -75,33 +84,35 @@ TextureRender* Player::GetTextureRender()
     return mAnimator->GetCurrentAnimation();
 }
 
+void Player::DrawBattery()
+{
+    mBattery->Draw(*GameManager::Get()->GetWindow());
+}
+
 void Player::OnCollision(Entity* other)
 {
-    mReverse = false;
+    mReverse = false; // Empêche un reverse forcé sans condition
 
-    if (other->IsTag(TestScene::Tag::METALIC_OBSTACLE) && static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->y != 0)
+    if (other->IsTag(TestScene::Tag::METALIC_OBSTACLE) && static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->y == -1)
     {
-        if (static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->y == -1)
+        if (!mPData->mBatteryCooldown && mPData->mCurrentBatteryDuration > 0) // Vérifie la batterie avant d'autoriser le reverse
         {
             mReverse = true;
             mBoolGravity = false;
         }
-        mPData->isGrounded = true;  // Le joueur est au sol lorsqu'il touche un obstacle métallique
-
+        mPData->isGrounded = true;
     }
     else if (static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->y == 1)
     {
-		if ( (other->IsTag(TestScene::Tag::PLATFORM)) || (other->IsTag(TestScene::Tag::MOVINGPLATFORM)) || (other->IsTag(TestScene::Tag::OBSTACLE)) || (other->IsTag(TestScene::Tag::METALIC_OBSTACLE)) )
+        if (other->IsTag(TestScene::Tag::PLATFORM) || other->IsTag(TestScene::Tag::MOVINGPLATFORM) ||
+            other->IsTag(TestScene::Tag::OBSTACLE) || other->IsTag(TestScene::Tag::METALIC_OBSTACLE) ||
+            other->IsTag(TestScene::Tag::BOUCING_OBSTACLE))
         {
-            mPData->isGrounded = true;  // Le joueur est au sol lorsqu'il touche une plateforme
-            mBoolGravity = false;
-        }
-        if (other->IsTag(TestScene::Tag::BOUCING_OBSTACLE))
-        {
-            mPData->isGrounded = true;  // Le joueur est au sol lorsqu'il touche une plateforme
+            mPData->isGrounded = true;
             mBoolGravity = false;
         }
     }
+
     if (other->IsTag(TestScene::Tag::OBSTACLE) && std::abs(static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->x) == 1) {
         if (other->GetGravitySpeed() <= 10) {
             SetState(PUSH);
@@ -110,22 +121,21 @@ void Player::OnCollision(Entity* other)
             SetState(IDLE);
         }
     }
-    if (other->IsTag(TestScene::Tag::CHECKPOINT)) 
-    {
-        mPData->mLastCheckPoint = other->GetPosition(0.f, 0.f); // On set le dernier checkpoint  
 
+    if (other->IsTag(TestScene::Tag::CHECKPOINT))
+    {
+        mPData->mLastCheckPoint = other->GetPosition(0.f, 0.f);
     }
-    if (other->IsTag(TestScene::Tag::DEADLYOBSTACLE)) 
+
+    if (other->IsTag(TestScene::Tag::DEADLYOBSTACLE))
     {
         SetState(DEAD);
     }
-    if (other->IsTag(TestScene::Tag::END_LEVEL))
-    {
-    }
 
     HandleBattery();
-	if (dynamic_cast<Teleporter*>(other))
-	{
+
+    if (dynamic_cast<Teleporter*>(other))
+    {
         for (Entity* entity3 : GameManager::Get()->GetEntities<Entity>()) // Parcours des entit�s du gameManager
         {
             if (entity3->IsTag(other->GetTag()) && entity3 != other && mPData->TeleportClock.getElapsedTime().asSeconds() > 2) // Si l'entit� est un autre teleporter
@@ -134,7 +144,7 @@ void Player::OnCollision(Entity* other)
                 mPData->TeleportClock.restart(); // On restart le timer de t�l�portation 
             }
         }
-	}
+    }
 }
 
 void Player::PlayerRespawn()
@@ -202,22 +212,33 @@ void Player::FixedUpdate(float dt)
 
 void Player::HandleBattery()
 {
-    if (mAnimator->GetRatio().y == -1) {
+    if (mAnimator->GetRatio().y == -1 && !mPData->mBatteryCooldown) {
+        mPData->mCurrentBatteryDuration -= GetDeltaTime() * 0.5f;
+
+        if (mPData->mCurrentBatteryDuration <= 0.f) {
+            mPData->mCurrentBatteryDuration = 0.f;
+            mPData->mBatteryCooldown = true;
+            mReverse = false; // Désactive le reverse automatiquement quand la batterie est vide
+        }
+    }
+    else if (mPData->mBatteryCooldown) {
+        mPData->mCurrentCooldownDuration += GetDeltaTime();
+
+        if (mPData->mCurrentCooldownDuration >= mPData->mCooldownDuration) {
+            mPData->mBatteryCooldown = false;
+            mPData->mCurrentCooldownDuration = 0.f;
+        }
+    }
+    else if (mPData->mCurrentBatteryDuration < mPData->mMaxBatteryDuration) {
         mPData->mCurrentBatteryDuration += GetDeltaTime() * 0.5f;
 
         if (mPData->mCurrentBatteryDuration > mPData->mMaxBatteryDuration) {
-            mReverse = false;
-        }
-    }
-
-    else if (mPData->mCurrentBatteryDuration > 0.f) {
-        mPData->mCurrentBatteryDuration -= GetDeltaTime() * 0.5f;
-
-        if (mPData->mCurrentBatteryDuration < 0.f) {
-            mPData->mCurrentBatteryDuration = 0.f;
+            mPData->mCurrentBatteryDuration = mPData->mMaxBatteryDuration;
         }
     }
 }
+
+
 
 Collider* Player::GetCollider()
 {
@@ -236,7 +257,6 @@ bool Player::SetState(PlayerStateList newState)
 
 Player::Player()
 {
-
     SetTag(TestScene::Tag::PLAYER);
 
     for (int i = 0; i < STATE_COUNT; i++)
