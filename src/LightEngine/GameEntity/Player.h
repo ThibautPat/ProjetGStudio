@@ -14,26 +14,36 @@ class TextureManager;
 struct PlayerData
 {
     float mJumpHeight = 600.f;  // Hauteur du saut
-    float mJumpTime = 0.3f;     // Dur�e du saut
-    float pJumpDuration = 0;    // Dur�e actuelle du saut
+    float mJumpTime = 0.8f;     // Dur�e du saut
+    float pJumpDuration = 0.f;    // Dur�e actuelle du saut
 
     float mMinSpeed = 0.f;      // Vitesse minimale
     float mMaxSpeedWalk = 20000.f; // Vitesse maximale en marchant
     float mMaxSpeedCrouch = 10000.f; // Vitesse maximale en accroupi
+    float mMaxSpeedPush = 15000.f; // Vitesse maximale en accroupi
 
     float mAcceleration = 700.f;  // Acc�l�ration du joueur
     float mDeceleration = 500.f;  // D�c�l�ration du joueur
+
+    float mMaxBatteryDuration = 5.f;
+    float mCurrentBatteryDuration = 0.f;
 
     sf::Vector2f mDirection = sf::Vector2f(0.f, 0.f);
 
     bool isGrounded = false;
     bool isCrouching = false;
+    bool isBackward = false;
+    bool playerIsDead = false;
     
 	sf::Vector2f nratioTexture = sf:: Vector2f(1,1);
 
     sf::Clock RespawnClock;
+    sf::Clock TeleportClock;
+    sf::Clock BoucingClock;
     sf::Vector2f mLastCheckPoint;
-    bool playerIsDead = false;
+
+    sf::FloatRect mHitboxCrouch = {0.f, 0.f, 115.f, 180.f} ;
+    sf::FloatRect mHitboxNotCrouch = { 0.f, 0.f, 110.f, 230.f };
 };
 
 // Classe repr�sentant un joueur, h�ritant de RectangleEntity
@@ -48,6 +58,9 @@ public:
         WALK,
         JUMP,
         FALL,
+        DEAD,
+        RESPAWN,
+        PUSH,
 
         COUNT // Nombre total d'�tats
     };
@@ -77,8 +90,13 @@ public:
 
     // M�thodes pour d�placer le joueur
     void Move(sf::Vector2f movement, float dt);
+    bool Movement();
     void OnUpdate() override;
     void FixedUpdate(float dt) override;
+
+    void HandleBattery();
+
+    Collider* GetCollider() override;
 
     //Au moment d'une collision
     void OnCollision(Entity* other) override;
@@ -99,7 +117,8 @@ public:
 
     // Accesseurs pour les donn�es du joueur (PData)
     PlayerData* GetPlayerData() const { return mPData; }
-    TextureRender* GetRender() override;
+    TextureRender* GetTextureRender() override;
+    void InitRender(const char* spritesheetname, const char* spritename) override { mAnimator = new Animator(); }
 
     // Amis de la classe (acc�s � des m�thodes priv�es)
     friend class PlayerAction_Jump;
@@ -107,4 +126,7 @@ public:
     friend class PlayerAction_Walk;
     friend class PlayerAction_Idle;
     friend class PlayerAction_Fall;
+    friend class PlayerAction_Death;
+    friend class PlayerAction_Respawn;
+    friend class PlayerAction_Push;
 };

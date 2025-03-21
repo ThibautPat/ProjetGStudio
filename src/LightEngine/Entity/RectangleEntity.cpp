@@ -16,7 +16,7 @@ sf::Shape* RectangleEntity::GetShape()
 
 bool RectangleEntity::IsColliding(Entity* other)
 {
-    return mCollider->IsColliding(other->GetCollider());
+    return mCollider->IsColliding(other->GetCollider(), IsRigidBody());
 }
 
 bool RectangleEntity::IsInside(float x, float y)
@@ -101,13 +101,22 @@ void RectangleEntity::Block(Entity* other)
 		// Collision verticale : on utilise les hauteurs
         place = (mCollider->GetCollideFace()->y > 0) ? 1 : -1;
 
-		if (mCollider->GetCollideFace()->y == 1)
+		if (mCollider->GetCollideFace()->y == 1 && !other->IsTag(TestScene::Tag::BOUCING_OBSTACLE))
 		{
             SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) - 0.5f);
             mGravitySpeed = 0.f;
 			mBoolGravity = false;
+
 		}
-		else {
+        else if (other->IsTag(TestScene::Tag::BOUCING_OBSTACLE))
+        {
+            mBoolGravity = true;
+            mGravitySpeed = -1000;
+            
+            SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) + 1 - 10);
+        }
+		else 
+        {
 			mBoolGravity = true;
 			mGravitySpeed = 0.f;
             SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) + 1 - int(mReverse));
@@ -119,8 +128,9 @@ void RectangleEntity::Block(Entity* other)
 
 void RectangleEntity::Update()
 {
+    if (mBackground)
+        return;
     mCollider->Update(GetPosition(0.f, 0.f).x - mCollider->mWidth / 2.f, GetPosition(0.f, 0.f).y - mCollider->mHeight / 2.f);
-    //Debug::DrawRectangle(GetPosition(-1.f, -1.f).x, GetPosition(-1.f, -1.f).y, mShape.getGlobalBounds().width, mShape.getGlobalBounds().height, sf::Color::Cyan);
     Entity::Update();
 }
 

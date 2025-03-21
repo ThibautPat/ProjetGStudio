@@ -15,14 +15,12 @@ class TestScene : public Scene
 protected:
 
 	GameManager* m_InstanceGameManager;
-	sf::View* mView;
 	sf::Clock menuClock;
 	sf::Clock escapeClockGap;
 	sf::Clock TeleportClock;
 	Level* mLevel;
 
 public:
-
 	enum Tag
 	{
 		PLAYER,
@@ -37,8 +35,9 @@ public:
 		BACK_GROUND1BIS,
 		BACK_GROUND2BIS,
 		BOUCING_OBSTACLE,
+		DECOR,
 		TELEPORTER,
-		TELEPORTER_2,
+		MOVINGPLATFORM,
 
 		COUNT
 	};

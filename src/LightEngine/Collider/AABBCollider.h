@@ -13,7 +13,7 @@ public:
 	sf::Vector2f* GetCollideFace() { return &mCollidingFace; }
 
 	// Hérité via Collider
-	bool IsColliding(Collider* pOther) override;
+	bool IsColliding(Collider* pOther, bool rigidBody = true) override;
 
 	/// <summary>
 	/// Update de la position du collider avant l'update de l'entity. Reset la face de collision de la frame d'avant.

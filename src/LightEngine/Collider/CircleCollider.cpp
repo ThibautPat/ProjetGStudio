@@ -4,7 +4,7 @@
 CircleCollider::CircleCollider(float x, float y, float radius) : Collider(x, y, radius) {
 }
 
-bool CircleCollider::IsColliding(Collider* pOther)
+bool CircleCollider::IsColliding(Collider* pOther, bool rigidBody)
 {
 	if (CircleCollider* pOtherCircleCollider = dynamic_cast<CircleCollider*>(pOther)) {
 		sf::Vector2f distance = sf::Vector2f(mX, mY) - sf::Vector2f(pOtherCircleCollider->mX, pOtherCircleCollider->mY);

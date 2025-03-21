@@ -30,6 +30,7 @@ protected:
     bool mRigidBody = false;
     bool mKinematic = false;
     bool mBoolGravity = true;
+    bool mBackground = false;
     float mGravitySpeed = 0.0f;
     float mSpeed = 0.0f;
 
@@ -44,15 +45,18 @@ public:
     bool GetGravity() const { return mBoolGravity; }
     float GetGravitySpeed() const { return mGravitySpeed; }
     float GetSpeed() const { return mSpeed; }
+	int GetTag() const { return mTag; }
     sf::Vector2f GetDirection() const { return mDirection; }
     bool IsRigidBody() const { return mRigidBody; }
     bool IsKinematic() const { return mKinematic; }
     bool ToDestroy() const { return mToDestroy; }
     bool IsTag(int tag) const { return mTag == tag; }
     sf::Vector2f GetPosition(float ratioX, float ratioY);
+    bool GetBackground() { return mBackground; };
 
     // Setters
     void SetSpeed(float speed) { mSpeed = speed; }
+    void SetBackground(bool result) { mBackground = result; } 
     void SetGravitySpeed(float speed) { mGravitySpeed = speed; }
     void SetTag(int tag) { mTag = tag; }
     void SetGravity(bool gravity) { mBoolGravity = gravity; }
@@ -76,7 +80,8 @@ public:
     virtual void Block(Entity* other) = 0;
 
     // Render
-    virtual TextureRender* GetRender() { return nullptr; }
+    virtual TextureRender* GetTextureRender() { return nullptr; }
+    virtual void InitRender(const char* spritesheetname, const char* spritename) = 0;
 
     // Lifecycle
     void Destroy();

@@ -16,12 +16,13 @@ AnimationRender::AnimationRender(const char* spritesheetname, const char* sprite
     mIsLoop = Utils::GetInfoFromArray<bool>(njson, spritename, "loop");
 
     mTimePerFrame = 1.f / (mFrameNb * mAnimSpeed);
-
 }
 
 void AnimationRender::UpdateAnimation()
 {
-    if (mIsFinished)
+    mRenderSprite->setScale(mRenderRatio);
+
+    if (mIsFinished || mPaused)
         return;
 
     float dt = GameManager::Get()->GetDeltaTime();
@@ -40,7 +41,7 @@ void AnimationRender::UpdateAnimation()
                     mTextRect.width, mTextRect.height
                 );
 
-            SetTextureRect(nrect);
+            SetSpriteRect(nrect);
         }
 
         if (mFrameCounter >= mFrameNb)
@@ -49,6 +50,7 @@ void AnimationRender::UpdateAnimation()
             if (IsLoop()) {
                 mFrameCounter = 0;
                 mTextRect.left -= mTextRect.width * (mFrameNb);
+                SetSpriteRect(mTextRect);
 
             }
             else {
@@ -58,7 +60,7 @@ void AnimationRender::UpdateAnimation()
                         mTextRect.width, mTextRect.height
                     );
 
-                SetTextureRect(nrect);
+                SetSpriteRect(nrect);
                 mIsFinished = true;
             }
                

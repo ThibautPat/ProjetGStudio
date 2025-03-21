@@ -5,7 +5,6 @@
 #include "../Other/Debug.h"
 #include "../Collider/CircleCollider.h"
 #include "../Collider/AABBCollider.h"
-
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 #include <iostream>
@@ -52,21 +51,12 @@ void Entity::Fall(float dt)
 	if (mGravitySpeed >= 1000.f)
 		mGravitySpeed = 1000.f;
 
-	if (sf::Joystick::isButtonPressed(0, 4))
-	{
-		mGravitySpeed -= GRAVITY_ACCEL + dt;
-	}
-	else
-	{
-		mGravitySpeed += GRAVITY_ACCEL + dt;
-	}
-
-
+	mGravitySpeed += GRAVITY_ACCEL + dt;
+	
 	sf::Vector2f co = GetShape()->getPosition();
 	co.y += mGravitySpeed * dt;
 	GetShape()->setPosition(co);
 }
-
 
 bool Entity::GoToDirection(int x, int y, float speed)
 {
@@ -107,6 +97,9 @@ void Entity::SetDirection(float x, float y, float speed)
 
 void Entity::Update()
 {
+	if (mBackground)
+		return;
+
 	sf::Vector2f oldPos = GetPosition(0.f, 0.f);
 
 	float dt = GetDeltaTime();

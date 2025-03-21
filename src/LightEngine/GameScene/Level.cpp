@@ -6,56 +6,123 @@
 #include "../GameEntity/DeadlyObstacle.h"
 #include "../GameEntity/Teleporter.h"
 #include "../GameEntity/Moving_Platform.h"
+#include "../Manager/TextureManager.h"
+#include "../Renderer/TextureRender.h"
 
-void Level::ChooseJson(const char* path)
+void Level::ChooseJson(const char* path, const char* envipath)
 {
-	mMap = *Utils::Parse(path);
+	mTileMap = *Utils::Parse(path);
+	std::string jsonpath1 = mTileMap["JsonPath"];
+	std::string sourcepath1 = mTileMap["SourcePath"];
+	std::string spritesheetname1 = mTileMap["SpriteSheetName"];
+	GameManager::Get()->GetTextureManager()->LoadSpriteSheet(jsonpath1.c_str(), sourcepath1.c_str(), spritesheetname1);
+
+	mEnv = *Utils::Parse(envipath);
+	std::string jsonpath2 = mEnv["JsonPath"];
+	std::string sourcepath2 = mEnv["SourcePath"];
+	std::string spritesheetname2 = mEnv["SpriteSheetName"];
+	GameManager::Get()->GetTextureManager()->LoadSpriteSheet(jsonpath2.c_str(), sourcepath2.c_str(), spritesheetname2);
+
+	std::cout << jsonpath2 << " " << sourcepath2 << " " << spritesheetname2 << std::endl;
 }
 
 void Level::LoadLevel()
 {
+	AddEnvironment();
+	AddPlayer();
+	AddTiles();
+}
+
+void Level::AddPlayer()
+{
 	Scene* sc = GameManager::Get()->GetSceneManager()->GetScene();
 
-	for (int i = 0; i < mMap["Rows"]; i++) { // Load Player
-		for (int j = 0; j < mMap["Columns"]; j++) {
+	for (int i = 0; i < mTileMap["Rows"]; i++) { // Load Player
+		for (int j = 0; j < mTileMap["Columns"]; j++) {
 
-			std::string tmp = mMap["MapPhysics"][i][j];
+			std::string tmp = mTileMap["MapPhysics"][i][j];
 
 			if (tmp != "1")
 				continue;
 
-			sc->SetPlayer(sc->CreateRectEntity<Player>(200, 100, sf::Color(0, 255, 0, 150)));
+			sc->SetPlayer(sc->CreateRectEntity<Player>(200, 75, sf::Color(0, 255, 0, 150)));
 
 			Player* pEntity = sc->GetPlayer();
-			pEntity->SetGravity((bool)mMap["Physics"][tmp]["Gravity"]);
-			pEntity->SetRigidBody((bool)mMap["Physics"][tmp]["RigidBody"]);
-			pEntity->SetIsKinematic((bool)mMap["Physics"][tmp]["IsKinematic"]);
-			pEntity->SetTag((int)mMap["Physics"][tmp]["Tag"]);
+			pEntity->SetGravity((bool)mTileMap["Physics"][tmp]["Gravity"]);
+			pEntity->SetRigidBody((bool)mTileMap["Physics"][tmp]["RigidBody"]);
+			pEntity->SetIsKinematic((bool)mTileMap["Physics"][tmp]["IsKinematic"]);
+			pEntity->SetTag((int)mTileMap["Physics"][tmp]["Tag"]);
 			pEntity->SetPosition(128 * j, 128 * i);
 		}
 	}
+}
 
-	for (int i = 0; i < mMap["Rows"]; i++) {  // Load Tiles
-		for (int j = 0; j < mMap["Columns"]; j++) {
+void Level::AddEnvironment()
+{
+	Scene* sc = GameManager::Get()->GetSceneManager()->GetScene();
 
-			std::string tmp = mMap["MapPhysics"][i][j];
-			//std::string tmp2 = mMap["MapGrid"][i][j];
+	for (int i = 0; i < mEnv["Rows"]; i++) {  // Load Tiles
+		for (int j = 0; j < mEnv["Columns"]; j++) {
+			coX = 128 * j;
+			coY = 128 * i - 128 * mEnv["Rows"];
+			std::string tmp = mEnv["Map"][i][j];
+
+			if (tmp == "X")
+				continue;
+
+			Entity* pEntity = sc->CreateRectEntity<RectangleEntity>(50, 50, sf::Color::Transparent);
+
+			pEntity->SetGravity(false);
+			pEntity->SetRigidBody(false);
+			pEntity->SetIsKinematic(false);
+			pEntity->SetTag(12);
+			pEntity->SetPosition(128 * j, 128 * i);
+			pEntity->SetBackground(true);
+
+			std::string spritesheetname = mEnv["SpriteSheetName"];
+			json* env_element = GameManager::Get()->GetTextureManager()->GetJson(spritesheetname);
+
+			pEntity->InitRender(spritesheetname.c_str(), ((std::string)mEnv["Map"][i][j]).c_str());
+
+			std::string spritename = ((std::string)mEnv["Map"][i][j]);
+			int width = env_element->at(spritename)["w"];
+			int height = env_element->at(spritename)["h"];
+			int xpos = env_element->at(spritename)["x"];
+			int ypos = env_element->at(spritename)["y"];
+			sf::IntRect rect(xpos, ypos, width, height);
+			pEntity->GetTextureRender()->SetSpriteRect(rect);
+		}
+	}
+}
+
+void Level::AddTiles()
+{
+	for (int i = 0; i < mTileMap["Rows"]; i++) {  // Load Tiles
+		for (int j = 0; j < mTileMap["Columns"]; j++) {
+			coX = 128 * j;
+			coY = 128 * i;
+			std::string tmp = mTileMap["MapPhysics"][i][j];
 
 			if (tmp == "0" || tmp == "1")
 				continue;
 
 			Entity* pEntity = CreateNewEnity(tmp.c_str());
 
-			pEntity->SetGravity((bool)mMap["Physics"][tmp]["Gravity"]);
-			pEntity->SetRigidBody((bool)mMap["Physics"][tmp]["RigidBody"]);
-			pEntity->SetIsKinematic((bool)mMap["Physics"][tmp]["IsKinematic"]);
-			pEntity->SetTag((int)mMap["Physics"][tmp]["Tag"]);
+			pEntity->SetGravity((bool)mTileMap["Physics"][tmp]["Gravity"]);
+			pEntity->SetRigidBody((bool)mTileMap["Physics"][tmp]["RigidBody"]);
+			pEntity->SetIsKinematic((bool)mTileMap["Physics"][tmp]["IsKinematic"]);
+			pEntity->SetTag((int)mTileMap["Physics"][tmp]["Tag"]);
 			pEntity->SetPosition(128 * j, 128 * i);
 
-			//if (tmp2 == "X")
-			//	continue;
+			pEntity->SetBackground((bool)mTileMap["Physics"][tmp]["Background"]);
 
-			//(RectangleEntity*)pEntity;
+			std::string spritesheetname = mTileMap["SpriteSheetName"];
+
+			std::string tmp2 = mTileMap["MapGrid"][i][j];
+
+			if (tmp2 == "X") 
+				continue;
+			pEntity->InitRender(spritesheetname.c_str(), ((std::string)mTileMap["MapGrid"][i][j]).c_str());
 		}
 	}
 }
@@ -71,12 +138,20 @@ Entity* Level::CreateNewEnity(const char* id)
 	case 4:
 	case 6:
 	case 10:
-	case 11: return sc->CreateRectEntity<RectangleEntity>(128, 128, sf::Color::Red);
-	case 7: return sc->CreateRectEntity<RectangleEntity>(128, 128, sf::Color::Green);
-	case 3: return sc->CreateRectEntity<Checkpoint>(128, 128, sf::Color::Red);
-	case 5: return sc->CreateRectEntity<DeadlyObstacle>(128, 128, sf::Color::Red);
-	case 8: return sc->CreateRectEntity<Teleporter>(128, 128, sf::Color::Red);
-	case 9: return sc->CreateRectEntity<Moving_Platform>(128, 128, sf::Color::Red);
+	case 12:
+	case 11:return sc->CreateRectEntity<RectangleEntity>(128, 128, sf::Color::Transparent);
+	case 7: return sc->CreateRectEntity<RectangleEntity>(128, 128, sf::Color::Transparent);
+	case 3: return sc->CreateRectEntity<Checkpoint>(128, 128, sf::Color::Transparent);
+	case 5: return sc->CreateRectEntity<DeadlyObstacle>(128, 128, sf::Color::Transparent);
+	case 8: return sc->CreateRectEntity<Teleporter>(128, 128, sf::Color::Transparent);
+	case 9: 
+	{
+		Moving_Platform* pEntity = sc->CreateRectEntity<Moving_Platform>(128, 128, sf::Color::Transparent);
+		pEntity->setMaxTravelDistance(128);
+		pEntity->SetLinearDirection(sf::Vector2f(1,0));
+		pEntity->SetStartPosition(sf::Vector2f(coX,coY));
+		return pEntity;
+	}
 	default:
 		return nullptr; // Retourne nullptr si aucun cas ne correspond
 	}

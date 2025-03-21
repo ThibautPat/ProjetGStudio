@@ -20,6 +20,7 @@ public:
     // H�ritage Entity
     Collider* GetCollider() override;
     sf::Shape* GetShape() override;
+    void InitRender(const char* spritesheetname, const char* spritename) override {}
 
     // Initialisation
     void Initialize(float radius, const sf::Color& color) override;
