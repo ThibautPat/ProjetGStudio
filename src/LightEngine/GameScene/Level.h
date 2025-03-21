@@ -9,6 +9,8 @@ class Entity;
 
 class Level
 {
+	int coX = 0;
+	int coY = 0;
 protected:
 	json mTileMap;
 	json mEnv;

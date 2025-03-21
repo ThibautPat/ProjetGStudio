@@ -38,6 +38,8 @@ struct PlayerData
 	sf::Vector2f nratioTexture = sf:: Vector2f(1,1);
 
     sf::Clock RespawnClock;
+    sf::Clock TeleportClock;
+    sf::Clock BoucingClock;
     sf::Vector2f mLastCheckPoint;
 
     sf::FloatRect mHitboxCrouch = {0.f, 0.f, 115.f, 180.f} ;

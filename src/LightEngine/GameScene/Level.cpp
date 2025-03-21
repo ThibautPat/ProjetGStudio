@@ -63,9 +63,9 @@ void Level::AddTiles()
 {
 	for (int i = 0; i < mTileMap["Rows"]; i++) {  // Load Tiles
 		for (int j = 0; j < mTileMap["Columns"]; j++) {
-
+			coX = 128 * j;
+			coY = 128 * i - 128 * mTileMap["Rows"];
 			std::string tmp = mTileMap["MapPhysics"][i][j];
-			//std::string tmp2 = mMap["MapGrid"][i][j];
 
 			if (tmp == "0" || tmp == "1")
 				continue;
@@ -77,7 +77,15 @@ void Level::AddTiles()
 			pEntity->SetIsKinematic((bool)mTileMap["Physics"][tmp]["IsKinematic"]);
 			pEntity->SetTag((int)mTileMap["Physics"][tmp]["Tag"]);
 			pEntity->SetPosition(128 * j, 128 * i);
+
+			pEntity->SetBackground((bool)mTileMap["Physics"][tmp]["Background"]);
+
 			std::string spritesheetname = mTileMap["SpriteSheetName"];
+
+			std::string tmp2 = mTileMap["MapGrid"][i][j];
+
+			if (tmp2 == "X") 
+				continue;
 			pEntity->InitRender(spritesheetname.c_str(), ((std::string)mTileMap["MapGrid"][i][j]).c_str());
 		}
 	}
@@ -95,12 +103,19 @@ Entity* Level::CreateNewEnity(const char* id)
 	case 6:
 	case 10:
 	case 12:
-	case 11: return sc->CreateRectEntity<RectangleEntity>(110, 110, sf::Color::Transparent);
-	case 7: return sc->CreateRectEntity<RectangleEntity>(110, 110, sf::Color::Transparent);
+	case 11:return sc->CreateRectEntity<RectangleEntity>(128, 128, sf::Color::Transparent);
+	case 7: return sc->CreateRectEntity<RectangleEntity>(128, 128, sf::Color::Transparent);
 	case 3: return sc->CreateRectEntity<Checkpoint>(128, 128, sf::Color::Transparent);
 	case 5: return sc->CreateRectEntity<DeadlyObstacle>(128, 128, sf::Color::Transparent);
 	case 8: return sc->CreateRectEntity<Teleporter>(128, 128, sf::Color::Transparent);
-	case 9: return sc->CreateRectEntity<Moving_Platform>(128, 128, sf::Color::Transparent);
+	case 9: 
+	{
+		Moving_Platform* pEntity = sc->CreateRectEntity<Moving_Platform>(128, 128, sf::Color::Transparent);
+		pEntity->setMaxTravelDistance(128);
+		pEntity->SetLinearDirection(sf::Vector2f(1,1));
+		pEntity->SetStartPosition(sf::Vector2f(coX,coY));
+		return pEntity;
+	}
 	default:
 		return nullptr; // Retourne nullptr si aucun cas ne correspond
 	}

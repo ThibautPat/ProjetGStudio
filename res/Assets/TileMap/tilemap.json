@@ -328,11 +328,11 @@
         "y": 6
     },
     "grass_teleport": {
-        "x": 10,
+        "x": 9,
         "y": 7
     },
     "teleport": {
-        "x": 11,
+        "x": 10,
         "y": 7
     },
     "metal_bottom": {

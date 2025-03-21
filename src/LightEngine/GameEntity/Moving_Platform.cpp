@@ -4,7 +4,7 @@ void Moving_Platform::OnUpdate()
 {
 	if (isMoving)
 	{
-		if (mData->mDirectionx)
+		if (mData->mDirection.x != 0)
 		{
 			float linearMove = 0;
 			if (mData->mMovement == 1 || mData->mMovement == -1)
@@ -23,7 +23,7 @@ void Moving_Platform::OnUpdate()
 			SetDirection(linearMove, 0, 1);
 			SetPosition(GetPosition(0, 0).x + mData->mMovement, GetPosition(0, 0).y);
 		}
-		else
+		if (mData->mDirection.y != 0)
 		{
 			float linearMove = 0;
 			if (mData->mMovement == 1 || mData->mMovement == -1)
@@ -42,7 +42,6 @@ void Moving_Platform::OnUpdate()
 			SetDirection(0, linearMove, 1);
 			SetPosition(GetPosition(0, 0).x, GetPosition(0, 0).y + mData->mMovement);
 		}
-
 	}
 }
 
@@ -51,6 +50,4 @@ void Moving_Platform::OnInitialize()
 	mData = new Data(); 
 	mShape.setOrigin(mShape.getSize().x / 2, mShape.getSize().y / 2);
 	mStartPosition = mShape.getPosition(); 
-	setMaxTravelDistance(100);
-	SetLinearDirection(true);
 }

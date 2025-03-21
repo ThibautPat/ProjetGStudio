@@ -97,6 +97,9 @@ void Entity::SetDirection(float x, float y, float speed)
 
 void Entity::Update()
 {
+	if (mBackground)
+		return;
+
 	sf::Vector2f oldPos = GetPosition(0.f, 0.f);
 
 	float dt = GetDeltaTime();

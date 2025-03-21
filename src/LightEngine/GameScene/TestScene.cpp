@@ -14,7 +14,7 @@ void TestScene::OnInitialize()
 {
 	m_InstanceGameManager = GameManager::Get();
 
-	mView = new sf::View(sf::FloatRect(0, -340, GetWindowWidth() + 56.25f, GetWindowHeight() + 100)); // Ajout de la cam�ra
+	mView = new sf::View(sf::FloatRect(0, -340, GetWindowWidth(), GetWindowHeight())); // Ajout de la cam�ra
 
 	BackGround* pEntity1 = CreateRectEntity<BackGround>(1090, 3350, sf::Color::White);
 	pEntity1->SetPosition(0, 205);
@@ -55,6 +55,7 @@ void TestScene::HandleConsoleEvent()
 	// Manette
 	if (sf::Joystick::isButtonPressed(0, 0)) // Bouton "A" sur la manette (équivalent de la barre d'espace pour le saut)
 	{
+
 		if (mPlayer->mReverse)
 		{
 			mPlayer->SetState(Player::PlayerStateList::FALL);
@@ -62,7 +63,8 @@ void TestScene::HandleConsoleEvent()
 			mPlayer->mReverse = false;
 			mPlayer->GetPlayerData()->isGrounded = false;
 		}
-		else if (mPlayer->GetPlayerData()->isGrounded) {
+		else if (mPlayer->GetPlayerData()->isGrounded)
+		{
 			mPlayer->SetState(Player::PlayerStateList::JUMP);
 		}
 	}
@@ -103,7 +105,6 @@ void TestScene::HandleConsoleEvent()
 		}
 	}
 }
-
 
 void TestScene::HandleKeyboardEvent()
 {
