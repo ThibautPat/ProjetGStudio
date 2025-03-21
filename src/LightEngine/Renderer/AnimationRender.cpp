@@ -20,6 +20,8 @@ AnimationRender::AnimationRender(const char* spritesheetname, const char* sprite
 
 void AnimationRender::UpdateAnimation()
 {
+    mRenderSprite->setScale(mRenderRatio);
+
     if (mIsFinished || mPaused)
         return;
 

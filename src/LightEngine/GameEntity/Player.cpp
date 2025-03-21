@@ -95,9 +95,6 @@ void Player::OnCollision(Entity* other)
             mPData->isGrounded = true;  // Le joueur est au sol lorsqu'il touche une plateforme
         }
     }
-    else {
-        mPData->isGrounded = false; // Sinon, il n'est pas au sol
-    }
     if (other->IsTag(TestScene::Tag::OBSTACLE) && std::abs(static_cast<AABBCollider*>(GetCollider())->GetCollideFace()->x) == 1) {
         if (other->GetGravitySpeed() <= 10) {
             SetState(PUSH);
@@ -108,7 +105,6 @@ void Player::OnCollision(Entity* other)
     }
     if (other->IsTag(TestScene::Tag::CHECKPOINT)) 
     {
-        mPData->isGrounded = false; // Utile ??? Sinon, il n'est pas au sol 
         mPData->mLastCheckPoint = other->GetPosition(0.f, 0.f); // On set le dernier checkpoint  
 
     }
