@@ -133,7 +133,7 @@ void GameManager::Run()
 		CreateWindow(1280, 720, "Default window");
 	}
 
-	bool fontLoaded = mFont.loadFromFile("../../../res/Hack-Regular.ttf");
+	bool fontLoaded = mFont.loadFromFile("../../../../../res/Hack-Regular.ttf");
 	_ASSERT(fontLoaded);
 	_ASSERT(mScM->GetScene() != nullptr);
 

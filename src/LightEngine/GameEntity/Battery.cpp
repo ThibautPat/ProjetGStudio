@@ -4,9 +4,9 @@ Battery::Battery()
 {
     mTotalFrames = 10;
 
-    mBatteryTexture1->loadFromFile("../../../res/Assets/Battery/Batterie_fond.png");
-    mBatteryTexture2->loadFromFile("../../../res/Assets/Battery/Batterie_barres.png");
-    mBatteryTexture3->loadFromFile("../../../res/Assets/Battery/Batterie_branche.png");
+    mBatteryTexture1->loadFromFile("../../../../../res/Assets/Battery/Batterie_fond.png");
+    mBatteryTexture2->loadFromFile("../../../../../res/Assets/Battery/Batterie_barres.png");
+    mBatteryTexture3->loadFromFile("../../../../../res/Assets/Battery/Batterie_branche.png");
 
     int frameWidth = mBatteryTexture2->getSize().x / mTotalFrames;
     int frameHeight = mBatteryTexture2->getSize().y;

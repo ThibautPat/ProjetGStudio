@@ -30,7 +30,7 @@ void TestScene::OnInitialize()
 	pEntity2->SetRigidBody(false);
 	pEntity2->SetIsKinematic(true);
 	pEntity2->SetGravity(false);
-	pEntity2->SetBackGroundTexture("..//..//..//res//Assets//Background//upsky_background_mercure.png");
+	pEntity2->SetBackGroundTexture("..//..//..//..//res//Assets//Background//upsky_background_mercure.png");
 	pEntity2->SetTag(Tag::BACK_GROUND2BIS);
 
 	BackGround* pEntity3 = CreateRectEntity<BackGround>(1290, 3450, sf::Color::White);
@@ -42,7 +42,7 @@ void TestScene::OnInitialize()
 	pEntity3->SetTag(Tag::BACK_GROUND2);
 
 	mLevel = new Level();
-	mLevel->ChooseJson("../../../res/Levels/map.json", "../../../res/Levels/environment.json");
+	mLevel->ChooseJson("../../../../../res/Levels/map.json", "../../../../../res/Levels/environment.json");
 	mLevel->LoadLevel();
 
 	mpAudioManager = new AudioManager();

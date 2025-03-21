@@ -61,7 +61,7 @@ void AudioManager::AddLevelSound(std::vector<std::string*> sound)
 void AudioManager::LoadSound(std::string Name, bool Loop)
 {
     sf::SoundBuffer* buffer = new sf::SoundBuffer;
-    if (!buffer->loadFromFile("../../../res/SOUND/" + Name))
+    if (!buffer->loadFromFile("../../../../../res/SOUND/" + Name))
     {
     }
     m_SoundBufferMap[Name] = buffer;
@@ -73,13 +73,13 @@ void AudioManager::LoadSound(std::string Name, bool Loop)
 
 void AudioManager::LoadMusic(std::string Name, bool Loop) {
 
-    if (!std::filesystem::exists("../../../res/SOUND/" + Name)) {
+    if (!std::filesystem::exists("../../../../../res/SOUND/" + Name)) {
         //std::cout << "File not found: " << "../../../res/SOUND/" + Name << std::endl;
         return;
     }
 
     sf::Music* music = new sf::Music();
-    if (!music->openFromFile("../../../res/SOUND/" + Name)) {
+    if (!music->openFromFile("../../../../../res/SOUND/" + Name)) {
         //std::cout << "File not open: " << "../../../res/SOUND/" + Name << std::endl;
         delete music;
         return;

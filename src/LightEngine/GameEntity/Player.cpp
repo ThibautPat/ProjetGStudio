@@ -15,7 +15,7 @@ void Player::OnInitialize()
     mShape.setOrigin(mShape.getGlobalBounds().width / 2, mShape.getGlobalBounds().height / 2); //WTF pourquoi l'h�ritage n'est pas fait ?!
     mAs = GameManager::Get()->GetTextureManager();
 
-    mAs->LoadSpriteSheet("../../../res/Assets/SpriteSheet/Character.json", "../../../res/Assets/SpriteSheet/spritesheet_character.png", "player");
+    mAs->LoadSpriteSheet("../../../../../res/Assets/SpriteSheet/Character.json", "../../../../../res/Assets/SpriteSheet/spritesheet_character.png", "player");
     mAnimator = new Animator();
     mAnimator->AddAnimation("player", "idle");
     mAnimator->AddAnimation("player", "walk");
