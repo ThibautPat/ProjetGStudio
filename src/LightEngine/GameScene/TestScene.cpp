@@ -202,8 +202,10 @@ void TestScene::HandleKeyboardEvent()
 
 void TestScene::OnUpdate()
 {
-	HandleConsoleEvent();
-	//HandleKeyboardEvent();
+	//HandleConsoleEvent();
+	HandleKeyboardEvent();
+
+	mPlayer->DrawBattery();
 
 	if (GetPlayer()->GetPosition(0, 0).x < 1000) {
 		mView->setCenter(1000, 128*7);

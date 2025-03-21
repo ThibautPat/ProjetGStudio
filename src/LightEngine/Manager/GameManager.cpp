@@ -117,6 +117,7 @@ void GameManager::CreateWindow(unsigned int width, unsigned int height, const ch
 	_ASSERT(mpWindow == nullptr);
 
 	mpWindow = new sf::RenderWindow(sf::VideoMode(width, height), title, sf::Style::Fullscreen);
+
 	mpWindow->setFramerateLimit(fpsLimit);
 
 	mWindowWidth = width;
@@ -226,5 +227,8 @@ void GameManager::Draw()
 	
 	Debug::Get()->Draw(mpWindow);
 
+	if (GetSceneManager()->GetScene()->GetPlayer() != nullptr) {
+		GetSceneManager()->GetScene()->GetPlayer()->DrawBattery();
+	}
 	mpWindow->display();
 }
