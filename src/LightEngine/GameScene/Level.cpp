@@ -45,7 +45,7 @@ void Level::AddPlayer()
 			if (tmp != "1")
 				continue;
 
-			sc->SetPlayer(sc->CreateRectEntity<Player>(200, 75, sf::Color(0, 255, 0, 150)));
+			sc->SetPlayer(sc->CreateRectEntity<Player>(200, 75, sf::Color::Transparent));
 
 			Player* pEntity = sc->GetPlayer();
 			pEntity->SetGravity((bool)mTileMap["Physics"][tmp]["Gravity"]);

@@ -206,8 +206,6 @@ void TestScene::OnUpdate()
 
 	int cox = GetPlayer()->GetPosition(0.f, 0.f).x;
 
-	std::string str = "Position X : " + std::to_string(cox);
-	Debug::DrawText(GetPlayer()->GetPosition(0.f, 0.f).x, GetPlayer()->GetPosition(0.f, 0.f).y,str , sf::Color::White);;
 
 	m_InstanceGameManager->GetWindow()->setView(*mView); // Mise a jour de la view
 }
