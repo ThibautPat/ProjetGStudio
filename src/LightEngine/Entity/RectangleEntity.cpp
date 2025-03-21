@@ -111,7 +111,7 @@ void RectangleEntity::Block(Entity* other)
         else if (other->IsTag(TestScene::Tag::BOUCING_OBSTACLE))
         {
             mBoolGravity = true;
-            mGravitySpeed = -1000;
+            mGravitySpeed = -800;
             
             SetPosition(GetPosition(0.f, 0.f).x, other->GetPosition(0.f, 0.f).y - place * (otherHeight * 0.5f + entityHeight * 0.5f) + 1 - 10);
         }

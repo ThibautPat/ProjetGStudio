@@ -61,7 +61,7 @@ void Level::AddEnvironment()
 {
 	Scene* sc = GameManager::Get()->GetSceneManager()->GetScene();
 
-	for (int i = 0; i < mTileMap["Rows"]; i++) { // Load Player
+	for (int i = 0; i < mTileMap["Rows"]; i++) {
 		for (int j = 0; j < mTileMap["Columns"]; j++) {
 
 			std::string tmp = mTileMap["MapPhysics"][i][j];
@@ -85,7 +85,6 @@ void Level::AddEnvironment()
 			pEntity->GetTextureRender()->SetSpriteRect(rect);
 		}
 	}
-
 }
 
 void Level::AddTiles()
