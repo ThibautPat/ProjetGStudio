@@ -61,13 +61,12 @@ void Level::AddEnvironment()
 {
 	Scene* sc = GameManager::Get()->GetSceneManager()->GetScene();
 
-	for (int i = 0; i < mEnv["Rows"]; i++) {  // Load Tiles
-		for (int j = 0; j < mEnv["Columns"]; j++) {
-			coX = 128 * j;
-			coY = 128 * i - 128 * mEnv["Rows"];
-			std::string tmp = mEnv["Map"][i][j];
+	for (int i = 0; i < mTileMap["Rows"]; i++) { // Load Player
+		for (int j = 0; j < mTileMap["Columns"]; j++) {
 
-			if (tmp == "X")
+			std::string tmp = mTileMap["MapPhysics"][i][j];
+
+			if (tmp != "3")
 				continue;
 
 			Entity* pEntity = sc->CreateRectEntity<RectangleEntity>(50, 50, sf::Color::Transparent);
@@ -79,20 +78,14 @@ void Level::AddEnvironment()
 			pEntity->SetPosition(128 * j, 128 * i);
 			pEntity->SetBackground(true);
 
-			std::string spritesheetname = mEnv["SpriteSheetName"];
-			json* env_element = GameManager::Get()->GetTextureManager()->GetJson(spritesheetname);
+			std::string spritesheetname = mTileMap["SpriteSheetName"];
 
-			pEntity->InitRender(spritesheetname.c_str(), ((std::string)mEnv["Map"][i][j]).c_str());
-
-			std::string spritename = ((std::string)mEnv["Map"][i][j]);
-			int width = env_element->at(spritename)["w"];
-			int height = env_element->at(spritename)["h"];
-			int xpos = env_element->at(spritename)["x"];
-			int ypos = env_element->at(spritename)["y"];
-			sf::IntRect rect(xpos, ypos, width, height);
+			pEntity->InitRender(spritesheetname.c_str(), "");
+			sf::IntRect rect(4*128, 7*128, 256, 384);
 			pEntity->GetTextureRender()->SetSpriteRect(rect);
 		}
 	}
+
 }
 
 void Level::AddTiles()
