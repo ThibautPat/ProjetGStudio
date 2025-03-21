@@ -41,7 +41,7 @@ void TestScene::OnInitialize()
 	pEntity3->SetTag(Tag::BACK_GROUND2);
 
 	mLevel = new Level();
-	mLevel->ChooseJson("../../../res/Levels/map.json");
+	mLevel->ChooseJson("../../../res/Levels/map.json", "../../../res/Levels/environment.json");
 	mLevel->LoadLevel();
 }
 

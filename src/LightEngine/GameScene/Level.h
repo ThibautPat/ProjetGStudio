@@ -16,7 +16,7 @@ protected:
 	json mEnv;
 
 public:
-	void ChooseJson(const char* path);
+	void ChooseJson(const char* path, const char* envipath);
 
 	void LoadLevel();
 

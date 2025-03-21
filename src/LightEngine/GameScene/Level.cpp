@@ -9,7 +9,7 @@
 #include "../Manager/TextureManager.h"
 #include "../Renderer/TextureRender.h"
 
-void Level::ChooseJson(const char* path)
+void Level::ChooseJson(const char* path, const char* envipath)
 {
 	mTileMap = *Utils::Parse(path);
 	std::string jsonpath1 = mTileMap["JsonPath"];
@@ -17,11 +17,13 @@ void Level::ChooseJson(const char* path)
 	std::string spritesheetname1 = mTileMap["SpriteSheetName"];
 	GameManager::Get()->GetTextureManager()->LoadSpriteSheet(jsonpath1.c_str(), sourcepath1.c_str(), spritesheetname1);
 
-	//mEnv = *Utils::Parse(envipath);
-	//std::string jsonpath2 = mEnv["JsonPath"];
-	//std::string sourcepath2 = mEnv["SourcePath"];
-	//std::string spritesheetname2 = mEnv["SpriteSheetName"];
-	//GameManager::Get()->GetTextureManager()->LoadSpriteSheet(jsonpath2.c_str(), sourcepath2.c_str(), spritesheetname2);
+	mEnv = *Utils::Parse(envipath);
+	std::string jsonpath2 = mEnv["JsonPath"];
+	std::string sourcepath2 = mEnv["SourcePath"];
+	std::string spritesheetname2 = mEnv["SpriteSheetName"];
+	GameManager::Get()->GetTextureManager()->LoadSpriteSheet(jsonpath2.c_str(), sourcepath2.c_str(), spritesheetname2);
+
+	std::cout << jsonpath2 << " " << sourcepath2 << " " << spritesheetname2 << std::endl;
 }
 
 void Level::LoadLevel()
@@ -57,6 +59,40 @@ void Level::AddPlayer()
 
 void Level::AddEnvironment()
 {
+	Scene* sc = GameManager::Get()->GetSceneManager()->GetScene();
+
+	for (int i = 0; i < mEnv["Rows"]; i++) {  // Load Tiles
+		for (int j = 0; j < mEnv["Columns"]; j++) {
+			coX = 128 * j;
+			coY = 128 * i - 128 * mEnv["Rows"];
+			std::string tmp = mEnv["Map"][i][j];
+
+			if (tmp == "X")
+				continue;
+
+			Entity* pEntity = sc->CreateRectEntity<RectangleEntity>(50, 50, sf::Color::Transparent);
+
+			pEntity->SetGravity(false);
+			pEntity->SetRigidBody(false);
+			pEntity->SetIsKinematic(false);
+			pEntity->SetTag(12);
+			pEntity->SetPosition(128 * j, 128 * i);
+			pEntity->SetBackground(true);
+
+			std::string spritesheetname = mEnv["SpriteSheetName"];
+			json* env_element = GameManager::Get()->GetTextureManager()->GetJson(spritesheetname);
+
+			pEntity->InitRender(spritesheetname.c_str(), ((std::string)mEnv["Map"][i][j]).c_str());
+
+			std::string spritename = ((std::string)mEnv["Map"][i][j]);
+			int width = env_element->at(spritename)["w"];
+			int height = env_element->at(spritename)["h"];
+			int xpos = env_element->at(spritename)["x"];
+			int ypos = env_element->at(spritename)["y"];
+			sf::IntRect rect(xpos, ypos, width, height);
+			pEntity->GetTextureRender()->SetSpriteRect(rect);
+		}
+	}
 }
 
 void Level::AddTiles()
