@@ -30,6 +30,7 @@ protected:
     bool mRigidBody = false;
     bool mKinematic = false;
     bool mBoolGravity = true;
+    bool mBackground = false;
     float mGravitySpeed = 0.0f;
     float mSpeed = 0.0f;
 
@@ -50,9 +51,11 @@ public:
     bool ToDestroy() const { return mToDestroy; }
     bool IsTag(int tag) const { return mTag == tag; }
     sf::Vector2f GetPosition(float ratioX, float ratioY);
+    bool GetBackground() { return mBackground; };
 
     // Setters
     void SetSpeed(float speed) { mSpeed = speed; }
+    void SetBackground(bool result) { mBackground = result; } 
     void SetGravitySpeed(float speed) { mGravitySpeed = speed; }
     void SetTag(int tag) { mTag = tag; }
     void SetGravity(bool gravity) { mBoolGravity = gravity; }

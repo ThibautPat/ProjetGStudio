@@ -104,7 +104,6 @@ void TestScene::HandleConsoleEvent()
 	}
 }
 
-
 void TestScene::HandleKeyboardEvent()
 {
 	//Clavier

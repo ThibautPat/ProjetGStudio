@@ -47,6 +47,8 @@ void GameManager::PhysiqueUpdate()
 			Entity* entity = *it1;
 			Entity* otherEntity = *it2;
 
+			if (entity->mBackground || otherEntity->mBackground)
+				continue;
 			if (entity->IsColliding(otherEntity))
 			{
 				entity->OnCollision(otherEntity);

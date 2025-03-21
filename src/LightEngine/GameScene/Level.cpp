@@ -65,7 +65,6 @@ void Level::AddTiles()
 		for (int j = 0; j < mTileMap["Columns"]; j++) {
 
 			std::string tmp = mTileMap["MapPhysics"][i][j];
-			//std::string tmp2 = mMap["MapGrid"][i][j];
 
 			if (tmp == "0" || tmp == "1")
 				continue;
@@ -77,7 +76,15 @@ void Level::AddTiles()
 			pEntity->SetIsKinematic((bool)mTileMap["Physics"][tmp]["IsKinematic"]);
 			pEntity->SetTag((int)mTileMap["Physics"][tmp]["Tag"]);
 			pEntity->SetPosition(128 * j, 128 * i);
+
+			pEntity->SetBackground((bool)mTileMap["Physics"][tmp]["Background"]);
+
 			std::string spritesheetname = mTileMap["SpriteSheetName"];
+
+			std::string tmp2 = mTileMap["MapGrid"][i][j];
+
+			if (tmp2 == "X") 
+				continue;
 			pEntity->InitRender(spritesheetname.c_str(), ((std::string)mTileMap["MapGrid"][i][j]).c_str());
 		}
 	}

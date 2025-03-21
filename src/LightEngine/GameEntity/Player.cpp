@@ -120,7 +120,7 @@ void Player::OnCollision(Entity* other)
     {
     }
 
-    HandleBattery();
+    //HandleBattery();
 }
 
 void Player::PlayerRespawn()
