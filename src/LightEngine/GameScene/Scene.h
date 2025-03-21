@@ -1,6 +1,9 @@
 #pragma once
+#include <string>
+#include <vector>
 
 class GameManager;
+class AudioManager;
 class SceneManager;
 
 #include <SFML/Window/Event.hpp>
@@ -19,6 +22,8 @@ private:
 	
 protected:
 	Player* mPlayer;
+	AudioManager* mpAudioManager;
+
 	bool mIsEnd = false; 
 	Scene() = default;
 
@@ -45,8 +50,13 @@ public:
 	int GetWindowWidth() const;
 	int GetWindowHeight() const;
 
+	std::vector<std::string*> m_soundList; // Penser a delete au changement de scene !!! 
+	std::vector<std::string*> m_MusicList; // Penser a delete au changement de scene !!! 
+
 	friend GameManager;
 	friend SceneManager;
+
+	~Scene();
 };
 
 #include "Scene.inl"

@@ -6,6 +6,7 @@
 #include "../GameEntity/Player.h"
 #include "../GameEntity/BackGround.h"
 #include "../GameScene/Level.h"
+#include "../Manager/AudioManager.h"
 #include "../GameEntity/Teleporter.h"
 #include "../GameEntity/Moving_Platform.h"
 #include "../Renderer/TextureRender.h"
@@ -43,6 +44,22 @@ void TestScene::OnInitialize()
 	mLevel = new Level();
 	mLevel->ChooseJson("../../../res/Levels/map.json", "../../../res/Levels/environment.json");
 	mLevel->LoadLevel();
+
+	mpAudioManager = new AudioManager();
+
+	std::string musicName = "TestWav.wav";
+	m_MusicList.push_back(&musicName); 
+
+	std::string SoundName = "SoundTest.wav";
+	m_soundList.push_back(&SoundName);  
+
+	std::string SoundName2 = "SoundTest2.wav";
+	m_soundList.push_back(&SoundName2);
+
+	mpAudioManager->AddLevelSound(m_soundList);
+	mpAudioManager->AddLevelMusic(m_MusicList);
+
+	mpAudioManager->PlayCurrentMusic();
 }
 
 void TestScene::OnEvent(const sf::Event& event)
@@ -55,7 +72,7 @@ void TestScene::HandleConsoleEvent()
 	// Manette
 	if (sf::Joystick::isButtonPressed(0, 0)) // Bouton "A" sur la manette (équivalent de la barre d'espace pour le saut)
 	{
-
+		mpAudioManager->PlaySound(0);
 		if (mPlayer->mReverse)
 		{
 			mPlayer->SetState(Player::PlayerStateList::FALL);
