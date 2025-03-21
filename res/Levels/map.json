@@ -6,9 +6,9 @@
   "Rows": 15,
   "Columns": 40,
   "MapPhysics": [
-    [ "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" ],
-    [ "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" ],
-    [ "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "7", "7", "7", "7", "7", "7", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "0", "0", "0", "0", "2", "2" ],
+    [ "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12" ],
+    [ "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12" ],
+    [ "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "7", "7", "7", "7", "7", "7", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "12", "0", "0", "0", "2", "2" ],
     [ "5", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "7", "7", "7", "7", "0", "0" ],
     [ "5", "0", "0", "0", "0", "0", "0", "0", "8", "0", "0", "0", "0", "0", "0", "0","11", "0", "0", "0", "0", "0", "2", "2", "2", "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" ],
     [ "5", "0", "0", "0", "0", "0", "0", "2", "2", "2", "0", "0", "0", "0", "0", "0", "2", "0", "0", "0", "0", "0", "2", "0", "0", "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" ],
@@ -16,16 +16,16 @@
     [ "5", "0", "0", "0", "0", "0", "0", "0", "5", "5", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "5", "5", "0", "0", "0" ],
     [ "5", "0", "0", "0", "0", "0", "0", "0", "5", "5", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "5", "5", "0", "0", "0" ],
     [ "2", "2", "0", "0", "0", "0", "0", "0", "5", "5", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0","10","10","10", "0", "5", "5", "0", "0", "0" ],
-    [ "0", "2", "0", "3", "0", "8", "0", "0", "5", "5", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "3", "0", "0", "2", "0", "0", "0", "0", "0", "5", "5", "0", "3", "0" ],
+    [ "0", "2", "1", "3", "0", "8", "0", "0", "5", "5", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "3", "0", "0", "2", "0", "0", "0", "0", "0", "5", "5", "0", "3", "0" ],
     [ "0", "0", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "0", "0", "0", "0", "0", "0", "0", "0", "9", "0", "0", "2", "2", "2", "2", "0", "5", "5", "0", "0", "0", "2", "0", "2", "2", "2" ],
     [ "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "5", "5", "5", "5", "5", "5", "5", "5", "5", "0", "5", "0", "0", "0", "0", "0", "0", "5", "0", "5", "5", "0", "0", "0", "0", "0" ],
     [ "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "5", "0", "5", "0", "0", "0", "0", "0", "0", "5", "0", "5", "0", "0", "0", "0", "0", "0" ],
-    [ "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2", "0", "0", "0", "0", "0", "0", "0", "0", "2", "0", "0", "0", "0", "0", "0", "0" ]
+    [ "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "2", "12", "12", "12", "12", "12", "12", "12", "12", "2", "12", "12", "12", "12", "12", "12", "12" ]
   ],
 
   "AcronymPhysics": "1 = player, 2 = platform, 0 = empty, 3 = Checkpoint, 5 = Death, 6 = Exit, 7 = Metalic platform, 8 = Teleporter, 9 = Moving Platform, 10 = Bouncing, 11 = Obstacle",
   "Physics": {
-    "0": {
+    "12": {
       "RigidBody": false,
       "Gravity": false,
       "IsKinematic": false,
@@ -101,13 +101,6 @@
       "Gravity": true,
       "IsKinematic": false,
       "Tag": 4
-    },
-
-    "12": {
-      "RigidBody": false,
-      "Gravity": false,
-      "IsKinematic": false,
-      "Tag": 99
     }
   },
 
@@ -115,18 +108,18 @@
   "MapGrid": [
     [ "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt" ],
     [ "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt" ],
-    [ "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b","metalic_b","metalic_b","metalic_b","metalic_b","metalic_b","metalic_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", 67, "dirt", "dirt", 83, "grass_b", "grass_b" ],
-    [ 86, 42,"X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X", 42,"X","X","X","X","X","X","X","X","X","X", 98,"metalic_b","metalic_b", 99,"X","X" ],
-    [ 86,"X","X","X","X","X","X","X",105,"X","X","X","X","X","X","X",100,"X","X","X","X","X",  4,  5,  6,  7,"X","X","X","X","X","X","X","X","X","X","X","X","X","X" ],
-    [ 86,"X","X","X","X","X","X",  0,121,  3,"X","X","X","X","X","X", 57,"X","X","X","X","X", 20, 21, 22, 23, 24,"X","X","X","X","X","X","X","X","X","X","X","X","X" ],
-    [ 86,"X","X","X","X","X","X","X","X","X","X","X","X","X","X","X", 42,"X","X","X","X","X", 36, 37, 38, 39,"X","X","X","X","X","X","X","X","X","X","X","X","X","X" ],
-    [ 86,"X","X","X","X","X","X","X", 68, 70,"X","X","X","X","X","X","X","X","X","X","X","X", 52, 12, 54,"X","X","X","X","X","X","X","X","X","X", 68, 70,"X","X","X" ],
-    [ 86, 53,"X","X","X","X","X","X", 84, 86,"X","X","X","X","X","X","X","X","X","X","X","X","X", 28,"X","X","X","X","X","X","X","X","X","X","X", 84, 86,"X","X","X" ],
-    [ "grass_t", 97,"X","X","X","X","X","X", 84, 86,"X","X","X","X","X","X","X","X","X","X","X","X","X", 12,"X","X","X","X","X", 31,"X",  8,  9, 11,"X", 84, 86,"X","X","X" ],
-    [ "dirt", "dirt","X","X", 30,105, 30, 31, 84, 86, 15, 30, 14, 30,"X","X","X","X","X","X","X","X","X", 28,"X", 30,"3","X", 53, 57,"X","X", 13,"X","X", 84, 86, 14,"X","X" ],
-    [ "dirt","grass_t_right_corner", "grass_t", "grass_t", "grass_t",121, "grass_t", "grass_t", "grass_t", "grass_t", "grass_t", "grass_t", "grass_t", 97,"X","X","X","X","X","X","X","X","9", 12,"X", 96, "grass_t", "grass_t", "grass_t", 66, 68, 70, 13,"X","X", 96, "grass_t", "grass_t", "grass_t",  1 ],
-    [ "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", 68, 69, 69, 69, 69, 69, 69, 69, 70, 28, 68, "dirt", "dirt", "dirt", "dirt", "dirt", 84, 86, 13, 68, 70, "dirt", "dirt", "dirt", "dirt", "dirt" ],
-    [ "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", 84, 85, 85, 85, 85, 85, 85, 85, 86, 29, 84, "dirt", "dirt", "dirt", "dirt", "dirt", 84, 86, 29, 84, 86, "dirt", "dirt", "dirt", "dirt", "dirt" ],
+    [ "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b","metalic_b","metalic_b","metalic_b","metalic_b","metalic_b","metalic_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b", "grass_b_left_corner", "dirt", "dirt", "grass_b_right_corner", "grass_b", "grass_b" ],
+    [ "rosebush_right", "falling_liane","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X", "falling_liane","X","X","X","X","X","X","X","X","X","X", "metal_b_left_smooth","metalic_b","metalic_b", "metal_b_right_smooth","X","X" ],
+    [ "rosebush_right","X","X","X","X","X","X","X","vfx_teleport","X","X","X","X","X","X","X","moveable_obstacle","X","X","X","X","X",  "big_ballon_t_left_angle",  "big_ballon_t_roped",  "big_ballon_t",  "big_ballon_t_right_angle","X","X","X","X","X","X","X","X","X","X","X","X","X","X" ],
+    [ "rosebush_right","X","X","X","X","X","X", "grass_t_left_angle","grass_teleport", "grass_t_right_angle","X","X","X","X","X","X", "solo_grass_t_smooth","X","X","X","X","X", "big_ballon_left", "big_ballon_roped", "big_ballon", "big_ballon_right", "ballon_fan","X","X","X","X","X","X","X","X","X","X","X","X","X" ],
+    [ "rosebush_right","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X", "falling_liane","X","X","X","X","X", "big_ballon_b_left_angle", "big_ballon_b_roped", "big_ballon_b", "big_ballon_b_right_angle","X","X","X","X","X","X","X","X","X","X","X","X","X","X" ],
+    [ "rosebush_right","X","X","X","X","X","X","X", "rosebush_t_left_angle", "rosebush_t_right_angle","X","X","X","X","X","X","X","X","X","X","X","X", "little_ballon_wing", "rope_right", "big_ballon_wing","X","X","X","X","X","X","X","X","X","X", "rosebush_t_left_angle", "rosebush_t_right_angle","X","X","X" ],
+    [ "rosebush_right", "solo_yellow_flower","X","X","X","X","X","X", "rosebush_left", "rosebush_right","X","X","X","X","X","X","X","X","X","X","X","X","X", "rope_left","X","X","X","X","X","X","X","X","X","X","X", "rosebush_left", "rosebush_right","X","X","X" ],
+    [ "grass_t", "grass_t_right_smooth","X","X","X","X","X","X", "rosebush_left", "rosebush_right","X","X","X","X","X","X","X","X","X","X","X","X","X", "rope_right","X","X","X","X","X", "solo_white_flower","X",  "little_ballon_left",  "little_ballon_roped", "little_ballon_right","X", "rosebush_left", "rosebush_right","X","X","X" ],
+    [ "dirt", "dirt","X","X", "tall_grass","vfx_teleport", "tall_grass", "solo_white_flower", "rosebush_left", "rosebush_right", "little_flower_pattern", "tall_grass", "big_flower_pattern", "tall_grass","X","X","X","X","X","X","X","X","X", "rope_left","X", "tall_grass","3","X", "solo_yellow_flower", "solo_grass_t_smooth","X","X", "rope","X","X", "rosebush_left", "rosebush_right", "big_flower_pattern","X","X" ],
+    [ "dirt","grass_t_right_corner", "grass_t", "grass_t", "grass_t","grass_teleport", "grass_t", "grass_t", "grass_t", "grass_t", "grass_t", "grass_t", "grass_t", "grass_t_right_smooth","X","X","X","X","X","X","X","X","moveable_platform", "rope_right","X", "grass_t_left_smooth", "grass_t", "grass_t", "grass_t", "grass_t_left_corner", "rosebush_t_left_angle", "rosebush_t_right_angle", "rope","X","X", "grass_t_left_smooth", "grass_t", "grass_t", "grass_t",  "grass_t" ],
+    [ "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "rosebush_t_left_angle", "rosebush_t", "rosebush_t", "rosebush_t", "rosebush_t", "rosebush_t", "rosebush_t", "rosebush_t", "rosebush_t_right_angle", "rope_left", "rosebush_t_left_angle", "dirt", "dirt", "dirt", "dirt", "dirt", "rosebush_left", "rosebush_right", "rope", "rosebush_t_left_angle", "rosebush_t_right_angle", "dirt", "dirt", "dirt", "dirt", "dirt" ],
+    [ "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "rosebush_left", "rosebush", "rosebush", "rosebush", "rosebush", "rosebush", "rosebush", "rosebush", "rosebush_right", "rope_hook", "rosebush_left", "dirt", "dirt", "dirt", "dirt", "dirt", "rosebush_left", "rosebush_right", "rope_hook", "rosebush_left", "rosebush_right", "dirt", "dirt", "dirt", "dirt", "dirt" ],
     [ "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt" ]
   ]
 }

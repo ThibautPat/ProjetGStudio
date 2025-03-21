@@ -94,6 +94,7 @@ Entity* Level::CreateNewEnity(const char* id)
 	case 4:
 	case 6:
 	case 10:
+	case 12:
 	case 11: return sc->CreateRectEntity<RectangleEntity>(110, 110, sf::Color::Transparent);
 	case 7: return sc->CreateRectEntity<RectangleEntity>(110, 110, sf::Color::Transparent);
 	case 3: return sc->CreateRectEntity<Checkpoint>(128, 128, sf::Color::Transparent);
