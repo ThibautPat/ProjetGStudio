@@ -1,11 +1,57 @@
 {
-    "arbre" : {
+    "saule" : {
+        "frame_size": { "width": 128*4, "height": 128*4 },
+        "coord" : { "x" : 1, "y" : 1 }
+    },
+
+    "little_fruit_tree" : {
         "frame_size": { "width": 11255151, "height": 7897764 },
         "coord" : { "x" : 1, "y" : 1 }
     },
 
-    "arbredeouf" : {
+    "little_olive_tree" : {
+    "frame_size": { "width": 11255151, "height": 7897764 },
+    "coord" : { "x" : 1, "y" : 1 }
+    },
+
+    "banzai" : {
         "frame_size": { "width": 11255151, "height": 7897764 },
         "coord" : { "x" : 1, "y" : 1 }
-    }
+    },
+
+    "big_fruit_tree" : {
+    "frame_size": { "width": 11255151, "height": 7897764 },
+    "coord" : { "x" : 1, "y" : 1 }
+    },
+
+    "fern" : {
+    "frame_size": { "width": 11255151, "height": 789 },
+    "coord" : { "x" : 1, "y" : 1 }
+    },
+
+    "fruit_wood" : {
+    "frame_size": { "width": 11255151, "height": 789 },
+    "coord" : { "x" : 1, "y" : 1 }
+    },
+
+    "fruit_bush" : {
+        "frame_size": { "width": 11255151, "height": 789 },
+        "coord" : { "x" : 1, "y" : 1 }
+    },
+
+    "big_leaf_1" : {
+        "frame_size": { "width": 11255151, "height": 789 },
+        "coord" : { "x" : 1, "y" : 1 }
+    },
+
+    "big_leaf_2" : {
+        "frame_size": { "width": 11255151, "height": 789 },
+        "coord" : { "x" : 1, "y" : 1 }
+    },
+
+    "bush" : {
+        "frame_size": { "width": 11255151, "height": 789 },
+        "coord" : { "x" : 1, "y" : 1 }
+    },
+
 }
