@@ -205,8 +205,6 @@ void Player::FixedUpdate(float dt)
 
 void Player::HandleBattery()
 {
-    Debug::DrawText(GetPosition(0.f, 0.f).x - 750, GetPosition(0.f, 0.f).y - 650, std::to_string(int(mPData->mCurrentBatteryDuration)), sf::Color::White);
-
     if (mAnimator->GetRatio().y == -1) {
         mPData->mCurrentBatteryDuration += GetDeltaTime() * 0.5f;
 
