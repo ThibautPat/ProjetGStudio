@@ -31,9 +31,9 @@
             "warning_level": "Level3"
         },
         {
-            "additional_dependencies": "%(AdditionalDependencies)",
-            "additional_include_directories": "",
-            "additional_library_directories": "",
+            "additional_dependencies": "sfml-graphics-s.lib;sfml-window-s.lib;sfml-audio-s.lib;sfml-system-s.lib;opengl32.lib;glu32.lib;gdi32.lib;winmm.lib;dwmapi.lib;freetype.lib;%(AdditionalDependencies);openal32.lib;flac.lib;vorbis.lib;vorbisfile.lib;ogg.lib;",
+            "additional_include_directories": "$(SolutionDir)../../SFML-2.5.1/include",
+            "additional_library_directories": "$(SolutionDir)../../SFML-2.5.1/lib",
             "character_set": "Unicode",
             "conformance_mode": "true",
             "generate_debug_information": "false",
@@ -44,7 +44,7 @@
             "platform_toolset": "v143",
             "precompiled_header": "NotUsing",
             "precompiled_header_file": "pch.h",
-            "preprocessor_definitions": "NDEBUG;_CONSOLE;%(PreprocessorDefinitions)",
+            "preprocessor_definitions": "NDEBUG;_CONSOLE;%(PreprocessorDefinitions);SFML_STATIC",
             "sdl_check": "true",
             "subsystem": "Console",
             "type": "Application",
