@@ -13,9 +13,13 @@ void SceneManager::SelectScene(const char* name)
 
 void SceneManager::LaunchScene()
 {
-	mCurrentScene->SetGameManager(GameManager::Get());
-	mCurrentScene->OnInitialize();
+	if (GameManager::Get()->GetIsSceneChanged())
+	{
 
-	GameManager::Get()->SetIsSceneChanged(false);
-	GameManager::Get()->Run();
+		mCurrentScene->SetGameManager(GameManager::Get());
+		mCurrentScene->OnInitialize();
+
+		GameManager::Get()->SetIsSceneChanged(false);
+		GameManager::Get()->Run();
+	}
 }

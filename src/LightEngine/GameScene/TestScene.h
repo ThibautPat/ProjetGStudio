@@ -12,11 +12,12 @@ class Level;
 
 class TestScene : public Scene
 {
+
+	
+
 protected:
 
 	GameManager* m_InstanceGameManager;
-	sf::Clock menuClock;
-	sf::Clock escapeClockGap;
 	sf::Clock TeleportClock;
 	Level* mLevel;
 
@@ -41,10 +42,11 @@ public:
 
 		COUNT
 	};
-
+	~TestScene(); // Add the destructor 
 	void OnInitialize() override;
 	void OnEvent(const sf::Event& event) override;
 	void HandleConsoleEvent();
 	void HandleKeyboardEvent();
 	void OnUpdate() override;
+
 };

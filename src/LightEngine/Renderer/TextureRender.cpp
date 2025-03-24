@@ -36,7 +36,6 @@ TextureRender::TextureRender(const char* spritesheetname, const char* spritename
 TextureRender::~TextureRender()
 {
     delete mRenderSprite;
-    delete mLoadTexture; // Libérer la mémoire
 }
 
 void TextureRender::ResetRect()

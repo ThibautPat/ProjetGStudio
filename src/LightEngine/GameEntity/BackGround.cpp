@@ -34,3 +34,8 @@ void BackGround::SetBackGroundTexture(std::string path)
 	texture->loadFromFile(path);
 	mShape.setTexture(texture);
 }
+
+BackGround::~BackGround()
+{
+	delete mShape.getTexture();
+}

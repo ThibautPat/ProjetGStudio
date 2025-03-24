@@ -11,62 +11,66 @@
 #include "../GameEntity/Moving_Platform.h"
 #include "../Renderer/TextureRender.h"
 
+TestScene::~TestScene()
+{
+}
+
 void TestScene::OnInitialize()
 {
 	m_InstanceGameManager = GameManager::Get();
 
-	mView = new sf::View(sf::FloatRect(0, -340, GetWindowWidth()+100, GetWindowHeight()+180)); // Ajout de la cam�ra
+		mView = new sf::View(sf::FloatRect(0, -340, GetWindowWidth() + 100, GetWindowHeight() + 180)); // Ajout de la cam�ra
 
-	BackGround* pEntity1 = CreateRectEntity<BackGround>(1290, 3450, sf::Color::White);
-	pEntity1->SetPosition(0, 205);
-	pEntity1->SetRigidBody(false);
-	pEntity1->SetIsKinematic(true);
-	pEntity1->SetGravity(false);
-	pEntity1->SetBackGroundTexture("..//..//..//res//Assets//Background//sky_mercure.png");
-	pEntity1->SetTag(Tag::BACK_GROUND1);
+		BackGround* pEntity1 = CreateRectEntity<BackGround>(1290, 3450, sf::Color::White);
+		pEntity1->SetPosition(0, 205);
+		pEntity1->SetRigidBody(false);
+		pEntity1->SetIsKinematic(true);
+		pEntity1->SetGravity(false);
+		pEntity1->SetBackGroundTexture("..//..//..//res//Assets//Background//sky_mercure.png");
+		pEntity1->SetTag(Tag::BACK_GROUND1);
 
-	BackGround* pEntity2 = CreateRectEntity<BackGround>(1290, 3450, sf::Color::White);
-	pEntity2->SetPosition(mView->getCenter().x, mView->getCenter().y);
-	pEntity2->SetRigidBody(false);
-	pEntity2->SetIsKinematic(true);
-	pEntity2->SetGravity(false);
-	pEntity2->SetBackGroundTexture("..//..//..//res//Assets//Background//upsky_background_mercure.png");
-	pEntity2->SetTag(Tag::BACK_GROUND2BIS);
+		BackGround* pEntity2 = CreateRectEntity<BackGround>(1290, 3450, sf::Color::White);
+		pEntity2->SetPosition(mView->getCenter().x, mView->getCenter().y);
+		pEntity2->SetRigidBody(false);
+		pEntity2->SetIsKinematic(true);
+		pEntity2->SetGravity(false);
+		pEntity2->SetBackGroundTexture("..//..//..//res//Assets//Background//upsky_background_mercure.png");
+		pEntity2->SetTag(Tag::BACK_GROUND2BIS);
 
-	BackGround* pEntity3 = CreateRectEntity<BackGround>(1290, 3450, sf::Color::White);
-	pEntity3->SetPosition(mView->getCenter().x - 30, mView->getCenter().y);
-	pEntity3->SetRigidBody(false);
-	pEntity3->SetIsKinematic(true);
-	pEntity3->SetGravity(false);
-	pEntity3->SetBackGroundTexture("..//..//..//res//Assets//Background//city_background_mercure.png");
-	pEntity3->SetTag(Tag::BACK_GROUND2);
+		BackGround* pEntity3 = CreateRectEntity<BackGround>(1290, 3450, sf::Color::White);
+		pEntity3->SetPosition(mView->getCenter().x - 30, mView->getCenter().y);
+		pEntity3->SetRigidBody(false);
+		pEntity3->SetIsKinematic(true);
+		pEntity3->SetGravity(false);
+		pEntity3->SetBackGroundTexture("..//..//..//res//Assets//Background//city_background_mercure.png");
+		pEntity3->SetTag(Tag::BACK_GROUND2);
 
-	mLevel = new Level();
-	mLevel->ChooseJson("../../../res/Levels/map.json", "../../../res/Levels/environment.json");
-	mLevel->LoadLevel();
+		mLevel = new Level();
+		mLevel->ChooseJson("../../../res/Levels/map.json", "../../../res/Levels/environment.json");
+		mLevel->LoadLevel();
 
-	mpAudioManager = new AudioManager();
+		mpAudioManager = new AudioManager();
 
-	std::string musicName = "BO.wav";
-	m_MusicList.push_back(&musicName); 
+		std::string musicName = "BO.wav";
+		m_MusicList.push_back(&musicName);
 
-	std::string SoundName = "revive.wav";
-	m_soundList.push_back(&SoundName);  
+		std::string SoundName = "revive.wav";
+		m_soundList.push_back(&SoundName);
 
-	std::string SoundName2 = "CheckPoint.wav";
-	m_soundList.push_back(&SoundName2);
+		std::string SoundName2 = "CheckPoint.wav";
+		m_soundList.push_back(&SoundName2);
 
-	std::string SoundName3 = "Jump.wav";
-	m_soundList.push_back(&SoundName3);
+		std::string SoundName3 = "Jump.wav";
+		m_soundList.push_back(&SoundName3);
 
-	std::string SoundName4= "Mort.wav";
-	m_soundList.push_back(&SoundName4);
+		std::string SoundName4 = "Mort.wav";
+		m_soundList.push_back(&SoundName4);
 
-	std::string SoundName5 = "Push.wav";
-	m_soundList.push_back(&SoundName5); 
+		std::string SoundName5 = "Push.wav";
+		m_soundList.push_back(&SoundName5);
 
-	mpAudioManager->AddLevelSound(m_soundList);
-	mpAudioManager->AddLevelMusic(m_MusicList);
+		mpAudioManager->AddLevelSound(m_soundList);
+		mpAudioManager->AddLevelMusic(m_MusicList);
 
 	mpAudioManager->PlayCurrentMusic();
 }
@@ -82,8 +86,10 @@ void TestScene::OnEvent(const sf::Event& event)
 		mpAudioManager->~AudioManager();
 		m_soundList.clear();
 		m_MusicList.clear();
-
-		m_InstanceGameManager->GetSceneManager()->SelectScene("beginscene"); 
+		mLevel->~Level(); 
+		mView = nullptr;
+		mPlayer->~Player();
+		m_InstanceGameManager->GetSceneManager()->SelectScene("testscene");
 		m_InstanceGameManager->GetSceneManager()->LaunchScene(); 
 	}
 }

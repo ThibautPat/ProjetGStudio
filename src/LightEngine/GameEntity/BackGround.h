@@ -6,5 +6,6 @@ public:
 	void OnInitialize() override;
 	void OnUpdate() override;
 	void SetBackGroundTexture(std::string path);
+	~BackGround();
 };
 

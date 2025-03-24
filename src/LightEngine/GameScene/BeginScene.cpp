@@ -6,7 +6,7 @@ void BeginScene::OnInitialize()
 {
 	mView = new sf::View(sf::FloatRect(0, 0, GetWindowWidth(), GetWindowHeight())); // Ajout de la cam�ra
 	m_InstanceGameManager = GameManager::Get();
-
+	
 	BackGround* pEntity1 = CreateRectEntity<BackGround>(1080, 1920, sf::Color::White); 
 	pEntity1->SetPosition(GetWindowWidth() / 2, GetWindowHeight() / 2);
 	pEntity1->SetRigidBody(false); 
@@ -47,5 +47,6 @@ void BeginScene::OnUpdate()
 		}
 		m_InstanceGameManager->GetSceneManager()->SelectScene("testscene");
 		m_InstanceGameManager->GetSceneManager()->LaunchScene();
+		isPressed = false;
 	}
 }

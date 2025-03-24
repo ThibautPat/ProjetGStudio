@@ -23,6 +23,17 @@ Battery::Battery()
     mSprite3->setScale(0.6f, 0.42f);
 }
 
+Battery::~Battery()
+{
+	delete mBatteryTexture1;
+	delete mBatteryTexture2;
+	delete mBatteryTexture3;
+
+	delete mSprite1;
+	delete mSprite2;
+	delete mSprite3;
+}
+
 void Battery::Update(float timerValue, float maxTime, sf::Vector2f position)
 {
     mSprite1->setPosition(position.x, position.y);

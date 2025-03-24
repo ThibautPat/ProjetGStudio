@@ -16,6 +16,7 @@ class Battery
 
 public:
 	Battery();
+	~Battery();
 
 	void Update(float timerValue, float maxTime, sf::Vector2f position);
 	void Draw(sf::RenderWindow& window);

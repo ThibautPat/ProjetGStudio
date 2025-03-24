@@ -8,6 +8,9 @@ class AnimationRender;
 
 class Animator 
 {
+
+	~Animator(); // Add the destructor
+
 protected:
 	std::map<std::string, AnimationRender*> mAnimMap;
 
@@ -26,5 +29,6 @@ public:
 	AnimationRender* GetCurrentAnimation() { return mCurrentAnim; }
 
 	void UpdateCurrentAnimation();
+
 };
 
