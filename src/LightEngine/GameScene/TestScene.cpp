@@ -202,8 +202,12 @@ void TestScene::HandleKeyboardEvent()
 
 void TestScene::OnUpdate()
 {
-	HandleConsoleEvent();
-	//HandleKeyboardEvent();
+	if (sf::Joystick::isConnected(0)) {
+		HandleConsoleEvent();
+	}
+	else {
+		HandleKeyboardEvent();
+	}
 
 	mPlayer->DrawBattery();
 
